@@ -1,0 +1,1184 @@
+{
+ "current": [
+  {
+   "id": "wztc-pcb-concrete",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.39",
+    "TMP Design Manual (Combined, No Links).pdf p.36",
+    "TMP Design Manual (Combined, No Links).pdf p.35",
+    "TMP Design Manual (Combined, No Links).pdf p.32",
+    "TMP Design Manual (Combined, No Links).pdf p.35"
+   ],
+   "ms": 308.33139999958803
+  },
+  {
+   "id": "wztc-pcb-asphalt",
+   "right_document": true,
+   "page_rank": 2,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.39",
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.36",
+    "TMP Design Manual (Combined, No Links).pdf p.35"
+   ],
+   "ms": 291.58620000089286
+  },
+  {
+   "id": "wztc-uneven-lanes",
+   "right_document": false,
+   "page_rank": null,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.83",
+    "2024 Standard Specifications for Roads and Structures.pdf p.661",
+    "fhwahop12005.pdf p.144",
+    "Division 11 Combined.pdf p.20",
+    "Chapter_2.pdf p.19"
+   ],
+   "ms": 310.9736000005796
+  },
+  {
+   "id": "wztc-curb-gutter",
+   "right_document": false,
+   "page_rank": null,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.20",
+    "TMP Design Manual (Combined, No Links).pdf p.14",
+    "part6.pdf p.170",
+    "part6.pdf p.84",
+    "Chapter_2.pdf p.21"
+   ],
+   "ms": 336.6152000016882
+  },
+  {
+   "id": "wztc-tma-weight",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "part6.pdf p.170",
+    "2023 WZ Safety & Mobility Process Review.pdf p.4",
+    "2024 Standard Specifications for Roads and Structures.pdf p.621",
+    "Chapter_2.pdf p.41",
+    "part6.pdf p.164"
+   ],
+   "ms": 322.48190000245813
+  },
+  {
+   "id": "utilities-fracout-depth",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.143",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.273",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.143",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.275",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.272"
+   ],
+   "ms": 354.02289999910863
+  },
+  {
+   "id": "utilities-effluent-moa",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.241",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.209",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.58",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.38",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.58"
+   ],
+   "ms": 393.045600001642
+  },
+  {
+   "id": "utilities-sign-spacing",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "010604.pdf p.227",
+    "010604.pdf p.91",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.188",
+    "CFR-2024-title23-vol1-part645.pdf p.14",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.188"
+   ],
+   "ms": 394.82959999804734
+  },
+  {
+   "id": "utilities-15ft-light",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "010604.pdf p.89",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.190",
+    "010604.pdf p.226",
+    "010604.pdf p.91",
+    "010604.pdf p.189"
+   ],
+   "ms": 380.08690000060597
+  },
+  {
+   "id": "utilities-low-speed-layout",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "010604.pdf p.42",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.85",
+    "010604.pdf p.49",
+    "010604.pdf p.191",
+    "if03014.pdf p.74"
+   ],
+   "ms": 377.1011999997427
+  },
+  {
+   "id": "tmsd-guardrail-l1",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.11",
+    "03. Guardrail, Barriers and Attenuators.pdf p.9",
+    "03. Guardrail, Barriers and Attenuators.pdf p.14",
+    "03. Guardrail, Barriers and Attenuators.pdf p.19",
+    "03. Guardrail, Barriers and Attenuators.pdf p.8"
+   ],
+   "ms": 392.9106999967189
+  },
+  {
+   "id": "tmsd-tods-placement",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "Chapter2c.pdf p.36",
+    "TODS Manual - September 2024.pdf p.7",
+    "L18_TSLG_Guide.pdf p.695",
+    "TODS Manual - September 2024.pdf p.25",
+    "TODS Manual - September 2024.pdf p.10"
+   ],
+   "ms": 340.2700000006007
+  },
+  {
+   "id": "tmsd-tods-county",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.23",
+    "TODS Manual - September 2024.pdf p.6",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.24"
+   ],
+   "ms": 326.83000000179163
+  },
+  {
+   "id": "tmsd-turn-radius",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "09. At Grade Intersections.pdf p.21",
+    "09. At Grade Intersections.pdf p.20",
+    "09. At Grade Intersections.pdf p.19",
+    "09. At Grade Intersections.pdf p.22",
+    "09. At Grade Intersections.pdf p.24"
+   ],
+   "ms": 380.3602000007231
+  },
+  {
+   "id": "tmsd-water-barrier",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.1",
+    "04091.pdf p.318",
+    "04091.pdf p.319"
+   ],
+   "ms": 339.1370999997889
+  }
+ ],
+ "current+captions": [
+  {
+   "id": "wztc-pcb-concrete",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.39",
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.37"
+   ],
+   "ms": 322.7552000025753
+  },
+  {
+   "id": "wztc-pcb-asphalt",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.39"
+   ],
+   "ms": 285.6530000026396
+  },
+  {
+   "id": "wztc-uneven-lanes",
+   "right_document": false,
+   "page_rank": null,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.83",
+    "2024 Standard Specifications for Roads and Structures.pdf p.661",
+    "fhwahop12005.pdf p.144",
+    "Division 11 Combined.pdf p.20",
+    "Chapter_2.pdf p.19"
+   ],
+   "ms": 305.0541000011435
+  },
+  {
+   "id": "wztc-curb-gutter",
+   "right_document": false,
+   "page_rank": null,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.20",
+    "TMP Design Manual (Combined, No Links).pdf p.14",
+    "part6.pdf p.170",
+    "part6.pdf p.84",
+    "Chapter_2.pdf p.21"
+   ],
+   "ms": 342.3806999999215
+  },
+  {
+   "id": "wztc-tma-weight",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "part6.pdf p.170",
+    "2023 WZ Safety & Mobility Process Review.pdf p.4",
+    "2024 Standard Specifications for Roads and Structures.pdf p.621",
+    "Chapter_2.pdf p.41",
+    "part6.pdf p.164"
+   ],
+   "ms": 308.6460000013176
+  },
+  {
+   "id": "utilities-fracout-depth",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.143",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.273",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.143",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.275",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.272"
+   ],
+   "ms": 341.3384999985283
+  },
+  {
+   "id": "utilities-effluent-moa",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.241",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.209",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.58",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.38",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.58"
+   ],
+   "ms": 412.1936999981699
+  },
+  {
+   "id": "utilities-sign-spacing",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "010604.pdf p.227",
+    "010604.pdf p.91",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.188",
+    "CFR-2024-title23-vol1-part645.pdf p.14",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.188"
+   ],
+   "ms": 393.7384999990172
+  },
+  {
+   "id": "utilities-15ft-light",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "010604.pdf p.89",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.190",
+    "010604.pdf p.226",
+    "010604.pdf p.91",
+    "010604.pdf p.189"
+   ],
+   "ms": 375.90840000120807
+  },
+  {
+   "id": "utilities-low-speed-layout",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "010604.pdf p.42",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.85",
+    "010604.pdf p.49",
+    "010604.pdf p.191",
+    "if03014.pdf p.74"
+   ],
+   "ms": 389.5889999985229
+  },
+  {
+   "id": "tmsd-guardrail-l1",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.11",
+    "03. Guardrail, Barriers and Attenuators.pdf p.9",
+    "03. Guardrail, Barriers and Attenuators.pdf p.14",
+    "03. Guardrail, Barriers and Attenuators.pdf p.19",
+    "03. Guardrail, Barriers and Attenuators.pdf p.8"
+   ],
+   "ms": 400.286000000051
+  },
+  {
+   "id": "tmsd-tods-placement",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "Chapter2c.pdf p.36",
+    "TODS Manual - September 2024.pdf p.7",
+    "L18_TSLG_Guide.pdf p.695",
+    "TODS Manual - September 2024.pdf p.25",
+    "TODS Manual - September 2024.pdf p.10"
+   ],
+   "ms": 333.98920000036014
+  },
+  {
+   "id": "tmsd-tods-county",
+   "right_document": true,
+   "page_rank": 2,
+   "top": [
+    "TODS Manual - September 2024.pdf p.23",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.6"
+   ],
+   "ms": 320.57070000155363
+  },
+  {
+   "id": "tmsd-turn-radius",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "09. At Grade Intersections.pdf p.21",
+    "09. At Grade Intersections.pdf p.20",
+    "09. At Grade Intersections.pdf p.19",
+    "09. At Grade Intersections.pdf p.22",
+    "09. At Grade Intersections.pdf p.24"
+   ],
+   "ms": 378.68539999908535
+  },
+  {
+   "id": "tmsd-water-barrier",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.1",
+    "04091.pdf p.318",
+    "04091.pdf p.319"
+   ],
+   "ms": 342.24549999999
+  }
+ ],
+ "pymupdf4llm-ocr": [
+  {
+   "id": "wztc-pcb-concrete",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.39",
+    "TMP Design Manual (Combined, No Links).pdf p.36",
+    "TMP Design Manual (Combined, No Links).pdf p.35",
+    "TMP Design Manual (Combined, No Links).pdf p.32",
+    "TMP Design Manual (Combined, No Links).pdf p.35"
+   ],
+   "ms": 293.77080000267597
+  },
+  {
+   "id": "wztc-pcb-asphalt",
+   "right_document": true,
+   "page_rank": 2,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.39",
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.36",
+    "TMP Design Manual (Combined, No Links).pdf p.35"
+   ],
+   "ms": 294.6903999982169
+  },
+  {
+   "id": "wztc-uneven-lanes",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_5.pdf p.4",
+    "TMP Design Manual (Combined, No Links).pdf p.83",
+    "2024 Standard Specifications for Roads and Structures.pdf p.661",
+    "fhwahop12005.pdf p.144",
+    "Division 11 Combined.pdf p.20"
+   ],
+   "ms": 309.1279999971448
+  },
+  {
+   "id": "wztc-curb-gutter",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_5.pdf p.8",
+    "Chapter_5.pdf p.9",
+    "Chapter_5.pdf p.10",
+    "Chapter_5.pdf p.6",
+    "Chapter_5.pdf p.7"
+   ],
+   "ms": 350.5422999987786
+  },
+  {
+   "id": "wztc-tma-weight",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_2.pdf p.40",
+    "part6.pdf p.170",
+    "2023 WZ Safety & Mobility Process Review.pdf p.4",
+    "2024 Standard Specifications for Roads and Structures.pdf p.621",
+    "Chapter_2.pdf p.41"
+   ],
+   "ms": 309.5976000004157
+  },
+  {
+   "id": "utilities-fracout-depth",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.300",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.299",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.303",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.302",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.299"
+   ],
+   "ms": 340.73780000107945
+  },
+  {
+   "id": "utilities-effluent-moa",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.244",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.250",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.241",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.209",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.58"
+   ],
+   "ms": 419.43539999920176
+  },
+  {
+   "id": "utilities-sign-spacing",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.230",
+    "010604.pdf p.228",
+    "010604.pdf p.227",
+    "010604.pdf p.232",
+    "010604.pdf p.91"
+   ],
+   "ms": 380.4959000008239
+  },
+  {
+   "id": "utilities-15ft-light",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.228",
+    "010604.pdf p.89",
+    "010604.pdf p.245",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.190",
+    "010604.pdf p.226"
+   ],
+   "ms": 387.9911000003631
+  },
+  {
+   "id": "utilities-low-speed-layout",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.229",
+    "010604.pdf p.228",
+    "010604.pdf p.232",
+    "010604.pdf p.230",
+    "010604.pdf p.230"
+   ],
+   "ms": 371.67309999858844
+  },
+  {
+   "id": "tmsd-guardrail-l1",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.11",
+    "03. Guardrail, Barriers and Attenuators.pdf p.9",
+    "03. Guardrail, Barriers and Attenuators.pdf p.14",
+    "03. Guardrail, Barriers and Attenuators.pdf p.19",
+    "03. Guardrail, Barriers and Attenuators.pdf p.8"
+   ],
+   "ms": 376.76619999911054
+  },
+  {
+   "id": "tmsd-tods-placement",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TODS Manual - September 2024.pdf p.40",
+    "Chapter2c.pdf p.36",
+    "TODS Manual - September 2024.pdf p.7",
+    "L18_TSLG_Guide.pdf p.695",
+    "TODS Manual - September 2024.pdf p.25"
+   ],
+   "ms": 315.731800001231
+  },
+  {
+   "id": "tmsd-tods-county",
+   "right_document": true,
+   "page_rank": 2,
+   "top": [
+    "TODS Manual - September 2024.pdf p.23",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.6"
+   ],
+   "ms": 340.9888999995019
+  },
+  {
+   "id": "tmsd-turn-radius",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "09. At Grade Intersections.pdf p.21",
+    "09. At Grade Intersections.pdf p.20",
+    "09. At Grade Intersections.pdf p.19",
+    "09. At Grade Intersections.pdf p.22",
+    "09. At Grade Intersections.pdf p.24"
+   ],
+   "ms": 365.3448000004573
+  },
+  {
+   "id": "tmsd-water-barrier",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.1",
+    "04091.pdf p.318",
+    "04091.pdf p.319"
+   ],
+   "ms": 350.70529999939026
+  }
+ ],
+ "pymupdf4llm-ocr+captions": [
+  {
+   "id": "wztc-pcb-concrete",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.39",
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.37"
+   ],
+   "ms": 307.2960999998031
+  },
+  {
+   "id": "wztc-pcb-asphalt",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.39"
+   ],
+   "ms": 287.59010000067065
+  },
+  {
+   "id": "wztc-uneven-lanes",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_5.pdf p.4",
+    "TMP Design Manual (Combined, No Links).pdf p.83",
+    "2024 Standard Specifications for Roads and Structures.pdf p.661",
+    "fhwahop12005.pdf p.144",
+    "Division 11 Combined.pdf p.20"
+   ],
+   "ms": 310.278400000243
+  },
+  {
+   "id": "wztc-curb-gutter",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_5.pdf p.8",
+    "Chapter_5.pdf p.9",
+    "Chapter_5.pdf p.10",
+    "Chapter_5.pdf p.6",
+    "Chapter_5.pdf p.7"
+   ],
+   "ms": 344.80510000139475
+  },
+  {
+   "id": "wztc-tma-weight",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_2.pdf p.40",
+    "part6.pdf p.170",
+    "2023 WZ Safety & Mobility Process Review.pdf p.4",
+    "2024 Standard Specifications for Roads and Structures.pdf p.621",
+    "Chapter_2.pdf p.41"
+   ],
+   "ms": 290.2223999990383
+  },
+  {
+   "id": "utilities-fracout-depth",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.300",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.299",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.303",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.302",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.299"
+   ],
+   "ms": 341.14620000036666
+  },
+  {
+   "id": "utilities-effluent-moa",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.244",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.250",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.241",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.209",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.58"
+   ],
+   "ms": 406.22260000236565
+  },
+  {
+   "id": "utilities-sign-spacing",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.230",
+    "010604.pdf p.228",
+    "010604.pdf p.227",
+    "010604.pdf p.232",
+    "010604.pdf p.91"
+   ],
+   "ms": 373.46550000074785
+  },
+  {
+   "id": "utilities-15ft-light",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.228",
+    "010604.pdf p.89",
+    "010604.pdf p.245",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.190",
+    "010604.pdf p.226"
+   ],
+   "ms": 395.0126000017917
+  },
+  {
+   "id": "utilities-low-speed-layout",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.229",
+    "010604.pdf p.228",
+    "010604.pdf p.232",
+    "010604.pdf p.230",
+    "010604.pdf p.230"
+   ],
+   "ms": 358.81789999984903
+  },
+  {
+   "id": "tmsd-guardrail-l1",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.11",
+    "03. Guardrail, Barriers and Attenuators.pdf p.9",
+    "03. Guardrail, Barriers and Attenuators.pdf p.14",
+    "03. Guardrail, Barriers and Attenuators.pdf p.19",
+    "03. Guardrail, Barriers and Attenuators.pdf p.8"
+   ],
+   "ms": 363.55230000117444
+  },
+  {
+   "id": "tmsd-tods-placement",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TODS Manual - September 2024.pdf p.40",
+    "Chapter2c.pdf p.36",
+    "TODS Manual - September 2024.pdf p.7",
+    "L18_TSLG_Guide.pdf p.695",
+    "TODS Manual - September 2024.pdf p.25"
+   ],
+   "ms": 332.5710999997682
+  },
+  {
+   "id": "tmsd-tods-county",
+   "right_document": true,
+   "page_rank": 2,
+   "top": [
+    "TODS Manual - September 2024.pdf p.23",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.6"
+   ],
+   "ms": 327.4803000022075
+  },
+  {
+   "id": "tmsd-turn-radius",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "09. At Grade Intersections.pdf p.21",
+    "09. At Grade Intersections.pdf p.20",
+    "09. At Grade Intersections.pdf p.19",
+    "09. At Grade Intersections.pdf p.22",
+    "09. At Grade Intersections.pdf p.24"
+   ],
+   "ms": 356.0887999992701
+  },
+  {
+   "id": "tmsd-water-barrier",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.1",
+    "04091.pdf p.318",
+    "04091.pdf p.319"
+   ],
+   "ms": 350.31270000035875
+  }
+ ],
+ "docling-ocr": [
+  {
+   "id": "wztc-pcb-concrete",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.39",
+    "TMP Design Manual (Combined, No Links).pdf p.37"
+   ],
+   "ms": 326.3283999986015
+  },
+  {
+   "id": "wztc-pcb-asphalt",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.37"
+   ],
+   "ms": 315.51930000205175
+  },
+  {
+   "id": "wztc-uneven-lanes",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_5.pdf p.4",
+    "TMP Design Manual (Combined, No Links).pdf p.83",
+    "2024 Standard Specifications for Roads and Structures.pdf p.661",
+    "fhwahop12005.pdf p.144",
+    "Division 11 Combined.pdf p.20"
+   ],
+   "ms": 315.11369999861927
+  },
+  {
+   "id": "wztc-curb-gutter",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_5.pdf p.10",
+    "Chapter_5.pdf p.8",
+    "Chapter_5.pdf p.9",
+    "Chapter_5.pdf p.7",
+    "Chapter_5.pdf p.6"
+   ],
+   "ms": 336.57550000134506
+  },
+  {
+   "id": "wztc-tma-weight",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_2.pdf p.40",
+    "part6.pdf p.170",
+    "2023 WZ Safety & Mobility Process Review.pdf p.4",
+    "2024 Standard Specifications for Roads and Structures.pdf p.621",
+    "Chapter_2.pdf p.41"
+   ],
+   "ms": 307.31939999895985
+  },
+  {
+   "id": "utilities-fracout-depth",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.300",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.299",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.303",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.302",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.304"
+   ],
+   "ms": 344.4630000012694
+  },
+  {
+   "id": "utilities-effluent-moa",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.250",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.244",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.241",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.209",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.58"
+   ],
+   "ms": 396.56010000180686
+  },
+  {
+   "id": "utilities-sign-spacing",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.230",
+    "010604.pdf p.228",
+    "010604.pdf p.230",
+    "010604.pdf p.227",
+    "010604.pdf p.232"
+   ],
+   "ms": 380.1720000010391
+  },
+  {
+   "id": "utilities-15ft-light",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.228",
+    "010604.pdf p.89",
+    "010604.pdf p.245",
+    "010604.pdf p.246",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.190"
+   ],
+   "ms": 391.5741999990132
+  },
+  {
+   "id": "utilities-low-speed-layout",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.229",
+    "010604.pdf p.228",
+    "010604.pdf p.232",
+    "010604.pdf p.230",
+    "010604.pdf p.230"
+   ],
+   "ms": 377.9237999988254
+  },
+  {
+   "id": "tmsd-guardrail-l1",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.11",
+    "03. Guardrail, Barriers and Attenuators.pdf p.9",
+    "03. Guardrail, Barriers and Attenuators.pdf p.14",
+    "03. Guardrail, Barriers and Attenuators.pdf p.19",
+    "03. Guardrail, Barriers and Attenuators.pdf p.8"
+   ],
+   "ms": 386.45980000001146
+  },
+  {
+   "id": "tmsd-tods-placement",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "Chapter2c.pdf p.36",
+    "TODS Manual - September 2024.pdf p.7",
+    "L18_TSLG_Guide.pdf p.695",
+    "TODS Manual - September 2024.pdf p.25",
+    "TODS Manual - September 2024.pdf p.10"
+   ],
+   "ms": 335.4865000001155
+  },
+  {
+   "id": "tmsd-tods-county",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.23",
+    "TODS Manual - September 2024.pdf p.6",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.3"
+   ],
+   "ms": 318.9072999994096
+  },
+  {
+   "id": "tmsd-turn-radius",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "09. At Grade Intersections.pdf p.21",
+    "09. At Grade Intersections.pdf p.21",
+    "09. At Grade Intersections.pdf p.20",
+    "09. At Grade Intersections.pdf p.19",
+    "09. At Grade Intersections.pdf p.22"
+   ],
+   "ms": 373.6325999998371
+  },
+  {
+   "id": "tmsd-water-barrier",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.1",
+    "04091.pdf p.318",
+    "04091.pdf p.319"
+   ],
+   "ms": 354.10639999827254
+  }
+ ],
+ "docling-ocr+captions": [
+  {
+   "id": "wztc-pcb-concrete",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.39",
+    "TMP Design Manual (Combined, No Links).pdf p.37"
+   ],
+   "ms": 321.0161999995762
+  },
+  {
+   "id": "wztc-pcb-asphalt",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.37",
+    "TMP Design Manual (Combined, No Links).pdf p.38",
+    "TMP Design Manual (Combined, No Links).pdf p.37"
+   ],
+   "ms": 308.8094999984605
+  },
+  {
+   "id": "wztc-uneven-lanes",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_5.pdf p.4",
+    "TMP Design Manual (Combined, No Links).pdf p.83",
+    "2024 Standard Specifications for Roads and Structures.pdf p.661",
+    "fhwahop12005.pdf p.144",
+    "Division 11 Combined.pdf p.20"
+   ],
+   "ms": 314.2627999986871
+  },
+  {
+   "id": "wztc-curb-gutter",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_5.pdf p.10",
+    "Chapter_5.pdf p.8",
+    "Chapter_5.pdf p.9",
+    "Chapter_5.pdf p.7",
+    "Chapter_5.pdf p.6"
+   ],
+   "ms": 345.44870000172523
+  },
+  {
+   "id": "wztc-tma-weight",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "Chapter_2.pdf p.40",
+    "part6.pdf p.170",
+    "2023 WZ Safety & Mobility Process Review.pdf p.4",
+    "2024 Standard Specifications for Roads and Structures.pdf p.621",
+    "Chapter_2.pdf p.41"
+   ],
+   "ms": 315.80030000259285
+  },
+  {
+   "id": "utilities-fracout-depth",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.300",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.299",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.303",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.302",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.304"
+   ],
+   "ms": 344.69629999875906
+  },
+  {
+   "id": "utilities-effluent-moa",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "20220713 NCDOT UAM Ver 2-0.pdf p.250",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.244",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.241",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.209",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.58"
+   ],
+   "ms": 410.3891000013391
+  },
+  {
+   "id": "utilities-sign-spacing",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.230",
+    "010604.pdf p.228",
+    "010604.pdf p.230",
+    "010604.pdf p.227",
+    "010604.pdf p.232"
+   ],
+   "ms": 374.613899999531
+  },
+  {
+   "id": "utilities-15ft-light",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.228",
+    "010604.pdf p.89",
+    "010604.pdf p.245",
+    "010604.pdf p.246",
+    "20220713 NCDOT UAM Ver 2-0.pdf p.190"
+   ],
+   "ms": 357.23499999949127
+  },
+  {
+   "id": "utilities-low-speed-layout",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "010604.pdf p.229",
+    "010604.pdf p.228",
+    "010604.pdf p.232",
+    "010604.pdf p.230",
+    "010604.pdf p.230"
+   ],
+   "ms": 374.5504999969853
+  },
+  {
+   "id": "tmsd-guardrail-l1",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.11",
+    "03. Guardrail, Barriers and Attenuators.pdf p.9",
+    "03. Guardrail, Barriers and Attenuators.pdf p.14",
+    "03. Guardrail, Barriers and Attenuators.pdf p.19",
+    "03. Guardrail, Barriers and Attenuators.pdf p.8"
+   ],
+   "ms": 389.1537999988941
+  },
+  {
+   "id": "tmsd-tods-placement",
+   "right_document": true,
+   "page_rank": null,
+   "top": [
+    "Chapter2c.pdf p.36",
+    "TODS Manual - September 2024.pdf p.7",
+    "L18_TSLG_Guide.pdf p.695",
+    "TODS Manual - September 2024.pdf p.25",
+    "TODS Manual - September 2024.pdf p.10"
+   ],
+   "ms": 338.7408999988111
+  },
+  {
+   "id": "tmsd-tods-county",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.23",
+    "TODS Manual - September 2024.pdf p.6",
+    "TODS Manual - September 2024.pdf p.24",
+    "TODS Manual - September 2024.pdf p.3"
+   ],
+   "ms": 324.8700000003737
+  },
+  {
+   "id": "tmsd-turn-radius",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "09. At Grade Intersections.pdf p.21",
+    "09. At Grade Intersections.pdf p.21",
+    "09. At Grade Intersections.pdf p.20",
+    "09. At Grade Intersections.pdf p.19",
+    "09. At Grade Intersections.pdf p.22"
+   ],
+   "ms": 370.92699999993783
+  },
+  {
+   "id": "tmsd-water-barrier",
+   "right_document": true,
+   "page_rank": 1,
+   "top": [
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.4",
+    "03. Guardrail, Barriers and Attenuators.pdf p.1",
+    "04091.pdf p.318",
+    "04091.pdf p.319"
+   ],
+   "ms": 347.9727999983879
+  }
+ ]
+}
