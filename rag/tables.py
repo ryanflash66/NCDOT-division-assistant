@@ -185,12 +185,24 @@ def clean_markdown_tables(text: str) -> str:
     return "\n".join(out)
 
 
+def _bold(row: str) -> bool:
+    """Every non-empty cell of the row is bold (**...**)."""
+    values = [cell.strip() for cell in cells(row) if cell.strip()]
+    return bool(values) and all(len(v) > 4 and v.startswith("**") and v.endswith("**") for v in values)
+
+
 def _header_row_count(rows: List[str]) -> int:
     """Rows that label columns: through the separator, plus header-like rows after it.
 
     Rows after the separator count as headers only when the table has numeric
     data further down, so all-text tables (e.g. state criteria) aren't mistaken
-    for having a multi-row header.
+    for having a multi-row header. A bold row right after the separator is a
+    header even when it holds numbers, as long as the data rows below are not
+    all bold: the TMP manual's deflection tables (p. 37, 38) print the design
+    speeds "**30**|**40**|...|**80**" as a bold row under the separator, and
+    without it the second piece of a split table had no speeds, so the model
+    read 42.89 from the wrong column. A table set entirely in bold (the TODS
+    county list) keeps one header row.
     """
     if len(rows) < 2 or not is_separator(rows[1]):
         return 1 if rows else 0
@@ -198,10 +210,15 @@ def _header_row_count(rows: List[str]) -> int:
     def numeric(row: str) -> bool:
         return any(cell.strip() and _NUMERIC_CELL.match(cell) for cell in cells(row)[1:])
 
+    has_numeric = any(numeric(row) for row in rows[2:])
+    has_plain = any(not _bold(row) for row in rows[2:])
     count = 2
-    if any(numeric(row) for row in rows[2:]):
-        while count < len(rows) and count - 2 < _MAX_EXTRA_HEADER_ROWS and not numeric(rows[count]):
+    while count < len(rows) and count - 2 < _MAX_EXTRA_HEADER_ROWS:
+        row = rows[count]
+        if (has_plain and _bold(row)) or (has_numeric and not numeric(row)):
             count += 1
+        else:
+            break
     return count
 
 

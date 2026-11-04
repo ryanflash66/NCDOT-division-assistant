@@ -88,7 +88,8 @@ class _Runtime:
                 cache = model_cache_dir()
                 embedder = Embedder(self.index.model, cache_dir=cache)
                 reranker = Reranker(cache_dir=cache) if self.settings.rerank else None
-                retriever = Retriever(self.index, embedder, reranker, candidates=self.settings.rerank_candidates)
+                retriever = Retriever(self.index, embedder, reranker, candidates=self.settings.rerank_candidates,
+                                      keyword=self.settings.keyword_search)
                 retriever.warm_up()
                 tls_context()  # for the model calls, off the event loop
                 log.info("models loaded from %s in %.1fs", cache, time.perf_counter() - started)
@@ -266,6 +267,8 @@ def health() -> Dict:
         "chunks": dict(counts),
         "embedding_model": runtime.index.model,
         "rerank": settings.rerank,
+        # On only when the setting allows it and bm25.npz shipped with the index (a missing file turns it off silently).
+        "keyword_search": settings.keyword_search and runtime.index.keyword is not None,
         "llm_models": list(settings.models),
         "llm_configured": bool(settings.openrouter_api_key),
         "cpus": cpu_info(),

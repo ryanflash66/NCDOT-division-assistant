@@ -244,6 +244,7 @@ def test_page_divisions_and_health_expose_no_secrets(api, monkeypatch, tmp_path)
     urls = [urlsplit(doc["url"]) for d in divisions["divisions"] for doc in d["documents"]]
     assert all(u.scheme == "https" and u.hostname in PUBLIC_DOCUMENT_HOSTS for u in urls)
     assert health["llm_configured"] is True
+    assert health["keyword_search"] is True  # the committed index ships bm25.npz
     assert health["cpus"]["cpu_count"] >= 1
     assert all(m.endswith(":free") for m in health["llm_models"])
     for text in (page.text, str(divisions), str(health)):

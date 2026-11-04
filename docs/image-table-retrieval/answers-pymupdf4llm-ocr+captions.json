@@ -1,0 +1,295 @@
+[
+ {
+  "id": "wztc-pcb-concrete",
+  "status": 200,
+  "seconds": 3.399781299998722,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "TMP Design Manual (Combined, No Links).pdf",
+    "page": 38,
+    "page_end": null
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "25.37 inches [1]",
+  "expected": "25.37 in (impact angle 11.5 degrees), Figure 5, NC-PCB impact design table for concrete pavement"
+ },
+ {
+  "id": "wztc-pcb-asphalt",
+  "status": 200,
+  "seconds": 4.965787999997701,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "TMP Design Manual (Combined, No Links).pdf",
+    "page": 37,
+    "page_end": null
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "42.89 inches [1]",
+  "expected": "44.53 in (impact angle 12.7 degrees), Figure 4, NC-PCB impact design table for asphalt pavement"
+ },
+ {
+  "id": "wztc-uneven-lanes",
+  "status": 200,
+  "seconds": 2.1482471999988775,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "Chapter_5.pdf",
+    "page": 4,
+    "page_end": null
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "The maximum vertical difference in elevation between open lanes of traffic is 2 inches when the posted speed limit is 30 mph or more [1].",
+  "expected": "2 inches; otherwise close one lane or provide a 6:1 slope between the lanes, and use Uneven Lanes (W8-11) signs"
+ },
+ {
+  "id": "wztc-curb-gutter",
+  "status": 200,
+  "seconds": 4.07848119999835,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "Chapter_5.pdf",
+    "page": 7,
+    "page_end": 10
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "On a roadway with curb and gutter, utility work within 2 feet of an open travel lane requires closing the nearest travel lane [1].",
+  "expected": "Within 2 ft of an open travel lane: close the nearest open travel lane using Roadway Standard Drawing No. 1101.02 unless the work area is protected by barrier or guardrail"
+ },
+ {
+  "id": "wztc-tma-weight",
+  "status": 200,
+  "seconds": 2.88053249999939,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "Chapter_2.pdf",
+    "page": 40,
+    "page_end": null
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "The weight of the truck and TMA in a moving or stationary operation varies from 10,000 lbs. to 20,000 lbs., and the Qualified Work Zone Supervisor determines if the truck is properly ballasted [1].",
+  "expected": "10,000 to 20,000 lbs (truck and TMA, moving or stationary), ballasted by NCDOT approved methods; the Qualified Work Zone Supervisor determines if it is properly ballasted"
+ },
+ {
+  "id": "utilities-fracout-depth",
+  "status": 200,
+  "seconds": 2.092520800000784,
+  "refused": false,
+  "uncited": true,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [],
+  "right_document": false,
+  "right_page": false,
+  "answer": "2 feet",
+  "expected": "By hand to a depth of 2 feet, contained and properly disposed of (Frac-out Contingency Plan, Attachment 24)"
+ },
+ {
+  "id": "utilities-effluent-moa",
+  "status": 200,
+  "seconds": 1.6995824000005086,
+  "refused": false,
+  "uncited": true,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [],
+  "right_document": false,
+  "right_page": false,
+  "answer": "January 25, 1999",
+  "expected": "January 25, 1999 (memo of November 15, 1999 to Division Engineers; addendum form)"
+ },
+ {
+  "id": "utilities-sign-spacing",
+  "status": 200,
+  "seconds": 2.449367000001075,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "010604.pdf",
+    "page": 230,
+    "page_end": null
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "For expressway/freeway: A = 1,000 ft, B = 1,600 ft, C = 2,600 ft [1].",
+  "expected": "A 1,000 ft, B 1,600 ft, C 2,600 ft (two-lane urban 200 ft each, standard 500 ft each)"
+ },
+ {
+  "id": "utilities-15ft-light",
+  "status": 200,
+  "seconds": 2.08845040000233,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "010604.pdf",
+    "page": 228,
+    "page_end": null
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "Only an activated flashing or revolving yellow light is needed. [1]",
+  "expected": "Only an activated flashing or revolving yellow light on the vehicle (Figure 10-4, work outside the shoulder)"
+ },
+ {
+  "id": "utilities-low-speed-layout",
+  "status": 200,
+  "seconds": 3.957819900002505,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "010604.pdf",
+    "page": 228,
+    "page_end": 229
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "The short layout with 200\u202fft sign spacing and a 50\u2013100\u202fft taper may be used only on low\u2011volume, low\u2011speed (35\u202fMPH or less) urban streets such as local residential streets, and it may not be used in rural areas. [1]",
+  "expected": "Only low-volume, low-speed (35 mph or less) streets such as local residential streets; not in rural areas"
+ },
+ {
+  "id": "tmsd-guardrail-l1",
+  "status": 200,
+  "seconds": 1.990175899998576,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "03. Guardrail, Barriers and Attenuators.pdf",
+    "page": 9,
+    "page_end": 12
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "L1 is calculated as N + 0.75 + travel lane width. [1]",
+  "expected": "L1 = N + 0.75 + travel lane width (Detail 2B)"
+ },
+ {
+  "id": "tmsd-tods-placement",
+  "status": 200,
+  "seconds": 1.8874391000026662,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "TODS Manual - September 2024.pdf",
+    "page": 25,
+    "page_end": null
+   },
+   {
+    "file": "L18_TSLG_Guide.pdf",
+    "page": 695,
+    "page_end": null
+   }
+  ],
+  "right_document": true,
+  "right_page": false,
+  "answer": "Tourist-oriented directional intersection approach signs must be placed at least 200 feet in advance of the main intersection, and advance signs must be located no more than one-half mile from the center of the main intersection [1][2].",
+  "expected": "At least 200 ft before the intersection and 200 ft apart; advance signs at least 500 ft before, in special circumstances only (Figure 2K-2)"
+ },
+ {
+  "id": "tmsd-tods-county",
+  "status": 200,
+  "seconds": 2.4945660999983374,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "TODS Manual - September 2024.pdf",
+    "page": 23,
+    "page_end": 24
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "Onslow County has county code 067 and is in Division 3. [1]",
+  "expected": "County code 067, Division 3 (Form TOD-7, County List and Codes)"
+ },
+ {
+  "id": "tmsd-turn-radius",
+  "status": 200,
+  "seconds": 2.948643200001243,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "09. At Grade Intersections.pdf",
+    "page": 20,
+    "page_end": 22
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "For a 120\u00b0 turn with an SU\u201140 design vehicle, the edge of traveled way should use a simple curve radius of 35\u202fft, an offset of 6.0\u202fft, and a taper of 8:1 [1].",
+  "expected": "Simple curve radius with taper: 35 ft radius, 6.0 ft offset, 8:1 taper (Table 3, T-3)"
+ },
+ {
+  "id": "tmsd-water-barrier",
+  "status": 200,
+  "seconds": 3.9892691999993986,
+  "refused": false,
+  "uncited": false,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "error": null,
+  "cited": [
+   {
+    "file": "03. Guardrail, Barriers and Attenuators.pdf",
+    "page": 4,
+    "page_end": null
+   }
+  ],
+  "right_document": true,
+  "right_page": true,
+  "answer": "Yes, a traffic barrier is required for streams within the clear zone, and the depth determines the requirement: streams or permanent bodies of water less than 2 ft. in depth do not require a barrier, while those more than 2 ft. in depth do require a barrier [1].",
+  "expected": "Yes if the stream or permanent body of water is more than 2 ft deep, no if less than 2 ft (Table 2, warrants for nontraversable hazards)"
+ }
+]

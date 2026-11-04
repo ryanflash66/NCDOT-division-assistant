@@ -1,0 +1,2638 @@
+{
+ "baseline": {
+  "image_table": {
+   "right_document": 13,
+   "right_page": 4,
+   "right_page_first": 3,
+   "cases": 15,
+   "rows": [
+    {
+     "id": "wztc-pcb-concrete",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "TMP Design Manual (Combined, No Links).pdf p.39",
+      "TMP Design Manual (Combined, No Links).pdf p.36",
+      "TMP Design Manual (Combined, No Links).pdf p.35",
+      "TMP Design Manual (Combined, No Links).pdf p.32",
+      "TMP Design Manual (Combined, No Links).pdf p.35"
+     ],
+     "ms": 887.619100001757
+    },
+    {
+     "id": "wztc-pcb-asphalt",
+     "right_document": true,
+     "page_rank": 2,
+     "top": [
+      "TMP Design Manual (Combined, No Links).pdf p.39",
+      "TMP Design Manual (Combined, No Links).pdf p.37",
+      "TMP Design Manual (Combined, No Links).pdf p.38",
+      "TMP Design Manual (Combined, No Links).pdf p.36",
+      "TMP Design Manual (Combined, No Links).pdf p.35"
+     ],
+     "ms": 1064.8729000022286
+    },
+    {
+     "id": "wztc-uneven-lanes",
+     "right_document": false,
+     "page_rank": null,
+     "top": [
+      "TMP Design Manual (Combined, No Links).pdf p.83",
+      "2024 Standard Specifications for Roads and Structures.pdf p.661",
+      "fhwahop12005.pdf p.144",
+      "Division 11 Combined.pdf p.20",
+      "Chapter_2.pdf p.19"
+     ],
+     "ms": 744.3824999973003
+    },
+    {
+     "id": "wztc-curb-gutter",
+     "right_document": false,
+     "page_rank": null,
+     "top": [
+      "TMP Design Manual (Combined, No Links).pdf p.20",
+      "TMP Design Manual (Combined, No Links).pdf p.14",
+      "part6.pdf p.170",
+      "part6.pdf p.84",
+      "Chapter_2.pdf p.21"
+     ],
+     "ms": 842.3189999994065
+    },
+    {
+     "id": "wztc-tma-weight",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "part6.pdf p.170",
+      "2023 WZ Safety & Mobility Process Review.pdf p.4",
+      "2024 Standard Specifications for Roads and Structures.pdf p.621",
+      "Chapter_2.pdf p.41",
+      "part6.pdf p.164"
+     ],
+     "ms": 777.6283999992302
+    },
+    {
+     "id": "utilities-fracout-depth",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "20220713 NCDOT UAM Ver 2-0.pdf p.143",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.273",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.143",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.275",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.272"
+     ],
+     "ms": 760.6402000019443
+    },
+    {
+     "id": "utilities-effluent-moa",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "20220713 NCDOT UAM Ver 2-0.pdf p.241",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.209",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.58",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.38",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.58"
+     ],
+     "ms": 1401.9770999984758
+    },
+    {
+     "id": "utilities-sign-spacing",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "010604.pdf p.227",
+      "010604.pdf p.91",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.188",
+      "CFR-2024-title23-vol1-part645.pdf p.14",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.188"
+     ],
+     "ms": 1116.3457000002381
+    },
+    {
+     "id": "utilities-15ft-light",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "010604.pdf p.89",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.190",
+      "010604.pdf p.226",
+      "010604.pdf p.91",
+      "010604.pdf p.189"
+     ],
+     "ms": 1057.2847999974329
+    },
+    {
+     "id": "utilities-low-speed-layout",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "010604.pdf p.42",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.85",
+      "010604.pdf p.49",
+      "010604.pdf p.191",
+      "if03014.pdf p.74"
+     ],
+     "ms": 1061.7713000028743
+    },
+    {
+     "id": "tmsd-guardrail-l1",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "03. Guardrail, Barriers and Attenuators.pdf p.11",
+      "03. Guardrail, Barriers and Attenuators.pdf p.9",
+      "03. Guardrail, Barriers and Attenuators.pdf p.14",
+      "03. Guardrail, Barriers and Attenuators.pdf p.19",
+      "03. Guardrail, Barriers and Attenuators.pdf p.8"
+     ],
+     "ms": 1349.570300000778
+    },
+    {
+     "id": "tmsd-tods-placement",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "Chapter2c.pdf p.36",
+      "TODS Manual - September 2024.pdf p.7",
+      "L18_TSLG_Guide.pdf p.695",
+      "TODS Manual - September 2024.pdf p.25",
+      "TODS Manual - September 2024.pdf p.10"
+     ],
+     "ms": 922.6684999994177
+    },
+    {
+     "id": "tmsd-tods-county",
+     "right_document": true,
+     "page_rank": 1,
+     "top": [
+      "TODS Manual - September 2024.pdf p.24",
+      "TODS Manual - September 2024.pdf p.23",
+      "TODS Manual - September 2024.pdf p.6",
+      "TODS Manual - September 2024.pdf p.24",
+      "TODS Manual - September 2024.pdf p.24"
+     ],
+     "ms": 1254.7505000002275
+    },
+    {
+     "id": "tmsd-turn-radius",
+     "right_document": true,
+     "page_rank": 1,
+     "top": [
+      "09. At Grade Intersections.pdf p.21",
+      "09. At Grade Intersections.pdf p.20",
+      "09. At Grade Intersections.pdf p.19",
+      "09. At Grade Intersections.pdf p.22",
+      "09. At Grade Intersections.pdf p.24"
+     ],
+     "ms": 1369.5355000018026
+    },
+    {
+     "id": "tmsd-water-barrier",
+     "right_document": true,
+     "page_rank": 1,
+     "top": [
+      "03. Guardrail, Barriers and Attenuators.pdf p.4",
+      "03. Guardrail, Barriers and Attenuators.pdf p.4",
+      "03. Guardrail, Barriers and Attenuators.pdf p.1",
+      "04091.pdf p.318",
+      "04091.pdf p.319"
+     ],
+     "ms": 977.9979999984789
+    }
+   ]
+  },
+  "known_pages": {
+   "right_page": 75,
+   "right_document": 82,
+   "mrr": 0.7353413654618474,
+   "cases": 83,
+   "ms_per_question": 1146.4131204819016,
+   "by_division": {
+    "wztc": {
+     "hits": 44,
+     "cases": 50,
+     "mrr": 0.7073333333333334,
+     "missed": [
+      "A1",
+      "A6",
+      "T1",
+      "T7",
+      "T8",
+      "T11"
+     ],
+     "other_documents_in_top5": 82
+    },
+    "utilities": {
+     "hits": 31,
+     "cases": 33,
+     "mrr": 0.7777777777777778,
+     "missed": [
+      "U14",
+      "U19"
+     ],
+     "other_documents_in_top5": 33
+    }
+   },
+   "rows": [
+    {
+     "id": "B1",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf"
+     ]
+    },
+    {
+     "id": "B2",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf",
+      "010604.pdf",
+      "010604.pdf"
+     ]
+    },
+    {
+     "id": "B3",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+      "if03014.pdf",
+      "if03014.pdf",
+      "if03014.pdf"
+     ]
+    },
+    {
+     "id": "B4",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "B5",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "B6",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "B7",
+     "division": "utilities",
+     "rank": 2,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "B8",
+     "division": "utilities",
+     "rank": 3,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "if03014.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "fhwahop09021.pdf"
+     ]
+    },
+    {
+     "id": "X1",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf"
+     ]
+    },
+    {
+     "id": "X2",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "A1",
+     "division": "wztc",
+     "rank": null,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "wzi_guide.pdf",
+      "part6.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Chapter_5.pdf",
+      "fhwahop14008.pdf"
+     ]
+    },
+    {
+     "id": "A2",
+     "division": "wztc",
+     "rank": 4,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "A3",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "wzi_guide.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "bpguidebook.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "A4",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "A5",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Division 11 Combined.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "A6",
+     "division": "wztc",
+     "rank": null,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "bpguidebook.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "A7",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Division 11 Combined.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "fhwahop12005.pdf"
+     ]
+    },
+    {
+     "id": "A8",
+     "division": "wztc",
+     "rank": 3,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "Division 11 Combined.pdf",
+      "Chapter_2.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "A9",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "bpguidebook.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "X3",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T1",
+     "division": "wztc",
+     "rank": null,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "wzi_guide.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "T2",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T3",
+     "division": "wztc",
+     "rank": 3,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T4",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T5",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "fhwahop14008.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf"
+     ]
+    },
+    {
+     "id": "T6",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "bpguidebook.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "fhwahop12005.pdf"
+     ]
+    },
+    {
+     "id": "T7",
+     "division": "wztc",
+     "rank": null,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "fhwahop12005.pdf",
+      "fhwahop12005.pdf",
+      "bpguidebook.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "fhwahop12005.pdf"
+     ]
+    },
+    {
+     "id": "T8",
+     "division": "wztc",
+     "rank": null,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf"
+     ]
+    },
+    {
+     "id": "T9",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf",
+      "trans_mgmt_plans.pdf"
+     ]
+    },
+    {
+     "id": "T10",
+     "division": "wztc",
+     "rank": 5,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T11",
+     "division": "wztc",
+     "rank": null,
+     "other_documents_in_top5": 5,
+     "top_sources": [
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "rule_guide.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf"
+     ]
+    },
+    {
+     "id": "T12",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "WZSafetyAndMobilityGuidelines.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T13",
+     "division": "wztc",
+     "rank": 3,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T14",
+     "division": "wztc",
+     "rank": 4,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T15",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T16",
+     "division": "wztc",
+     "rank": 3,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "CFR-2024-title23-vol1-part630.pdf",
+      "CFR-2024-title23-vol1-part630.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "bpguidebook.pdf"
+     ]
+    },
+    {
+     "id": "T17",
+     "division": "wztc",
+     "rank": 3,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "part6.pdf",
+      "part6.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "T18",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "T19",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "fhwahop12005.pdf",
+      "bpguidebook.pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T20",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T21",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf"
+     ]
+    },
+    {
+     "id": "T22",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf"
+     ]
+    },
+    {
+     "id": "T23",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf"
+     ]
+    },
+    {
+     "id": "T24",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "trans_mgmt_plans.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "T25",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T26",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "wzi_guide.pdf"
+     ]
+    },
+    {
+     "id": "T27",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "U1",
+     "division": "utilities",
+     "rank": 2,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U2",
+     "division": "utilities",
+     "rank": 3,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf",
+      "if03014.pdf"
+     ]
+    },
+    {
+     "id": "U3",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U4",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf"
+     ]
+    },
+    {
+     "id": "U5",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U6",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U7",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U8",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "DOT Encroachment Submissions User Manual - July 2023.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U9",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf"
+     ]
+    },
+    {
+     "id": "U10",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "hif22040.pdf",
+      "hif22040.pdf",
+      "CFR-2024-title23-vol1-part645.pdf"
+     ]
+    },
+    {
+     "id": "U11",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U12",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U13",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U14",
+     "division": "utilities",
+     "rank": null,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U15",
+     "division": "utilities",
+     "rank": 3,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U16",
+     "division": "utilities",
+     "rank": 2,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf"
+     ]
+    },
+    {
+     "id": "U17",
+     "division": "utilities",
+     "rank": 3,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf",
+      "if03014.pdf"
+     ]
+    },
+    {
+     "id": "U18",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "CFR-2024-title23-vol1-part645.pdf",
+      "010604.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf"
+     ]
+    },
+    {
+     "id": "U19",
+     "division": "utilities",
+     "rank": null,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U20",
+     "division": "utilities",
+     "rank": 3,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U21",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U22",
+     "division": "utilities",
+     "rank": 2,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U23",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "Q1",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "fhwahop12005.pdf",
+      "fhwahop12005.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "Q2",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "Q3",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "WZSafetyAndMobilityGuidelines.pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "Q4",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "Q5",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Chapter_5.pdf",
+      "Division 11 Combined.pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "Q6",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Chapter_2.pdf"
+     ]
+    },
+    {
+     "id": "Q7",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "Q8",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "H1",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "H2",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "H3",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Division 11 Combined.pdf"
+     ]
+    },
+    {
+     "id": "H4",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "WZSafetyAndMobilityGuidelines.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "H5",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Division 11 Combined.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "fhwahop12005.pdf"
+     ]
+    }
+   ]
+  }
+ },
+ "baseline + keyword": {
+  "image_table": {
+   "right_document": 13,
+   "right_page": 4,
+   "right_page_first": 3,
+   "cases": 15,
+   "rows": [
+    {
+     "id": "wztc-pcb-concrete",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "TMP Design Manual (Combined, No Links).pdf p.39",
+      "TMP Design Manual (Combined, No Links).pdf p.36",
+      "TMP Design Manual (Combined, No Links).pdf p.35",
+      "TMP Design Manual (Combined, No Links).pdf p.32",
+      "TMP Design Manual (Combined, No Links).pdf p.35"
+     ],
+     "ms": 900.3592000008211
+    },
+    {
+     "id": "wztc-pcb-asphalt",
+     "right_document": true,
+     "page_rank": 2,
+     "top": [
+      "TMP Design Manual (Combined, No Links).pdf p.39",
+      "TMP Design Manual (Combined, No Links).pdf p.37",
+      "TMP Design Manual (Combined, No Links).pdf p.38",
+      "TMP Design Manual (Combined, No Links).pdf p.36",
+      "TMP Design Manual (Combined, No Links).pdf p.35"
+     ],
+     "ms": 923.6349999991944
+    },
+    {
+     "id": "wztc-uneven-lanes",
+     "right_document": false,
+     "page_rank": null,
+     "top": [
+      "TMP Design Manual (Combined, No Links).pdf p.14",
+      "part6.pdf p.188",
+      "TMP Design Manual (Combined, No Links).pdf p.83",
+      "2024 Standard Specifications for Roads and Structures.pdf p.661",
+      "Division 11 Combined.pdf p.37"
+     ],
+     "ms": 1062.8615999994508
+    },
+    {
+     "id": "wztc-curb-gutter",
+     "right_document": false,
+     "page_rank": null,
+     "top": [
+      "TMP Design Manual (Combined, No Links).pdf p.20",
+      "TMP Design Manual (Combined, No Links).pdf p.14",
+      "part6.pdf p.170",
+      "part6.pdf p.84",
+      "Chapter_2.pdf p.21"
+     ],
+     "ms": 1320.8140999995521
+    },
+    {
+     "id": "wztc-tma-weight",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "part6.pdf p.170",
+      "2023 WZ Safety & Mobility Process Review.pdf p.4",
+      "2024 Standard Specifications for Roads and Structures.pdf p.621",
+      "Chapter_2.pdf p.41",
+      "part6.pdf p.164"
+     ],
+     "ms": 867.9537999996683
+    },
+    {
+     "id": "utilities-fracout-depth",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "20220713 NCDOT UAM Ver 2-0.pdf p.143",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.273",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.143",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.275",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.272"
+     ],
+     "ms": 1468.47870000056
+    },
+    {
+     "id": "utilities-effluent-moa",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "20220713 NCDOT UAM Ver 2-0.pdf p.241",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.209",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.58",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.38",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.58"
+     ],
+     "ms": 1257.8739000018686
+    },
+    {
+     "id": "utilities-sign-spacing",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "010604.pdf p.227",
+      "010604.pdf p.91",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.188",
+      "CFR-2024-title23-vol1-part645.pdf p.14",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.188"
+     ],
+     "ms": 1253.0864000000292
+    },
+    {
+     "id": "utilities-15ft-light",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "010604.pdf p.89",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.190",
+      "010604.pdf p.226",
+      "010604.pdf p.190",
+      "010604.pdf p.91"
+     ],
+     "ms": 1353.4892999996373
+    },
+    {
+     "id": "utilities-low-speed-layout",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "010604.pdf p.227",
+      "010604.pdf p.226",
+      "20220713 NCDOT UAM Ver 2-0.pdf p.85",
+      "010604.pdf p.49",
+      "010604.pdf p.206"
+     ],
+     "ms": 1346.2456000015663
+    },
+    {
+     "id": "tmsd-guardrail-l1",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "03. Guardrail, Barriers and Attenuators.pdf p.11",
+      "03. Guardrail, Barriers and Attenuators.pdf p.9",
+      "03. Guardrail, Barriers and Attenuators.pdf p.14",
+      "03. Guardrail, Barriers and Attenuators.pdf p.19",
+      "03. Guardrail, Barriers and Attenuators.pdf p.8"
+     ],
+     "ms": 1402.9866000018956
+    },
+    {
+     "id": "tmsd-tods-placement",
+     "right_document": true,
+     "page_rank": null,
+     "top": [
+      "Chapter2c.pdf p.36",
+      "TODS Manual - September 2024.pdf p.7",
+      "L18_TSLG_Guide.pdf p.695",
+      "TODS Manual - September 2024.pdf p.25",
+      "TODS Manual - September 2024.pdf p.10"
+     ],
+     "ms": 1020.0008000028902
+    },
+    {
+     "id": "tmsd-tods-county",
+     "right_document": true,
+     "page_rank": 1,
+     "top": [
+      "TODS Manual - September 2024.pdf p.24",
+      "TODS Manual - September 2024.pdf p.23",
+      "TODS Manual - September 2024.pdf p.6",
+      "TODS Manual - September 2024.pdf p.24",
+      "TODS Manual - September 2024.pdf p.24"
+     ],
+     "ms": 1109.4326000020374
+    },
+    {
+     "id": "tmsd-turn-radius",
+     "right_document": true,
+     "page_rank": 1,
+     "top": [
+      "09. At Grade Intersections.pdf p.21",
+      "09. At Grade Intersections.pdf p.20",
+      "09. At Grade Intersections.pdf p.19",
+      "09. At Grade Intersections.pdf p.22",
+      "09. At Grade Intersections.pdf p.24"
+     ],
+     "ms": 1245.2241999999387
+    },
+    {
+     "id": "tmsd-water-barrier",
+     "right_document": true,
+     "page_rank": 1,
+     "top": [
+      "03. Guardrail, Barriers and Attenuators.pdf p.4",
+      "03. Guardrail, Barriers and Attenuators.pdf p.4",
+      "03. Guardrail, Barriers and Attenuators.pdf p.1",
+      "04091.pdf p.318",
+      "03. Guardrail, Barriers and Attenuators.pdf p.2"
+     ],
+     "ms": 1259.4075000015437
+    }
+   ]
+  },
+  "known_pages": {
+   "right_page": 77,
+   "right_document": 83,
+   "mrr": 0.7473895582329317,
+   "cases": 83,
+   "ms_per_question": 1336.1113397590395,
+   "by_division": {
+    "wztc": {
+     "hits": 45,
+     "cases": 50,
+     "mrr": 0.7073333333333334,
+     "missed": [
+      "A1",
+      "A6",
+      "T1",
+      "T7",
+      "T8"
+     ],
+     "other_documents_in_top5": 79
+    },
+    "utilities": {
+     "hits": 32,
+     "cases": 33,
+     "mrr": 0.8080808080808081,
+     "missed": [
+      "U14"
+     ],
+     "other_documents_in_top5": 32
+    }
+   },
+   "rows": [
+    {
+     "id": "B1",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "B2",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf",
+      "010604.pdf",
+      "010604.pdf"
+     ]
+    },
+    {
+     "id": "B3",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+      "if03014.pdf",
+      "if03014.pdf",
+      "if03014.pdf"
+     ]
+    },
+    {
+     "id": "B4",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "B5",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "B6",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "B7",
+     "division": "utilities",
+     "rank": 2,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "B8",
+     "division": "utilities",
+     "rank": 3,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "if03014.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "fhwahop09021.pdf"
+     ]
+    },
+    {
+     "id": "X1",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "X2",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "A1",
+     "division": "wztc",
+     "rank": null,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "wzi_guide.pdf",
+      "part6.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Chapter_5.pdf",
+      "wzi_guide.pdf"
+     ]
+    },
+    {
+     "id": "A2",
+     "division": "wztc",
+     "rank": 4,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "A3",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "wzi_guide.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "bpguidebook.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "A4",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "A5",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Division 11 Combined.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Division 11 Combined.pdf"
+     ]
+    },
+    {
+     "id": "A6",
+     "division": "wztc",
+     "rank": null,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "bpguidebook.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "A7",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Division 11 Combined.pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "A8",
+     "division": "wztc",
+     "rank": 3,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "Division 11 Combined.pdf",
+      "Chapter_2.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "A9",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "bpguidebook.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "X3",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T1",
+     "division": "wztc",
+     "rank": null,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "wzi_guide.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "T2",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T3",
+     "division": "wztc",
+     "rank": 3,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T4",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T5",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "fhwahop14008.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf"
+     ]
+    },
+    {
+     "id": "T6",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "bpguidebook.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "fhwahop12005.pdf"
+     ]
+    },
+    {
+     "id": "T7",
+     "division": "wztc",
+     "rank": null,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "fhwahop12005.pdf",
+      "fhwahop12005.pdf",
+      "bpguidebook.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "fhwahop12005.pdf"
+     ]
+    },
+    {
+     "id": "T8",
+     "division": "wztc",
+     "rank": null,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T9",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf",
+      "trans_mgmt_plans.pdf"
+     ]
+    },
+    {
+     "id": "T10",
+     "division": "wztc",
+     "rank": 5,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T11",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "rule_guide.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf"
+     ]
+    },
+    {
+     "id": "T12",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "WZSafetyAndMobilityGuidelines.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T13",
+     "division": "wztc",
+     "rank": 3,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T14",
+     "division": "wztc",
+     "rank": 4,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T15",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T16",
+     "division": "wztc",
+     "rank": 3,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "CFR-2024-title23-vol1-part630.pdf",
+      "CFR-2024-title23-vol1-part630.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "bpguidebook.pdf"
+     ]
+    },
+    {
+     "id": "T17",
+     "division": "wztc",
+     "rank": 3,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "part6.pdf",
+      "part6.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "T18",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "T19",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "fhwahop12005.pdf",
+      "rule_guide.pdf",
+      "fhwahop12005.pdf"
+     ]
+    },
+    {
+     "id": "T20",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T21",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf"
+     ]
+    },
+    {
+     "id": "T22",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf"
+     ]
+    },
+    {
+     "id": "T23",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf"
+     ]
+    },
+    {
+     "id": "T24",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 4,
+     "top_sources": [
+      "trans_mgmt_plans.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf",
+      "part6.pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "T25",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T26",
+     "division": "wztc",
+     "rank": 2,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "T27",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "U1",
+     "division": "utilities",
+     "rank": 2,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U2",
+     "division": "utilities",
+     "rank": 3,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf",
+      "if03014.pdf"
+     ]
+    },
+    {
+     "id": "U3",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U4",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "010604.pdf"
+     ]
+    },
+    {
+     "id": "U5",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U6",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U7",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U8",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "DOT Encroachment Submissions User Manual - July 2023.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U9",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U10",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "hif22040.pdf",
+      "hif22040.pdf",
+      "CFR-2024-title23-vol1-part645.pdf"
+     ]
+    },
+    {
+     "id": "U11",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U12",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U13",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U14",
+     "division": "utilities",
+     "rank": null,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U15",
+     "division": "utilities",
+     "rank": 3,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U16",
+     "division": "utilities",
+     "rank": 2,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf"
+     ]
+    },
+    {
+     "id": "U17",
+     "division": "utilities",
+     "rank": 3,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf",
+      "if03014.pdf"
+     ]
+    },
+    {
+     "id": "U18",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "CFR-2024-title23-vol1-part645.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf",
+      "010604.pdf"
+     ]
+    },
+    {
+     "id": "U19",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U20",
+     "division": "utilities",
+     "rank": 3,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U21",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "if03014.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "U22",
+     "division": "utilities",
+     "rank": 2,
+     "other_documents_in_top5": 2,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "16-1-Two-Party-Utility-Primary-and-Secondary-Highways-Non-C-A.pdf",
+      "Utility-Encroachment-Plan-Requirements.pdf"
+     ]
+    },
+    {
+     "id": "U23",
+     "division": "utilities",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf",
+      "20220713 NCDOT UAM Ver 2-0.pdf"
+     ]
+    },
+    {
+     "id": "Q1",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "fhwahop12005.pdf",
+      "fhwahop12005.pdf",
+      "fhwahop12005.pdf"
+     ]
+    },
+    {
+     "id": "Q2",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Division 11 Combined.pdf"
+     ]
+    },
+    {
+     "id": "Q3",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "WZSafetyAndMobilityGuidelines.pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "Q4",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "Q5",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Chapter_5.pdf",
+      "Division 11 Combined.pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "Q6",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "part6.pdf"
+     ]
+    },
+    {
+     "id": "Q7",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "Q8",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "H1",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "2024 Standard Specifications for Roads and Structures.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "H2",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "H3",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 0,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "H4",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 1,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "WZSafetyAndMobilityGuidelines.pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf"
+     ]
+    },
+    {
+     "id": "H5",
+     "division": "wztc",
+     "rank": 1,
+     "other_documents_in_top5": 3,
+     "top_sources": [
+      "TMP Design Manual (Combined, No Links).pdf",
+      "TMP Design Manual (Combined, No Links).pdf",
+      "Division 11 Combined.pdf",
+      "Division 11 Combined.pdf",
+      "part6.pdf"
+     ]
+    }
+   ]
+  }
+ }
+}

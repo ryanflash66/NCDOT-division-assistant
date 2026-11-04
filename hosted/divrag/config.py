@@ -9,6 +9,7 @@ for the public demo.
     LLM_TEMPERATURE             default 0.1
     LLM_REASONING               "off" (default), "low", "medium" or "high" for reasoning models
     RERANK                      "on" (default) or "off": rerank vector hits with the cross-encoder
+    KEYWORD_SEARCH              "on" (default) or "off": add the index's keyword (BM25) search to the vector search
     RERANK_CANDIDATES           vector hits handed to the reranker (default 40; see retrieval.DEFAULT_CANDIDATES)
     TOP_K                       passages given to the model (default 5)
     MODEL_CACHE_DIR             fastembed model directory (see embedder.model_cache_dir)
@@ -50,6 +51,7 @@ class Settings:
     temperature: float
     reasoning: str
     rerank: bool
+    keyword_search: bool
     rerank_candidates: int
     top_k: int
     index_dir: Path
@@ -77,6 +79,9 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     rerank = env.get("RERANK", "on").strip().lower()
     if rerank not in ("on", "off", "1", "0", "true", "false"):
         raise ValueError(f"RERANK must be on or off, got {rerank!r}")
+    keyword = env.get("KEYWORD_SEARCH", "on").strip().lower()
+    if keyword not in ("on", "off", "1", "0", "true", "false"):
+        raise ValueError(f"KEYWORD_SEARCH must be on or off, got {keyword!r}")
     reasoning = env.get("LLM_REASONING", "off").strip().lower()
     if reasoning not in ("off", "low", "medium", "high"):
         raise ValueError(f"LLM_REASONING must be off, low, medium or high, got {reasoning!r}")
@@ -103,6 +108,7 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         temperature=float(env.get("LLM_TEMPERATURE", "0.1")),
         reasoning=reasoning,
         rerank=rerank in ("on", "1", "true"),
+        keyword_search=keyword in ("on", "1", "true"),
         rerank_candidates=int(env.get("RERANK_CANDIDATES", "40")),
         top_k=top_k,
         index_dir=index_dir if index_dir.is_absolute() else HOSTED_DIR / index_dir,

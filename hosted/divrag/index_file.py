@@ -2,6 +2,12 @@
 
     chunks.json   {"model": ..., "dim": ..., "chunks": [{"text", "source", "page", "section", "division"}, ...]}
     vectors.npy   float16 array, one unit-length row per chunk, in the same order
+    bm25.npz      the keyword index (keyword.py), when the build made one
+
+A chunk may also have a `context` line (the document, page and the page's
+figure/table captions, see prototype.ingest.context_line). It is embedded,
+keyword-searched and reranked with the text (search_text) and shown to the
+model, but the sources panel shows only `text`, the page's own words.
 
 `division` is the id of the division (divisions.py) whose documents the chunk
 came from. Search is a dot product (cosine similarity, as rows and queries are
@@ -18,8 +24,16 @@ from typing import Any, Dict, List, Optional, Sequence
 
 import numpy as np
 
+from .keyword import KEYWORD_FILE, KeywordIndex
+
 CHUNKS_FILE = "chunks.json"
 VECTORS_FILE = "vectors.npy"
+
+
+def search_text(chunk: Dict[str, Any]) -> str:
+    """What the search reads of a chunk: its context line (when it has one), then its text."""
+    context = chunk.get("context")
+    return f"{context}\n{chunk['text']}" if context else chunk["text"]
 
 
 @dataclass(frozen=True)
@@ -29,12 +43,14 @@ class Hit:
 
 
 class IndexFile:
-    def __init__(self, model: str, chunks: List[Dict[str, Any]], vectors: np.ndarray):
+    def __init__(self, model: str, chunks: List[Dict[str, Any]], vectors: np.ndarray,
+                 keyword: Optional[KeywordIndex] = None):
         if len(chunks) != len(vectors):
             raise ValueError(f"{len(chunks)} chunks but {len(vectors)} vectors")
         self.model = model
         self.chunks = chunks
         self.vectors = vectors
+        self.keyword = keyword
         self._rows_cache: Dict[Optional[str], np.ndarray] = {}
         self._position = {id(chunk): i for i, chunk in enumerate(chunks)}
 
@@ -45,7 +61,7 @@ class IndexFile:
         vectors = np.load(directory / VECTORS_FILE).astype(np.float32)
         if vectors.shape[1] != meta["dim"]:
             raise ValueError(f"vectors have {vectors.shape[1]} dimensions, chunks.json says {meta['dim']}")
-        return cls(meta["model"], meta["chunks"], vectors)
+        return cls(meta["model"], meta["chunks"], vectors, KeywordIndex.load(directory, len(meta["chunks"])))
 
     def save(self, directory: "str | Path") -> None:
         directory = Path(directory)
@@ -53,6 +69,15 @@ class IndexFile:
         meta = {"model": self.model, "dim": int(self.vectors.shape[1]), "chunks": self.chunks}
         (directory / CHUNKS_FILE).write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
         np.save(directory / VECTORS_FILE, self.vectors.astype(np.float16))
+        if self.keyword is not None:
+            self.keyword.save(directory)
+        elif (directory / KEYWORD_FILE).exists():
+            (directory / KEYWORD_FILE).unlink()  # an earlier build's, for other chunks
+
+    def with_keyword_index(self) -> "IndexFile":
+        """This index with a keyword index built from its chunks (prototype.ingest calls it before saving)."""
+        self.keyword = KeywordIndex.build([search_text(c) for c in self.chunks], [c.get("division") for c in self.chunks])
+        return self
 
     def divisions(self) -> List[str]:
         return sorted({c.get("division") for c in self.chunks if c.get("division")})
@@ -99,3 +124,10 @@ class IndexFile:
         scores = self.vectors[rows] @ np.asarray(query_vector, dtype=np.float32)
         top = np.argsort(-scores)[:k]
         return [Hit(float(scores[i]), self.chunks[rows[i]]) for i in top]
+
+    def keyword_search(self, query: str, k: int = 3, division: Optional[str] = None,
+                       sources: Optional[Sequence[str]] = None) -> List[Hit]:
+        """Top k chunks by BM25 score, with the same filters as `search`; [] when the index has no keyword index."""
+        if self.keyword is None:
+            return []
+        return [Hit(score, self.chunks[i]) for i, score in self.keyword.top(query, self._rows(division, sources), k)]
