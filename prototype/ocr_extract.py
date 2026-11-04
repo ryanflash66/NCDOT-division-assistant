@@ -3,10 +3,11 @@
     python prototype/ocr_extract.py --option pymupdf4llm-ocr --pages pages.json --out extracted.json
     python prototype/ocr_extract.py --option docling-ocr     --pages pages.json --out extracted.json
 
-Runs in its own virtual environment, not .venv: pymupdf4llm turns OCR on by
-itself as soon as an OCR engine (RapidOCR, Tesseract) is importable, so
-installing one into .venv would silently change what `prototype.ingest` builds.
-That venv needs pymupdf4llm==1.28.2 and pymupdf-layout (as .venv), rapidocr,
+The extractor comparison ran it in its own virtual environment, not .venv,
+because pymupdf4llm turned OCR on by itself as soon as an OCR engine (RapidOCR,
+Tesseract) was importable; rag.loader now passes `use_ocr` explicitly, so .venv
+has RapidOCR and `prototype.ingest --ocr` uses it. Docling still needs its own
+environment. That venv needs pymupdf4llm==1.28.2 and pymupdf-layout (as .venv), rapidocr,
 onnxruntime and docling. It imports nothing from the repo, so it runs as a plain
 script; `prototype.image_table_check` reads its output.
 

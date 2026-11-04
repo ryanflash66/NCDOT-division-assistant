@@ -7,6 +7,8 @@ python-pptx
 docx2txt
 # PDF pages as Markdown with tables kept as Markdown tables (AGPL-3.0)
 pymupdf4llm>=1.28
+# OCR for PDF pages with no text layer, only when asked (`prototype.ingest --ocr`, DAR-651)
+rapidocr>=3.10
 llama-index-embeddings-huggingface
 sentence-transformers
 chromadb

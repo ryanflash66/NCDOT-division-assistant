@@ -1,13 +1,15 @@
-"""Division-scoped retrieval: vector search within one division, then rerank.
+"""Division-scoped retrieval: vector and keyword search within one division, fused, then reranked.
 
-The division filter is applied inside the vector search (IndexFile.search), so
-the reranker and the answer only ever see the asked division's chunks.
+The division filter is applied inside both searches (IndexFile.search and
+IndexFile.keyword_search), so the reranker and the answer only ever see the
+asked division's chunks.
 """
 
 from typing import List, Optional, Sequence
 
 from .embedder import Embedder, Reranker
-from .index_file import Hit, IndexFile
+from .index_file import Hit, IndexFile, search_text
+from .keyword import fuse
 from .timing import StepTimer, timed
 
 # Vector hits handed to the reranker. 20 was enough for the 4 original manuals,
@@ -23,11 +25,13 @@ DEFAULT_CANDIDATES = 40
 
 class Retriever:
     def __init__(self, index: IndexFile, embedder: Embedder, reranker: Optional[Reranker] = None,
-                 candidates: int = DEFAULT_CANDIDATES):
+                 candidates: int = DEFAULT_CANDIDATES, keyword: bool = True):
+        """`keyword` adds the keyword (BM25) search, when the index has one."""
         self.index = index
         self.embedder = embedder
         self.reranker = reranker
         self.candidates = candidates
+        self.keyword = keyword and index.keyword is not None
 
     def retrieve(self, question: str, division: Optional[str], k: int = 5,
                  timer: Optional[StepTimer] = None, candidates: Optional[int] = None,
@@ -35,18 +39,24 @@ class Retriever:
         """The k best chunks of `division` for the question (all divisions when None).
 
         `sources` (document file names) limits the search to those documents.
-        With a reranker, the top `candidates` vector hits (default: the
-        retriever's) are re-ordered by the cross-encoder and their scores are
-        the cross-encoder's. `timer` records the embed, search and rerank steps.
+        With a reranker, the top `candidates` hits (default: the retriever's)
+        are re-ordered by the cross-encoder and their scores are the
+        cross-encoder's. With keyword search, those candidates are the top of
+        the vector and keyword rankings fused (reciprocal rank fusion), each
+        search giving `candidates` hits. `timer` records the embed, search
+        (both searches) and rerank steps.
         """
         pool = max(k, candidates or self.candidates) if self.reranker else k
         with timed(timer, "embed"):
             vector = self.embedder.query(question)
         with timed(timer, "search"):
             hits = self.index.search(vector, k=pool, division=division, sources=sources)
+            if self.keyword:
+                words = self.index.keyword_search(question, k=pool, division=division, sources=sources)
+                hits = _fused(hits, words)[:pool]
         if self.reranker and len(hits) > 1:
             with timed(timer, "rerank"):
-                scores = self.reranker.scores(question, [h.chunk["text"] for h in hits])
+                scores = self.reranker.scores(question, [search_text(h.chunk) for h in hits])
             hits = [Hit(s, h.chunk) for s, h in sorted(zip(scores, hits), key=lambda pair: -pair[0])]
         return hits[:k]
 
@@ -111,6 +121,14 @@ class Retriever:
                 passages.append(hit)
             last_position = position
         return passages
+
+
+def _fused(vector_hits: List[Hit], keyword_hits: List[Hit]) -> List[Hit]:
+    """Both searches' hits, best first by reciprocal rank fusion; a chunk keeps its vector hit when it has one."""
+    by_id = {id(h.chunk): h for h in keyword_hits}
+    by_id.update({id(h.chunk): h for h in vector_hits})
+    order = fuse([[id(h.chunk) for h in vector_hits], [id(h.chunk) for h in keyword_hits]])
+    return [by_id[i] for i in order]
 
 
 def _join_sections(first, second):

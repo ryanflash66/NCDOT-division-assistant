@@ -2,6 +2,7 @@
 
     py -m prototype.image_table_check pages  [--out results/pages.json]
     py -m prototype.image_table_check search [--option NAME=extracted.json ...] [--save-index NAME=DIR] [--out results/search.json]
+    py -m prototype.image_table_check measure --index NAME=DIR [--index NAME=DIR ...] [--out results/measure.json]
     py -m prototype.image_table_check answers --base-url http://127.0.0.1:8000 --label NAME [--out results/answers-NAME.json]
 
 `pages` lists the pages where the index holds under LOW_TEXT characters but the
@@ -20,6 +21,11 @@ pages' chunks: the new text is split and embedded as prototype.ingest does
 NAME ends in "+captions" also starts each chunk of a page with the page's
 figure and table captions (see `patched`).
 
+`measure` runs each --index NAME=DIR with the keyword search off and on (an
+index without bm25.npz gets one built in memory) on these 15 questions and on
+the 83 known-page questions of prototype.stress_test (right page of the gold
+document in the top 5), one row per index and setting.
+
 `answers` posts each question to a running server's /api/ask (start it with
 INDEX_DIR pointing at the index to test) and records the cited pages. The free
 models' daily cap is shared, so this is one LLM call per question (more on a retry).
@@ -27,7 +33,6 @@ models' daily cap is shared, so this is one LLM call per question (more on a ret
 
 import argparse
 import json
-import re
 import sys
 import time
 import urllib.error
@@ -39,7 +44,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 import numpy as np
 
 from prototype import HOSTED_DIR
-from prototype.ingest import CHUNK_OVERLAP, CHUNK_SIZE
+from prototype.ingest import CHUNK_OVERLAP, CHUNK_SIZE, captions
 from prototype.stress_test import _covers, _json_or_error, _source_file
 from divrag.divisions import DIVISIONS, DOCUMENTS_DIR
 from divrag.embedder import Embedder, Reranker, model_cache_dir
@@ -56,18 +61,6 @@ LOW_TEXT = 50
 MANY_DRAWINGS = 20
 
 PageKey = Tuple[str, int]  # (source, page)
-
-# A figure or table caption on its own line, as the manuals print them:
-# "Figure 5 – NC-PCB impact design table for CONCRETE pavement", "TABLE 3 (continued)".
-_CAPTION = re.compile(r"^[#*\s]*((?:Figure|FIGURE|Table|TABLE|Exhibit)\s+[0-9A-Z][\w.\-]*\b.*?)[*\s]*$", re.MULTILINE)
-
-
-def captions(text: str) -> List[str]:
-    """The page's figure and table captions, in order, without Markdown marks."""
-    text = re.sub(r"</?(?:u|mark|b|i|em|strong)>", "", text)  # pymupdf4llm underlines the TMP manual's captions
-    found = [" ".join(m.group(1).replace("**", "").split()) for m in _CAPTION.finditer(text)]
-    return list(dict.fromkeys(c for c in found if len(c) > 8))
-
 
 def load_cases() -> List[Dict]:
     return json.loads(CASES.read_text(encoding="utf-8"))["cases"]
@@ -243,6 +236,55 @@ def search(args: argparse.Namespace) -> int:
     return 0
 
 
+def measure(args: argparse.Namespace) -> int:
+    """Each index, with and without keyword search, on the 15 questions here and the 83 known-page ones."""
+    from prototype.stress_test import GOLD_SOURCE, eval_cases, hit_at_5
+
+    cache = model_cache_dir()
+    reranker = Reranker(cache_dir=cache)
+    cases, known = load_cases(), eval_cases()
+    results = {}
+    for name, path in _pairs(args.index):
+        index = IndexFile.load(path)
+        if index.keyword is None:
+            index.with_keyword_index()  # an index built before bm25.npz: same chunks, keyword index built here
+        embedder = Embedder(index.model, cache_dir=cache)
+        for keyword in (False, True):
+            label = f"{name}{' + keyword' if keyword else ''}"
+            retriever = Retriever(index, embedder, reranker, keyword=keyword)
+            retriever.warm_up()
+            rows = check(retriever, cases)
+            started = time.perf_counter()
+            known_result = hit_at_5(retriever, known)
+            known_ms = (time.perf_counter() - started) * 1000 / len(known)
+            known_rows = known_result["cases"]
+            results[label] = {
+                "image_table": {"right_document": sum(r["right_document"] for r in rows),
+                                "right_page": sum(1 for r in rows if r["page_rank"]),
+                                "right_page_first": sum(1 for r in rows if r["page_rank"] == 1),
+                                "cases": len(rows), "rows": rows},
+                "known_pages": {"right_page": sum(1 for r in known_rows if r["rank"]),
+                                "right_document": sum(1 for r in known_rows
+                                                      if GOLD_SOURCE[r["division"]] in r["top_sources"]),
+                                "mrr": sum(1 / r["rank"] for r in known_rows if r["rank"]) / len(known_rows),
+                                "cases": len(known_rows), "ms_per_question": known_ms,
+                                "by_division": known_result["by_division"], "rows": known_rows},
+            }
+            print(f"{label}: done", flush=True)
+    print("\n| index | 15 image/table: right document | right page in top 5 | right page #1 "
+          "| 83 known-page: right page in top 5 | MRR | right document | ms per question |")
+    print("|---|---|---|---|---|---|---|---|")
+    for label, r in results.items():
+        a, b = r["image_table"], r["known_pages"]
+        print(f"| {label} | {a['right_document']}/{a['cases']} | {a['right_page']}/{a['cases']} | "
+              f"{a['right_page_first']}/{a['cases']} | {b['right_page']}/{b['cases']} | {b['mrr']:.3f} | "
+              f"{b['right_document']}/{b['cases']} | {b['ms_per_question']:.0f} |")
+    if args.out:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(results, indent=1), encoding="utf-8")
+    return 0
+
+
 def answers(args: argparse.Namespace) -> int:
     rows = []
     for case in load_cases():
@@ -289,12 +331,15 @@ def main(argv: List[str]) -> int:
     s.add_argument("--option", action="append", help="NAME=ocr_extract.py output")
     s.add_argument("--save-index", action="append", help="NAME=DIR: save that option's patched index")
     s.add_argument("--out", type=Path)
+    m = sub.add_parser("measure")
+    m.add_argument("--index", action="append", required=True, help="NAME=DIR: an index to measure")
+    m.add_argument("--out", type=Path)
     a = sub.add_parser("answers")
     a.add_argument("--base-url", default="http://127.0.0.1:8000")
     a.add_argument("--label", required=True)
     a.add_argument("--out", type=Path)
     args = parser.parse_args(argv)
-    return {"pages": pages, "search": search, "answers": answers}[args.command](args)
+    return {"pages": pages, "search": search, "measure": measure, "answers": answers}[args.command](args)
 
 
 if __name__ == "__main__":

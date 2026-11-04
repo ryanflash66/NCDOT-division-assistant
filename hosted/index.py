@@ -88,7 +88,8 @@ class _Runtime:
                 cache = model_cache_dir()
                 embedder = Embedder(self.index.model, cache_dir=cache)
                 reranker = Reranker(cache_dir=cache) if self.settings.rerank else None
-                retriever = Retriever(self.index, embedder, reranker, candidates=self.settings.rerank_candidates)
+                retriever = Retriever(self.index, embedder, reranker, candidates=self.settings.rerank_candidates,
+                                      keyword=self.settings.keyword_search)
                 retriever.warm_up()
                 tls_context()  # for the model calls, off the event loop
                 log.info("models loaded from %s in %.1fs", cache, time.perf_counter() - started)

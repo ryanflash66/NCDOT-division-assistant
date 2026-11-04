@@ -1,5 +1,6 @@
 """Tests for the offline index build (prototype.ingest): section tagging, and where it reads documents."""
 
+import numpy as np
 import pytest
 
 from prototype.ingest import build_division, chunk_sections, document_root, section_headings, text_warning  # noqa: E501  (puts hosted/ on sys.path)
@@ -107,3 +108,43 @@ def test_a_missing_document_stops_the_build_and_says_how_to_fetch_it(folders):
 
     with pytest.raises(SystemExit, match=r"missing \['old.md'\].*fetch_documents.py --division demo"):
         build_division(config, _DIVISION, 512, 64, documents)
+
+
+def test_captions_and_the_context_line():
+    from prototype.ingest import captions, context_line
+
+    text = ("<u>Figure 4 – NC-PCB impact design table for ASPHALT pavement</u> \n\n# **TABLE 3 (continued)**\n"
+            "Figure 3 shows the offsets measured from the edge of the travel lane to the face of the barrier, "
+            "which is a sentence long enough to be prose rather than a caption of the figure on the page.")
+    names = captions(text)
+
+    assert names == ["Figure 4 – NC-PCB impact design table for ASPHALT pavement", "TABLE 3 (continued)"]
+    assert context_line("TMP Design Manual", 37, names) == (
+        "[TMP Design Manual · p.37 · Figure 4 – NC-PCB impact design table for ASPHALT pavement; TABLE 3 (continued)]")
+
+
+class _CountingEmbedder:
+    model_name = "m"
+
+    def __init__(self):
+        self.embedded = []
+
+    def passages(self, texts):
+        texts = list(texts)
+        self.embedded += texts
+        return np.full((len(texts), 2), 0.5, dtype=np.float32)
+
+
+def test_unchanged_chunks_keep_their_vectors_from_the_earlier_index():
+    from divrag.index_file import IndexFile
+    from prototype.ingest import embed
+
+    earlier = IndexFile("m", [{"text": "kept"}, {"text": "old"}], np.array([[1, 0], [0, 1]], dtype=np.float32))
+    embedder = _CountingEmbedder()
+
+    vectors = embed(embedder, ["kept", "[ctx]\nold", "kept"], earlier)
+
+    assert embedder.embedded == ["[ctx]\nold"]
+    np.testing.assert_array_equal(vectors[0], [1, 0])
+    np.testing.assert_array_equal(vectors[1], [0.5, 0.5])
+    assert embed(_CountingEmbedder(), ["kept"], IndexFile("other", [{"text": "kept"}], np.ones((1, 2)))).tolist() == [[0.5, 0.5]]

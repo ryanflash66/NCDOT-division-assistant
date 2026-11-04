@@ -218,6 +218,21 @@ def _history_text(history: Sequence[Dict[str, str]]) -> str:
     return HISTORY_PROMPT.format(turns="\n\n".join(turns)) if turns else ""
 
 
+def passage_text(chunk: Dict) -> str:
+    """A passage as the model reads it: each part's text after its context line, once per page.
+
+    The context line names the page's figure and table captions, so a chunk of
+    numbers split away from its caption still says which table it is (the TMP
+    manual's asphalt and concrete deflection tables, pp. 37-38).
+    """
+    out, last = [], None
+    for part in chunk.get("parts", [chunk]):
+        context = part.get("context")
+        out.append(f"{context}\n{part['text']}" if context and context != last else part["text"])
+        last = context
+    return "\n\n".join(out)
+
+
 def build_messages(question: str, asker: Division, target: Division, hits: List[Hit],
                    history: Sequence[Dict[str, str]] = ()) -> List[Dict[str, str]]:
     """The system and user messages for one question.
@@ -239,7 +254,7 @@ def build_messages(question: str, asker: Division, target: Division, hits: List[
     )
     if earlier:
         system += HISTORY_RULE.format(not_found=NOT_FOUND)
-    context = "\n\n---\n\n".join(f"[{n}] ({_locator(hit)})\n{hit.chunk['text']}" for n, hit in enumerate(hits, 1))
+    context = "\n\n---\n\n".join(f"[{n}] ({_locator(hit)})\n{passage_text(hit.chunk)}" for n, hit in enumerate(hits, 1))
     user = USER_PROMPT.format(history=earlier, target_name=target.name, context=context, question=question)
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 

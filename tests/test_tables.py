@@ -176,3 +176,26 @@ def test_tables_without_a_repeating_group_key_are_unchanged():
     states = "|State|Criteria|\n|---|---|\n|Iowa|> 10 in|\n|Texas|> 2 ft|\n|Ohio|> 5 in|\n|Utah|> 3 in|"
     assert tables.clean_markdown_tables(curve) == curve
     assert tables.clean_markdown_tables(states) == states
+
+
+def test_bold_numeric_header_row_after_the_separator_is_repeated():
+    # The TMP manual's deflection tables (pp. 37-38): the design speeds are a bold row under the separator.
+    speeds = "|**Maxi**|**mum Deflection (in)**|**30**|**40**|**50**|**60**|**70**|**80**|"
+    rows = [f"|**{o}**|**Maximum Deflection**|{o}.1|{o}.2|{o}.3|{o}.4|{o}.5|{o}.6|" for o in range(8, 200, 6)]
+    text = "\n".join(["|**Imp**|**act Angle (degree)/**||**D**|**esign Sp **|**eed(mph**|**)**||",
+                      "|---|---|---|---|---|---|---|---|", speeds, *rows])
+
+    chunks = tables.split_text(text, chunk_size=30, chunk_overlap=0, count=_count)
+
+    assert len(chunks) > 1
+    assert all(speeds in chunk for chunk in chunks)
+
+
+def test_table_set_entirely_in_bold_repeats_only_its_first_row():
+    rows = [f"|**County{i}**|**Division {i}**|" for i in range(40)]
+    text = "\n".join(["|**County**|**Division**|", "|---|---|", *rows])
+
+    chunks = tables.split_text(text, chunk_size=60, chunk_overlap=0, count=_count)
+
+    assert len(chunks) > 1
+    assert sum(chunk.count("|**County0**|") for chunk in chunks) == 1

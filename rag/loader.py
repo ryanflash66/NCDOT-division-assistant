@@ -154,7 +154,7 @@ def _supported_files(data_dir: Path) -> List[Path]:
     ]
 
 
-def _file_extractor(files: List[Path]) -> Dict[str, object]:
+def _file_extractor(files: List[Path], ocr: bool = False) -> Dict[str, object]:
     extractor: Dict[str, object] = {}
     unstructured_exts = {p.suffix.lower() for p in files if FORMATS[p.suffix.lower()].reader == "unstructured"}
     if unstructured_exts:
@@ -163,7 +163,7 @@ def _file_extractor(files: List[Path]) -> Dict[str, object]:
         reader = UnstructuredReader()
         extractor.update({ext: reader for ext in unstructured_exts})
     pdf_exts = {ext for ext, fmt in FORMATS.items() if fmt.reader == "pdf"}
-    extractor.update({ext: _PdfMarkdownReader() for ext in pdf_exts})
+    extractor.update({ext: _PdfMarkdownReader(ocr=ocr) for ext in pdf_exts})
     # Keep "text" formats away from any built-in reader keyed on the same extension.
     text_exts = {ext for ext, fmt in FORMATS.items() if fmt.reader == "text"}
     extractor.update({ext: _PlainTextReader() for ext in text_exts})
@@ -185,16 +185,36 @@ class _PlainTextReader(BaseReader):
 _PDF_MARKUP = re.compile(r"</?(?:mark|u)>|\ufffd")
 
 
+# OCR resolution: pymupdf4llm's default is 150 dpi; the scanned UAM attachments are small type.
+OCR_DPI = 200
+
+
 class _PdfMarkdownReader(BaseReader):
     """One Document per page, as Markdown; tables become Markdown tables.
 
     Empty and "--" cells are kept, so every row has the table's full column count.
+
+    With `ocr`, pages pymupdf4llm judges to need it (images or text drawn as
+    outlines, little real text, no earlier OCR layer) are read with RapidOCR;
+    other pages read exactly as without it. Without `ocr`, OCR is off even when
+    an OCR engine is installed, as pymupdf4llm would otherwise turn it on by
+    itself. DAR-651: 184 pages in 15 documents (scanned attachments, pictures of
+    text) had no searchable text before.
     """
+
+    def __init__(self, ocr: bool = False):
+        super().__init__()
+        self._ocr = ocr
 
     def load_data(self, file, extra_info=None, **_kwargs) -> List[Document]:
         import pymupdf4llm
 
-        pages = pymupdf4llm.to_markdown(str(file), page_chunks=True, show_progress=False)
+        options = {"use_ocr": False}
+        if self._ocr:
+            from pymupdf4llm.ocr import rapidocr_api
+
+            options = {"use_ocr": True, "ocr_function": rapidocr_api.exec_ocr, "ocr_dpi": OCR_DPI}
+        pages = pymupdf4llm.to_markdown(str(file), page_chunks=True, show_progress=False, **options)
         return [
             Document(
                 text=clean_markdown_tables(_PDF_MARKUP.sub("", page["text"]).replace("<br>", " ")),
@@ -290,12 +310,13 @@ class _SheetReader(BaseReader):
         return docs
 
 
-def load(data_dir: "str | Path", only: Optional[Iterable["str | Path"]] = None) -> List[Document]:
+def load(data_dir: "str | Path", only: Optional[Iterable["str | Path"]] = None, ocr: bool = False) -> List[Document]:
     """Load every supported Document under data_dir, with its metadata attached.
 
     Files with unsupported extensions and hidden files or directories are skipped.
     Documents that produce no text are dropped. `only` limits loading to those
-    files (paths under data_dir); metadata is still relative to data_dir.
+    files (paths under data_dir); metadata is still relative to data_dir. `ocr`
+    reads PDF pages without a text layer with OCR (see _PdfMarkdownReader).
     """
     data_dir = Path(data_dir).resolve()
     files = _supported_files(data_dir)
@@ -307,7 +328,7 @@ def load(data_dir: "str | Path", only: Optional[Iterable["str | Path"]] = None) 
 
     reader = SimpleDirectoryReader(
         input_files=[str(p) for p in files],
-        file_extractor=_file_extractor(files),
+        file_extractor=_file_extractor(files, ocr),
         file_metadata=lambda path: document_metadata(_relative(data_dir, path)),
     )
     docs = [doc for doc in reader.load_data() if doc.text.strip()]
