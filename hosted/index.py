@@ -267,6 +267,8 @@ def health() -> Dict:
         "chunks": dict(counts),
         "embedding_model": runtime.index.model,
         "rerank": settings.rerank,
+        # On only when the setting allows it and bm25.npz shipped with the index (a missing file turns it off silently).
+        "keyword_search": settings.keyword_search and runtime.index.keyword is not None,
         "llm_models": list(settings.models),
         "llm_configured": bool(settings.openrouter_api_key),
         "cpus": cpu_info(),
