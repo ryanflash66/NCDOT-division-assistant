@@ -166,6 +166,21 @@ def test_unverified_numbers_pass_through_from_the_payload():
     assert row["unverified"] == ["27.42"]
 
 
+def test_a_flagged_answer_with_the_right_value_is_a_false_flag():
+    # DAR-659 reports the unverified rate and the guardrail's false alarms on the locked set.
+    right = score_item(ITEM, RANKED, _payload(sources=[_source(37)], unverified=["27.42"]))
+    clean = score_item(ITEM, RANKED, _payload(sources=[_source(37)], unverified=[]))
+    wrong = score_item(ITEM, RANKED, _payload("It is 25.37 ft [1].", sources=[_source(37)], unverified=["25.37"]))
+    old = score_item(ITEM, RANKED, _payload(sources=[_source(37)]))  # an API without the guardrail
+    refused = score_item(ITEM, RANKED, _payload("I couldn't find it.", refused=True, unverified=[]))
+
+    assert (right["flagged"], right["false_flag"]) == (True, True)
+    assert (clean["flagged"], clean["false_flag"]) == (False, False)
+    assert (wrong["flagged"], wrong["false_flag"]) == (True, None)
+    assert (old["flagged"], old["false_flag"]) == (None, None)
+    assert (refused["flagged"], refused["false_flag"]) == (None, None)
+
+
 def test_printed_page_is_scored_only_when_the_api_sends_it():
     assert score_item(ITEM, RANKED, _payload(sources=[_source(37, printed="13")]))["cited_page_ok_printed"] is True
     assert score_item(ITEM, RANKED, _payload(sources=[_source(37, printed="14")]))["cited_page_ok_printed"] is False

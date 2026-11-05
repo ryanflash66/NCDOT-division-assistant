@@ -21,6 +21,10 @@ Per item (score_item):
     refused, uncited       the answer's flags
     unverified             numbers the hosted guardrail could not find in the cited passages,
                            passed through from the payload when present
+    flagged                a cited answer (not refused, not uncited) the guardrail marked
+                           unverified: the rate DAR-659 wants near zero
+    false_flag             flagged although its value is right (the guardrail's false alarms,
+                           over the cited answers with the right value)
     critical               a confident wrong answer: cited (not refused, not uncited) with the
                            wrong value, or a cited answer to an unanswerable question
     seconds, model, error  the answer call
@@ -41,7 +45,7 @@ TOP = 5
 Z_95 = 1.959963984540054
 # Metrics reported per stratum, in table order; each is a per-item True/False/None field.
 METRICS = ("right_document", "hit1", "hit5", "cited_page_ok_pdf", "cited_page_ok_printed", "value_ok", "strict_ok",
-           "critical", "over_refusal", "false_answer")
+           "critical", "over_refusal", "false_answer", "flagged", "false_flag")
 
 
 def wilson(k: int, n: int, z: float = Z_95) -> Tuple[float, float]:
@@ -167,7 +171,7 @@ def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]],
         "answered": payload is not None, "refused": None, "uncited": None, "unverified": None,
         "cited_pages_pdf": None, "cited_pages_printed": None, "cited_page_ok_pdf": None, "cited_page_ok_printed": None,
         "value_ok": None, "strict_ok": None, "critical": None, "over_refusal": None, "false_answer": None,
-        "answer": None, "seconds": seconds, "model": None, "error": error,
+        "flagged": None, "false_flag": None, "answer": None, "seconds": seconds, "model": None, "error": error,
     }
     if ranked is not None:
         row["top"] = [f"{h.get('source')} p.{h.get('page')}" for h in ranked[:TOP]]
@@ -194,9 +198,15 @@ def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]],
         # The wrong number with a citation beside it is what a visitor would act on;
         # an uncited answer is shown with "No source cited" and is counted separately.
         row["critical"] = not uncited and not row["value_ok"]
+        if not uncited and row["unverified"] is not None:
+            row["flagged"] = bool(row["unverified"])
+            if row["value_ok"]:
+                row["false_flag"] = row["flagged"]
     else:
         row["false_answer"] = not refused
         row["critical"] = not refused and not uncited
+        if not refused and not uncited and row["unverified"] is not None:
+            row["flagged"] = bool(row["unverified"])
     return row
 
 
