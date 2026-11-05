@@ -15,6 +15,11 @@ division's documents look relevant, it suggests asking that division instead.
 An answer that cites none of the passages is kept and marked `uncited`, so the
 page can flag it ("No source cited") instead of hiding it (DAR-629).
 
+Every number the answer states is checked against the passages it cites
+(verify.py, DAR-659). When one is missing, the model is asked once more with a
+stricter rule, time allowing, and the numbers still missing from the final
+answer are returned as `unverified` for the page to flag.
+
 answer() waits for the model's whole reply; answer_stream() passes the text on
 as it is written. Both grade, retry and refuse the same way.
 
@@ -40,6 +45,7 @@ from .llm import Completion, LLMError, OpenRouterClient
 from .pages_static import image_url
 from .retrieval import Retriever
 from .timing import StepTimer, timed
+from .verify import unverified_numbers
 
 # emit(event, data): one server-sent event of a streamed answer ("step", "delta", "replace").
 Emit = Callable[[str, Dict[str, Any]], None]
@@ -70,6 +76,10 @@ RETRY_MIN_SCORE = 1.0
 RETRY_MIN_SECONDS = 15.0
 # The retry stops this long before the request's deadline so the refusal can still be returned.
 RETRY_MARGIN_SECONDS = 1.0
+# An answer with a number missing from its cited passages is asked again with
+# NUMBERS_RULE when at least this much of the request is left: the second call
+# is a whole answer, like the retry, and the retry's 15 s held for free models.
+RECHECK_MIN_SECONDS = RETRY_MIN_SECONDS
 EXCERPT_CHARS = 700
 # The best hits also bring the next chunk of their document (see Retriever.with_following).
 FOLLOWING_FOR_TOP = 2
@@ -96,7 +106,7 @@ Rules:
 2. Cite the passage that supports each sentence inline, like [1] or [2][3]. Every sentence that states a fact, number or requirement needs a citation.
 3. If the passages do not answer the question, reply with exactly {not_found} and nothing else.
 4. If the passages answer only part of the question, answer that part with citations and say plainly which part the documents don't cover.
-5. When reading a table, find the row and the column that match the question, and take the unit from that column's header. Answer in the units the question uses, and always state the unit.
+5. When reading a table, find the row and the column that match the question, and take the unit from that column's header. Say which row and column labels you used, answer in the units the question uses, and always state the unit.
 6. Start with the direct answer. Keep it short: one to four sentences, or a short list when there are several requirements. Use plain language.
 7. Don't mention "passages" or "context"; refer to the document by name if needed."""
 
@@ -114,6 +124,12 @@ USER_PROMPT = """{history}Passages from the {target_name} division's documents:
 {context}
 
 Question: {question}"""
+
+# Asked after an answer stated numbers its cited passages don't contain (DAR-659).
+# The model sees its first answer and which numbers were not found, so it can
+# re-read the table instead of rephrasing the same cell.
+NUMBERS_RULE = """These numbers in your answer are not in the passages you cited: {numbers}.
+Answer the question again from the passages. For every number, quote the row label, the column header, the value and its unit exactly as the passage writes them, and the page, with its citation. State only numbers that appear in the passages; do not convert, round or calculate. If the passages do not answer the question, reply with exactly {not_found} and nothing else."""
 
 HISTORY_PROMPT = """Earlier conversation, oldest first (only to understand what the question refers to; not a source):
 
@@ -165,12 +181,14 @@ class Answer:
     retried: bool = False  # a refusal was followed by a second model call
     first_model: Optional[str] = None  # the model that answered the first call (differs from `model` after a retry)
     uncited: bool = False  # an answer (not a refusal) that cites none of the passages
+    unverified: List[str] = field(default_factory=list)  # numbers not found in the cited passages (verify.py)
 
     def as_dict(self) -> Dict:
         return {
             "answer": self.answer,
             "refused": self.refused,
             "uncited": self.uncited,
+            "unverified": list(self.unverified),
             "sources": [s.as_dict() for s in self.sources],
             "model": self.model,
             "first_model": self.first_model,
@@ -494,6 +512,21 @@ def _grade(raw: str, hits: List[Hit]) -> Tuple[str, List[Source]]:
     return text, sources
 
 
+def _unverified(raw: str, text: str, hits: List[Hit], asked: str) -> List[str]:
+    """The numbers of a graded answer `text` missing from the passages `raw` cites.
+
+    `asked` is the question with the earlier turns' questions: numbers the
+    visitor gave are not the documents' to verify. An answer citing nothing is
+    checked against all the passages it was given, so its numbers are still
+    checked; it is already flagged "No source cited". The locator ("TMP Design
+    Manual, PDF page 37") verifies a bare page number the answer names.
+    """
+    cited = cited_numbers(_EMPTY_CITATION.sub("", raw.replace(NOT_FOUND, "")), len(hits))
+    shown = [hits[n - 1] for n in cited] or hits
+    return unverified_numbers(text, [passage_text(hit.chunk) for hit in shown], asked,
+                              labels=[_locator(hit) for hit in shown])
+
+
 def _lead(text: str) -> str:
     """The text without leading whitespace and Markdown emphasis, where a reply that refuses starts with NOT_FOUND."""
     return text.lstrip(" \t\r\n*_`")
@@ -572,13 +605,14 @@ LIVE_STEPS: Tuple[Tuple[str, Tuple[str, ...]], ...] = (
     ("write", ("llm",)),
     ("check", ("citations",)),
     ("retry", ("retry",)),
+    ("recheck", ("recheck",)),
     ("suggest", ("suggest",)),
 )
 
 # Steps that only run after a refusal, so the page isn't told about them in
 # advance: most answers never retry or suggest, and a step left "not started"
 # at the end would read as if the answer stopped short (DAR-636).
-OCCASIONAL_STEPS = ("retry", "suggest")
+OCCASIONAL_STEPS = ("retry", "recheck", "suggest")
 
 
 def live_step_labels(target: Division, passages: int, top_k: int) -> Dict[str, str]:
@@ -590,6 +624,7 @@ def live_step_labels(target: Division, passages: int, top_k: int) -> Dict[str, s
         "write": "Writing the answer",
         "check": "Checking sources",
         "retry": "Double-checking the source…",
+        "recheck": "Checking the numbers against the source…",
         "suggest": "Checking whether another division covers it",
     }
 
@@ -641,6 +676,18 @@ class LiveSteps:
     def _send(self, live: str, status: str, ms: int) -> None:
         if self._emit:
             self._emit("step", {"id": live, "label": self._labels[live], "status": status, "ms": ms})
+
+
+def _time_left(deadline: Optional[float], needed: float) -> bool:
+    """At least `needed` seconds of the request are left (always, without a deadline).
+
+    More than the margin must be left too, or a second call would get no time
+    and be reported as a retry that never ran.
+    """
+    if deadline is None:
+        return True
+    left = deadline - time.monotonic()
+    return left >= needed and left > RETRY_MARGIN_SECONDS
 
 
 class Answerer:
@@ -712,11 +759,7 @@ class Answerer:
             return False
         if max(hit.score for hit in hits) < self.retry_min_score:
             return False
-        if deadline is None:
-            return True
-        left = deadline - time.monotonic()
-        # More than the margin must be left, or _retry would give the call no time and report a retry that never ran.
-        return left >= self.retry_min_seconds and left > RETRY_MARGIN_SECONDS
+        return _time_left(deadline, self.retry_min_seconds)
 
     async def _retry(self, messages: List[Dict[str, str]], first: Completion, hits: List[Hit],
                      deadline: Optional[float], call: _Call) -> Optional[Tuple[Completion, str, List[Source]]]:
@@ -741,6 +784,30 @@ class Answerer:
         log.info("retry by %s: %s", second.model,
                  "cited answer" if sources else "uncited answer, keeping the refusal" if text else "refused again")
         return second, text, sources
+
+    async def _recheck(self, messages: List[Dict[str, str]], first: Completion, unverified: List[str],
+                       hits: List[Hit], asked: str, deadline: Optional[float],
+                       call: _Call) -> Optional[Tuple[Completion, str, List[Source], List[str]]]:
+        """Ask once more with NUMBERS_RULE: the reply graded with its unverified numbers, or None if the call failed."""
+        log.info("answer by %s states numbers not in its cited passages (%s): asking again", first.model,
+                 ", ".join(unverified))
+        again = messages + [
+            {"role": "assistant", "content": first.text},
+            {"role": "user", "content": NUMBERS_RULE.format(numbers=", ".join(unverified), not_found=NOT_FOUND)},
+        ]
+        # The model that wrote the answer is asked to correct it (after a retry, not the one that refused).
+        models = [first.model, *[m for m in self.llm.retry_models(first.model) if m != first.model]]
+        timeout = None if deadline is None else deadline - time.monotonic() - RETRY_MARGIN_SECONDS
+        try:
+            second = await asyncio.wait_for(call(again, models=models), timeout=timeout)
+        except (LLMError, asyncio.TimeoutError) as exc:
+            log.warning("number recheck failed (%s); keeping the first answer", exc.__class__.__name__)
+            return None
+        text, sources = _grade(second.text, hits)
+        still = _unverified(second.text, text, hits, asked) if text else []
+        log.info("recheck by %s: %s", second.model,
+                 f"cited answer, unverified {still or 'none'}" if sources else "uncited answer" if text else "refused")
+        return second, text, sources, still
 
     async def answer(self, question: str, asker: Division, target: Division, hits: List[Hit],
                      deadline: Optional[float] = None, timer: Optional[StepTimer] = None,
@@ -814,6 +881,17 @@ class Answerer:
                 # Still a refusal, now from the retry's model: name that one, so the
                 # page shows which two models refused instead of the first one twice.
                 completion = second[0]
+        asked = "\n".join([question, *(turn.get("question") or "" for turn in recent_turns(history))])
+        unverified = _unverified(completion.text, text, hits, asked) if text else []
+        if unverified and _time_left(deadline, RECHECK_MIN_SECONDS):
+            with timed(timer, "recheck"):
+                again = await self._recheck(messages, completion, unverified, hits, asked, deadline, call)
+            # The second answer replaces the first only when it is a cited answer with
+            # fewer unverified numbers: a refusal or an uncited answer after "only numbers
+            # in the passages" is no better than a flagged answer that cites its pages,
+            # and one unsupported number swapped for another is no correction.
+            if again and again[2] and len(again[3]) < len(unverified):
+                completion, text, sources, unverified = again
         if not text:
             with timed(timer, "suggest"):
                 # The same text the question was searched with, so a refused follow-up is matched on its topic.
@@ -822,4 +900,4 @@ class Answerer:
             return Answer(refusal_text(target, suggest), refused=True, model=completion.model, suggest=suggest,
                           retried=retried, first_model=first_model)
         return Answer(text, refused=False, sources=sources, model=completion.model, retried=retried,
-                      first_model=first_model, uncited=not sources)
+                      first_model=first_model, uncited=not sources, unverified=unverified)
