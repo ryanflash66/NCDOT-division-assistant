@@ -187,7 +187,7 @@ def check(retriever: Retriever, cases: List[Dict]) -> List[Dict]:
         ms = (time.perf_counter() - started) * 1000
         in_document = [h for h in hits if h.chunk["source"] == case["source"]]
         rank = next((i for i, h in enumerate(hits, 1)
-                     if h.chunk["source"] == case["source"] and h.chunk["page"] in case["pages"]), None)
+                     if h.chunk["source"] == case["source"] and _covers(h.chunk, case["pages"])), None)
         rows.append({"id": case["id"], "right_document": bool(in_document), "page_rank": rank,
                      "top": [f"{h.chunk['source']} p.{h.chunk['page']}" for h in hits], "ms": ms})
     return rows

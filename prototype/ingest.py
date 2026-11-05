@@ -38,6 +38,7 @@ from divrag.embedder import Embedder
 from divrag.index_file import IndexFile, search_text
 from rag import loader
 from rag.config import AppConfig, load_config
+from rag.table_merge import merge_continued_tables, page_lines, page_span
 from rag.tables import TableAwareSplitter
 
 DEFAULT_OUT = HOSTED_DIR / "index"
@@ -155,12 +156,18 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
     for document in division.documents:
         root = roots[document.file]
         started = time.perf_counter()
-        pages = loader.load(root, only=[root / document.file], ocr=ocr)
-        page_captions = {_page(p.metadata): captions(p.text) for p in pages}
+        loaded = loader.load(root, only=[root / document.file], ocr=ocr, tables=True)
+        # A table that runs over a page break is joined into the first page's Document (DAR-655).
+        pages = merge_continued_tables(loaded)
+        lines_by_page = page_lines(loaded)
+        page_captions = {_page(p.metadata): captions(p.text) for p in loaded}
         nodes = [n for n in splitter.get_nodes_from_documents(pages) if n.get_content().strip()]
         texts = [n.get_content().strip() for n in nodes]
         for node, text, section in zip(nodes, texts, chunk_sections(texts)):
-            page = _page(node.metadata)
+            page, page_end = _page(node.metadata), None
+            if node.metadata.get("page_end") and page is not None:
+                # A chunk of a joined table cites the pages its own rows came from.
+                page, page_end = page_span(text, lines_by_page, page, int(node.metadata["page_end"]))
             chunk = {
                 "text": text,
                 "source": node.metadata.get("source"),
@@ -168,6 +175,8 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
                 "section": section,
                 "division": division.id,
             }
+            if page_end:
+                chunk["page_end"] = page_end
             if with_context and page is not None and page_captions.get(page):
                 chunk["context"] = context_line(document.title, page, page_captions[page])
             chunks.append(chunk)
@@ -178,9 +187,9 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
                 "seconds": time.perf_counter() - started,
                 "pdf_pages": _pdf_pages(root / document.file),
                 # The loader drops pages with no text, so a scanned page is missing here.
-                "pages_with_text": len({_page(p.metadata) for p in pages}),
+                "pages_with_text": len({_page(p.metadata) for p in loaded}),
                 "chunks": len(nodes),
-                "last_page": max((_page(n.metadata) or 0 for n in nodes), default=0),
+                "last_page": max((int(n.metadata.get("page_end") or _page(n.metadata) or 0) for n in nodes), default=0),
             })
     return chunks
 

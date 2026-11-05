@@ -341,7 +341,8 @@ def narrow(chunk: Dict, sentences: str) -> Dict:
     if best == 0:
         return chunk
     kept = [part for part, score in zip(parts, scores) if score >= _PART_SHARE * best]
-    pages = [part["page"] for part in kept if part.get("page")]
+    # A kept part that is a table joined over a page break spans page..page_end on its own.
+    pages = [p for part in kept for p in (part.get("page"), part.get("page_end")) if p]
     sections = [s for part in kept if part.get("section") for s in part["section"].split("; ")]
     narrowed = dict(kept[0], text="\n\n".join(part["text"] for part in kept), section="; ".join(dict.fromkeys(sections)) or None)
     narrowed.pop("page_end", None)

@@ -113,8 +113,12 @@ class Retriever:
             if previous is not None and position == last_position + 1 and previous.get("source") == hit.chunk.get("source"):
                 merged = dict(previous, text=previous["text"] + "\n\n" + hit.chunk["text"])
                 merged["parts"] = previous.get("parts", [previous]) + [hit.chunk]
-                if hit.chunk.get("page") != previous.get("page"):
-                    merged["page_end"] = hit.chunk.get("page")
+                # A part may span pages itself (a table joined over a page break at
+                # build time carries its own page_end), so the passage ends at the last page of any part.
+                last = max((p.get("page_end") or p.get("page") or 0 for p in merged["parts"]), default=0)
+                merged.pop("page_end", None)
+                if last and last != previous.get("page"):
+                    merged["page_end"] = last
                 merged["section"] = _join_sections(previous.get("section"), hit.chunk.get("section"))
                 passages[-1] = Hit(max(passages[-1].score, hit.score), merged)
             else:
