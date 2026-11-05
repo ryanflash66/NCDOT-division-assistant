@@ -1,0 +1,1669 @@
+{
+ "results": [
+  {
+   "label": "textlayer",
+   "pages": 117,
+   "errors": 0,
+   "seconds_mean": 0.02,
+   "seconds_median": 0.01,
+   "cpu_seconds_mean": 0.01,
+   "corpus_hours": 0.0,
+   "number_recall": 1.0,
+   "number_precision": 1.0,
+   "unit_recall": 1.0,
+   "table_pages_found": "0/67",
+   "header_fragmentation": null,
+   "caption_attached": "0/0",
+   "no_text_read": "0/26",
+   "no_text_numbers": 7,
+   "cells_ok": "13/30",
+   "offset_ft_verbatim": "2/2",
+   "cells": [
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "Offset (ft)",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "Maximum Deflection (in)",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "27.42",
+     "row_label": "14",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "44.53",
+     "row_label": "44",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+     "value": "Offset (ft)",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+     "value": "25.37",
+     "row_label": "20",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#35",
+     "value": "12 ft. 10 in.",
+     "row_label": "Maximum Deflection",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "6.0",
+     "row_label": "SU-40",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "100",
+     "row_label": "WB-62",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "9.2",
+     "row_label": "WB-109D",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "tmsd/TODS Manual - September 2024.pdf#24",
+     "value": "067",
+     "row_label": "Onslow",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/TODS Manual - September 2024.pdf#24",
+     "value": "060",
+     "row_label": "Mecklenburg",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/part6.pdf#39",
+     "value": "60 x 30",
+     "row_label": "Large Arrow",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/part6.pdf#39",
+     "value": "18 x 24",
+     "row_label": "Chevron Alignment",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "tmsd/04100.pdf#64",
+     "value": "(Number of Travel Lanes and Median Type)",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/04100.pdf#64",
+     "value": "Recommendations for installing marked crosswalks",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+     "value": "AGGREGATE GRADATION - COARSE AGGREGATE",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+     "value": "Percentage of Total by Weight Passing",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/Division 11 Combined.pdf#4",
+     "value": "GENERAL NOTES FOR PILOT CAR OPERATIONS",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/fhwahop14008.pdf#11",
+     "value": "Real-time Traveler Information",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/C34 - Manual 2012.pdf#51",
+     "value": "Enter P.V.A.",
+     "row_label": "E",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/C34 - Manual 2012.pdf#50",
+     "value": "Enter P.P.",
+     "row_label": "E",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_2.pdf#40",
+     "value": "20,000",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_5.pdf#4",
+     "value": "W8-11",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_5.pdf#4",
+     "value": "2 inches",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#300",
+     "value": "removed by hand to a depth of 2",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#230",
+     "value": "2,600",
+     "row_label": "C",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#230",
+     "value": "1,600",
+     "row_label": "B",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#228",
+     "value": "flashing or revolving yellow light",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#244",
+     "value": "January 25, 1999",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    }
+   ],
+   "by_kind": {
+    "drawing": {
+     "pages": 10,
+     "seconds_mean": 0.03,
+     "number_recall": 1.0
+    },
+    "gold": {
+     "pages": 16,
+     "seconds_mean": 0.01,
+     "number_recall": 1.0
+    },
+    "landscape": {
+     "pages": 10,
+     "seconds_mean": 0.01,
+     "number_recall": 1.0
+    },
+    "multi_page": {
+     "pages": 20,
+     "seconds_mean": 0.02,
+     "number_recall": 1.0
+    },
+    "near_duplicate": {
+     "pages": 6,
+     "seconds_mean": 0.0,
+     "number_recall": 1.0
+    },
+    "rotated": {
+     "pages": 20,
+     "seconds_mean": 0.03,
+     "number_recall": 1.0
+    },
+    "scan": {
+     "pages": 15,
+     "seconds_mean": 0.01,
+     "number_recall": null
+    },
+    "spanned_header": {
+     "pages": 20,
+     "seconds_mean": 0.03,
+     "number_recall": 1.0
+    }
+   }
+  },
+  {
+   "label": "pymupdf4llm",
+   "pages": 117,
+   "errors": 0,
+   "seconds_mean": 4.03,
+   "seconds_median": 1.44,
+   "cpu_seconds_mean": 8.52,
+   "corpus_hours": 6.6,
+   "number_recall": 0.946,
+   "number_precision": 0.934,
+   "unit_recall": 0.901,
+   "table_pages_found": "49/67",
+   "header_fragmentation": 0.134,
+   "caption_attached": "23/28",
+   "no_text_read": "21/26",
+   "no_text_numbers": 291,
+   "cells_ok": "24/30",
+   "offset_ft_verbatim": "0/2",
+   "cells": [
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "Offset (ft)",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "Maximum Deflection (in)",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "27.42",
+     "row_label": "14",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "44.53",
+     "row_label": "44",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+     "value": "Offset (ft)",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+     "value": "25.37",
+     "row_label": "20",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#35",
+     "value": "12 ft. 10 in.",
+     "row_label": "Maximum Deflection",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "6.0",
+     "row_label": "SU-40",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "100",
+     "row_label": "WB-62",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "9.2",
+     "row_label": "WB-109D",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/TODS Manual - September 2024.pdf#24",
+     "value": "067",
+     "row_label": "Onslow",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/TODS Manual - September 2024.pdf#24",
+     "value": "060",
+     "row_label": "Mecklenburg",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/part6.pdf#39",
+     "value": "60 x 30",
+     "row_label": "Large Arrow",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/part6.pdf#39",
+     "value": "18 x 24",
+     "row_label": "Chevron Alignment",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/04100.pdf#64",
+     "value": "(Number of Travel Lanes and Median Type)",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "tmsd/04100.pdf#64",
+     "value": "Recommendations for installing marked crosswalks",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+     "value": "AGGREGATE GRADATION - COARSE AGGREGATE",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+     "value": "Percentage of Total by Weight Passing",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/Division 11 Combined.pdf#4",
+     "value": "GENERAL NOTES FOR PILOT CAR OPERATIONS",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/fhwahop14008.pdf#11",
+     "value": "Real-time Traveler Information",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/C34 - Manual 2012.pdf#51",
+     "value": "Enter P.V.A.",
+     "row_label": "E",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/C34 - Manual 2012.pdf#50",
+     "value": "Enter P.P.",
+     "row_label": "E",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_2.pdf#40",
+     "value": "20,000",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_5.pdf#4",
+     "value": "W8-11",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_5.pdf#4",
+     "value": "2 inches",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#300",
+     "value": "removed by hand to a depth of 2",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#230",
+     "value": "2,600",
+     "row_label": "C",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#230",
+     "value": "1,600",
+     "row_label": "B",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#228",
+     "value": "flashing or revolving yellow light",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#244",
+     "value": "January 25, 1999",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    }
+   ],
+   "by_kind": {
+    "drawing": {
+     "pages": 10,
+     "seconds_mean": 5.84,
+     "number_recall": 1.0
+    },
+    "gold": {
+     "pages": 16,
+     "seconds_mean": 7.76,
+     "number_recall": 0.998
+    },
+    "landscape": {
+     "pages": 10,
+     "seconds_mean": 2.37,
+     "number_recall": 0.946
+    },
+    "multi_page": {
+     "pages": 20,
+     "seconds_mean": 2.0,
+     "number_recall": 0.981
+    },
+    "near_duplicate": {
+     "pages": 6,
+     "seconds_mean": 3.71,
+     "number_recall": 1.0
+    },
+    "rotated": {
+     "pages": 20,
+     "seconds_mean": 2.48,
+     "number_recall": 0.851
+    },
+    "scan": {
+     "pages": 15,
+     "seconds_mean": 8.03,
+     "number_recall": null
+    },
+    "spanned_header": {
+     "pages": 20,
+     "seconds_mean": 1.67,
+     "number_recall": 0.884
+    }
+   }
+  },
+  {
+   "label": "docling",
+   "pages": 117,
+   "errors": 0,
+   "seconds_mean": 16.95,
+   "seconds_median": 15.34,
+   "cpu_seconds_mean": 19.47,
+   "corpus_hours": 27.9,
+   "number_recall": 0.866,
+   "number_precision": 0.972,
+   "unit_recall": 0.621,
+   "table_pages_found": "47/67",
+   "header_fragmentation": 0.081,
+   "caption_attached": "23/27",
+   "no_text_read": "22/26",
+   "no_text_numbers": 269,
+   "cells_ok": "23/30",
+   "offset_ft_verbatim": "0/2",
+   "cells": [
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "Offset (ft)",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "Maximum Deflection (in)",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "27.42",
+     "row_label": "14",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "44.53",
+     "row_label": "44",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+     "value": "Offset (ft)",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+     "value": "25.37",
+     "row_label": "20",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#35",
+     "value": "12 ft. 10 in.",
+     "row_label": "Maximum Deflection",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "6.0",
+     "row_label": "SU-40",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "100",
+     "row_label": "WB-62",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "9.2",
+     "row_label": "WB-109D",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/TODS Manual - September 2024.pdf#24",
+     "value": "067",
+     "row_label": "Onslow",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/TODS Manual - September 2024.pdf#24",
+     "value": "060",
+     "row_label": "Mecklenburg",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/part6.pdf#39",
+     "value": "60 x 30",
+     "row_label": "Large Arrow",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/part6.pdf#39",
+     "value": "18 x 24",
+     "row_label": "Chevron Alignment",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/04100.pdf#64",
+     "value": "(Number of Travel Lanes and Median Type)",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "tmsd/04100.pdf#64",
+     "value": "Recommendations for installing marked crosswalks",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+     "value": "AGGREGATE GRADATION - COARSE AGGREGATE",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+     "value": "Percentage of Total by Weight Passing",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/Division 11 Combined.pdf#4",
+     "value": "GENERAL NOTES FOR PILOT CAR OPERATIONS",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/fhwahop14008.pdf#11",
+     "value": "Real-time Traveler Information",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/C34 - Manual 2012.pdf#51",
+     "value": "Enter P.V.A.",
+     "row_label": "E",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/C34 - Manual 2012.pdf#50",
+     "value": "Enter P.P.",
+     "row_label": "E",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_2.pdf#40",
+     "value": "20,000",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_5.pdf#4",
+     "value": "W8-11",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_5.pdf#4",
+     "value": "2 inches",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#300",
+     "value": "removed by hand to a depth of 2",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#230",
+     "value": "2,600",
+     "row_label": "C",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#230",
+     "value": "1,600",
+     "row_label": "B",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#228",
+     "value": "flashing or revolving yellow light",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#244",
+     "value": "January 25, 1999",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    }
+   ],
+   "by_kind": {
+    "drawing": {
+     "pages": 10,
+     "seconds_mean": 17.4,
+     "number_recall": 0.366
+    },
+    "gold": {
+     "pages": 16,
+     "seconds_mean": 22.64,
+     "number_recall": 0.965
+    },
+    "landscape": {
+     "pages": 10,
+     "seconds_mean": 13.47,
+     "number_recall": 0.707
+    },
+    "multi_page": {
+     "pages": 20,
+     "seconds_mean": 19.72,
+     "number_recall": 0.965
+    },
+    "near_duplicate": {
+     "pages": 6,
+     "seconds_mean": 14.9,
+     "number_recall": 0.905
+    },
+    "rotated": {
+     "pages": 20,
+     "seconds_mean": 15.98,
+     "number_recall": 0.638
+    },
+    "scan": {
+     "pages": 15,
+     "seconds_mean": 10.93,
+     "number_recall": null
+    },
+    "spanned_header": {
+     "pages": 20,
+     "seconds_mean": 17.24,
+     "number_recall": 0.813
+    }
+   }
+  },
+  {
+   "label": "mineru-medium",
+   "pages": 117,
+   "errors": 0,
+   "seconds_mean": 6.94,
+   "seconds_median": 4.96,
+   "cpu_seconds_mean": 9.63,
+   "corpus_hours": 11.4,
+   "number_recall": 0.788,
+   "number_precision": 0.916,
+   "unit_recall": 0.529,
+   "table_pages_found": "50/67",
+   "header_fragmentation": 0.069,
+   "caption_attached": "21/27",
+   "no_text_read": "21/26",
+   "no_text_numbers": 231,
+   "cells_ok": "22/30",
+   "offset_ft_verbatim": "0/2",
+   "cells": [
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "Offset (ft)",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "Maximum Deflection (in)",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "27.42",
+     "row_label": "14",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "44.53",
+     "row_label": "44",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+     "value": "Offset (ft)",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+     "value": "25.37",
+     "row_label": "20",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#35",
+     "value": "12 ft. 10 in.",
+     "row_label": "Maximum Deflection",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "6.0",
+     "row_label": "SU-40",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "100",
+     "row_label": "WB-62",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "9.2",
+     "row_label": "WB-109D",
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "tmsd/TODS Manual - September 2024.pdf#24",
+     "value": "067",
+     "row_label": "Onslow",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/TODS Manual - September 2024.pdf#24",
+     "value": "060",
+     "row_label": "Mecklenburg",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/part6.pdf#39",
+     "value": "60 x 30",
+     "row_label": "Large Arrow",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/part6.pdf#39",
+     "value": "18 x 24",
+     "row_label": "Chevron Alignment",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/04100.pdf#64",
+     "value": "(Number of Travel Lanes and Median Type)",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/04100.pdf#64",
+     "value": "Recommendations for installing marked crosswalks",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+     "value": "AGGREGATE GRADATION - COARSE AGGREGATE",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+     "value": "Percentage of Total by Weight Passing",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "wztc/Division 11 Combined.pdf#4",
+     "value": "GENERAL NOTES FOR PILOT CAR OPERATIONS",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/fhwahop14008.pdf#11",
+     "value": "Real-time Traveler Information",
+     "row_label": null,
+     "ok": false,
+     "read": true
+    },
+    {
+     "id": "tmsd/C34 - Manual 2012.pdf#51",
+     "value": "Enter P.V.A.",
+     "row_label": "E",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "tmsd/C34 - Manual 2012.pdf#50",
+     "value": "Enter P.P.",
+     "row_label": "E",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_2.pdf#40",
+     "value": "20,000",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_5.pdf#4",
+     "value": "W8-11",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/Chapter_5.pdf#4",
+     "value": "2 inches",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#300",
+     "value": "removed by hand to a depth of 2",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#230",
+     "value": "2,600",
+     "row_label": "C",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#230",
+     "value": "1,600",
+     "row_label": "B",
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/010604.pdf#228",
+     "value": "flashing or revolving yellow light",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#244",
+     "value": "January 25, 1999",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    }
+   ],
+   "by_kind": {
+    "drawing": {
+     "pages": 10,
+     "seconds_mean": 6.44,
+     "number_recall": 0.39
+    },
+    "gold": {
+     "pages": 16,
+     "seconds_mean": 7.8,
+     "number_recall": 0.805
+    },
+    "landscape": {
+     "pages": 10,
+     "seconds_mean": 4.72,
+     "number_recall": 0.661
+    },
+    "multi_page": {
+     "pages": 20,
+     "seconds_mean": 6.09,
+     "number_recall": 0.936
+    },
+    "near_duplicate": {
+     "pages": 6,
+     "seconds_mean": 4.42,
+     "number_recall": 0.905
+    },
+    "rotated": {
+     "pages": 20,
+     "seconds_mean": 6.97,
+     "number_recall": 0.484
+    },
+    "scan": {
+     "pages": 15,
+     "seconds_mean": 6.53,
+     "number_recall": null
+    },
+    "spanned_header": {
+     "pages": 20,
+     "seconds_mean": 9.52,
+     "number_recall": 0.697
+    }
+   }
+  },
+  {
+   "label": "mineru-high",
+   "pages": 14,
+   "errors": 0,
+   "seconds_mean": 132.32,
+   "seconds_median": 4.51,
+   "cpu_seconds_mean": 434.84,
+   "corpus_hours": 217.7,
+   "number_recall": 0.748,
+   "number_precision": 0.769,
+   "unit_recall": 0.692,
+   "table_pages_found": "10/12",
+   "header_fragmentation": 0.009,
+   "caption_attached": "3/5",
+   "no_text_read": "0/0",
+   "no_text_numbers": 0,
+   "cells_ok": "1/1",
+   "offset_ft_verbatim": "0/0",
+   "cells": [
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "Offset (ft)",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "Maximum Deflection (in)",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "27.42",
+     "row_label": "14",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+     "value": "44.53",
+     "row_label": "44",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+     "value": "Offset (ft)",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+     "value": "25.37",
+     "row_label": "20",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/TMP Design Manual (Combined, No Links).pdf#35",
+     "value": "12 ft. 10 in.",
+     "row_label": "Maximum Deflection",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "6.0",
+     "row_label": "SU-40",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "100",
+     "row_label": "WB-62",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "tmsd/09. At Grade Intersections.pdf#21",
+     "value": "9.2",
+     "row_label": "WB-109D",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "tmsd/TODS Manual - September 2024.pdf#24",
+     "value": "067",
+     "row_label": "Onslow",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "tmsd/TODS Manual - September 2024.pdf#24",
+     "value": "060",
+     "row_label": "Mecklenburg",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/part6.pdf#39",
+     "value": "60 x 30",
+     "row_label": "Large Arrow",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/part6.pdf#39",
+     "value": "18 x 24",
+     "row_label": "Chevron Alignment",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "tmsd/04100.pdf#64",
+     "value": "(Number of Travel Lanes and Median Type)",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "tmsd/04100.pdf#64",
+     "value": "Recommendations for installing marked crosswalks",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+     "value": "AGGREGATE GRADATION - COARSE AGGREGATE",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+     "value": "Percentage of Total by Weight Passing",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/Division 11 Combined.pdf#4",
+     "value": "GENERAL NOTES FOR PILOT CAR OPERATIONS",
+     "row_label": null,
+     "ok": true,
+     "read": true
+    },
+    {
+     "id": "wztc/fhwahop14008.pdf#11",
+     "value": "Real-time Traveler Information",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "tmsd/C34 - Manual 2012.pdf#51",
+     "value": "Enter P.V.A.",
+     "row_label": "E",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "tmsd/C34 - Manual 2012.pdf#50",
+     "value": "Enter P.P.",
+     "row_label": "E",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/Chapter_2.pdf#40",
+     "value": "20,000",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/Chapter_5.pdf#4",
+     "value": "W8-11",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "wztc/Chapter_5.pdf#4",
+     "value": "2 inches",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#300",
+     "value": "removed by hand to a depth of 2",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "utilities/010604.pdf#230",
+     "value": "2,600",
+     "row_label": "C",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "utilities/010604.pdf#230",
+     "value": "1,600",
+     "row_label": "B",
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "utilities/010604.pdf#228",
+     "value": "flashing or revolving yellow light",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    },
+    {
+     "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#244",
+     "value": "January 25, 1999",
+     "row_label": null,
+     "ok": false,
+     "read": false
+    }
+   ],
+   "by_kind": {
+    "multi_page": {
+     "pages": 3,
+     "seconds_mean": 195.66,
+     "number_recall": 0.866
+    },
+    "rotated": {
+     "pages": 6,
+     "seconds_mean": 6.07,
+     "number_recall": 0.416
+    },
+    "spanned_header": {
+     "pages": 5,
+     "seconds_mean": 245.82,
+     "number_recall": 0.907
+    }
+   }
+  }
+ ],
+ "subsets": [
+  {
+   "label": "mineru-high",
+   "pages": 14,
+   "results": [
+    {
+     "label": "textlayer",
+     "pages": 14,
+     "errors": 0,
+     "seconds_mean": 0.04,
+     "seconds_median": 0.01,
+     "cpu_seconds_mean": 0.01,
+     "corpus_hours": 0.1,
+     "number_recall": 1.0,
+     "number_precision": 1.0,
+     "unit_recall": 1.0,
+     "table_pages_found": "0/12",
+     "header_fragmentation": null,
+     "caption_attached": "0/0",
+     "no_text_read": "0/0",
+     "no_text_numbers": 0,
+     "cells_ok": "1/1",
+     "offset_ft_verbatim": "0/0",
+     "cells": [
+      {
+       "id": "wztc/Division 11 Combined.pdf#4",
+       "value": "GENERAL NOTES FOR PILOT CAR OPERATIONS",
+       "row_label": null,
+       "ok": true,
+       "read": true
+      }
+     ],
+     "by_kind": {
+      "multi_page": {
+       "pages": 3,
+       "seconds_mean": 0.03,
+       "number_recall": 1.0
+      },
+      "rotated": {
+       "pages": 6,
+       "seconds_mean": 0.04,
+       "number_recall": 1.0
+      },
+      "spanned_header": {
+       "pages": 5,
+       "seconds_mean": 0.03,
+       "number_recall": 1.0
+      }
+     }
+    },
+    {
+     "label": "pymupdf4llm",
+     "pages": 14,
+     "errors": 0,
+     "seconds_mean": 2.78,
+     "seconds_median": 0.95,
+     "cpu_seconds_mean": 5.93,
+     "corpus_hours": 4.6,
+     "number_recall": 0.924,
+     "number_precision": 0.918,
+     "unit_recall": 0.989,
+     "table_pages_found": "11/12",
+     "header_fragmentation": 0.04,
+     "caption_attached": "4/5",
+     "no_text_read": "0/0",
+     "no_text_numbers": 0,
+     "cells_ok": "1/1",
+     "offset_ft_verbatim": "0/0",
+     "cells": [
+      {
+       "id": "wztc/Division 11 Combined.pdf#4",
+       "value": "GENERAL NOTES FOR PILOT CAR OPERATIONS",
+       "row_label": null,
+       "ok": true,
+       "read": true
+      }
+     ],
+     "by_kind": {
+      "multi_page": {
+       "pages": 3,
+       "seconds_mean": 0.94,
+       "number_recall": 0.845
+      },
+      "rotated": {
+       "pages": 6,
+       "seconds_mean": 3.68,
+       "number_recall": 0.942
+      },
+      "spanned_header": {
+       "pages": 5,
+       "seconds_mean": 2.8,
+       "number_recall": 0.989
+      }
+     }
+    },
+    {
+     "label": "docling",
+     "pages": 14,
+     "errors": 0,
+     "seconds_mean": 15.58,
+     "seconds_median": 11.2,
+     "cpu_seconds_mean": 17.02,
+     "corpus_hours": 25.6,
+     "number_recall": 0.851,
+     "number_precision": 0.941,
+     "unit_recall": 0.692,
+     "table_pages_found": "10/12",
+     "header_fragmentation": 0.016,
+     "caption_attached": "4/5",
+     "no_text_read": "0/0",
+     "no_text_numbers": 0,
+     "cells_ok": "1/1",
+     "offset_ft_verbatim": "0/0",
+     "cells": [
+      {
+       "id": "wztc/Division 11 Combined.pdf#4",
+       "value": "GENERAL NOTES FOR PILOT CAR OPERATIONS",
+       "row_label": null,
+       "ok": true,
+       "read": true
+      }
+     ],
+     "by_kind": {
+      "multi_page": {
+       "pages": 3,
+       "seconds_mean": 12.51,
+       "number_recall": 0.893
+      },
+      "rotated": {
+       "pages": 6,
+       "seconds_mean": 14.41,
+       "number_recall": 0.669
+      },
+      "spanned_header": {
+       "pages": 5,
+       "seconds_mean": 18.82,
+       "number_recall": 0.962
+      }
+     }
+    },
+    {
+     "label": "mineru-medium",
+     "pages": 14,
+     "errors": 0,
+     "seconds_mean": 5.41,
+     "seconds_median": 5.12,
+     "cpu_seconds_mean": 6.68,
+     "corpus_hours": 8.9,
+     "number_recall": 0.74,
+     "number_precision": 0.768,
+     "unit_recall": 0.692,
+     "table_pages_found": "10/12",
+     "header_fragmentation": 0.013,
+     "caption_attached": "3/5",
+     "no_text_read": "0/0",
+     "no_text_numbers": 0,
+     "cells_ok": "1/1",
+     "offset_ft_verbatim": "0/0",
+     "cells": [
+      {
+       "id": "wztc/Division 11 Combined.pdf#4",
+       "value": "GENERAL NOTES FOR PILOT CAR OPERATIONS",
+       "row_label": null,
+       "ok": true,
+       "read": true
+      }
+     ],
+     "by_kind": {
+      "multi_page": {
+       "pages": 3,
+       "seconds_mean": 4.55,
+       "number_recall": 0.845
+      },
+      "rotated": {
+       "pages": 6,
+       "seconds_mean": 5.24,
+       "number_recall": 0.416
+      },
+      "spanned_header": {
+       "pages": 5,
+       "seconds_mean": 6.14,
+       "number_recall": 0.907
+      }
+     }
+    },
+    {
+     "label": "mineru-high",
+     "pages": 14,
+     "errors": 0,
+     "seconds_mean": 132.32,
+     "seconds_median": 4.51,
+     "cpu_seconds_mean": 434.84,
+     "corpus_hours": 217.7,
+     "number_recall": 0.748,
+     "number_precision": 0.769,
+     "unit_recall": 0.692,
+     "table_pages_found": "10/12",
+     "header_fragmentation": 0.009,
+     "caption_attached": "3/5",
+     "no_text_read": "0/0",
+     "no_text_numbers": 0,
+     "cells_ok": "1/1",
+     "offset_ft_verbatim": "0/0",
+     "cells": [
+      {
+       "id": "wztc/Division 11 Combined.pdf#4",
+       "value": "GENERAL NOTES FOR PILOT CAR OPERATIONS",
+       "row_label": null,
+       "ok": true,
+       "read": true
+      }
+     ],
+     "by_kind": {
+      "multi_page": {
+       "pages": 3,
+       "seconds_mean": 195.66,
+       "number_recall": 0.866
+      },
+      "rotated": {
+       "pages": 6,
+       "seconds_mean": 6.07,
+       "number_recall": 0.416
+      },
+      "spanned_header": {
+       "pages": 5,
+       "seconds_mean": 245.82,
+       "number_recall": 0.907
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "meta": {
+  "textlayer": {
+   "candidate": "textlayer",
+   "label": "textlayer",
+   "versions": {
+    "pymupdf": "1.28.2"
+   },
+   "python": "3.13.14",
+   "machine": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+   "cpus": 16,
+   "load_seconds": 1.4,
+   "warmup_seconds": 0.0,
+   "install_mb": 55.6,
+   "model_cache_mb": {},
+   "effort": null
+  },
+  "pymupdf4llm": {
+   "candidate": "pymupdf4llm",
+   "label": "pymupdf4llm",
+   "versions": {
+    "pymupdf4llm": "1.28.2",
+    "pymupdf-layout": "1.28.2",
+    "rapidocr": "3.10.0",
+    "onnxruntime": "1.30.0"
+   },
+   "python": "3.13.14",
+   "machine": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+   "cpus": 16,
+   "load_seconds": 33.1,
+   "warmup_seconds": 26.2,
+   "install_mb": 412.4,
+   "model_cache_mb": {},
+   "effort": null
+  },
+  "docling": {
+   "candidate": "docling",
+   "label": "docling",
+   "versions": {
+    "docling": "2.147.0",
+    "rapidocr": "3.10.0",
+    "onnxruntime": "1.31.1"
+   },
+   "python": "3.12.11",
+   "machine": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+   "cpus": 16,
+   "load_seconds": 37.1,
+   "warmup_seconds": 29.6,
+   "install_mb": 1139.7,
+   "model_cache_mb": {
+    "C:\\Users\\ryanf\\.cache\\huggingface\\hub\\models--docling-project--docling-layout-heron": 343.5,
+    "C:\\Users\\ryanf\\.cache\\huggingface\\hub\\models--docling-project--docling-models": 716.5
+   },
+   "effort": null
+  },
+  "mineru-medium": {
+   "candidate": "mineru",
+   "label": "mineru-medium",
+   "versions": {
+    "mineru": "4.1.7"
+   },
+   "python": "3.12.11",
+   "machine": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+   "cpus": 16,
+   "load_seconds": 3.4,
+   "warmup_seconds": 57.0,
+   "install_mb": 584.6,
+   "model_cache_mb": {
+    "C:\\Users\\ryanf\\.cache\\huggingface\\hub\\models--opendatalab--MinerU-4_models_onnx": 0.0,
+    "C:\\Users\\ryanf\\.mineru\\models\\MinerU-4_models_onnx": 858.2
+   },
+   "effort": "medium"
+  },
+  "mineru-high": {
+   "candidate": "mineru",
+   "label": "mineru-high",
+   "versions": {
+    "mineru": "4.1.7"
+   },
+   "python": "3.12.11",
+   "machine": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+   "cpus": 16,
+   "load_seconds": 2.0,
+   "warmup_seconds": 59.8,
+   "install_mb": 584.6,
+   "model_cache_mb": {
+    "C:\\Users\\ryanf\\.mineru\\models\\MinerU-4_models_onnx": 858.2,
+    "C:\\Users\\ryanf\\.mineru\\models\\MinerU2.5-Pro-2605-1.2B-GGUF": 1240.5
+   },
+   "effort": "high",
+   "note": "stopped after 14 of the 30 sample pages (runtime bound); load/warm-up from the run log"
+  }
+ }
+}
