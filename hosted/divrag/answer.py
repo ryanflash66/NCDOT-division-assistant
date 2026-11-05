@@ -629,8 +629,11 @@ class Answerer:
             if deadline is not None and deadline - time.monotonic() < SUGGEST_MIN_SECONDS:
                 log.info("skipping the remaining division suggestions: too little time left")
                 break
-            hits = self.retriever.retrieve(question, division=division.id, k=1, candidates=SUGGEST_CANDIDATES)
-            if hits and hits[0].score >= SUGGEST_THRESHOLD:
+            # All the candidates, not k=1: with PAGE_AGGREGATION=sum or MAX_CHUNKS_PER_DOCUMENT the first hit
+            # need not be the best-scoring chunk (DAR-657); the retrieval cost is the same either way.
+            hits = self.retriever.retrieve(question, division=division.id, k=SUGGEST_CANDIDATES,
+                                           candidates=SUGGEST_CANDIDATES)
+            if hits and max(h.score for h in hits) >= SUGGEST_THRESHOLD:
                 suggest.append(division.id)
         return suggest
 

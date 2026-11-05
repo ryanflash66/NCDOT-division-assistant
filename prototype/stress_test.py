@@ -41,6 +41,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Sequence
 
 from prototype import HOSTED_DIR
+from divrag.config import retrieval_options
 from divrag.divisions import BY_ID, DIVISIONS
 from divrag.embedder import Embedder, Reranker, model_cache_dir
 from divrag.index_file import IndexFile
@@ -324,7 +325,8 @@ def measure(args: argparse.Namespace) -> int:
     index = IndexFile.load(args.index)
     load_ms = (time.perf_counter() - started) * 1000
     cache = model_cache_dir()
-    retriever = Retriever(index, Embedder(index.model, cache_dir=cache), Reranker(cache_dir=cache))
+    retriever = Retriever(index, Embedder(index.model, cache_dir=cache), Reranker(cache_dir=cache),
+                          **retrieval_options())  # PAGE_AGGREGATION, RRF_K... from the environment, as in the app
     retriever.warm_up()
     for division, question in QUESTIONS[:3]:  # the first real-length reranks are slower than later ones
         retriever.retrieve(question, division, k=TOP)

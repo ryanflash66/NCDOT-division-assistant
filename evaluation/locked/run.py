@@ -81,8 +81,8 @@ class Runtime:
         cache = model_cache_dir()
         embedder = Embedder(self.index.model, cache_dir=cache)
         reranker = Reranker(cache_dir=cache) if settings.rerank else None
-        self.retriever = Retriever(self.index, embedder, reranker, candidates=settings.rerank_candidates,
-                                   keyword=settings.keyword_search)
+        # The app's own retriever settings (keyword field, fusion, page aggregation), so the set scores what ships.
+        self.retriever = Retriever(self.index, embedder, reranker, **settings.retriever_options())
         self.retriever.warm_up()
 
     def answerer(self, llm):
