@@ -232,6 +232,8 @@ class _RotatedLines:
 
 # OCR resolution: pymupdf4llm's default is 150 dpi; the scanned UAM attachments are small type.
 OCR_DPI = 200
+# Page notes for the index build (rag.ocr), not words to embed or to show a model.
+_OCR_KEYS = ("ocr_degrees", "ocr_confidence", "flags")
 
 
 class _PdfMarkdownReader(BaseReader):
@@ -244,7 +246,10 @@ class _PdfMarkdownReader(BaseReader):
     other pages read exactly as without it. Without `ocr`, OCR is off even when
     an OCR engine is installed, as pymupdf4llm would otherwise turn it on by
     itself. DAR-651: 184 pages in 15 documents (scanned attachments, pictures of
-    text) had no searchable text before.
+    text) had no searchable text before. DAR-658: OCR tries the page's other
+    orientations when the first reading is poor or sideways (rag.ocr); each OCR'd
+    page's metadata gets `ocr_degrees`, `ocr_confidence` and, when it read badly
+    or turned, `flags` ("ocr_low_conf", "rotated").
     """
 
     def __init__(self, ocr: bool = False, tables: bool = False):
@@ -256,28 +261,43 @@ class _PdfMarkdownReader(BaseReader):
         import pymupdf4llm
 
         options = {"use_ocr": False}
+        ocr = None
         if self._ocr:
-            from pymupdf4llm.ocr import rapidocr_api
+            from rag.ocr import OrientedOcr
 
-            options = {"use_ocr": True, "ocr_function": rapidocr_api.exec_ocr, "ocr_dpi": OCR_DPI}
+            ocr = OrientedOcr()
+            options = {"use_ocr": True, "ocr_function": ocr, "ocr_dpi": OCR_DPI}
         pages = pymupdf4llm.to_markdown(str(file), page_chunks=True, show_progress=False, **options)
         boxes = table_boxes(file, pages) if self._tables else {}
         rotated = _RotatedLines(file)
         try:
-            docs = []
+            documents = []
             for page in pages:
                 # "page" on pymupdf4llm's fallback path (no pymupdf.layout); both are 1-based.
                 number = page["metadata"].get("page_number", page["metadata"].get("page"))
-                metadata = {"page_label": str(number), "file_name": Path(file).name, **(extra_info or {})}
+                label = str(number)
+                text = page["text"]
+                metadata = {"page_label": label, "file_name": Path(file).name}
                 if number in boxes:
                     metadata["table_bboxes"] = boxes[number]
-                docs.append(Document(
+                result = ocr.pages.get(int(label) - 1) if ocr is not None and label.isdigit() else None
+                if result is not None:
+                    # A sideways drawing read turned upright, or sideways labels, can't go back onto the page at
+                    # its boxes, so its text follows the page's own (rag.ocr).
+                    turned = ocr.appended_text(result.number)
+                    text = f"{text.rstrip()}\n\n{turned}\n" if turned else text
+                    metadata.update(ocr_degrees=result.degrees, ocr_confidence=round(result.confidence, 3))
+                    if result.flags:
+                        metadata["flags"] = ",".join(result.flags)
+                documents.append(Document(
                     # `<br>` is kept until the tables are cleaned: it marks rows stacked into
                     # one and the pieces of a rotated label (rag/table_rows.py).
-                    text=clean_markdown_tables(_PDF_MARKUP.sub("", page["text"]), rotated.on(number, page["text"])),
-                    metadata=metadata,
+                    text=clean_markdown_tables(_PDF_MARKUP.sub("", text), rotated.on(number, page["text"])),
+                    metadata={**metadata, **(extra_info or {})},
+                    excluded_embed_metadata_keys=list(_OCR_KEYS),
+                    excluded_llm_metadata_keys=list(_OCR_KEYS),
                 ))
-            return docs
+            return documents
         finally:
             rotated.close()
 

@@ -52,7 +52,8 @@ def test_a_page_that_is_all_table_and_footer_lets_the_table_run_on():
     # The Legal Guide: every page is one table under "NCDOT Traffic Services Legal Guide (revised 6/20/23)".
     footer = "NCDOT Traffic Services Legal Guide (revised 6/20/23)\n\nPage {} of 706"
     box = {"table_bboxes": [[0.05, 0.08, 0.95, 0.93]]}
-    pages = [_page(n, f"|{n}a|x|y|z|\n|---|---|---|---|\n|{n}b|x|y|z|\n\n" + footer.format(n), **box) for n in (17, 18, 19)]
+    # Capital filler cells: "17a" | "x" would read as one word sliced by a column boundary (rag.table_rows).
+    pages = [_page(n, f"|{n}a|X|Y|Z|\n|---|---|---|---|\n|{n}b|X|Y|Z|\n\n" + footer.format(n), **box) for n in (17, 18, 19)]
 
     merged = merge_continued_tables(pages)
 

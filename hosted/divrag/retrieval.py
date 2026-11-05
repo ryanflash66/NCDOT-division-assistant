@@ -8,7 +8,7 @@ asked division's chunks.
 from typing import List, Optional, Sequence
 
 from .embedder import Embedder, Reranker
-from .index_file import Hit, IndexFile, search_text
+from .index_file import Hit, IndexFile, is_figure, search_text
 from .keyword import fuse
 from .timing import StepTimer, timed
 
@@ -110,7 +110,8 @@ class Retriever:
         for hit in sorted(hits, key=lambda h: self.index.position(h.chunk)):
             position = self.index.position(hit.chunk)
             previous = passages[-1].chunk if passages else None
-            if previous is not None and position == last_position + 1 and previous.get("source") == hit.chunk.get("source"):
+            if (previous is not None and position == last_position + 1 and previous.get("source") == hit.chunk.get("source")
+                    and not is_figure(previous) and not is_figure(hit.chunk)):
                 merged = dict(previous, text=previous["text"] + "\n\n" + hit.chunk["text"])
                 merged["parts"] = previous.get("parts", [previous]) + [hit.chunk]
                 # A part may span pages itself (a table joined over a page break at
