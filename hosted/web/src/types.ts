@@ -33,6 +33,8 @@ export type Source = {
   section: string | null;
   url: string;
   excerpt: string;
+  /** Site-relative URL of the cited page's image (/pages/...), when it was rendered (DAR-654). */
+  image: string | null;
 };
 
 export type StepEvent = {

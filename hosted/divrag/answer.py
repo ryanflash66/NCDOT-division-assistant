@@ -36,6 +36,7 @@ from typing import Any, Awaitable, Callable, Dict, List, Optional, Sequence, Tup
 from .divisions import BY_ID, DIVISIONS, Division, document_for
 from .index_file import Hit
 from .llm import Completion, LLMError, OpenRouterClient
+from .pages_static import image_url
 from .retrieval import Retriever
 from .timing import StepTimer, timed
 
@@ -133,11 +134,13 @@ class Source:
     section: Optional[str]
     url: str
     excerpt: str
+    image: Optional[str] = None  # site-relative URL of the page's image, when rendered (DAR-654)
 
     def as_dict(self) -> Dict:
         return {
             "n": self.n, "division": self.division, "title": self.title, "page": self.page,
             "page_end": self.page_end, "section": self.section, "url": self.url, "excerpt": self.excerpt,
+            "image": self.image,
         }
 
 
@@ -302,6 +305,7 @@ def _source_for(hit: Hit, n: int) -> Source:
         section=chunk.get("section"),
         url=url,
         excerpt=_excerpt(chunk.get("text") or ""),
+        image=image_url(chunk),
     )
 
 
