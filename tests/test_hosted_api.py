@@ -41,6 +41,7 @@ class _FakeRetriever:
         self.divisions = []
         self.sources = []
         self.questions = []
+        self.printed_page = None  # set to the number printed on the hit's page (DAR-654)
 
     def retrieve(self, question, division, k=5, timer=None, candidates=None, sources=None):
         self.divisions.append(division)
@@ -52,8 +53,11 @@ class _FakeRetriever:
             with timer.step("search"):
                 pass
         text = "Any work within 5 feet of the edge of any travel lane shall require a lane closure."
-        return [Hit(2.0, {"text": text, "source": UAM, "page": 126, "division": division,
-                          "section": "3.6.4.1 Lane and Road Closures"})]
+        chunk = {"text": text, "source": UAM, "page": 126, "division": division,
+                 "section": "3.6.4.1 Lane and Road Closures"}
+        if self.printed_page is not None:
+            chunk["printed_page"] = self.printed_page
+        return [Hit(2.0, chunk)]
 
     def with_following(self, hits, top=2):
         return hits
@@ -467,10 +471,27 @@ def test_a_streamed_answer_sends_the_steps_and_the_text_as_they_happen_then_the_
     assert {k: v for k, v in done.items() if k not in timed} == {k: v for k, v in asked.items() if k not in timed}
     assert list(done["timing_ms"]) == list(asked["timing_ms"])
     assert done["refused"] is False and done["uncited"] is False and done["sources"][0]["page"] == 126
+    # The index has no printed page numbers yet: the fields are there, empty.
+    assert (done["sources"][0]["printed_page"], done["sources"][0]["printed_page_end"]) == (None, None)
     assert retriever.divisions == ["utilities", "utilities"]
     lines = [r.getMessage() for r in caplog.records if r.getMessage().startswith("ask ")]
     assert len(lines) == 1 and "stream=True" in lines[0] and "uncited=False" in lines[0]
     assert SECRET not in response.text
+
+
+def test_both_replies_carry_the_printed_page_and_the_prompt_names_it(api):
+    """DAR-654: a page that prints "3-14" is PDF page 126; the link keeps the index, the source has both."""
+    client, retriever, llm = api
+    retriever.printed_page = "3-14"
+
+    asked = _ask(client).json()
+    done = _events(_stream(client))[-1][1]
+
+    for source in (asked["sources"][0], done["sources"][0]):
+        assert (source["page"], source["printed_page"], source["printed_page_end"]) == (126, "3-14", None)
+        assert source["url"].endswith("#page=126")
+    assert "[1] (Utilities Accommodation Manual" in llm.messages[1]["content"]
+    assert ", p.3-14 (PDF page 126), section 3.6.4.1 Lane and Road Closures)" in llm.messages[1]["content"]
 
 
 def test_a_streamed_refusal_with_strong_retrieval_double_checks_and_replaces_the_text(api):

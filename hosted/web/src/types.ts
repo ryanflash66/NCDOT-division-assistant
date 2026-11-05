@@ -33,6 +33,13 @@ export type Source = {
   section: string | null;
   url: string;
   excerpt: string;
+  /**
+   * The number printed on the page (DAR-654), when the index knows it; `page` stays the PDF
+   * index the link opens. Optional only because answers saved before this field existed
+   * (sessionStorage) have none; the server always sends both.
+   */
+  printed_page?: string | null;
+  printed_page_end?: string | null;
 };
 
 export type StepEvent = {

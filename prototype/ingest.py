@@ -258,6 +258,13 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
             }
             if page_end:
                 chunk["page_end"] = page_end
+                # A joined table's last printed page; with none there, no printed page at all, rather
+                # than label pages 33-35 with page 33's number alone (DAR-654).
+                end = identities.get(page_end)
+                if end is not None and end.printed:
+                    chunk["printed_page_end"] = end.printed
+                else:
+                    chunk["printed_page"] = None
             if with_context and page is not None and page_captions.get(page):
                 chunk["context"] = context_line(document.title, page, page_captions[page],
                                                 printed=identity.printed if identity else None)
