@@ -1,0 +1,2853 @@
+[
+ {
+  "id": "tmsd/01102.pdf#115",
+  "division": "tmsd",
+  "source": "01102.pdf",
+  "page": 115,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 67,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.37
+  }
+ },
+ {
+  "id": "tmsd/04100.pdf#64",
+  "division": "tmsd",
+  "source": "04100.pdf",
+  "page": 64,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3759,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 90,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 1.0
+  }
+ },
+ {
+  "id": "tmsd/09. At Grade Intersections.pdf#39",
+  "division": "tmsd",
+  "source": "09. At Grade Intersections.pdf",
+  "page": 39,
+  "kind": "rotated",
+  "tags": [
+   "rotated",
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 531,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.78
+  }
+ },
+ {
+  "id": "tmsd/Signal System Timing Philosophy Manual.pdf#17",
+  "division": "tmsd",
+  "source": "Signal System Timing Philosophy Manual.pdf",
+  "page": 17,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 207,
+   "imgs": 2,
+   "w": 792,
+   "h": 612,
+   "rot": 90,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 1.0
+  }
+ },
+ {
+  "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#269",
+  "division": "utilities",
+  "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+  "page": 269,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 404,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 90,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 1.0
+  }
+ },
+ {
+  "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+  "division": "wztc",
+  "source": "2024 Standard Specifications for Roads and Structures.pdf",
+  "page": 444,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1531,
+   "imgs": 0,
+   "w": 504,
+   "h": 720,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.98
+  }
+ },
+ {
+  "id": "wztc/Chapter_5.pdf#26",
+  "division": "wztc",
+  "source": "Chapter_5.pdf",
+  "page": 26,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 993,
+   "imgs": 5,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.87
+  }
+ },
+ {
+  "id": "wztc/Division 11 Combined.pdf#4",
+  "division": "wztc",
+  "source": "Division 11 Combined.pdf",
+  "page": 4,
+  "kind": "rotated",
+  "tags": [
+   "rotated",
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3637,
+   "imgs": 0,
+   "w": 954,
+   "h": 612,
+   "rot": 270,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.95
+  }
+ },
+ {
+  "id": "wztc/WZSafetyAndMobilityGuidelines.pdf#7",
+  "division": "wztc",
+  "source": "WZSafetyAndMobilityGuidelines.pdf",
+  "page": 7,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3784,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 90,
+   "nt": 2,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 1.0
+  }
+ },
+ {
+  "id": "wztc/fhwahop12005.pdf#69",
+  "division": "wztc",
+  "source": "fhwahop12005.pdf",
+  "page": 69,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1654,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 90,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 1.0
+  }
+ },
+ {
+  "id": "wztc/fhwahop14008.pdf#11",
+  "division": "wztc",
+  "source": "fhwahop14008.pdf",
+  "page": 11,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3996,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.99
+  }
+ },
+ {
+  "id": "wztc/rule_guide.pdf#97",
+  "division": "wztc",
+  "source": "rule_guide.pdf",
+  "page": 97,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2420,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.98
+  }
+ },
+ {
+  "id": "tmsd/01102.pdf#135",
+  "division": "tmsd",
+  "source": "01102.pdf",
+  "page": 135,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 68,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.3
+  }
+ },
+ {
+  "id": "tmsd/04100.pdf#58",
+  "division": "tmsd",
+  "source": "04100.pdf",
+  "page": 58,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 523,
+   "imgs": 1,
+   "w": 792,
+   "h": 612,
+   "rot": 90,
+   "nt": 6,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.99
+  }
+ },
+ {
+  "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#270",
+  "division": "utilities",
+  "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+  "page": 270,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 614,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 90,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 1.0
+  }
+ },
+ {
+  "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#582",
+  "division": "wztc",
+  "source": "2024 Standard Specifications for Roads and Structures.pdf",
+  "page": 582,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1333,
+   "imgs": 0,
+   "w": 504,
+   "h": 720,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.98
+  }
+ },
+ {
+  "id": "wztc/Chapter_5.pdf#28",
+  "division": "wztc",
+  "source": "Chapter_5.pdf",
+  "page": 28,
+  "kind": "rotated",
+  "tags": [
+   "rotated",
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1038,
+   "imgs": 7,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.87
+  }
+ },
+ {
+  "id": "wztc/Division 11 Combined.pdf#31",
+  "division": "wztc",
+  "source": "Division 11 Combined.pdf",
+  "page": 31,
+  "kind": "rotated",
+  "tags": [
+   "rotated",
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3829,
+   "imgs": 0,
+   "w": 954,
+   "h": 612,
+   "rot": 270,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.95
+  }
+ },
+ {
+  "id": "wztc/WZSafetyAndMobilityGuidelines.pdf#8",
+  "division": "wztc",
+  "source": "WZSafetyAndMobilityGuidelines.pdf",
+  "page": 8,
+  "kind": "rotated",
+  "tags": [
+   "rotated",
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 4128,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 90,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 1.0
+  }
+ },
+ {
+  "id": "wztc/fhwahop12005.pdf#70",
+  "division": "wztc",
+  "source": "fhwahop12005.pdf",
+  "page": 70,
+  "kind": "rotated",
+  "tags": [
+   "rotated"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2106,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 90,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 1.0
+  }
+ },
+ {
+  "id": "tmsd/04091.pdf#327",
+  "division": "tmsd",
+  "source": "04091.pdf",
+  "page": 327,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2293,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 3,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/04100.pdf#48",
+  "division": "tmsd",
+  "source": "04100.pdf",
+  "page": 48,
+  "kind": "spanned_header",
+  "tags": [
+   "rotated",
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 654,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 90,
+   "nt": 2,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.91
+  }
+ },
+ {
+  "id": "tmsd/09. At Grade Intersections.pdf#40",
+  "division": "tmsd",
+  "source": "09. At Grade Intersections.pdf",
+  "page": 40,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 361,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.06
+  }
+ },
+ {
+  "id": "tmsd/C34 - Manual 2012.pdf#52",
+  "division": "tmsd",
+  "source": "C34 - Manual 2012.pdf",
+  "page": 52,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header",
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2079,
+   "imgs": 2,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/CFR-2024-title23-vol1-part655.pdf#6",
+  "division": "tmsd",
+  "source": "CFR-2024-title23-vol1-part655.pdf",
+  "page": 6,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 4775,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 4,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.01
+  }
+ },
+ {
+  "id": "tmsd/Chapter2c.pdf#7",
+  "division": "tmsd",
+  "source": "Chapter2c.pdf",
+  "page": 7,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3293,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/Policy on Access Manual.pdf#80",
+  "division": "tmsd",
+  "source": "Policy on Access Manual.pdf",
+  "page": 80,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3597,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/Signal System Timing Philosophy Manual.pdf#21",
+  "division": "tmsd",
+  "source": "Signal System Timing Philosophy Manual.pdf",
+  "page": 21,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3342,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/bikeped_Ped_Policy.pdf#4",
+  "division": "tmsd",
+  "source": "bikeped_Ped_Policy.pdf",
+  "page": 4,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1968,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/part3.pdf#25",
+  "division": "tmsd",
+  "source": "part3.pdf",
+  "page": 25,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header",
+   "near_duplicate"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 309,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#194",
+  "division": "utilities",
+  "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+  "page": 194,
+  "kind": "spanned_header",
+  "tags": [
+   "rotated",
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1843,
+   "imgs": 1,
+   "w": 1224,
+   "h": 792,
+   "rot": 90,
+   "nt": 24,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.99
+  }
+ },
+ {
+  "id": "utilities/DOT Encroachment Submissions User Manual - July 2023.pdf#20",
+  "division": "utilities",
+  "source": "DOT Encroachment Submissions User Manual - July 2023.pdf",
+  "page": 20,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2044,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/Chapter_2.pdf#39",
+  "division": "wztc",
+  "source": "Chapter_2.pdf",
+  "page": 39,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1018,
+   "imgs": 6,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/Division 11 Combined.pdf#53",
+  "division": "wztc",
+  "source": "Division 11 Combined.pdf",
+  "page": 53,
+  "kind": "spanned_header",
+  "tags": [
+   "rotated",
+   "spanned_header",
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1291,
+   "imgs": 0,
+   "w": 954,
+   "h": 612,
+   "rot": 270,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.69
+  }
+ },
+ {
+  "id": "wztc/TMP Design Manual (Combined, No Links).pdf#35",
+  "division": "wztc",
+  "source": "TMP Design Manual (Combined, No Links).pdf",
+  "page": 35,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1657,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/fhwahop12005.pdf#46",
+  "division": "wztc",
+  "source": "fhwahop12005.pdf",
+  "page": 46,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2144,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 4,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/part6.pdf#11",
+  "division": "wztc",
+  "source": "part6.pdf",
+  "page": 11,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3200,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 3,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/trans_mgmt_plans.pdf#78",
+  "division": "wztc",
+  "source": "trans_mgmt_plans.pdf",
+  "page": 78,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header",
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2102,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": true,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/04100.pdf#52",
+  "division": "tmsd",
+  "source": "04100.pdf",
+  "page": 52,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2798,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.01
+  }
+ },
+ {
+  "id": "tmsd/C34 - Manual 2012.pdf#54",
+  "division": "tmsd",
+  "source": "C34 - Manual 2012.pdf",
+  "page": 54,
+  "kind": "spanned_header",
+  "tags": [
+   "spanned_header"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1580,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/C34 - Manual 2012.pdf#41",
+  "division": "tmsd",
+  "source": "C34 - Manual 2012.pdf",
+  "page": 41,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1899,
+   "imgs": 2,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/CFR-2024-title23-vol1-part655.pdf#7",
+  "division": "tmsd",
+  "source": "CFR-2024-title23-vol1-part655.pdf",
+  "page": 7,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 4270,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 5,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": true,
+   "notes": false,
+   "rotated_share": 0.01
+  }
+ },
+ {
+  "id": "tmsd/CFR-2024-title23-vol1-part924.pdf#6",
+  "division": "tmsd",
+  "source": "CFR-2024-title23-vol1-part924.pdf",
+  "page": 6,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2876,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": true,
+   "notes": false,
+   "rotated_share": 0.01
+  }
+ },
+ {
+  "id": "tmsd/Chapter2c.pdf#4",
+  "division": "tmsd",
+  "source": "Chapter2c.pdf",
+  "page": 4,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3398,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/L18_TSLG_Guide.pdf#7",
+  "division": "tmsd",
+  "source": "L18_TSLG_Guide.pdf",
+  "page": 7,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page",
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2170,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": true,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/Signal System Timing Philosophy Manual.pdf#15",
+  "division": "tmsd",
+  "source": "Signal System Timing Philosophy Manual.pdf",
+  "page": 15,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3352,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/interim-design-safety-pilot-program.pdf#18",
+  "division": "tmsd",
+  "source": "interim-design-safety-pilot-program.pdf",
+  "page": 18,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page",
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2354,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/part3.pdf#28",
+  "division": "tmsd",
+  "source": "part3.pdf",
+  "page": 28,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 316,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": true,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/DOT Encroachment Submissions User Manual - July 2023.pdf#26",
+  "division": "utilities",
+  "source": "DOT Encroachment Submissions User Manual - July 2023.pdf",
+  "page": 26,
+  "kind": "multi_page",
+  "tags": [
+   "spanned_header",
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2587,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/NCDOT Utility Cost Reimbursement Guidance_8-20-2026.pdf#3",
+  "division": "utilities",
+  "source": "NCDOT Utility Cost Reimbursement Guidance_8-20-2026.pdf",
+  "page": 3,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2456,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/fhwahop09021.pdf#23",
+  "division": "utilities",
+  "source": "fhwahop09021.pdf",
+  "page": 23,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1543,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#276",
+  "division": "wztc",
+  "source": "2024 Standard Specifications for Roads and Structures.pdf",
+  "page": 276,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3615,
+   "imgs": 0,
+   "w": 504,
+   "h": 720,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": true,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/Chapter_2.pdf#13",
+  "division": "wztc",
+  "source": "Chapter_2.pdf",
+  "page": 13,
+  "kind": "multi_page",
+  "tags": [
+   "spanned_header",
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 642,
+   "imgs": 7,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/Division 11 Combined.pdf#1",
+  "division": "wztc",
+  "source": "Division 11 Combined.pdf",
+  "page": 1,
+  "kind": "multi_page",
+  "tags": [
+   "rotated",
+   "spanned_header",
+   "multi_page",
+   "near_duplicate"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1725,
+   "imgs": 0,
+   "w": 954,
+   "h": 612,
+   "rot": 270,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.89
+  }
+ },
+ {
+  "id": "wztc/WZSafetyAndMobilityGuidelines.pdf#9",
+  "division": "wztc",
+  "source": "WZSafetyAndMobilityGuidelines.pdf",
+  "page": 9,
+  "kind": "multi_page",
+  "tags": [
+   "rotated",
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 4103,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 90,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": true,
+   "notes": false,
+   "rotated_share": 1.0
+  }
+ },
+ {
+  "id": "wztc/fhwahop12005.pdf#43",
+  "division": "wztc",
+  "source": "fhwahop12005.pdf",
+  "page": 43,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1675,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": true,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/part6.pdf#39",
+  "division": "wztc",
+  "source": "part6.pdf",
+  "page": 39,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2718,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/trans_mgmt_plans.pdf#76",
+  "division": "wztc",
+  "source": "trans_mgmt_plans.pdf",
+  "page": 76,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2733,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": true,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/C34 - Manual 2012.pdf#45",
+  "division": "tmsd",
+  "source": "C34 - Manual 2012.pdf",
+  "page": 45,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1937,
+   "imgs": 2,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/Chapter2c.pdf#5",
+  "division": "tmsd",
+  "source": "Chapter2c.pdf",
+  "page": 5,
+  "kind": "multi_page",
+  "tags": [
+   "multi_page"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3519,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/01102.pdf#3",
+  "division": "tmsd",
+  "source": "01102.pdf",
+  "page": 3,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 0,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/Revised Rumble Strip Guidelines.pdf#1",
+  "division": "tmsd",
+  "source": "Revised Rumble Strip Guidelines.pdf",
+  "page": 1,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 0,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/fhwa_hop_08_024.pdf#1",
+  "division": "tmsd",
+  "source": "fhwa_hop_08_024.pdf",
+  "page": 1,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 0,
+   "imgs": 3,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/interim-design-safety-pilot-program.pdf#3",
+  "division": "tmsd",
+  "source": "interim-design-safety-pilot-program.pdf",
+  "page": 3,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2,
+   "imgs": 1,
+   "w": 792,
+   "h": 612,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/010604.pdf#4",
+  "division": "utilities",
+  "source": "010604.pdf",
+  "page": 4,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 0,
+   "imgs": 33,
+   "w": 610,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#244",
+  "division": "utilities",
+  "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+  "page": 244,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [
+   "utilities-effluent-moa"
+  ],
+  "audit": {
+   "chars": 0,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/UtilitiesCoordination-Encroachments-presentation-notes.pdf#1",
+  "division": "utilities",
+  "source": "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+  "page": 1,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2,
+   "imgs": 2,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/Chapter_2.pdf#3",
+  "division": "wztc",
+  "source": "Chapter_2.pdf",
+  "page": 3,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 0,
+   "imgs": 185,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/Chapter_5.pdf#14",
+  "division": "wztc",
+  "source": "Chapter_5.pdf",
+  "page": 14,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 0,
+   "imgs": 187,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/WZSafety_and_Mobility.pdf#1",
+  "division": "wztc",
+  "source": "WZSafety_and_Mobility.pdf",
+  "page": 1,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 0,
+   "imgs": 825,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/01102.pdf#4",
+  "division": "tmsd",
+  "source": "01102.pdf",
+  "page": 4,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/Revised Rumble Strip Guidelines.pdf#2",
+  "division": "tmsd",
+  "source": "Revised Rumble Strip Guidelines.pdf",
+  "page": 2,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 0,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/010604.pdf#6",
+  "division": "utilities",
+  "source": "010604.pdf",
+  "page": 6,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 6,
+   "imgs": 33,
+   "w": 610,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#245",
+  "division": "utilities",
+  "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+  "page": 245,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 0,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/UtilitiesCoordination-Encroachments-presentation-notes.pdf#23",
+  "division": "utilities",
+  "source": "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+  "page": 23,
+  "kind": "scan",
+  "tags": [
+   "scan"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 3,
+   "imgs": 2,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/L18_TSLG_Guide.pdf#1",
+  "division": "tmsd",
+  "source": "L18_TSLG_Guide.pdf",
+  "page": 1,
+  "kind": "landscape",
+  "tags": [
+   "multi_page",
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2368,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": true,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/interim-design-safety-pilot-program.pdf#38",
+  "division": "tmsd",
+  "source": "interim-design-safety-pilot-program.pdf",
+  "page": 38,
+  "kind": "landscape",
+  "tags": [
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 758,
+   "imgs": 1,
+   "w": 792,
+   "h": 612,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.02
+  }
+ },
+ {
+  "id": "utilities/010604.pdf#39",
+  "division": "utilities",
+  "source": "010604.pdf",
+  "page": 39,
+  "kind": "landscape",
+  "tags": [
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1209,
+   "imgs": 33,
+   "w": 794,
+   "h": 613,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#195",
+  "division": "utilities",
+  "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+  "page": 195,
+  "kind": "landscape",
+  "tags": [
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 190,
+   "imgs": 11,
+   "w": 792,
+   "h": 612,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/utility_row.pdf#1",
+  "division": "utilities",
+  "source": "utility_row.pdf",
+  "page": 1,
+  "kind": "landscape",
+  "tags": [
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 155,
+   "imgs": 6,
+   "w": 720,
+   "h": 540,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/L18_TSLG_Guide.pdf#2",
+  "division": "tmsd",
+  "source": "L18_TSLG_Guide.pdf",
+  "page": 2,
+  "kind": "landscape",
+  "tags": [
+   "multi_page",
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2645,
+   "imgs": 0,
+   "w": 792,
+   "h": 612,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": true,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/interim-design-safety-pilot-program.pdf#15",
+  "division": "tmsd",
+  "source": "interim-design-safety-pilot-program.pdf",
+  "page": 15,
+  "kind": "landscape",
+  "tags": [
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1025,
+   "imgs": 1,
+   "w": 792,
+   "h": 612,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/010604.pdf#49",
+  "division": "utilities",
+  "source": "010604.pdf",
+  "page": 49,
+  "kind": "landscape",
+  "tags": [
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2317,
+   "imgs": 33,
+   "w": 793,
+   "h": 613,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#286",
+  "division": "utilities",
+  "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+  "page": 286,
+  "kind": "landscape",
+  "tags": [
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 2095,
+   "imgs": 35,
+   "w": 612,
+   "h": 792,
+   "rot": 90,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/utility_row.pdf#2",
+  "division": "utilities",
+  "source": "utility_row.pdf",
+  "page": 2,
+  "kind": "landscape",
+  "tags": [
+   "landscape"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 396,
+   "imgs": 1,
+   "w": 720,
+   "h": 540,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/Chapter2c.pdf#35",
+  "division": "tmsd",
+  "source": "Chapter2c.pdf",
+  "page": 35,
+  "kind": "drawing",
+  "tags": [
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 572,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/bikeped_Ped_Policy.pdf#13",
+  "division": "tmsd",
+  "source": "bikeped_Ped_Policy.pdf",
+  "page": 13,
+  "kind": "drawing",
+  "tags": [
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 270,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/fhwa_hop_08_024.pdf#187",
+  "division": "tmsd",
+  "source": "fhwa_hop_08_024.pdf",
+  "page": 187,
+  "kind": "drawing",
+  "tags": [
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1362,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.02
+  }
+ },
+ {
+  "id": "tmsd/interim-design-safety-pilot-program.pdf#39",
+  "division": "tmsd",
+  "source": "interim-design-safety-pilot-program.pdf",
+  "page": 39,
+  "kind": "drawing",
+  "tags": [
+   "landscape",
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 158,
+   "imgs": 1,
+   "w": 792,
+   "h": 612,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.12
+  }
+ },
+ {
+  "id": "tmsd/part3.pdf#68",
+  "division": "tmsd",
+  "source": "part3.pdf",
+  "page": 68,
+  "kind": "drawing",
+  "tags": [
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 178,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/Chapter_2.pdf#23",
+  "division": "wztc",
+  "source": "Chapter_2.pdf",
+  "page": 23,
+  "kind": "drawing",
+  "tags": [
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1261,
+   "imgs": 7,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.01
+  }
+ },
+ {
+  "id": "wztc/Chapter_5.pdf#17",
+  "division": "wztc",
+  "source": "Chapter_5.pdf",
+  "page": 17,
+  "kind": "drawing",
+  "tags": [
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 325,
+   "imgs": 85,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/part6.pdf#185",
+  "division": "wztc",
+  "source": "part6.pdf",
+  "page": 185,
+  "kind": "drawing",
+  "tags": [
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 529,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": true,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/trans_mgmt_plans.pdf#44",
+  "division": "wztc",
+  "source": "trans_mgmt_plans.pdf",
+  "page": 44,
+  "kind": "drawing",
+  "tags": [
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 542,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/wzi_guide.pdf#58",
+  "division": "wztc",
+  "source": "wzi_guide.pdf",
+  "page": 58,
+  "kind": "drawing",
+  "tags": [
+   "drawing"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 29,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/C34 - Manual 2012.pdf#50",
+  "division": "tmsd",
+  "source": "C34 - Manual 2012.pdf",
+  "page": 50,
+  "kind": "near_duplicate",
+  "tags": [
+   "near_duplicate"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 856,
+   "imgs": 4,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/C34 - Manual 2012.pdf#51",
+  "division": "tmsd",
+  "source": "C34 - Manual 2012.pdf",
+  "page": 51,
+  "kind": "near_duplicate",
+  "tags": [
+   "near_duplicate"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 821,
+   "imgs": 4,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/part3.pdf#15",
+  "division": "tmsd",
+  "source": "part3.pdf",
+  "page": 15,
+  "kind": "near_duplicate",
+  "tags": [
+   "near_duplicate"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 265,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/part3.pdf#16",
+  "division": "tmsd",
+  "source": "part3.pdf",
+  "page": 16,
+  "kind": "near_duplicate",
+  "tags": [
+   "near_duplicate"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 210,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/fhwahop09021.pdf#84",
+  "division": "utilities",
+  "source": "fhwahop09021.pdf",
+  "page": 84,
+  "kind": "near_duplicate",
+  "tags": [
+   "near_duplicate"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1437,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/fhwahop09021.pdf#85",
+  "division": "utilities",
+  "source": "fhwahop09021.pdf",
+  "page": 85,
+  "kind": "near_duplicate",
+  "tags": [
+   "near_duplicate"
+  ],
+  "gold": [],
+  "audit": {
+   "chars": 1431,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+  "division": "wztc",
+  "source": "TMP Design Manual (Combined, No Links).pdf",
+  "page": 38,
+  "kind": "gold",
+  "tags": [],
+  "gold": [
+   "wztc-pcb-concrete"
+  ],
+  "audit": {
+   "chars": 1394,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.01
+  }
+ },
+ {
+  "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+  "division": "wztc",
+  "source": "TMP Design Manual (Combined, No Links).pdf",
+  "page": 37,
+  "kind": "gold",
+  "tags": [],
+  "gold": [
+   "wztc-pcb-asphalt"
+  ],
+  "audit": {
+   "chars": 1403,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": true,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.01
+  }
+ },
+ {
+  "id": "wztc/Chapter_5.pdf#4",
+  "division": "wztc",
+  "source": "Chapter_5.pdf",
+  "page": 4,
+  "kind": "gold",
+  "tags": [
+   "scan"
+  ],
+  "gold": [
+   "wztc-uneven-lanes"
+  ],
+  "audit": {
+   "chars": 0,
+   "imgs": 125,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/Chapter_5.pdf#8",
+  "division": "wztc",
+  "source": "Chapter_5.pdf",
+  "page": 8,
+  "kind": "gold",
+  "tags": [
+   "scan"
+  ],
+  "gold": [
+   "wztc-curb-gutter"
+  ],
+  "audit": {
+   "chars": 0,
+   "imgs": 57,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/Chapter_5.pdf#10",
+  "division": "wztc",
+  "source": "Chapter_5.pdf",
+  "page": 10,
+  "kind": "gold",
+  "tags": [
+   "scan"
+  ],
+  "gold": [
+   "wztc-curb-gutter"
+  ],
+  "audit": {
+   "chars": 0,
+   "imgs": 32,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "wztc/Chapter_2.pdf#40",
+  "division": "wztc",
+  "source": "Chapter_2.pdf",
+  "page": 40,
+  "kind": "gold",
+  "tags": [
+   "scan"
+  ],
+  "gold": [
+   "wztc-tma-weight"
+  ],
+  "audit": {
+   "chars": 0,
+   "imgs": 45,
+   "w": 1584,
+   "h": 2448,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#300",
+  "division": "utilities",
+  "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+  "page": 300,
+  "kind": "gold",
+  "tags": [
+   "scan"
+  ],
+  "gold": [
+   "utilities-fracout-depth"
+  ],
+  "audit": {
+   "chars": 0,
+   "imgs": 1,
+   "w": 613,
+   "h": 790,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#250",
+  "division": "utilities",
+  "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+  "page": 250,
+  "kind": "gold",
+  "tags": [
+   "scan"
+  ],
+  "gold": [
+   "utilities-effluent-moa"
+  ],
+  "audit": {
+   "chars": 0,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/010604.pdf#230",
+  "division": "utilities",
+  "source": "010604.pdf",
+  "page": 230,
+  "kind": "gold",
+  "tags": [
+   "scan"
+  ],
+  "gold": [
+   "utilities-sign-spacing"
+  ],
+  "audit": {
+   "chars": 0,
+   "imgs": 1,
+   "w": 611,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/010604.pdf#228",
+  "division": "utilities",
+  "source": "010604.pdf",
+  "page": 228,
+  "kind": "gold",
+  "tags": [
+   "scan"
+  ],
+  "gold": [
+   "utilities-15ft-light"
+  ],
+  "audit": {
+   "chars": 0,
+   "imgs": 1,
+   "w": 611,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "utilities/010604.pdf#229",
+  "division": "utilities",
+  "source": "010604.pdf",
+  "page": 229,
+  "kind": "gold",
+  "tags": [
+   "scan"
+  ],
+  "gold": [
+   "utilities-low-speed-layout"
+  ],
+  "audit": {
+   "chars": 0,
+   "imgs": 1,
+   "w": 611,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/03. Guardrail, Barriers and Attenuators.pdf#12",
+  "division": "tmsd",
+  "source": "03. Guardrail, Barriers and Attenuators.pdf",
+  "page": 12,
+  "kind": "gold",
+  "tags": [],
+  "gold": [
+   "tmsd-guardrail-l1"
+  ],
+  "audit": {
+   "chars": 61,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/TODS Manual - September 2024.pdf#40",
+  "division": "tmsd",
+  "source": "TODS Manual - September 2024.pdf",
+  "page": 40,
+  "kind": "gold",
+  "tags": [],
+  "gold": [
+   "tmsd-tods-placement"
+  ],
+  "audit": {
+   "chars": 24,
+   "imgs": 1,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/TODS Manual - September 2024.pdf#24",
+  "division": "tmsd",
+  "source": "TODS Manual - September 2024.pdf",
+  "page": 24,
+  "kind": "gold",
+  "tags": [],
+  "gold": [
+   "tmsd-tods-county"
+  ],
+  "audit": {
+   "chars": 1632,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 1,
+   "tabtop": false,
+   "tabbot": true,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/09. At Grade Intersections.pdf#21",
+  "division": "tmsd",
+  "source": "09. At Grade Intersections.pdf",
+  "page": 21,
+  "kind": "gold",
+  "tags": [],
+  "gold": [
+   "tmsd-turn-radius"
+  ],
+  "audit": {
+   "chars": 1130,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 0,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": true,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ },
+ {
+  "id": "tmsd/03. Guardrail, Barriers and Attenuators.pdf#4",
+  "division": "tmsd",
+  "source": "03. Guardrail, Barriers and Attenuators.pdf",
+  "page": 4,
+  "kind": "gold",
+  "tags": [],
+  "gold": [
+   "tmsd-water-barrier"
+  ],
+  "audit": {
+   "chars": 1674,
+   "imgs": 0,
+   "w": 612,
+   "h": 792,
+   "rot": 0,
+   "nt": 2,
+   "tabtop": false,
+   "tabbot": false,
+   "cont": false,
+   "notes": false,
+   "rotated_share": 0.0
+  }
+ }
+]
