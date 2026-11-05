@@ -166,7 +166,7 @@ class Pipeline:
     """The hosted app's runtime, as hosted/index.py's _Runtime builds it, without the web app."""
 
     def __init__(self, settings):
-        from divrag.embedder import Embedder, Reranker, model_cache_dir
+        from divrag.embedder import Embedder, model_cache_dir, reranker_from_settings
         from divrag.index_file import IndexFile
         from divrag.retrieval import Retriever
 
@@ -174,8 +174,9 @@ class Pipeline:
         self.index = IndexFile.load(settings.index_dir)
         cache = model_cache_dir()
         self.embedder = Embedder(self.index.model, cache_dir=cache)
-        reranker = Reranker(cache_dir=cache) if settings.rerank else None
-        self.retriever = Retriever(self.index, self.embedder, reranker, candidates=settings.rerank_candidates)
+        reranker = reranker_from_settings(settings, cache_dir=cache)
+        self.retriever = Retriever(self.index, self.embedder, reranker, candidates=settings.rerank_candidates,
+                                   keyword=settings.keyword_search, text_only=settings.rerank_text_only)
         self.retriever.warm_up()
 
     def answerer(self, llm):

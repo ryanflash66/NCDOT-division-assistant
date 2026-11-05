@@ -13,6 +13,7 @@ import time
 from typing import List
 
 from prototype import HOSTED_DIR
+from divrag.config import retrieval_options
 from divrag.divisions import BY_ID
 from divrag.embedder import Embedder, Reranker, model_cache_dir
 from divrag.index_file import IndexFile
@@ -31,7 +32,8 @@ def main(argv: List[str]) -> int:
     started = time.perf_counter()
     index = IndexFile.load(args.index)
     cache = model_cache_dir()
-    retriever = Retriever(index, Embedder(index.model, cache_dir=cache), None if args.no_rerank else Reranker(cache_dir=cache))
+    retriever = Retriever(index, Embedder(index.model, cache_dir=cache), None if args.no_rerank else Reranker(cache_dir=cache),
+                          **retrieval_options())  # PAGE_AGGREGATION, RRF_K... from the environment, as in the app
     retriever.retrieve("warm up", division=args.division, k=1)
     print(f"loaded {len(index.chunks)} chunks and the models in {time.perf_counter() - started:.2f}s")
 

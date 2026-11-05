@@ -1,0 +1,2306 @@
+{
+ "division": "utilities",
+ "items": [
+  {
+   "id": "utilities-001",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Using Table 3-1 of the Utilities Accommodation Manual, what minimum cover is required for a transverse HDD installation under pavement when the drilled or reamed hole diameter is between 6 and 15 inches?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "non_first_column",
+    "merged_header",
+    "table_id",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     101
+    ],
+    "printed_pages": [
+     "3-28"
+    ],
+    "value": "12 times hole diameter",
+    "accept": [
+     "12 times the hole diameter",
+     "12x hole diameter",
+     "twelve times the hole diameter"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Table 3-1, HDD (transverse) sub-table, row '>6-15' inches; the row label is a sub-row under the HDD method row."
+  },
+  {
+   "id": "utilities-002",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Per footnote b of Table 3-1 in the UAM, what is the minimum cover depth for a transverse HDD installation of any size under a fully controlled access roadway?",
+   "type": "footnote",
+   "edge_cases": [
+    "footnote",
+    "table_id",
+    "chapter_page",
+    "conflicting_values"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     101
+    ],
+    "printed_pages": [
+     "3-28"
+    ],
+    "value": "15 feet",
+    "accept": [
+     "15 ft",
+     "15'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Footnote b overrides the 5 ft / 12x / 15 ft rows for fully controlled access roadways: 15 feet regardless of hole size."
+  },
+  {
+   "id": "utilities-003",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "If a phone company just plows its cable in along the shoulder, how many inches of cover does the UAM's open-cut bury depth table require?",
+   "type": "units",
+   "edge_cases": [
+    "units",
+    "phrasing_drift",
+    "non_first_row",
+    "table_id",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     102
+    ],
+    "printed_pages": [
+     "3-29"
+    ],
+    "value": "1.5 feet",
+    "accept": [
+     "18 inches",
+     "18 in",
+     "1.5 ft",
+     "1-1/2 feet"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 3-2 row 'Plowed-in communication lines/cable' = 1.5 feet; the asker's unit (inches) differs from the table's (feet)."
+  },
+  {
+   "id": "utilities-004",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "In Table 3-3 of the UAM, what wall thickness is required for a 30-inch outside-diameter steel encasement pipe?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "numeric_precision",
+    "table_id",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     104
+    ],
+    "printed_pages": [
+     "3-31"
+    ],
+    "value": "0.312",
+    "accept": [
+     "0.312 inches",
+     "0.312 in",
+     ".312"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 3-3 row '30' -> 0.312; neighbours are 0.250 (14-24) and 0.375 (36)."
+  },
+  {
+   "id": "utilities-005",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Table 3-3 of the UAM says a 48-inch encasement pipe needs a 0.250-inch wall. Is that right, and what is the actual required wall thickness?",
+   "type": "table",
+   "edge_cases": [
+    "false_premise",
+    "table_id",
+    "numeric_precision",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     104
+    ],
+    "printed_pages": [
+     "3-31"
+    ],
+    "value": "0.500",
+    "accept": [
+     "0.5 inch",
+     "0.500 inches",
+     "1/2 inch",
+     "0.5 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "False premise: 0.250 is the 14-24 inch row. Correct answer corrects the premise with 0.500 for 48 inch."
+  },
+  {
+   "id": "utilities-006",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Per Table 3-4 (Steel Plate Thickness Table) in the UAM, what minimum total plate thickness is required for a trench width of 3 feet 5 inches?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "units",
+    "table_id",
+    "chapter_page",
+    "numeric_precision"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     136
+    ],
+    "printed_pages": [
+     "3-63"
+    ],
+    "value": "1\"",
+    "accept": [
+     "1 inch",
+     "1 in",
+     "1-inch",
+     "one inch"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 3-4: 1'-11\" -> 3/4\", 3'-5\" -> 1\", 5'-3\" -> 1 3/4\"."
+  },
+  {
+   "id": "utilities-007",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "My crew wants to plate over a 6-foot-wide trench overnight in the clear zone. What does the UAM say about who designs that plate?",
+   "type": "text",
+   "edge_cases": [
+    "phrasing_drift",
+    "units",
+    "conditional",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     136
+    ],
+    "printed_pages": [
+     "3-63"
+    ],
+    "value": "sealed by a North Carolina licensed Professional Engineer",
+    "accept": [
+     "sealed by a licensed Professional Engineer",
+     "Professional Engineer",
+     "PE seal"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Spans wider than 5'-3\" fall outside Table 3-4, so the plate design must be sealed by a NC licensed PE (Section 3.6.10.4)."
+  },
+  {
+   "id": "utilities-008",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In Table 4-1 (Utility Agreement Chart) of the UAM, which agreement covers construction when NCDOT constructs the relocation under Utilities Construction and NCDOT has cost responsibility?",
+   "type": "table",
+   "edge_cases": [
+    "merged_header",
+    "non_first_row",
+    "non_first_column",
+    "table_id",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     169
+    ],
+    "printed_pages": [
+     "4-26"
+    ],
+    "value": "Utility Construction Agreement",
+    "accept": [
+     "UCA"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Row 'NCDOT Constructs (Utilities Construction, UC)', column 'NCDOT' under the merged 'Cost Responsibility' header."
+  },
+  {
+   "id": "utilities-009",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "According to footnote a of Table 4-1 in the UAM, what was the Utility Engineering by Owner Agreement formerly called?",
+   "type": "footnote",
+   "edge_cases": [
+    "footnote",
+    "table_id",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     169
+    ],
+    "printed_pages": [
+     "4-26"
+    ],
+    "value": "Utility Preliminary Engineering Agreement",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Footnote a of Table 4-1."
+  },
+  {
+   "id": "utilities-010",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In the UAM's Table 4-3 estimate summary example, what salvage amount is deducted from the total billing?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "table_id",
+    "numeric_precision",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     174
+    ],
+    "printed_pages": [
+     "4-31"
+    ],
+    "value": "$122,000",
+    "accept": [
+     "122,000",
+     "122000"
+    ],
+    "unit": "USD"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 4-3 row 'Less salvage (if applicable)'; other rows are $360,000 (betterment credit) and $698,000 (reimbursement)."
+  },
+  {
+   "id": "utilities-011",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What is the minimum performance and indemnity bond amount for a utility crossing of a controlled access highway in the UAM Appendix D bond table (updated 2019)?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "form_or_checklist",
+    "appendix_prefix",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     257
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "$20,000",
+    "accept": [
+     "20,000",
+     "20000"
+    ],
+    "unit": "USD"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "'Minimum Amounts for Performance and Indemnity Bonds', utility encroachments: unpaved $5,000; paved two lane $10,000; non-C/A >2 lanes $15,000; controlled access $20,000. Page has no printed number."
+  },
+  {
+   "id": "utilities-012",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In the UAM Appendix D bond minimums table, what is the minimum bond per linear foot for curb and gutter under non-utility encroachments?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "non_first_column",
+    "units",
+    "appendix_prefix"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     257
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "$18 per linear foot",
+    "accept": [
+     "$18",
+     "18 per linear foot"
+    ],
+    "unit": "USD/ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Non-utility encroachments section: paving $12/sq ft, curb and gutter $18/linear ft, sidewalk $45/sq yd."
+  },
+  {
+   "id": "utilities-013",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "In the Blue Diamond conduit sizes table in Appendix F of the UAM, what is the nominal inside diameter of 2-inch SCH 80 conduit?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "non_first_column",
+    "merged_header",
+    "numeric_precision",
+    "appendix_prefix"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     309
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "1.913",
+    "accept": [
+     "1.913 in",
+     "1.913 inches"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Vendor spec sheet (ASTM F 2160 SDR pipe data / SCH 40-SCH 80 block). 2\" row: OD 2.375; SCH 40 ID 2.047; SCH 80 ID 1.913, wall 0.218."
+  },
+  {
+   "id": "utilities-014",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Per Figure 3-3 of the UAM (clearances for aerial installations near bridges), what is the minimum sag clearance height above a bridge deck for power and telecommunications lines?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "table_id",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     121
+    ],
+    "printed_pages": [
+     "3-48"
+    ],
+    "value": "25 feet",
+    "accept": [
+     "25 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Note 2 on Figure 3-3: minimum sag clearance height is 25 feet (telecommunications and power)."
+  },
+  {
+   "id": "utilities-015",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Under the horizontal clearance exception in Figure 3-3 of the UAM, to what may the minimum horizontal clearance to a bridge be reduced when the power line's sag clearance above the deck is at least 45 feet and the voltage is 350 kV or less?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "footnote",
+    "conditional",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     121
+    ],
+    "printed_pages": [
+     "3-48"
+    ],
+    "value": "3 feet",
+    "accept": [
+     "3 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Note 3 of Figure 3-3; the base rule is 8 feet + Table 'A'."
+  },
+  {
+   "id": "utilities-016",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Per Figure 3-2 and Section 3.4.13 of the UAM, temporary shoring is required when a theoretical 2:1 slope from the bottom of the excavation meets the existing ground closer than what distance from the outside edge of an open travel lane?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "two_page_question",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     113,
+     114
+    ],
+    "printed_pages": [
+     "3-40",
+     "3-41"
+    ],
+    "value": "5 feet",
+    "accept": [
+     "5 ft",
+     "5 ft min"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Rule text on 3-40 (p.113), figure callout '5 ft min' on 3-41 (p.114)."
+  },
+  {
+   "id": "utilities-017",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "How high do the wires have to be when a utility line crosses over an interstate?",
+   "type": "text",
+   "edge_cases": [
+    "phrasing_drift",
+    "near_duplicate",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     89,
+     86
+    ],
+    "printed_pages": [
+     "3-16",
+     "3-13"
+    ],
+    "value": "24 feet",
+    "accept": [
+     "24 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Section 3.3.5 (crossing a controlled access highway: 24 feet) and 3.3.3.2 item 1 state the same value; either page is correct."
+  },
+  {
+   "id": "utilities-018",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Where a guardrail is present, how far behind the face of the guardrail must a street light pole be placed under standard placement in the UAM?",
+   "type": "units",
+   "edge_cases": [
+    "units",
+    "numeric_precision",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     96
+    ],
+    "printed_pages": [
+     "3-23"
+    ],
+    "value": "5 feet 6 inches",
+    "accept": [
+     "5'-6\"",
+     "5.5 feet",
+     "5 ft 6 in",
+     "5'6\""
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Section 3.3.7.9; reducible to 3 ft 6 in with 3 ft 1.5 in post spacing."
+  },
+  {
+   "id": "utilities-019",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "When guardrail post spacing is reduced to 3 feet 1.5 inches, how far behind the face of the guardrail may a light pole be placed per the UAM?",
+   "type": "units",
+   "edge_cases": [
+    "units",
+    "conditional",
+    "numeric_precision",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     96
+    ],
+    "printed_pages": [
+     "3-23"
+    ],
+    "value": "3 feet 6 inches",
+    "accept": [
+     "3'-6\"",
+     "3.5 feet",
+     "3 ft 6 in"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Section 3.3.7.9; the reduced spacing begins 25 feet before the pole."
+  },
+  {
+   "id": "utilities-020",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What's the deal with fire hydrants next to the road in NCDOT right of way, how far back do they have to go?",
+   "type": "text",
+   "edge_cases": [
+    "phrasing_drift",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     111
+    ],
+    "printed_pages": [
+     "3-38"
+    ],
+    "value": "6 feet",
+    "accept": [
+     "6 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Section 3.4.9.1: breakaway type, minimum 6 feet from back of curb and gutter / back of ditch."
+  },
+  {
+   "id": "utilities-021",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Section 3.6.13 of the UAM refers to Section 2.7.6 for bond information. Under that section, how soon after satisfactory completion of the work may a performance bond be released at the earliest?",
+   "type": "cross_ref",
+   "edge_cases": [
+    "cross_ref",
+    "two_page_question",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     69,
+     137
+    ],
+    "printed_pages": [
+     "2-45",
+     "3-64"
+    ],
+    "value": "1 year",
+    "accept": [
+     "one year",
+     "12 months",
+     "no sooner than 1 year"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Section 2.7.6.5 Release of Bonds (p.69); the pointer is on p.137."
+  },
+  {
+   "id": "utilities-022",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "For a transverse utility crossing inside a reinforced concrete box culvert, above what flood water surface elevation must the crossing occur per the UAM?",
+   "type": "text",
+   "edge_cases": [
+    "conflicting_values",
+    "non_first_row",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     119
+    ],
+    "printed_pages": [
+     "3-46"
+    ],
+    "value": "25-year",
+    "accept": [
+     "25 year",
+     "25-year flood"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Section 3.5.1.2 item 3.b.v (box culverts) = 25-year; item 3.c.i for drainage pipe says 10-year, a decoy on the same page."
+  },
+  {
+   "id": "utilities-023",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "We want to mole an 8-inch conduit under a driveway with a pneumatic piercing tool. What is the largest diameter the UAM allows for the driving method?",
+   "type": "text",
+   "edge_cases": [
+    "phrasing_drift",
+    "false_premise",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     130
+    ],
+    "printed_pages": [
+     "3-57"
+    ],
+    "value": "6 inches",
+    "accept": [
+     "6 in",
+     "maximum of 6 inches"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Section 3.6.8.6 Driving: diameter shall be a maximum of 6 inches, so 8 inches is not allowed."
+  },
+  {
+   "id": "utilities-024",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "When grouting the voids outside steel tunnel liner plates, the 2-inch grout openings in the top of the liner plates are provided on what centers?",
+   "type": "units",
+   "edge_cases": [
+    "units",
+    "numeric_precision",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     131
+    ],
+    "printed_pages": [
+     "3-58"
+    ],
+    "value": "4-foot, 6-inch",
+    "accept": [
+     "4'-6\"",
+     "4.5 feet",
+     "4 feet 6 inches",
+     "4 ft 6 in"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Section 3.6.8.8."
+  },
+  {
+   "id": "utilities-025",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Do we have to tell anybody at NCDOT before digging near a traffic light, and how close counts?",
+   "type": "text",
+   "edge_cases": [
+    "phrasing_drift",
+    "toc_decoy",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     135
+    ],
+    "printed_pages": [
+     "3-62"
+    ],
+    "value": "1,000 feet",
+    "accept": [
+     "1000 feet",
+     "1,000 ft",
+     "1000 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Section 3.6.10.2: excavations within 1,000 feet of a signalized intersection require notification to the Division Traffic Engineer. The TOC lists '3.6.10 Excavation Guidance'."
+  },
+  {
+   "id": "utilities-026",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "When a utility abandons a pipe in place in NCDOT right of way, how full does it have to be grouted?",
+   "type": "text",
+   "edge_cases": [
+    "phrasing_drift",
+    "conditional",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     142
+    ],
+    "printed_pages": [
+     "3-69"
+    ],
+    "value": "90 percent",
+    "accept": [
+     "90%"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Section 3.6.15.4: at least 90 percent full, or completely full on railroad right of way."
+  },
+  {
+   "id": "utilities-027",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "If a town of about 30,000 people has to move its water line for an NCDOT widening, what share of the non-betterment relocation cost does NCDOT pick up?",
+   "type": "text",
+   "edge_cases": [
+    "phrasing_drift",
+    "conditional",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     161
+    ],
+    "printed_pages": [
+     "4-18"
+    ],
+    "value": "75 percent",
+    "accept": [
+     "75%"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Section 4.4.1.4 G.S. 136-27.1: 100% for pop. 10,000 or less; 75% for >10,000 and <50,000; 50% for 50,000 to <100,000."
+  },
+  {
+   "id": "utilities-028",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Per footnote 2 in Section 4.4.1.4 of the UAM, from what date are the provisions for private water or sewer utilities serving 10,000 or fewer customers retroactive?",
+   "type": "footnote",
+   "edge_cases": [
+    "footnote",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     161
+    ],
+    "printed_pages": [
+     "4-18"
+    ],
+    "value": "March 1, 2020",
+    "accept": [
+     "1 March 2020",
+     "3/1/2020"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Footnote 2 also defines customers as households served when the agreement is executed."
+  },
+  {
+   "id": "utilities-029",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "Under the UAM, for a utility to have a compensable interest by adverse possession, how long before the facilities were taken into NCDOT right of way must possession have begun?",
+   "type": "text",
+   "edge_cases": [
+    "conflicting_values",
+    "near_duplicate",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     162
+    ],
+    "printed_pages": [
+     "4-19"
+    ],
+    "value": "20 years",
+    "accept": [
+     "twenty years",
+     "20-years"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Section 4.4.3.1. The glossary (A-1) repeats 20 years; the Aug 2026 Cost Reimbursement Guidance gives 7 years under color of title."
+  },
+  {
+   "id": "utilities-030",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "According to NCDOT's August 2026 Utility Cost Reimbursement Guidance, what prescriptive period applies to adverse possession under color of title?",
+   "type": "table",
+   "edge_cases": [
+    "conflicting_values",
+    "multipage_table",
+    "merged_header",
+    "non_first_row"
+   ],
+   "expected": {
+    "source": "NCDOT Utility Cost Reimbursement Guidance_8-20-2026.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "7 years",
+    "accept": [
+     "seven years"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table row 'Adverse Possession', Definition column: 7 years under color of title or 20 years without. Conflicts with the UAM's flat 20 years. No printed page numbers in this memo."
+  },
+  {
+   "id": "utilities-031",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Per the table in the 2026 Utility Cost Reimbursement Guidance, within how many years must an inverse condemnation action be brought under G.S. 40A-51(a)?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "merged_header"
+   ],
+   "expected": {
+    "source": "NCDOT Utility Cost Reimbursement Guidance_8-20-2026.pdf",
+    "pdf_pages": [
+     4,
+     3
+    ],
+    "printed_pages": [
+     "",
+     ""
+    ],
+    "value": "2 years",
+    "accept": [
+     "two years",
+     "2 \nyears"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Row 'Inverse Condemnation' starts on p.3 and its Definition cell continues on p.4 where the 2-year limit appears."
+  },
+  {
+   "id": "utilities-032",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "For direct bury utility poles 60 feet and taller, what must the pole owner submit with the encroachment per the May 26, 2026 NCDOT memo?",
+   "type": "text",
+   "edge_cases": [
+    "conditional",
+    "form_or_checklist"
+   ],
+   "expected": {
+    "source": "Encroachment_Requirements_Involving_Excessive_Height_Direct_Bury_Poles_5-26-2026.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "signed attestation",
+    "accept": [
+     "attestation"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Attestation that NESC Rules 250C, 250D and 250B were considered and achieved; submitted by the pole owner, not the applicant."
+  },
+  {
+   "id": "utilities-033",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "According to the NCDOT Standard Utility Encroachment Plan Requirements (July 2023), what is the largest scale allowed for scaled plans?",
+   "type": "text",
+   "edge_cases": [
+    "near_duplicate",
+    "printed_vs_pdf",
+    "units"
+   ],
+   "expected": {
+    "source": "Utility-Encroachment-Plan-Requirements.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "1\" = 100'",
+    "accept": [
+     "1 inch = 100 feet",
+     "1\"=100'",
+     "1 in = 100 ft"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Same rule appears in UAM 3.2.1.6 (p.80) and Appendix C (p.202); the question names the standalone July 2023 document."
+  },
+  {
+   "id": "utilities-034",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In the July 2023 Standard Utility Encroachment Plan Requirements, the profile view must show the theoretical 1:1 slope from the edge of pavement and a theoretical 2:1 slope taken at a point how far from the edge of the travel way?",
+   "type": "text",
+   "edge_cases": [
+    "near_duplicate",
+    "conflicting_values",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "Utility-Encroachment-Plan-Requirements.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "5 feet",
+    "accept": [
+     "5 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "The UAM's own profile list (p.82) only names the 1:1 slope; the 2023 standalone adds the 2:1 slope at 5 feet."
+  },
+  {
+   "id": "utilities-035",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "Per the general requirements on Form R/W 16.1 (Rev. Sept 2026), how far beyond the toe of slopes must encasements extend in fill sections?",
+   "type": "text",
+   "edge_cases": [
+    "form_or_checklist",
+    "near_duplicate",
+    "conflicting_values",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "16-1-Two-Party-Utility-Primary-and-Secondary-Highways-Non-C-A.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "5'",
+    "accept": [
+     "5 feet",
+     "5 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "General requirement 4: ditch line to ditch line in cuts, 5' beyond toe of slopes in fills. The UAM Appendix C carries an older Rev. Feb 2021 copy of the same form."
+  },
+  {
+   "id": "utilities-036",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Under Form R/W 16.1, the encroachment agreement becomes void if construction has not begun within what period after NCDOT's authorization?",
+   "type": "text",
+   "edge_cases": [
+    "form_or_checklist",
+    "near_duplicate",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "16-1-Two-Party-Utility-Primary-and-Secondary-Highways-Non-C-A.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "one (1) year",
+    "accept": [
+     "1 year",
+     "one year"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Unless a written waiver is secured from NCDOT."
+  },
+  {
+   "id": "utilities-037",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Per the HDD Required Information list (November 2019) in UAM Appendix F, within how many days after the drilling operation must as-built drawings be supplied to the District Engineer's office?",
+   "type": "text",
+   "edge_cases": [
+    "form_or_checklist",
+    "near_duplicate",
+    "appendix_prefix",
+    "two_page_question"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     274,
+     276
+    ],
+    "printed_pages": [
+     "",
+     ""
+    ],
+    "value": "30 days",
+    "accept": [
+     "thirty days"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Item 15 of the HDD list; Appendix F holds two copies of the form (static p.273-274 and fillable p.275-276). Item 15 is on p.274 and p.276."
+  },
+  {
+   "id": "utilities-038",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "The HDD requirements list in UAM Appendix F says a traffic control plan is needed when personnel or equipment are within what distance of the edge of pavement on an undivided road?",
+   "type": "text",
+   "edge_cases": [
+    "form_or_checklist",
+    "near_duplicate",
+    "appendix_prefix"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     273,
+     275
+    ],
+    "printed_pages": [
+     "",
+     ""
+    ],
+    "value": "5 ft",
+    "accept": [
+     "5 feet"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Item 14 (10 ft on a divided roadway). UAM 3.6.4.1 (p.126) states the same lane-closure trigger; the question names the Appendix F list."
+  },
+  {
+   "id": "utilities-039",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "On the blank NCDOT Encroachment Fee Form in UAM Appendix E, what administrative fee amount is pre-printed?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "landscape",
+    "form_or_checklist",
+    "appendix_prefix",
+    "conflicting_values"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     269
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "500.00",
+    "accept": [
+     "$500",
+     "$500.00",
+     "500"
+    ],
+    "unit": "USD"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Rotated landscape form page (rot=90). GL account 47900027. Section 2.3.2 (p.39) quotes a $1,500 processing fee for grading, so the two pages disagree."
+  },
+  {
+   "id": "utilities-040",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In the example Encroachment Fee Form in UAM Appendix E, what material fee amount was posted for the Massey Developers grading encroachment on I-485?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "landscape",
+    "form_or_checklist",
+    "appendix_prefix"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     270
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "2,500.00",
+    "accept": [
+     "$2,500",
+     "2500",
+     "$2,500.00"
+    ],
+    "unit": "USD"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Rotated landscape example form: Administrative Fee 500.00 (check 1234), Material Fee 2,500.00 (check 1235)."
+  },
+  {
+   "id": "utilities-041",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In the NCDOT Encroachment Process flowchart in UAM Appendix B, an encroachment located within the limits of an NCDOT project is transferred to whom?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "landscape",
+    "figure",
+    "appendix_prefix"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     194
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "Division Utility",
+    "accept": [
+     "Division Project Personnel",
+     "Division Utilities"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Rotated (rot=90, 1224x792) flowchart: 'Transfer to Division Utility (Division Project Personnel)' -> DIVISION UTILITIES status."
+  },
+  {
+   "id": "utilities-042",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In the November 15, 1999 memo on piping effluent in highway rights of way (UAM Appendix D), what phone number is given for the State Utility Agent?",
+   "type": "scan",
+   "edge_cases": [
+    "scan",
+    "appendix_prefix"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     245
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "(919) 733-4420",
+    "accept": [
+     "919-733-4420",
+     "733-4420"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "ocr_match",
+   "note": "Page 2 of the memo: Aydren D. Flowers, State Utility Agent, or David West, Encroachment Agent, (919) 733-4420."
+  },
+  {
+   "id": "utilities-043",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Per the July 7, 2010 Chief Engineer memo on control of access fence (UAM Appendix D), what minimum fence height must an alternate specialty fence meet?",
+   "type": "scan",
+   "edge_cases": [
+    "scan",
+    "units",
+    "appendix_prefix"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     252
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "48\"",
+    "accept": [
+     "48 inches",
+     "48-inch",
+     "48 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "ocr_match",
+   "note": "Also a maximum opening size of 4\". Page 2 of the memo."
+  },
+  {
+   "id": "utilities-044",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Section 2.6.1.1 of the UAM says replacement of controlled access fence follows the Chief Engineer's July 7, 2010 memo in Appendix D. Within municipal boundaries, what betterment fence type will the Department agree to under that memo?",
+   "type": "cross_ref",
+   "edge_cases": [
+    "cross_ref",
+    "scan",
+    "two_page_question",
+    "appendix_prefix"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     251,
+     58
+    ],
+    "printed_pages": [
+     "",
+     "2-34"
+    ],
+    "value": "black vinyl coated chain link",
+    "accept": [
+     "vinyl coated chain link",
+     "black vinyl-coated chain link fence"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "Pointer on p.58 (2-34); answer on the scanned memo p.251 (page 1 of the memo, no page number printed)."
+  },
+  {
+   "id": "utilities-045",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Under NCDOT's Standard Practice for Gateway Signs (modified 4/23/12, UAM Appendix D), who approves gateway signs requested for installation on freeways?",
+   "type": "scan",
+   "edge_cases": [
+    "scan",
+    "appendix_prefix"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     253
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "Transportation Mobility and Safety Division",
+    "accept": [
+     "TMSD",
+     "Mobility and Safety Division"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "Criterion 4; printed 'Page 1 of 3'."
+  },
+  {
+   "id": "utilities-046",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Per the May 7, 2009 policy guidance on communication enclosures with electrical power (UAM Appendix D), how far from intersecting roadways must enclosures be located on statewide tier routes?",
+   "type": "scan",
+   "edge_cases": [
+    "scan",
+    "conflicting_values",
+    "near_duplicate",
+    "appendix_prefix"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     261
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "300'",
+    "accept": [
+     "300 feet",
+     "300 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "Memo item 2: 300' on statewide tier; item 3: 100' on regional/subregional tier. UAM 3.4.7.3 (p.108) restates the memo but its item 1.c says 100 feet on the statewide tier, so the two pages disagree; the question names the memo."
+  },
+  {
+   "id": "utilities-047",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Per the January 1965 State Highway Commission policy reproduced in UAM Appendix D, who bears the cost of relocating municipal utilities located within an existing Highway system street right of way?",
+   "type": "scan",
+   "edge_cases": [
+    "scan",
+    "cross_ref",
+    "appendix_prefix"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     263
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "The municipality",
+    "accept": [
+     "municipality must bear the cost",
+     "the municipality"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "Policy A.1; referenced from Section 4.4.4.1 (p.163). Low-quality 1965 scan."
+  },
+  {
+   "id": "utilities-048",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In the example Frac-Out Contingency Plan in UAM Appendix F, equipment to contain a frac-out that is not kept at the work site must be available at an offsite location within how many minutes of the bore site?",
+   "type": "scan",
+   "edge_cases": [
+    "scan",
+    "appendix_prefix",
+    "form_or_checklist"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     301
+    ],
+    "printed_pages": [
+     "5"
+    ],
+    "value": "15 minutes",
+    "accept": [
+     "15-minutes",
+     "fifteen minutes"
+    ],
+    "unit": "min"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "Section 4.0 Equipment; printed page 5 of the plan."
+  },
+  {
+   "id": "utilities-049",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "In the example Frac-Out Contingency Plan in UAM Appendix F, within how many hours must agency notifications be made after a frac-out reaches a water source?",
+   "type": "scan",
+   "edge_cases": [
+    "scan",
+    "appendix_prefix",
+    "form_or_checklist"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     304
+    ],
+    "printed_pages": [
+     "8"
+    ],
+    "value": "24 hours",
+    "accept": [
+     "twenty-four hours"
+    ],
+    "unit": "h"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "Section 7.0 Notification; printed page 8 of the plan."
+  },
+  {
+   "id": "utilities-050",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Who presented the August 2017 NCDOT 'Utilities Coordination and Encroachments' webinar, according to its title slide?",
+   "type": "scan",
+   "edge_cases": [
+    "scan"
+   ],
+   "expected": {
+    "source": "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "Carl Barclay",
+    "accept": [
+     "Barclay"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "Title slide is an image: 'Carl Barclay, PE - State Utilities Manager, August 2-3, 2017'."
+  },
+  {
+   "id": "utilities-051",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In the Encroachment Submissions User Guide, what line color is used to map a Non-Utility Grading/Drainage encroachment?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "printed_vs_pdf",
+    "non_first_row"
+   ],
+   "expected": {
+    "source": "DOT Encroachment Submissions User Manual - July 2023.pdf",
+    "pdf_pages": [
+     40,
+     39
+    ],
+    "printed_pages": [
+     "39",
+     "38"
+    ],
+    "value": "Dark Grey",
+    "accept": [
+     "dark gray"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "'Encroachment Lines' table header and first rows on PDF p.39 (printed 38); the Grading/Drainage row is on PDF p.40 (printed 39)."
+  },
+  {
+   "id": "utilities-052",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In the Next Action table of the Encroachment Submissions User Guide, what must be selected in conjunction with the Central Utilities next action?",
+   "type": "table",
+   "edge_cases": [
+    "multipage_table",
+    "printed_vs_pdf",
+    "non_first_row"
+   ],
+   "expected": {
+    "source": "DOT Encroachment Submissions User Manual - July 2023.pdf",
+    "pdf_pages": [
+     26
+    ],
+    "printed_pages": [
+     "25"
+    ],
+    "value": "Central Review reason",
+    "accept": [
+     "Central Review reason(s)",
+     "a Central Review reason"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Next Action table spans PDF p.26-27 (printed 25-26); Central Utilities row is on p.26."
+  },
+  {
+   "id": "utilities-053",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In the Submit a New Encroachment field table of the Encroachment Submissions User Guide, when should route SR0000 be used?",
+   "type": "table",
+   "edge_cases": [
+    "printed_vs_pdf",
+    "multipage_table",
+    "non_first_row"
+   ],
+   "expected": {
+    "source": "DOT Encroachment Submissions User Manual - July 2023.pdf",
+    "pdf_pages": [
+     10
+    ],
+    "printed_pages": [
+     "9"
+    ],
+    "value": "not yet been assigned a number",
+    "accept": [
+     "roads which have not yet been assigned a number",
+     "new roads with no NCDOT route number yet"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Routes* row: 'Use SR0000 only for new installations located along roads which have not yet been assigned a number by NCDOT.' Table starts on PDF p.9 (printed 8)."
+  },
+  {
+   "id": "utilities-054",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "On page 28 of the Encroachment Submissions User Guide, what phone number does the sample 'Proposed' email give for the Division 06 - District 2 office?",
+   "type": "page_ref",
+   "edge_cases": [
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "DOT Encroachment Submissions User Manual - July 2023.pdf",
+    "pdf_pages": [
+     29
+    ],
+    "printed_pages": [
+     "28"
+    ],
+    "value": "910-364-0601",
+    "accept": [
+     "(910) 364-0601"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Printed page 28 is PDF page 29."
+  },
+  {
+   "id": "utilities-055",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "On page 2-44 of the Utilities Accommodation Manual, what is the only acceptable form of bond when the bond amount is $500 or less?",
+   "type": "page_ref",
+   "edge_cases": [
+    "chapter_page",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     68
+    ],
+    "printed_pages": [
+     "2-44"
+    ],
+    "value": "certified or cashier's check",
+    "accept": [
+     "certified check",
+     "cashier's check",
+     "certified or cashier’s check"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Section 2.7.6.2; printed 2-44 = PDF p.68."
+  },
+  {
+   "id": "utilities-056",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What does page 4-35 of the UAM give as the maximum total progress billing, as a share of the approved non-betterment estimate?",
+   "type": "page_ref",
+   "edge_cases": [
+    "chapter_page",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     178
+    ],
+    "printed_pages": [
+     "4-35"
+    ],
+    "value": "95 percent",
+    "accept": [
+     "95%"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Section 4.7.1.1; printed 4-35 = PDF p.178."
+  },
+  {
+   "id": "utilities-057",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "Under the UAM, within how many months after completion of the roadway work must the utility submit its one final complete billing?",
+   "type": "text",
+   "edge_cases": [
+    "conflicting_values",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     178
+    ],
+    "printed_pages": [
+     "4-35"
+    ],
+    "value": "6 months",
+    "accept": [
+     "six months"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "UAM 4.7.1.1. 23 CFR 645.117(i)(2) instead says within one year following completion of the utility relocation work."
+  },
+  {
+   "id": "utilities-058",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Under 23 CFR 645.117(i)(2), within what period following completion of the utility relocation work must the utility provide its final and complete billing?",
+   "type": "text",
+   "edge_cases": [
+    "conflicting_values",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part645.pdf",
+    "pdf_pages": [
+     9
+    ],
+    "printed_pages": [
+     "335"
+    ],
+    "value": "one year",
+    "accept": [
+     "1 year",
+     "within one year"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "CFR printed page 335 = PDF p.9. The UAM's own rule is 6 months after the roadway work."
+  },
+  {
+   "id": "utilities-059",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Under 23 CFR 645.117(e)(2), materials recovered from temporary use and accepted for reuse are credited at the prices charged to the job less what consideration for loss in service life?",
+   "type": "text",
+   "edge_cases": [
+    "near_duplicate",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part645.pdf",
+    "pdf_pages": [
+     8
+    ],
+    "printed_pages": [
+     "334"
+    ],
+    "value": "10 percent",
+    "accept": [
+     "10%"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Printed 334 = PDF p.8. The same sentence is reproduced in the FHWA Program Guide (if03014.pdf p.84-85)."
+  },
+  {
+   "id": "utilities-060",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "In the FHWA Program Guide on Utility Relocation and Accommodation (6th edition, Appendix B reproduction of 23 CFR 645.117), what percentage of the amounts billed for materials from company stores may a utility opt to receive in lieu of actual handling costs?",
+   "type": "text",
+   "edge_cases": [
+    "near_duplicate",
+    "appendix_prefix",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "if03014.pdf",
+    "pdf_pages": [
+     85
+    ],
+    "printed_pages": [
+     "B-85"
+    ],
+    "value": "5 percent",
+    "accept": [
+     "5%"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Printed B-85 = PDF p.85; the identical text is in CFR-2024 part 645 p.9 (printed 335). The question names the Program Guide."
+  },
+  {
+   "id": "utilities-061",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In Table 6-8 (Mississippi) of the Rural Interstate Corridor Communications Study, what is the high cost estimate for Directional Boring - Rock?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "non_first_column",
+    "chapter_page",
+    "printed_vs_pdf",
+    "table_id"
+   ],
+   "expected": {
+    "source": "fhwahop09021.pdf",
+    "pdf_pages": [
+     97
+    ],
+    "printed_pages": [
+     "6-18"
+    ],
+    "value": "$569,100",
+    "accept": [
+     "569,100",
+     "569100"
+    ],
+    "unit": "USD"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Printed 6-18, PDF label 97. Low estimate is $89,250; Louisiana (Table 6-7) rock high is $609,750."
+  },
+  {
+   "id": "utilities-062",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "According to the FHWA presentation 'Utility Accommodation within Federal-aid Rights-of-Way', how much had TxDOT spent on 70 projects because one telecommunications company failed to move its lines on time?",
+   "type": "text",
+   "edge_cases": [
+    "landscape"
+   ],
+   "expected": {
+    "source": "utility_row.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     "7"
+    ],
+    "value": "$25 million",
+    "accept": [
+     "25 million"
+    ],
+    "unit": "USD"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Landscape slide 7 (720x540), citing a 2015 report to the Texas House Transportation Committee."
+  },
+  {
+   "id": "utilities-063",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Per the FHWA 'Utility Accommodation within Federal-aid Rights-of-Way' slides, collisions with roadside trees and utility poles are the most harmful event in what percentage of fatal crashes?",
+   "type": "text",
+   "edge_cases": [
+    "landscape"
+   ],
+   "expected": {
+    "source": "utility_row.pdf",
+    "pdf_pages": [
+     5
+    ],
+    "printed_pages": [
+     "5"
+    ],
+    "value": "14 percent",
+    "accept": [
+     "14%"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Landscape slide 5; source FHWA Office of Safety, Roadway Departure Safety 2010-2013."
+  },
+  {
+   "id": "utilities-064",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Per Chapter 9 of the Roadway Design Manual Part II, what is a typical right of way width for a 4-lane rural interstate, freeway or expressway section?",
+   "type": "text",
+   "edge_cases": [
+    "chapter_page",
+    "units"
+   ],
+   "expected": {
+    "source": "09. Right of Way.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     "9-1"
+    ],
+    "value": "250′ to 300′",
+    "accept": [
+     "250 to 300 feet",
+     "250-300 ft",
+     "250' to 300'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Guide item 1; urban projects are 150' to 200'. Prime symbols in the text layer."
+  },
+  {
+   "id": "utilities-065",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In the FHWA tech brief on subsurface utility engineering in Delaware (Table 1), which ASCE quality level is obtained by geophysical prospecting to find approximate horizontal positions, the activity called 'designating'?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "table_id"
+   ],
+   "expected": {
+    "source": "hif22002.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "B",
+    "accept": [
+     "Quality Level B",
+     "QL-B",
+     "Level B"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 1 ASCE quality levels D, C, B, A; row B = designating. Printed page 2."
+  },
+  {
+   "id": "utilities-066",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "According to the 1999 Purdue study cited in FHWA tech brief HIF-22-002, how much did subsurface utility engineering save for every $1 spent?",
+   "type": "text",
+   "edge_cases": [
+    "numeric_precision"
+   ],
+   "expected": {
+    "source": "hif22002.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "$4.62",
+    "accept": [
+     "4.62"
+    ],
+    "unit": "USD"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "SUE saved 1.9 percent of construction costs, $4.62 per $1 spent."
+  },
+  {
+   "id": "utilities-067",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In the acronym list at the front of the Utilities Accommodation Manual, what does SCTE stand for?",
+   "type": "text",
+   "edge_cases": [
+    "roman_front_matter",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     "vi"
+    ],
+    "value": "Society of Cable Telecommunications Engineers",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Front matter page vi = PDF p.7. The glossary of references (1-14/1-15) also spells it out."
+  },
+  {
+   "id": "utilities-068",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "How long a period of possession does the UAM glossary (Appendix A) give in its definition of adverse possession?",
+   "type": "text",
+   "edge_cases": [
+    "appendix_prefix",
+    "near_duplicate",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     185
+    ],
+    "printed_pages": [
+     "A-1"
+    ],
+    "value": "20-years",
+    "accept": [
+     "20 years",
+     "twenty years"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Glossary A-1. Same value in 4.4.3.1 (p.162); the 2026 guidance adds 7 years under color of title."
+  },
+  {
+   "id": "utilities-069",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Per the list of NCDOT forms in Appendix C of the UAM, which form number is the blanket agreement for trenched-in telecommunications cable?",
+   "type": "text",
+   "edge_cases": [
+    "appendix_prefix",
+    "form_or_checklist",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     198
+    ],
+    "printed_pages": [
+     "C-1"
+    ],
+    "value": "16.3A",
+    "accept": [
+     "R/W 16.3A",
+     "Form 16.3A"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "C-1 list: 16.3 plowed-in, 16.3A trenched-in, 16.4 cablevision."
+  },
+  {
+   "id": "utilities-070",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "Per UAM Section 3.4.7.3, how many days' advance notice must owners of communication enclosures with electrical power give municipalities and adjacent property owners before construction?",
+   "type": "text",
+   "edge_cases": [
+    "near_duplicate",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     108,
+     261
+    ],
+    "printed_pages": [
+     "3-35",
+     ""
+    ],
+    "value": "15 days",
+    "accept": [
+     "15 days'",
+     "fifteen days"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "UAM text p.108 and the scanned May 7, 2009 memo p.261 both say 15 days; either is a correct citation."
+  },
+  {
+   "id": "utilities-071",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What is the processing fee for a Tourist Oriented Directional Sign (TODS) application?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "absent_from_corpus",
+   "note": "TODS fees are a TMSD topic; no utilities document covers them."
+  },
+  {
+   "id": "utilities-072",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What minimum cover does Table 3-5 of the Utilities Accommodation Manual require for a pipe bursting installation?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "table_id",
+    "false_premise"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "tuning",
+   "verified_by": "absent_from_corpus",
+   "note": "The UAM has Tables 3-1 to 3-4 only, and Table 3-1 gives no cover for pipe bursting."
+  },
+  {
+   "id": "utilities-073",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "How much per hour does NCDOT charge a utility for a highway inspector assigned under Section 4.6.5 of the UAM?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope",
+    "false_premise"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "tuning",
+   "verified_by": "absent_from_corpus",
+   "note": "Section 4.6.5 describes inspection but states no rate."
+  },
+  {
+   "id": "utilities-074",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What maximum wind speed does the UAM set for stopping aerial utility work in NCDOT right of way?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "tuning",
+   "verified_by": "absent_from_corpus",
+   "note": "No wind-speed limit appears in any utilities document."
+  },
+  {
+   "id": "utilities-075",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What minimum horizontal clearance does the UAM require between a utility pole and the nearest railroad track?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "absent_from_corpus",
+   "note": "The UAM defers railroad matters to the railroad; no pole-to-track clearance is given."
+  },
+  {
+   "id": "utilities-076",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "Which NCDOT office approves utility encroachments on the Blue Ridge Parkway right of way?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope",
+    "false_premise"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "absent_from_corpus",
+   "note": "The Parkway is federal (National Park Service) right of way; not covered."
+  },
+  {
+   "id": "utilities-077",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What is the minimum bury depth for a utility crossing under a runway at a state-owned airport in the UAM?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "absent_from_corpus",
+   "note": "Airports are not covered by the utilities documents."
+  },
+  {
+   "id": "utilities-078",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What is the maximum number of small cell antennas the UAM allows on a single pole?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope",
+    "false_premise"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "absent_from_corpus",
+   "note": "Section 3.3.6 sets location and pole rules but no antenna count."
+  },
+  {
+   "id": "utilities-079",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "What does NCDOT Form R/W 16.8 cover?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "false_premise",
+    "table_id"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "absent_from_corpus",
+   "note": "Encroachment forms run 16.1 to 16.7 plus bond forms 16, 16A, 16B; there is no 16.8."
+  },
+  {
+   "id": "utilities-080",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What setback from the right of way line does the UAM require for a residential swimming pool?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "absent_from_corpus",
+   "note": "Swimming pools are not an encroachment type covered by the utilities documents."
+  }
+ ]
+}

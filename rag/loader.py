@@ -21,9 +21,11 @@ format has one: the heading path for Markdown, "Slide N" for .pptx, the sheet
 name for spreadsheets and "Page N" for PDFs.
 """
 
+import logging
 import os
 import re
 import shutil
+import time
 from dataclasses import dataclass
 from pathlib import Path, PurePath
 from typing import Dict, FrozenSet, Iterable, List, Optional, Tuple
@@ -33,6 +35,8 @@ from llama_index.core.readers.base import BaseReader
 
 from rag.classify import classify
 from rag.tables import clean_markdown_tables
+
+log = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -154,7 +158,7 @@ def _supported_files(data_dir: Path) -> List[Path]:
     ]
 
 
-def _file_extractor(files: List[Path], ocr: bool = False) -> Dict[str, object]:
+def _file_extractor(files: List[Path], ocr: bool = False, tables: bool = False) -> Dict[str, object]:
     extractor: Dict[str, object] = {}
     unstructured_exts = {p.suffix.lower() for p in files if FORMATS[p.suffix.lower()].reader == "unstructured"}
     if unstructured_exts:
@@ -163,7 +167,7 @@ def _file_extractor(files: List[Path], ocr: bool = False) -> Dict[str, object]:
         reader = UnstructuredReader()
         extractor.update({ext: reader for ext in unstructured_exts})
     pdf_exts = {ext for ext, fmt in FORMATS.items() if fmt.reader == "pdf"}
-    extractor.update({ext: _PdfMarkdownReader(ocr=ocr) for ext in pdf_exts})
+    extractor.update({ext: _PdfMarkdownReader(ocr=ocr, tables=tables) for ext in pdf_exts})
     # Keep "text" formats away from any built-in reader keyed on the same extension.
     text_exts = {ext for ext, fmt in FORMATS.items() if fmt.reader == "text"}
     extractor.update({ext: _PlainTextReader() for ext in text_exts})
@@ -185,8 +189,51 @@ class _PlainTextReader(BaseReader):
 _PDF_MARKUP = re.compile(r"</?(?:mark|u)>|\ufffd")
 
 
+class _RotatedLines:
+    """Text-layer lines that do not run left to right, per page, read only for pages with a table.
+
+    TMP Design Manual p. 37: the row header "Offset (ft)" is printed
+    vertically (line dir (0, -1)) and is whole in the text layer, while the
+    Markdown grid scatters it over four cells; rag.table_rows uses these
+    lines to recognise and remove the pieces.
+    """
+
+    def __init__(self, file):
+        self._file = file
+        self._doc = None
+
+    def on(self, page_number, markdown: str) -> List[str]:
+        if not page_number or not any(line.lstrip().startswith("|") for line in markdown.split("\n")):
+            return []
+        try:
+            import pymupdf
+
+            if self._doc is None:
+                self._doc = pymupdf.open(str(self._file))
+            page = self._doc[int(page_number) - 1]
+            lines = [line for block in page.get_text("dict")["blocks"] for line in block.get("lines", [])]
+            rotated = [
+                "".join(span["text"] for span in line["spans"]).strip()
+                for line in lines
+                if tuple(round(x, 2) for x in line["dir"]) != (1.0, 0.0)
+            ]
+            # On a page set sideways most lines are "rotated", and they are the
+            # table's own cells, not a label beside it (TMP p. 37 has 1 of ~150).
+            return rotated if len(rotated) <= max(3, len(lines) // 5) else []
+        except Exception:  # the grid is still cleaned without them
+            log.debug("no text layer for %s p. %s", self._file, page_number, exc_info=True)
+            return []
+
+    def close(self) -> None:
+        if self._doc is not None:
+            self._doc.close()
+            self._doc = None
+
+
 # OCR resolution: pymupdf4llm's default is 150 dpi; the scanned UAM attachments are small type.
 OCR_DPI = 200
+# Page notes for the index build (rag.ocr), not words to embed or to show a model.
+_OCR_KEYS = ("ocr_degrees", "ocr_confidence", "flags")
 
 
 class _PdfMarkdownReader(BaseReader):
@@ -199,34 +246,106 @@ class _PdfMarkdownReader(BaseReader):
     other pages read exactly as without it. Without `ocr`, OCR is off even when
     an OCR engine is installed, as pymupdf4llm would otherwise turn it on by
     itself. DAR-651: 184 pages in 15 documents (scanned attachments, pictures of
-    text) had no searchable text before.
+    text) had no searchable text before. DAR-658: OCR tries the page's other
+    orientations when the first reading is poor or sideways (rag.ocr); each OCR'd
+    page's metadata gets `ocr_degrees`, `ocr_confidence` and, when it read badly
+    or turned, `flags` ("ocr_low_conf", "rotated").
     """
 
-    def __init__(self, ocr: bool = False):
+    def __init__(self, ocr: bool = False, tables: bool = False):
         super().__init__()
         self._ocr = ocr
+        self._tables = tables
 
     def load_data(self, file, extra_info=None, **_kwargs) -> List[Document]:
         import pymupdf4llm
 
         options = {"use_ocr": False}
+        ocr = None
         if self._ocr:
-            from pymupdf4llm.ocr import rapidocr_api
+            from rag.ocr import OrientedOcr
 
-            options = {"use_ocr": True, "ocr_function": rapidocr_api.exec_ocr, "ocr_dpi": OCR_DPI}
+            ocr = OrientedOcr()
+            options = {"use_ocr": True, "ocr_function": ocr, "ocr_dpi": OCR_DPI}
         pages = pymupdf4llm.to_markdown(str(file), page_chunks=True, show_progress=False, **options)
-        return [
-            Document(
-                text=clean_markdown_tables(_PDF_MARKUP.sub("", page["text"]).replace("<br>", " ")),
-                metadata={
-                    # "page" on pymupdf4llm's fallback path (no pymupdf.layout); both are 1-based.
-                    "page_label": str(page["metadata"].get("page_number", page["metadata"].get("page"))),
-                    "file_name": Path(file).name,
-                    **(extra_info or {}),
-                },
+        boxes = table_boxes(file, pages) if self._tables else {}
+        rotated = _RotatedLines(file)
+        try:
+            documents = []
+            for page in pages:
+                # "page" on pymupdf4llm's fallback path (no pymupdf.layout); both are 1-based.
+                number = page["metadata"].get("page_number", page["metadata"].get("page"))
+                label = str(number)
+                text = page["text"]
+                metadata = {"page_label": label, "file_name": Path(file).name}
+                if number in boxes:
+                    metadata["table_bboxes"] = boxes[number]
+                result = ocr.pages.get(int(label) - 1) if ocr is not None and label.isdigit() else None
+                if result is not None:
+                    # A sideways drawing read turned upright, or sideways labels, can't go back onto the page at
+                    # its boxes, so its text follows the page's own (rag.ocr).
+                    turned = ocr.appended_text(result.number)
+                    text = f"{text.rstrip()}\n\n{turned}\n" if turned else text
+                    metadata.update(ocr_degrees=result.degrees, ocr_confidence=round(result.confidence, 3))
+                    if result.flags:
+                        metadata["flags"] = ",".join(result.flags)
+                documents.append(Document(
+                    # `<br>` is kept until the tables are cleaned: it marks rows stacked into
+                    # one and the pieces of a rotated label (rag/table_rows.py).
+                    text=clean_markdown_tables(_PDF_MARKUP.sub("", text), rotated.on(number, page["text"])),
+                    metadata={**metadata, **(extra_info or {})},
+                    excluded_embed_metadata_keys=list(_OCR_KEYS),
+                    excluded_llm_metadata_keys=list(_OCR_KEYS),
+                ))
+            return documents
+        finally:
+            rotated.close()
+
+
+# Table detection with pymupdf's own find_tables (the fallback when pymupdf4llm
+# gives no layout boxes) stops after this many pages or seconds per document:
+# it costs about 0.13 s per page of the 706-page Legal Guide, and a page drawn
+# as thousands of vector paths can take minutes on its own. Pages past the cap
+# carry no boxes, so only the geometry merge signal is missing for them.
+TABLE_BOXES_MAX_PAGES = 1000
+TABLE_BOXES_MAX_SECONDS = 120
+
+
+def table_boxes(file, pages: List[Dict]) -> Dict[int, List[List[float]]]:
+    """Per 1-based page number, each table's [x0, y0, x1, y1] as fractions of the page size, top to bottom.
+
+    rag.table_merge reads them to tell a table that runs off the bottom of one
+    page onto the top of the next. pymupdf4llm 1.28 lists every layout block
+    of a page with its class in `page_boxes`, so the table boxes come from the
+    pass it already made; without that key (older versions, the no-layout
+    fallback) pymupdf's find_tables runs on each page, guarded and capped.
+    """
+    import pymupdf
+
+    boxes: Dict[int, List[List[float]]] = {}
+    started = time.perf_counter()
+    with pymupdf.open(str(file)) as pdf:
+        for n, page in enumerate(pages):
+            number = page["metadata"].get("page_number", page["metadata"].get("page"))
+            if not isinstance(number, int) or not 1 <= number <= pdf.page_count:
+                continue
+            try:
+                rect = pdf[number - 1].rect
+                width, height = rect.width or 1.0, rect.height or 1.0
+                if "page_boxes" in page:
+                    found = [b["bbox"] for b in page["page_boxes"] if b.get("class") == "table"]
+                elif n < TABLE_BOXES_MAX_PAGES and time.perf_counter() - started < TABLE_BOXES_MAX_SECONDS:
+                    found = [t.bbox for t in pdf[number - 1].find_tables().tables]
+                else:
+                    continue
+            except Exception:  # a page pymupdf cannot analyse keeps no boxes rather than stopping the build
+                continue
+            boxes[number] = sorted(
+                [[round(x0 / width, 4), round(y0 / height, 4), round(x1 / width, 4), round(y1 / height, 4)]
+                 for x0, y0, x1, y1 in found],
+                key=lambda b: b[1],
             )
-            for page in pages
-        ]
+    return boxes
 
 
 _HEADING = re.compile(r"^ {0,3}(#{1,6})\s+(.*?)(?:\s+#+)?\s*$")
@@ -310,13 +429,17 @@ class _SheetReader(BaseReader):
         return docs
 
 
-def load(data_dir: "str | Path", only: Optional[Iterable["str | Path"]] = None, ocr: bool = False) -> List[Document]:
+def load(data_dir: "str | Path", only: Optional[Iterable["str | Path"]] = None, ocr: bool = False,
+         tables: bool = False) -> List[Document]:
     """Load every supported Document under data_dir, with its metadata attached.
 
     Files with unsupported extensions and hidden files or directories are skipped.
     Documents that produce no text are dropped. `only` limits loading to those
     files (paths under data_dir); metadata is still relative to data_dir. `ocr`
     reads PDF pages without a text layer with OCR (see _PdfMarkdownReader).
+    `tables` adds each PDF page's table boxes as `table_bboxes` metadata (see
+    table_boxes) for rag.table_merge; it is off by default as the list is not a
+    value the Chainlit app's Chroma store accepts in metadata.
     """
     data_dir = Path(data_dir).resolve()
     files = _supported_files(data_dir)
@@ -328,7 +451,7 @@ def load(data_dir: "str | Path", only: Optional[Iterable["str | Path"]] = None, 
 
     reader = SimpleDirectoryReader(
         input_files=[str(p) for p in files],
-        file_extractor=_file_extractor(files, ocr),
+        file_extractor=_file_extractor(files, ocr, tables),
         file_metadata=lambda path: document_metadata(_relative(data_dir, path)),
     )
     docs = [doc for doc in reader.load_data() if doc.text.strip()]

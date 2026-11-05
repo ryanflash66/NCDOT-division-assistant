@@ -33,6 +33,15 @@ export type Source = {
   section: string | null;
   url: string;
   excerpt: string;
+  /**
+   * The number printed on the page (DAR-654), when the index knows it; `page` stays the PDF
+   * index the link opens. Optional only because answers saved before this field existed
+   * (sessionStorage) have none; the server always sends both.
+   */
+  printed_page?: string | null;
+  printed_page_end?: string | null;
+  /** Site-relative URL of the cited page's image (/pages/...), when it was rendered (DAR-654). */
+  image: string | null;
 };
 
 export type StepEvent = {
@@ -48,6 +57,8 @@ export type AnswerPayload = {
   answer: string;
   refused: boolean;
   uncited: boolean;
+  /** Numbers the answer states that its cited passages don't contain (DAR-659); absent in answers saved before it. */
+  unverified?: string[];
   sources: Source[];
   model: string | null;
   first_model: string | null;

@@ -40,7 +40,7 @@ from pydantic import BaseModel, Field
 from divrag.answer import Answer, Answerer, Emit, LiveSteps, live_step_labels
 from divrag.config import Settings, load_settings
 from divrag.divisions import BY_ID, DIVISIONS, Division
-from divrag.embedder import Embedder, Reranker, cpu_info, model_cache_dir
+from divrag.embedder import Embedder, cpu_info, model_cache_dir, reranker_from_settings
 from divrag.index_file import IndexFile
 from divrag.llm import MISCONFIGURED, TOO_SLOW, LLMError, OpenRouterClient, tls_context
 from divrag.retrieval import Retriever
@@ -72,6 +72,10 @@ if settings.allowed_origins:
                        allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
 
 
+def _index_bm25(index: IndexFile) -> Optional[Dict[str, float]]:
+    return None if index.keyword is None else {"k1": index.keyword.k1, "b": index.keyword.b}
+
+
 class _Runtime:
     """The index, models and LLM client, built once per server instance."""
 
@@ -80,6 +84,12 @@ class _Runtime:
         self._lock = threading.Lock()
         self._retriever: Optional[Retriever] = None
         self.index = IndexFile.load(settings.index_dir)
+        built = _index_bm25(self.index)
+        if built is not None and (built["k1"], built["b"]) != (settings.bm25_k1, settings.bm25_b):
+            # BM25_K1/BM25_B are baked into bm25.npz: changing them without a rebuild changes nothing.
+            log.warning("BM25_K1=%s BM25_B=%s are set, but bm25.npz was built with k1=%s b=%s; rebuild the index"
+                        " (prototype.ingest) for them to apply", settings.bm25_k1, settings.bm25_b,
+                        built["k1"], built["b"])
 
     def retriever(self) -> Retriever:
         with self._lock:
@@ -87,9 +97,8 @@ class _Runtime:
                 started = time.perf_counter()
                 cache = model_cache_dir()
                 embedder = Embedder(self.index.model, cache_dir=cache)
-                reranker = Reranker(cache_dir=cache) if self.settings.rerank else None
-                retriever = Retriever(self.index, embedder, reranker, candidates=self.settings.rerank_candidates,
-                                      keyword=self.settings.keyword_search)
+                reranker = reranker_from_settings(self.settings, cache_dir=cache)
+                retriever = Retriever(self.index, embedder, reranker, **self.settings.retriever_options())
                 retriever.warm_up()
                 tls_context()  # for the model calls, off the event loop
                 log.info("models loaded from %s in %.1fs", cache, time.perf_counter() - started)
@@ -267,8 +276,28 @@ def health() -> Dict:
         "chunks": dict(counts),
         "embedding_model": runtime.index.model,
         "rerank": settings.rerank,
+        "rerank_model": settings.rerank_model if settings.rerank else None,
+        "rerank_model_file": settings.rerank_model_file if settings.rerank else None,
+        "rerank_text_only": settings.rerank and settings.rerank_text_only,
+        "rerank_batch_size": settings.rerank_batch_size if settings.rerank else None,
         # On only when the setting allows it and bm25.npz shipped with the index (a missing file turns it off silently).
         "keyword_search": settings.keyword_search and runtime.index.keyword is not None,
+        # The caption/ID field (DAR-657) counts only with the keyword search on and a field in the index.
+        "keyword_field": (settings.keyword_search and settings.keyword_field and runtime.index.keyword is not None
+                          and runtime.index.keyword.field is not None),
+        "keyword_field_boost": settings.keyword_field_boost,
+        "keyword_id_boost": settings.keyword_id_boost,
+        "rerank_candidates": settings.rerank_candidates,
+        "top_k": settings.top_k,
+        "page_aggregation": settings.page_aggregation,
+        "max_chunks_per_page": settings.max_chunks_per_page,
+        "max_chunks_per_document": settings.max_chunks_per_document,
+        "rrf_k": settings.rrf_k,
+        "fusion_weights": list(settings.fusion_weights),
+        # The settings' BM25 values apply at the next index rebuild; the index reports what bm25.npz was built with.
+        "bm25_k1": settings.bm25_k1,
+        "bm25_b": settings.bm25_b,
+        "index_bm25": _index_bm25(runtime.index),
         "llm_models": list(settings.models),
         "llm_configured": bool(settings.openrouter_api_key),
         "cpus": cpu_info(),

@@ -1,0 +1,2746 @@
+{
+ "division": "tmsd",
+ "items": [
+  {
+   "id": "tmsd-001",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "The guardrail warrant curves for 2:1 embankments in the guardrail chapter assume what design speed?",
+   "type": "text",
+   "edge_cases": [
+    "phrasing_drift"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "60",
+    "accept": [
+     "60 mph",
+     "60 miles per hour"
+    ],
+    "unit": "mph"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 3-1. Section 3-1, sentence under Figures 4 through 6: 'These curves are based on a design speed of 60 mph.'"
+  },
+  {
+   "id": "tmsd-002",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Per Table 2 of the guardrail chapter, a shoulder drop-off steeper than 1:1 requires a traffic barrier when its height is greater than what?",
+   "type": "table",
+   "edge_cases": [
+    "merged_header",
+    "non_first_row"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "2 ft",
+    "accept": [
+     "2 feet",
+     "2'",
+     "two feet"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 3-1. Table 2 (T-2) Warrants for Nontraversable Hazards, row 'Shoulder drop-off with slope steeper than 1:1 (a) Height greater than 2 ft' = YES; (b) less than 2 ft = NO. Header 'Traffic barrier required' spans YES/NO."
+  },
+  {
+   "id": "tmsd-003",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In Detail 3-2A, what runout length LR applies at 60 mph with an ADT of 800 to 2,000?",
+   "type": "figure",
+   "edge_cases": [
+    "drawing",
+    "table_id",
+    "non_first_row",
+    "non_first_column",
+    "merged_header",
+    "scan"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     10
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "330",
+    "accept": [
+     "330 ft",
+     "330'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "visual",
+   "note": "No printed page number; RDM section label 3-2A. Detail 3-2A table (image only; page text layer holds just the header). Row 60 mph, column group 800-2000 ADT: LC 22, LR 330. Neighbours: 2000-4000 gives 360, under 800 gives 300."
+  },
+  {
+   "id": "tmsd-004",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What N width does Detail 3-2A give for a local or collector road with a design-year ADT of 400 to 1,500?",
+   "type": "figure",
+   "edge_cases": [
+    "drawing",
+    "non_first_row",
+    "non_first_column",
+    "merged_header",
+    "scan"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     10
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "5",
+    "accept": [
+     "5 ft",
+     "5'",
+     "5 feet"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "visual",
+   "note": "No printed page number; RDM section label 3-2A. Detail 3-2A, table 'N width for locals and collectors' under the merged 'Design year' header: under 400 = 2', 400-1500 = 5', 1501-2000 = 6', over 2000 = 8'."
+  },
+  {
+   "id": "tmsd-005",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Detail 3-2B: when L1 is equal to or greater than LC on the trailing end of a rigid obstacle, what anchor unit can be used because no L distance is needed?",
+   "type": "figure",
+   "edge_cases": [
+    "drawing",
+    "figure_callout",
+    "scan"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     12
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "CAT-1",
+    "accept": [
+     "CAT 1",
+     "Cable Anchor Terminal"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "visual",
+   "note": "No printed page number; RDM section label 3-2B. Note on Detail 3-2B (image): 'When L1 is equal to or greater than LC, no L distance is needed on trailing end of warrant. A CAT-1 anchor unit can be used.' Page 11 text says the same for multi-lane highways."
+  },
+  {
+   "id": "tmsd-006",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What recommended length of need L does Detail 3-2C give for a fill slope warrant at a 50 mph design speed?",
+   "type": "figure",
+   "edge_cases": [
+    "drawing",
+    "table_id",
+    "non_first_row",
+    "scan"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     13
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "100",
+    "accept": [
+     "100 ft",
+     "100'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "No printed page number; RDM section label 3-2C. Detail 3-2C table (image only): 70 mph 150', 60 mph 125', 50 mph 100', 40 mph 75'."
+  },
+  {
+   "id": "tmsd-007",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "For a hazard on a horizontal curve, how much is added to the tangent runout distance to get the total length of need?",
+   "type": "text",
+   "edge_cases": [
+    "numeric_precision"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     14
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "12.5",
+    "accept": [
+     "12.5 ft",
+     "12.5'",
+     "12'-6\"",
+     "12 ft 6 in"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 3-2D. 3-2D: a distance of 12.5' is added to LH or LC."
+  },
+  {
+   "id": "tmsd-008",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What anchor deduction is used for a Type B-77 structure anchor unit when computing total guardrail length?",
+   "type": "table",
+   "edge_cases": [
+    "numeric_precision",
+    "non_first_row",
+    "footnote"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     18
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "22.875",
+    "accept": [
+     "22.875 ft",
+     "22.875'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 3-2F. Anchor Deductions table in 3-2F: GRAU-350 50.0', M-350 37.5', CAT-1 6.25', AT-1 6.25', *Type III 18.75', *B-77 22.875', *B-83 25.0'. Footnote: * measured from the end of the bridge or approach slab rail."
+  },
+  {
+   "id": "tmsd-009",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "On a curb-and-gutter road faster than 35 mph, what berm width is needed to place guardrail at the preferred 12 feet from the face of curb?",
+   "type": "text",
+   "edge_cases": [
+    "two_page_question"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     19
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "14",
+    "accept": [
+     "14 feet",
+     "14 ft",
+     "14'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 3-5. 3-5: preferred placement 12 feet from face of curb; 'the berm width would have to be 14 feet'."
+  },
+  {
+   "id": "tmsd-010",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Median guardrail or guiderail is to be incorporated on freeway projects with medians of what width or less?",
+   "type": "text",
+   "edge_cases": [
+    "conflicting_values"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     20
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "70",
+    "accept": [
+     "70 feet",
+     "70 ft",
+     "70'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 3-6. 3-6: 'median widths of 70 feet or less'. Page 21 says guardrail is not required in medians wider than 80' when the pier is centred (different rule, decoy)."
+  },
+  {
+   "id": "tmsd-011",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Under a bridge, an outside pier at or closer than what distance from the edge of the main travel lane gets a concrete barrier plus guardrail?",
+   "type": "units",
+   "edge_cases": [
+    "units"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     24
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "15'-6\"",
+    "accept": [
+     "15 ft 6 in",
+     "15.5 ft",
+     "15'6\"",
+     "15 feet 6 inches"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 3-7. 3-7 1.A: 'If the outside pier is 15'-6\" or less from the edge of the main travel lane, use a concrete barrier and guardrail (Std. No. 857.01)'."
+  },
+  {
+   "id": "tmsd-012",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "For a temporary bridge barrier with an offset of 4'-0\" to 5'-11\" from the edge of slab, which Roadway Standard Drawing barrier is used?",
+   "type": "cross_ref",
+   "edge_cases": [
+    "cross_ref"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     26
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "1170.01",
+    "accept": [
+     "Std. No. 1170.01"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 3-11. 3-11 (c): standard precast temporary concrete median barrier Std. No. 1170.01, restrained by the angle and anchor system; 0'-0\" to 3'-11\" uses the Type S barrier instead."
+  },
+  {
+   "id": "tmsd-013",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In Table 1 of the guardrail chapter (FHWA approved Type 350 units), how long is the SENTRE impact attenuator?",
+   "type": "table",
+   "edge_cases": [
+    "table_id",
+    "rotated",
+    "non_first_row",
+    "non_first_column",
+    "scan"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     28
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "17",
+    "accept": [
+     "17 ft",
+     "17'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "No printed page number; RDM section label 3-12. Table 1 (3-12) is an image on a rotated page; row SENTRE: width 2', length 17', supplier Energy Absorption, guardrail anchor unit (SF) and fixed object."
+  },
+  {
+   "id": "tmsd-014",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Who supplies the SKT 350 unit listed in Table 1 of the guardrail chapter?",
+   "type": "table",
+   "edge_cases": [
+    "table_id",
+    "rotated",
+    "non_first_row",
+    "scan"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     28
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "Road Systems",
+    "accept": [
+     "Road Systems, Inc.",
+     "Road Systems Inc"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "No printed page number; RDM section label 3-12. Table 1 (3-12), row SKT 350: 1'-6\" x 50', Road Systems, Inc. (FLEAT is also Road Systems; ET-2000 is Trinity)."
+  },
+  {
+   "id": "tmsd-015",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Intersection bulbs are to be designed in accordance with which Policy and Procedure Manual section?",
+   "type": "cross_ref",
+   "edge_cases": [
+    "cross_ref"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "23/1",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 9-1. 9-1: 'Policy and Procedure Manual 23/1'; bulb-type intersections used on all divided facilities."
+  },
+  {
+   "id": "tmsd-016",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What minimum left or right turn lane length applies at a 50 mph design speed, and does it include the taper?",
+   "type": "table",
+   "edge_cases": [
+    "footnote",
+    "non_first_row"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     11
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "550",
+    "accept": [
+     "550 ft",
+     "550'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 9-1. 9-1 F-4 table: 40 mph 330', 50 mph 550', 60 mph 680'; footnote '*This length includes the taper'. Taper-only values (230/265/300) are decoys."
+  },
+  {
+   "id": "tmsd-017",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What is the minimum taper length allowed within the minimum turn lane lengths of the right turn lane guidelines?",
+   "type": "footnote",
+   "edge_cases": [
+    "footnote"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     11
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "100",
+    "accept": [
+     "100 ft",
+     "100'",
+     "100 feet"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 9-1. Footnote to the turn lane length table: 'The taper length can range from a minimum of 100' to a maximum of 150''. The maximum, 150', is the decoy."
+  },
+  {
+   "id": "tmsd-018",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In Table 3 (simple curve with taper), what offset is listed for a WB-100T design vehicle making a 45 degree turn?",
+   "type": "table",
+   "edge_cases": [
+    "table_id",
+    "non_first_row",
+    "non_first_column",
+    "merged_header"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     19
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "2.5",
+    "accept": [
+     "2.5 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 9-2. Table 3 (T-3), angle 45, WB-100T: simple curve radius 200, radius with taper 115, offset 2.5, taper 15:1. The turn angle is printed only on the first row of each group."
+  },
+  {
+   "id": "tmsd-019",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What symmetric three-centered compound curve radii does Table 3A give for a WB-62 vehicle turning 45 degrees?",
+   "type": "table",
+   "edge_cases": [
+    "table_id",
+    "non_first_row",
+    "non_first_column",
+    "merged_header"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     23
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "460-240-460",
+    "accept": [
+     "460, 240, 460"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 9-2. Table 3A (T-3A), 45 degrees, WB-62: symmetric radii 460-240-460 offset 2.0; asymmetric 120-140-500 offset 3.0-8.5."
+  },
+  {
+   "id": "tmsd-020",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Which AASHTO sight distance case gives the minimum required sight distance at a stop-controlled intersection?",
+   "type": "text",
+   "edge_cases": [
+    "phrasing_drift"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     32
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "Case IIIA",
+    "accept": [
+     "IIIA",
+     "Case III A"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No printed page number; RDM section label 9-3. 9-3: Case IIIA (vehicle crossing from the minor road) is the minimum required at unsignalized intersections; IIIB/IIIC are desirable."
+  },
+  {
+   "id": "tmsd-021",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What formula does Figure 3 of the intersection sight distance section use for the distance d along the major highway?",
+   "type": "figure",
+   "edge_cases": [
+    "figure_callout",
+    "drawing"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     35
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "1.47",
+    "accept": [
+     "d = 1.47 V (J + ta)",
+     "1.47V(J+ta)"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "visual",
+   "note": "No printed page number; RDM section label 9-3. Figure 3 (F-3), legend: d = 1.47 V (J+ta); 12' lanes, level, right-angle intersections; based on 90 degree crossings and 0% grades."
+  },
+  {
+   "id": "tmsd-022",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What minimum length does the directional crossover drawing (9-4 Figure 1) require for all left turn lanes, including taper and storage?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "drawing",
+    "figure_callout"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     39
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "575",
+    "accept": [
+     "575 ft",
+     "575'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "visual",
+   "note": "No printed page number; RDM section label 9-4. Figure 1 of 9-4 (rotated sheet), note 6: 'Use 575' minimum length for all left turn lanes (includes taper and full storage length)'. Drawing assumes 46' median, 4' paved shoulders, 55 mph; 800' min. between crossover and U-turn."
+  },
+  {
+   "id": "tmsd-023",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What date is listed for revision 1.0 in the revision grid of the Signal System Timing Philosophy Manual?",
+   "type": "table",
+   "edge_cases": [
+    "table_id"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "12/25/2015",
+    "accept": [
+     "December 25, 2015"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Document Information page, D. Revision Grid: 1.0 12/25/2015 draft annotated outline; 2.0 2/1/2017."
+  },
+  {
+   "id": "tmsd-024",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What travel time reduction is the COST Section's performance goal for a retimed corridor?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     10
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "20%",
+    "accept": [
+     "20 percent"
+    ],
+    "unit": "%"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Performance Goals, Table 1: new corridors 40%, retimed corridors 20% reduction in travel times."
+  },
+  {
+   "id": "tmsd-025",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What limitation does the data needs table list for traffic counts as a data source?",
+   "type": "table",
+   "edge_cases": [
+    "merged_header"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     11
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "1 typical day",
+    "accept": [
+     "only 1 typical day of data",
+     "one typical day",
+     "snap shot in time"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Data Needs and Applications table, row Traffic Counts, Disadvantages: 'Only 1 typical day of data (normally excludes Mondays, Fridays, rainy days & incidents). Only a snap shot in time'."
+  },
+  {
+   "id": "tmsd-026",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In Figure 1 (selection of objectives, strategies and tactics), which tactic is rated 3 for the Pedestrian Progression strategy?",
+   "type": "figure",
+   "edge_cases": [
+    "rotated",
+    "landscape",
+    "figure_callout"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     17
+    ],
+    "printed_pages": [
+     "Page 3"
+    ],
+    "value": "Optimize Ped/Walk Time",
+    "accept": [
+     "Ped/Walk time",
+     "optimize pedestrian walk time"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "visual",
+   "note": "Landscape matrix page with almost no text layer. Row 'Pedestrian Progression' has a single rating, a 3 under the tactic column 'Optimize Ped/Walk Time'."
+  },
+  {
+   "id": "tmsd-027",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What walking speed does the pedestrian progression strategy use?",
+   "type": "text",
+   "edge_cases": [
+    "numeric_precision"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     19
+    ],
+    "printed_pages": [
+     "Page 5"
+    ],
+    "value": "3.5",
+    "accept": [
+     "3.5 feet per second",
+     "3.5 ft/s"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 2 Strategies, Pedestrian Progression: 'walk at 3.5 feet per second'."
+  },
+  {
+   "id": "tmsd-028",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Below what volume-to-capacity ratio does the manual call a corridor undersaturated?",
+   "type": "text",
+   "edge_cases": [
+    "numeric_precision"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     22
+    ],
+    "printed_pages": [
+     "Page 8"
+    ],
+    "value": "0.85",
+    "accept": [
+     ".85"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Degree of Saturation: undersaturated v/c less than 0.85; oversaturated v/c greater than 1.0."
+  },
+  {
+   "id": "tmsd-029",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In the cost benefit example, what is the peak hour total of the AM peak turning movement counts (Table 1)?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "table_id"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     38
+    ],
+    "printed_pages": [
+     "Page 3"
+    ],
+    "value": "2522",
+    "accept": [
+     "2,522"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Cost Benefit Analysis Table 1: AM peak total 2522, noon 2408, PM 3381, sum 8311."
+  },
+  {
+   "id": "tmsd-030",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What cost per stop does the cost benefit analysis use?",
+   "type": "text",
+   "edge_cases": [
+    "numeric_precision"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     39
+    ],
+    "printed_pages": [
+     "Page 4"
+    ],
+    "value": "$0.014",
+    "accept": [
+     "0.014",
+     "1.4 cents"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Step 3 B: $0.014 per stop (AASHTO Manual on Road User Benefit Analysis); cost of delay $15.91/hour in 2015; 250 analysis days per year."
+  },
+  {
+   "id": "tmsd-031",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "How far from the attraction can a TODS sign be placed at most?",
+   "type": "text",
+   "edge_cases": [
+    "printed_vs_pdf",
+    "toc_decoy"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     "3"
+    ],
+    "value": "five miles",
+    "accept": [
+     "5 miles",
+     "5 mi"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Survey Procedures IV (printed page 3): G.S. 136-140.19(3), not more than five miles. The TOC on PDF page 2 lists 'Travel Services Inventory ... 3' and is a decoy."
+  },
+  {
+   "id": "tmsd-032",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "To what precision is the odometer distance recorded on the TODS survey form?",
+   "type": "text",
+   "edge_cases": [
+    "numeric_precision",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     "3"
+    ],
+    "value": "1/100",
+    "accept": [
+     "0.01 mile",
+     "one-hundredth of a mile",
+     "nearest 1/100 of a mile"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Survey Procedures IV: 'Distance shall be recorded to the nearest 1/100 of a mile'."
+  },
+  {
+   "id": "tmsd-033",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "If an attraction deleted from the TODS program for a breach re-applies and is found in compliance, what service charge per sign is paid to reinstall its signs?",
+   "type": "text",
+   "edge_cases": [
+    "conflicting_values",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     14
+    ],
+    "printed_pages": [
+     "11"
+    ],
+    "value": "$160",
+    "accept": [
+     "160.00",
+     "$160.00"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "VII.C (printed page 11): $160.00 per attraction sign. The $200 per sign charge for a design change (printed page 6) and the $200 contract fee are decoys."
+  },
+  {
+   "id": "tmsd-034",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Which TOD form is filled out when a TODS attraction changes ownership?",
+   "type": "text",
+   "edge_cases": [
+    "table_id",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     14
+    ],
+    "printed_pages": [
+     "11"
+    ],
+    "value": "TOD-5",
+    "accept": [
+     "TOD 5"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "VII.D: Form TOD-5 'Change of Ownership', request within 30 days of actual transfer."
+  },
+  {
+   "id": "tmsd-035",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What retroreflective sheeting type is required on mini-TODS sign faces?",
+   "type": "text",
+   "edge_cases": [
+    "printed_vs_pdf",
+    "conflicting_values"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     42
+    ],
+    "printed_pages": [
+     "39"
+    ],
+    "value": "Type I",
+    "accept": [
+     "engineering grade",
+     "Type I/engineering grade"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Appendix G item 3: mini-TODS Type I/engineering grade (enclosed lens); mainline TODS Type III/high intensity, the conflicting neighbour value."
+  },
+  {
+   "id": "tmsd-036",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "According to the TODS application flow chart time frames, within how many days of the let date or contract execution should the signs be constructed?",
+   "type": "figure",
+   "edge_cases": [
+    "figure_callout",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     44
+    ],
+    "printed_pages": [
+     "41"
+    ],
+    "value": "90 days",
+    "accept": [
+     "90"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Appendix flow chart (printed page 41), TIME FRAMES box: survey within 30 days of fee, fees within 60 days of approval, construction arranged within 7 days, signs constructed within 90 days; typical 6 months end to end."
+  },
+  {
+   "id": "tmsd-037",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "How long do we have to keep fatal investigation files?",
+   "type": "text",
+   "edge_cases": [
+    "phrasing_drift"
+   ],
+   "expected": {
+    "source": "Fatal Investigation Guidelines.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     "3"
+    ],
+    "value": "10 years",
+    "accept": [
+     "ten years"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "File Management: retained electronically according to standard policy (10 years)."
+  },
+  {
+   "id": "tmsd-038",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What instrument do the field guidelines say to use to check curves at a fatal crash site?",
+   "type": "text",
+   "edge_cases": [
+    "phrasing_drift"
+   ],
+   "expected": {
+    "source": "Fatal Investigation Guidelines.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     "4"
+    ],
+    "value": "Ball Bank Indicator",
+    "accept": [
+     "ball-bank indicator"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Regional Office Field Guidelines item 4: 'Check curves with Ball Bank Indicator'."
+  },
+  {
+   "id": "tmsd-039",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What completion rate by the due date rates a Traffic Safety Unit engineer as 'Exceeds Expectations' on fatal investigations?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row"
+   ],
+   "expected": {
+    "source": "Fatal Investigation Guidelines.pdf",
+    "pdf_pages": [
+     5
+    ],
+    "printed_pages": [
+     "5"
+    ],
+    "value": "95%",
+    "accept": [
+     "> 95%",
+     "more than 95 percent"
+    ],
+    "unit": "%"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Performance Evaluation table: Exceeds > 95%, Meets 90-95%, Does Not Meet < 90%. The 60 calendar day expectation is a decoy."
+  },
+  {
+   "id": "tmsd-040",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In the functional-area reaction distance table of the access policy, what distance applies in an urban area at 45 mph?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "non_first_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     37
+    ],
+    "printed_pages": [
+     "27"
+    ],
+    "value": "100 ft",
+    "accept": [
+     "100 feet",
+     "100'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Reaction Time and Distances table (printed page 27): Rural 2.5 s 130/165/200 ft; Urban 1.5 s 75/100/120 ft at 35/45/55 mph."
+  },
+  {
+   "id": "tmsd-041",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "How much sight distance per 10 mph of arterial design speed does the access policy require for a single unit truck crossing a four-lane arterial?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "non_first_column",
+    "merged_header",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     39
+    ],
+    "printed_pages": [
+     "29"
+    ],
+    "value": "150",
+    "accept": [
+     "150 ft",
+     "150 feet"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Sight distance table (printed page 29): passenger vehicle 100/120/130, single unit truck 130/150/170, WB-50 170/200/210 for two/four/six lanes."
+  },
+  {
+   "id": "tmsd-042",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What is the maximum width of a one-way driveway under the NCDOT access policy?",
+   "type": "text",
+   "edge_cases": [
+    "printed_vs_pdf",
+    "phrasing_drift"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     60
+    ],
+    "printed_pages": [
+     "50"
+    ],
+    "value": "24",
+    "accept": [
+     "12 to 24 feet",
+     "maximum 24 foot",
+     "24 ft",
+     "24 feet"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Width of Driveways (W), printed page 50: one-way minimum 12 foot and maximum 24 foot; two-way maximum 36 foot. The 12 ft minimum and the 36 ft two-way maximum are decoys."
+  },
+  {
+   "id": "tmsd-043",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Which NCDOT district office covers Onslow and Pender counties?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     78
+    ],
+    "printed_pages": [
+     "68"
+    ],
+    "value": "Jacksonville",
+    "accept": [
+     "Jacksonville district office"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Appendix 2 (printed page 68): Division 3 (Wilmington) - Jacksonville district office: Onslow, Pender."
+  },
+  {
+   "id": "tmsd-044",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Which General Statute requires abandonment of a road after 15 years of non-use, according to the Traffic Services Legal Guide?",
+   "type": "table",
+   "edge_cases": [
+    "landscape",
+    "non_first_column"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "136-96",
+    "accept": [
+     "G.S. 136-96"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Row 'Abandonment (non-use)': N.C. General Statute 136-96, last action 1987-0428."
+  },
+  {
+   "id": "tmsd-045",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Which Administrative Code rule holds the definitions for the Adopt-A-Highway Program?",
+   "type": "table",
+   "edge_cases": [
+    "landscape",
+    "multipage_table"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "2D.1002",
+    "accept": [
+     "19A NCAC 2D.1002"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Row 'Adopt-A-Highway Program (general) Definitions': 19A NCAC 2D.1002, last action 1993-1101. The column headers are printed only on page 1."
+  },
+  {
+   "id": "tmsd-046",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Under which Administrative Code rule does the Chief Engineer set maximum axle weights on light traffic roads?",
+   "type": "table",
+   "edge_cases": [
+    "landscape",
+    "multipage_table",
+    "non_first_column"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     16
+    ],
+    "printed_pages": [
+     "16"
+    ],
+    "value": "4A.0106",
+    "accept": [
+     "19A NCAC 4A.0106"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Row 'Chief Engineer Powers (light traffic roads)': 4A.0106, last action 1993-1201."
+  },
+  {
+   "id": "tmsd-047",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What is the 'Last Action' session law listed for the church roads easement statute (G.S. 136-68) in the legal guide?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "landscape",
+    "multipage_table",
+    "non_first_column"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     17
+    ],
+    "printed_pages": [
+     "17"
+    ],
+    "value": "1995-0513",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Row 'Church Roads (easements)': 136-68, last action 1995-0513; the table runs from page 1 with no repeated header."
+  },
+  {
+   "id": "tmsd-048",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "On the DMV-349, what does the route class abbreviation PVA stand for?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row"
+   ],
+   "expected": {
+    "source": "C34 - Manual 2012.pdf",
+    "pdf_pages": [
+     41
+    ],
+    "printed_pages": [
+     "41"
+    ],
+    "value": "Public vehicular area",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Urban Non-Intersections section E listing: PVA = Public vehicular area; PP = private road, property or driveway."
+  },
+  {
+   "id": "tmsd-049",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "For a rural non-intersection crash more than 500 feet from the reference point, the DMV-349 manual says 0.01 miles is about how many feet?",
+   "type": "table",
+   "edge_cases": [
+    "multipage_table",
+    "numeric_precision"
+   ],
+   "expected": {
+    "source": "C34 - Manual 2012.pdf",
+    "pdf_pages": [
+     45
+    ],
+    "printed_pages": [
+     "45"
+    ],
+    "value": "53 feet",
+    "accept": [
+     "53 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Rural Non-Intersections section H (table continues onto page 46): distance in feet if less than 500 feet, else nearest one-hundredth mile; '0.01 miles is about 53 feet'."
+  },
+  {
+   "id": "tmsd-050",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What vision obstruction code is entered on the DMV-349 when the driver was blinded by sunlight?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "non_first_row"
+   ],
+   "expected": {
+    "source": "C34 - Manual 2012.pdf",
+    "pdf_pages": [
+     53
+    ],
+    "printed_pages": [
+     "53"
+    ],
+    "value": "10",
+    "accept": [
+     "code 10"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Driver Information table continues from page 52 (header 'Section / Enter' only there); L 34 Vision Obstruction: 9 blinded headlights, 10 blinded sunlight, 11 blinded other lights."
+  },
+  {
+   "id": "tmsd-051",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Per MUTCD Table 2C-1, what size is the Chevron Alignment (W1-8) sign on an expressway?",
+   "type": "table",
+   "edge_cases": [
+    "multipage_table",
+    "non_first_row",
+    "non_first_column",
+    "printed_vs_pdf",
+    "table_id"
+   ],
+   "expected": {
+    "source": "Chapter2c.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     "148"
+    ],
+    "value": "30 x 36",
+    "accept": [
+     "30 by 36",
+     "30x36",
+     "30 in x 36 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 2C-1 sheet 1 of 4 (printed page 148): W1-8 conventional 18 x 24, expressway 30 x 36, freeway 36 x 48, oversized 24 x 30."
+  },
+  {
+   "id": "tmsd-052",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What oversized dimension does MUTCD Table 2C-1 list for the Trail Crossing plaque (W11-15P)?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "non_first_row",
+    "non_first_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "Chapter2c.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     "150"
+    ],
+    "value": "36 x 30",
+    "accept": [
+     "36 by 30",
+     "36x30"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 2C-1 sheet 3 of 4 (printed page 150): W11-15P conventional 24 x 18, expressway 30 x 24, oversized 36 x 30. The header is repeated on each sheet but the sheet is a continuation."
+  },
+  {
+   "id": "tmsd-053",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Under MUTCD Table 2C-4 chart A, are horizontal alignment devices required, recommended or optional on an arterial without pavement markings carrying 1,000 to 2,999 AADT?",
+   "type": "table",
+   "edge_cases": [
+    "merged_header",
+    "non_first_row",
+    "non_first_column",
+    "printed_vs_pdf",
+    "table_id"
+   ],
+   "expected": {
+    "source": "Chapter2c.pdf",
+    "pdf_pages": [
+     11
+    ],
+    "printed_pages": [
+     "155"
+    ],
+    "value": "Recommended",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Table 2C-4 A (printed page 155): arterial/collector without markings: <1,000 optional, 1,000-2,999 recommended, 3,000-3,999 required, >3,999 required."
+  },
+  {
+   "id": "tmsd-054",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What chevron sign spacing does MUTCD Table 2C-5 give for a curve with a 35 to 45 mph advisory speed?",
+   "type": "table_id",
+   "edge_cases": [
+    "non_first_row",
+    "printed_vs_pdf",
+    "table_id"
+   ],
+   "expected": {
+    "source": "Chapter2c.pdf",
+    "pdf_pages": [
+     14
+    ],
+    "printed_pages": [
+     "158"
+    ],
+    "value": "120 feet",
+    "accept": [
+     "120 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 2C-5 (printed page 158): 15 mph or less 40 ft, 20-30 80 ft, 35-45 (401-700 ft radius) 120 ft, 50-60 160 ft, >60 200 ft."
+  },
+  {
+   "id": "tmsd-055",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Per MUTCD 3B.02 guidance, center line markings should be placed on rural arterials and collectors at least 18 feet wide when ADT reaches what?",
+   "type": "text",
+   "edge_cases": [
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "part3.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     "542"
+    ],
+    "value": "3,000",
+    "accept": [
+     "3000 vehicles per day"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Section 3B.02 paragraph 02 (printed page 542): rural 18 ft and 3,000 vpd (guidance); urban 20 ft and 4,000 (guidance) or 6,000 (standard)."
+  },
+  {
+   "id": "tmsd-056",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What minimum passing sight distance does MUTCD Table 3B-1 require for no-passing zone markings where the speed limit is 45 mph?",
+   "type": "table_id",
+   "edge_cases": [
+    "non_first_row",
+    "printed_vs_pdf",
+    "table_id"
+   ],
+   "expected": {
+    "source": "part3.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     "543"
+    ],
+    "value": "700 feet",
+    "accept": [
+     "700 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Table 3B-1 (printed page 543): 40 mph 600 ft, 45 mph 700 ft, 50 mph 800 ft."
+  },
+  {
+   "id": "tmsd-057",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In 23 CFR 655 Appendix Table 1 (daytime color limits for retroreflective material), what is the x chromaticity coordinate of corner point 1 for orange?",
+   "type": "table",
+   "edge_cases": [
+    "numeric_precision",
+    "non_first_row",
+    "merged_header",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part655.pdf",
+    "pdf_pages": [
+     5
+    ],
+    "printed_pages": [
+     "387"
+    ],
+    "value": "0.558",
+    "accept": [
+     "x 0.558",
+     "x = 0.558"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 1 to Appendix to Part 655 Subpart F (printed page 387): Orange point 1 x=0.558 y=0.352. y = 0.352 is the neighbouring cell."
+  },
+  {
+   "id": "tmsd-058",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What maximum daytime luminance factor does 23 CFR 655 Table 1A allow for yellow Type V retroreflective sheeting?",
+   "type": "table",
+   "edge_cases": [
+    "merged_header",
+    "non_first_row",
+    "non_first_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part655.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     "388"
+    ],
+    "value": "30",
+    "accept": [
+     "30%",
+     "30 percent"
+    ],
+    "unit": "%"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 1A (printed page 388): Yellow - Types I/II/III/VI min 15 max 45; Types IV/VII/VIII min 24 max 45; Type V min 12 max 30."
+  },
+  {
+   "id": "tmsd-059",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "23 CFR 655 Table 3A lists a fluorescence luminance factor YF of 15 for fluorescent red; may that value be used to judge performance in service?",
+   "type": "footnote",
+   "edge_cases": [
+    "footnote",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part655.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     "389"
+    ],
+    "value": "No",
+    "accept": [
+     "shall not be used",
+     "quality assurance purposes only",
+     "not as a measure of performance"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 3A continued (printed page 389), footnote: YF values are typical, for quality assurance only; 'YF shall not be used as a measure of performance during service'."
+  },
+  {
+   "id": "tmsd-060",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What is the maximum daytime luminance factor for blue retroreflective pavement marking material in 23 CFR 655 Table 5A?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "non_first_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part655.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     "389"
+    ],
+    "value": "14",
+    "accept": [
+     "14%",
+     "14 percent"
+    ],
+    "unit": "%"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 5A (printed page 389): white min 35, yellow min 25, red 6-15, blue 5-14, purple 5-15."
+  },
+  {
+   "id": "tmsd-061",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Under 23 CFR 924.9, a Strategic Highway Safety Plan update must be completed no later than how many years after the previous approved version?",
+   "type": "text",
+   "edge_cases": [
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part924.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     "607"
+    ],
+    "value": "5 years",
+    "accept": [
+     "five years"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "924.9(a)(3)(i) (printed page 607)."
+  },
+  {
+   "id": "tmsd-062",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What share of an incidental sidewalk project's cost does NCDOT pay for a municipality of 50,000 to 100,000 people?",
+   "type": "duplicate_pages",
+   "edge_cases": [
+    "near_duplicate",
+    "non_first_row",
+    "merged_header"
+   ],
+   "expected": {
+    "source": "bikeped_Ped_Policy.pdf",
+    "pdf_pages": [
+     4,
+     11
+    ],
+    "printed_pages": [
+     "4",
+     "11"
+    ],
+    "value": "60%",
+    "accept": [
+     "60 percent",
+     "60/40"
+    ],
+    "unit": "%"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "The same population sliding-scale table appears on pages 4 and 11: >100,000 50/50; 50,000-100,000 DOT 60% local 40%; 10,000-50,000 70/30; <10,000 80/20. Either page is a correct citation."
+  },
+  {
+   "id": "tmsd-063",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Which countermeasure in the NCDOT interim design safety pilot project reduces vehicle turning speeds at intersections?",
+   "type": "text",
+   "edge_cases": [
+    "landscape",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "interim-design-safety-pilot-program.pdf",
+    "pdf_pages": [
+     15
+    ],
+    "printed_pages": [
+     "13"
+    ],
+    "value": "protected corners",
+    "accept": [
+     "protected corner"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Printed page 13: curb extensions, median refuge islands, protected corners. The other two selected countermeasures (curb extensions, median refuge islands) are decoys."
+  },
+  {
+   "id": "tmsd-064",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How many candidate locations were on the pilot project team's initial list?",
+   "type": "text",
+   "edge_cases": [
+    "landscape",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "interim-design-safety-pilot-program.pdf",
+    "pdf_pages": [
+     17
+    ],
+    "printed_pages": [
+     "15"
+    ],
+    "value": "36",
+    "accept": [
+     "thirty-six"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Printed page 15, last sentence: 'an initial list of 36 candidate locations'."
+  },
+  {
+   "id": "tmsd-065",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In the pilot project's initial candidate list, how many total crashes are recorded at Capital Blvd (US-1) and Calvary Dr in Raleigh?",
+   "type": "table",
+   "edge_cases": [
+    "landscape",
+    "multipage_table",
+    "non_first_row",
+    "non_first_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "interim-design-safety-pilot-program.pdf",
+    "pdf_pages": [
+     18
+    ],
+    "printed_pages": [
+     "16"
+    ],
+    "value": "20",
+    "accept": [
+     "20 total crashes"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Initial List of Candidate Locations (printed page 16): Capital Blvd (US-1) and Calvary Dr, Raleigh, Division 5, curb extensions, '5 pedestrian injury, 20 total crashes', shoulder."
+  },
+  {
+   "id": "tmsd-066",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Which highway division is listed for the Manning Dr and Ridge Rd/Skipper Bowles Dr candidate site in Chapel Hill?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "landscape",
+    "multipage_table",
+    "non_first_row",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "interim-design-safety-pilot-program.pdf",
+    "pdf_pages": [
+     19
+    ],
+    "printed_pages": [
+     "17"
+    ],
+    "value": "7",
+    "accept": [
+     "Division 7"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Candidate list continuation (printed page 17): Chapel Hill, Division 7, intersection, curb extensions, 10 pedestrian injury, 11 total crashes."
+  },
+  {
+   "id": "tmsd-067",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What is the FHWA report number of the Guide for Improving Pedestrian Safety at Uncontrolled Crossing Locations?",
+   "type": "text",
+   "edge_cases": [
+    "roman_front_matter"
+   ],
+   "expected": {
+    "source": "STEP-guide-improving-ped-safety.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     "i"
+    ],
+    "value": "FHWA-SA-17-072",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Technical Report Documentation Page (printed page i): FHWA-SA-17-072, January 2018 (July 2018 updated), 38 pages."
+  },
+  {
+   "id": "tmsd-068",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Above what AADT does the STEP guide say a marked crosswalk alone is typically insufficient on a multi-lane road?",
+   "type": "text",
+   "edge_cases": [
+    "printed_vs_pdf",
+    "near_duplicate"
+   ],
+   "expected": {
+    "source": "STEP-guide-improving-ped-safety.pdf",
+    "pdf_pages": [
+     23
+    ],
+    "printed_pages": [
+     "16"
+    ],
+    "value": "10,000",
+    "accept": [
+     "10000"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Printed page 16, citing Zegeer 2005: multi-lane crossings with AADTs exceeding 10,000. The underlying FHWA-HRT-04-100 Table 11 uses 12,000/15,000 thresholds, so the two documents differ."
+  },
+  {
+   "id": "tmsd-069",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In Table 1 of the marked-versus-unmarked crosswalk study, how many pedestrian crashes occurred at the marked crosswalk sites on 3- or 4-lane roads?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "non_first_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "04100.pdf",
+    "pdf_pages": [
+     28
+    ],
+    "printed_pages": [
+     "18"
+    ],
+    "value": "94",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 1 (printed page 18): 3 or 4 lanes, marked 401 sites, 94 crashes; unmarked 395 sites, 12 crashes."
+  },
+  {
+   "id": "tmsd-070",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Per Table 7 of the crosswalk study, how many crashes were recorded at marked crosswalks on multilane roads without a raised median carrying 12,000 to 15,000 ADT?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "non_first_column",
+    "merged_header",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "04100.pdf",
+    "pdf_pages": [
+     33
+    ],
+    "printed_pages": [
+     "23"
+    ],
+    "value": "23",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 7 (printed page 23): Multi, no raised median, 12,000-15,000: marked 76 sites 23 crashes; unmarked 73 sites 2 crashes."
+  },
+  {
+   "id": "tmsd-071",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In Table 11 of FHWA-HRT-04-100, what recommendation code applies to a multilane road with a raised median, 12,000 to 15,000 ADT and a 35 mph speed limit?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "landscape",
+    "merged_header",
+    "non_first_row",
+    "non_first_column",
+    "near_duplicate",
+    "printed_vs_pdf",
+    "table_id"
+   ],
+   "expected": {
+    "source": "04100.pdf",
+    "pdf_pages": [
+     64
+    ],
+    "printed_pages": [
+     "54"
+    ],
+    "value": "P",
+    "accept": [
+     "possible increase in pedestrian crash risk"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 11 (rotated landscape page, printed 54): row 'Multilane (four or more lanes) with raised median', ADT >12,000-15,000 group, 35 mph column = P. Neighbours: 30 mph P, 40 mph N. The STEP guide's Table 1 is a near-duplicate matrix with different codes."
+  },
+  {
+   "id": "tmsd-072",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What minimum width must a raised median have to count as a pedestrian refuge in Table 11 of the crosswalk study?",
+   "type": "footnote",
+   "edge_cases": [
+    "footnote",
+    "rotated",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "04100.pdf",
+    "pdf_pages": [
+     64
+    ],
+    "printed_pages": [
+     "54"
+    ],
+    "value": "4 ft",
+    "accept": [
+     "4 feet",
+     "1.2 m",
+     "4'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 11 footnote ***: at least 1.2 m (4 ft) wide and 1.8 m (6 ft) long. The 6 ft (1.8 m) minimum length is the decoy."
+  },
+  {
+   "id": "tmsd-073",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In the split estimation example of the FHWA Signal Timing Manual (page 3-14), what average green time results for the EB through/right movement?",
+   "type": "table",
+   "edge_cases": [
+    "chapter_page",
+    "footnote",
+    "non_first_row",
+    "non_first_column"
+   ],
+   "expected": {
+    "source": "fhwa_hop_08_024.pdf",
+    "pdf_pages": [
+     72
+    ],
+    "printed_pages": [
+     "3-14"
+    ],
+    "value": "48",
+    "accept": [
+     "48 s",
+     "48 seconds"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Critical movement table: EB TH/RT volume 485, 43%, split 52 s, Y+R 4 s, green 48 s. Footnote ** flags the NB LT 4 s green as possibly below minimum green."
+  },
+  {
+   "id": "tmsd-074",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What accident modification factor does the Signal Timing Manual cite for converting a 4-legged urban intersection from stop control to signal control?",
+   "type": "text",
+   "edge_cases": [
+    "chapter_page",
+    "numeric_precision"
+   ],
+   "expected": {
+    "source": "fhwa_hop_08_024.pdf",
+    "pdf_pages": [
+     85
+    ],
+    "printed_pages": [
+     "3-27"
+    ],
+    "value": "0.77",
+    "accept": [
+     "23 percent reduction"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Page 3-27: AMF 0.77 for all fatal and injury crashes, a 23 percent anticipated reduction."
+  },
+  {
+   "id": "tmsd-075",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Per Table 5-1 of the Signal Timing Manual, semi-actuated control is applicable where the major road is posted below what speed?",
+   "type": "table_id",
+   "edge_cases": [
+    "chapter_page",
+    "merged_header",
+    "non_first_column"
+   ],
+   "expected": {
+    "source": "fhwa_hop_08_024.pdf",
+    "pdf_pages": [
+     128
+    ],
+    "printed_pages": [
+     "5-3"
+    ],
+    "value": "40 mph",
+    "accept": [
+     "<40 mph",
+     "less than 40 mph"
+    ],
+    "unit": "mph"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 5-1 (page 5-3), Semi-Actuated column: major road posted <40 mph, cross road light; fully actuated for isolated locations posted >40 mph."
+  },
+  {
+   "id": "tmsd-076",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In the HCM quick cycle-length estimate given in the Signal Timing Manual, what area type adjustment factor fa applies in a central business district?",
+   "type": "text",
+   "edge_cases": [
+    "chapter_page",
+    "numeric_precision"
+   ],
+   "expected": {
+    "source": "fhwa_hop_08_024.pdf",
+    "pdf_pages": [
+     191
+    ],
+    "printed_pages": [
+     "6-33"
+    ],
+    "value": "0.90",
+    "accept": [
+     ".90",
+     "0.9"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Page 6-33: RS = 1,710 * PHF * fa, fa = 0.90 if CBD, 1.00 otherwise; minimum cycle 60 s."
+  },
+  {
+   "id": "tmsd-077",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What average maintained illuminance does Table 17 of the Signalized Intersections guide recommend for a Major/Collector intersection on asphalt (R2/R3) with a medium pedestrian classification?",
+   "type": "table",
+   "edge_cases": [
+    "units",
+    "merged_header",
+    "non_first_row",
+    "non_first_column",
+    "printed_vs_pdf",
+    "table_id"
+   ],
+   "expected": {
+    "source": "04091.pdf",
+    "pdf_pages": [
+     110
+    ],
+    "printed_pages": [
+     "92"
+    ],
+    "value": "22.0",
+    "accept": [
+     "22 lux",
+     "2.2 fc",
+     "22.0 (2.2)"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 17 (printed page 92): R2/R3 block, Major/Collector: high 29.0 (2.9), medium 22.0 (2.2), low 15.0 (1.5). The R1 (concrete) block gives 15.0 (1.5) for medium, a decoy."
+  },
+  {
+   "id": "tmsd-078",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What ADT range defines a 'Collector' roadway for intersection illumination in Table 18 of the Signalized Intersections guide?",
+   "type": "table",
+   "edge_cases": [
+    "non_first_row",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "04091.pdf",
+    "pdf_pages": [
+     111
+    ],
+    "printed_pages": [
+     "93"
+    ],
+    "value": "1,500 to 3,500",
+    "accept": [
+     "1500-3500",
+     "1,500-3,500"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 18 (printed page 93): Major more than 3,500; Collector 1,500 to 3,500; Local 100 to 1,500."
+  },
+  {
+   "id": "tmsd-079",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Using Table 117 of the Signalized Intersections guide, Case II (exclusive left-turn lanes on the major approaches only), what planning-level capacity is given for three basic lanes on the major approach and two on the minor approach?",
+   "type": "table",
+   "edge_cases": [
+    "merged_header",
+    "non_first_row",
+    "non_first_column",
+    "footnote",
+    "printed_vs_pdf",
+    "table_id"
+   ],
+   "expected": {
+    "source": "04091.pdf",
+    "pdf_pages": [
+     327
+    ],
+    "printed_pages": [
+     "309"
+    ],
+    "value": "2,600",
+    "accept": [
+     "2600 veh/hr"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Table 117 (printed page 309), Case II: minor 1 lane 1,600/2,100/2,700; minor 2 lanes 2,100/2,600/3,000; minor 3 lanes 2,300/2,800/3,200 for 2/3/4 major lanes. Footnote ***: use a fraction of capacity for design."
+  },
+  {
+   "id": "tmsd-080",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What contract number is listed on the documentation page of the Pedestrian Facilities Users Guide (FHWA-RD-01-102)?",
+   "type": "scan",
+   "edge_cases": [
+    "scan"
+   ],
+   "expected": {
+    "source": "01102.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "DTFH61-92-C-00138",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "Scanned Technical Report Documentation Page: contract DTFH61-92-C-00138, 162 pages, Highway Safety Research Center."
+  },
+  {
+   "id": "tmsd-081",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "How many different engineering improvements for pedestrians does Chapter 4 of the Pedestrian Facilities Users Guide detail?",
+   "type": "scan",
+   "edge_cases": [
+    "scan"
+   ],
+   "expected": {
+    "source": "01102.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "47",
+    "accept": [
+     "forty-seven"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "Scanned abstract: 'Chapter 4 contains the details of 47 different engineering improvements'; 13 crash-type groupings in Chapter 3 is a decoy."
+  },
+  {
+   "id": "tmsd-082",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What maximum cross-slope does the Pedestrian Facilities Users Guide give for sidewalks?",
+   "type": "units",
+   "edge_cases": [
+    "units",
+    "numeric_precision",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "01102.pdf",
+    "pdf_pages": [
+     155
+    ],
+    "printed_pages": [
+     "149"
+    ],
+    "value": "1:50",
+    "accept": [
+     "2 percent",
+     "2%"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Sidewalk Grade and Cross-Slopes (printed page 148): maximum cross-slope 1:50 (2 percent); curb ramp max grade 1:12 (8.3 percent); running grade 5 percent or less."
+  },
+  {
+   "id": "tmsd-083",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In Detail 3-2D (guardrail on the approach end of a hazard on a horizontal curve), what offset from the edge of lane is dimensioned at the GRAU-350 end, beyond N?",
+   "type": "figure",
+   "edge_cases": [
+    "drawing",
+    "figure_callout",
+    "scan",
+    "rotated"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     15
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "0.75",
+    "accept": [
+     "N + 0.75'",
+     "N + 0.75 ft",
+     "0.75 ft",
+     "0.75'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "No printed page number; RDM detail label 3-2D. Image-only page drawn upside down; OCR reads 'GRAU-350', '0.75'', '+ N'. The drawing also dimensions 12'-6\" along the curve (the 12.5' of 3-2D text on p14, a decoy)."
+  },
+  {
+   "id": "tmsd-084",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In Figure 1 of the guardrail chapter (special grading in a superelevated location), what slope runs from the median shoulder break point down toward the ditch?",
+   "type": "figure",
+   "edge_cases": [
+    "drawing",
+    "figure_callout",
+    "scan",
+    "landscape"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     23
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "10:1",
+    "accept": [
+     "10:1 slope",
+     "10 to 1"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "ocr_match",
+   "note": "No printed page number; RDM label 3-6 F-1. Figure 1, image only; OCR reads '10:1' on all three sections (cross slopes .10, .03, .02 are decoys). Footnote: median shoulder width per Standards 560.01 and 560.02."
+  },
+  {
+   "id": "tmsd-085",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In the TODS manual's TOD-7 county list, what county code is assigned to Onslow County?",
+   "type": "table",
+   "edge_cases": [
+    "table_id",
+    "non_first_column",
+    "non_first_row",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     24
+    ],
+    "printed_pages": [
+     "21"
+    ],
+    "value": "067",
+    "accept": [
+     "67",
+     "county code 067"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "TOD-7 County List and Codes, second column group: Div. 3, Onslow, 067 (Northampton 066 and Orange 068 are neighbours). Printed page 21, PDF page 24."
+  },
+  {
+   "id": "tmsd-086",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What hourly rate does NCDOT pay contractors to mill shoulder rumble strips?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No pay rates anywhere in the tmsd documents."
+  },
+  {
+   "id": "tmsd-087",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How many fatal crash investigations did NCDOT complete statewide in 2019?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "The Fatal Investigation Guidelines give procedures and deadlines, no counts."
+  },
+  {
+   "id": "tmsd-088",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What is the unit price per linear foot of GRAU-350 guardrail in the current NCDOT bid averages?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No prices in the guardrail chapter."
+  },
+  {
+   "id": "tmsd-089",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What in-vehicle sound level in decibels must shoulder rumble strips produce?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "The rumble strip guidelines give geometry and placement only."
+  },
+  {
+   "id": "tmsd-090",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What runout length LR does Detail 3-2A give for an 80 mph design speed?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Detail 3-2A tabulates 40 to 70 mph only; the model must not extrapolate."
+  },
+  {
+   "id": "tmsd-091",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What was NCDOT's total HSIP apportionment for federal fiscal year 2024?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 924 sets program requirements, not dollar amounts."
+  },
+  {
+   "id": "tmsd-092",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What TODS fee does Virginia DOT charge for an attraction on a primary highway?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Other state; only the NC TODS manual is present."
+  },
+  {
+   "id": "tmsd-093",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What drop-off depth does the SCDOT require before temporary barrier is used in a work zone?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Other state and other division's topic."
+  },
+  {
+   "id": "tmsd-094",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What is the maximum deflection of NC-PCB portable concrete barrier on concrete pavement at 60 mph?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Answer lives in the wztc TMP Design Manual, not in any tmsd document; a refusal (optionally suggesting Work Zone Traffic Control) is expected."
+  },
+  {
+   "id": "tmsd-095",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What minimum cover does the Utilities Accommodation Manual require for a utility installed by bore and jack?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "Utilities division document; must refuse for tmsd."
+  },
+  {
+   "id": "tmsd-096",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "The 2004 rumble strip revision moved the strip from 6 inches out to 3 feet from the travel lane - when did that change take effect?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "tuning",
+   "verified_by": "page_text_match",
+   "note": "Reversed premise: the memo moved the strip from 3 feet to 6 inches (effective March 2005 letting). A correct reply refuses the premise or corrects it; it must not confirm the 3-foot placement. The rumble strip memo is not a registered tmsd document, so a refusal is the grounded reply; if it is registered later, a correction also passes."
+  },
+  {
+   "id": "tmsd-097",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Why does the guardrail chapter require a 500-foot minimum gap between separate guardrail installations?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "The rule is the opposite: gaps of less than 300' should not be left; there is no 500-foot requirement."
+  },
+  {
+   "id": "tmsd-098",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What is the annual maintenance fee for a mainline TODS panel on an interstate exit ramp?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "TODS are not installed on freeways or at ramp terminals; the $200 annual fee is per contract at non-freeway intersections. The premise is false."
+  },
+  {
+   "id": "tmsd-099",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "The Signal Timing Philosophy Manual says undersaturated corridors have a v/c ratio below 0.95 - what ratio marks oversaturation?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "The manual uses 0.85 for undersaturated and greater than 1.0 for oversaturated; the 0.95 premise is wrong and should be corrected or refused, not echoed."
+  },
+  {
+   "id": "tmsd-100",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "According to the Fatal Investigation Guidelines, how many business days does a regional office have to review the DMV-349 before the 60-day clock starts?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "verified_by": "page_text_match",
+   "note": "No such pre-review period exists; the 60 calendar day (45 business day) expectation begins at Step 4 of the Tracker."
+  }
+ ]
+}

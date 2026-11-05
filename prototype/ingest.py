@@ -10,8 +10,14 @@ read and chunked as the Chainlit app does (rag.loader's PDF-to-Markdown reader,
 rag.tables' table-aware splitter) but into 512-token chunks, tagged with their division and the numbered section heading in
 effect, embedded with the hosted app's embedder and saved as one index
 (chunks.json + vectors.npy, plus the keyword index bm25.npz) that the hosted
-app loads. A chunk on a page with figure or table captions also gets a
-`context` line naming the document, page and captions, embedded with its text.
+app loads. Each chunk keeps its page's index in the PDF (`page`) and, when the
+page prints another number in its footer, header or PDF page label, that
+number too (`printed_page`, rag.pages). A chunk on a page with figure or table
+captions also gets a `context` line naming the document, page (printed number
+too, when it differs) and captions, embedded with its text. Each figure or
+drawing caption also gets a chunk of its own (`kind: "figure"`: caption, nearby
+lines and the drawing's OCR labels, rag.figures), and a chunk from a page OCR
+read badly or had to turn carries `flags` (rag.ocr).
 --reuse keeps the vectors of chunks that haven't changed. Building the index needs
 requirements.txt (llama-index, pymupdf4llm) as well as hosted/requirements.txt;
 the hosted app needs only the latter.
@@ -22,6 +28,7 @@ similarity between the two models' vectors.
 """
 
 import argparse
+import bisect
 import json
 import re
 import sys
@@ -33,12 +40,16 @@ import numpy as np
 from dotenv import load_dotenv
 
 from prototype import HOSTED_DIR  # noqa: F401  (puts hosted/ on sys.path)
+from divrag.config import bm25_parameters
 from divrag.divisions import BY_ID, DIVISIONS, DOCUMENTS_DIR, Division, Document
 from divrag.embedder import Embedder
 from divrag.index_file import IndexFile, search_text
-from rag import loader
+from rag import loader, pages
 from rag.config import AppConfig, load_config
+from rag.table_merge import merge_continued_tables, page_lines, page_span
+from rag.figures import figure_chunks
 from rag.tables import TableAwareSplitter
+from prototype.table_quality import flag_chunks
 
 DEFAULT_OUT = HOSTED_DIR / "index"
 # Smaller than the Chainlit app's 1024-token chunks: bge-small (and the
@@ -75,15 +86,24 @@ def captions(text: str) -> List[str]:
     return list(dict.fromkeys(c for c in found if 8 < len(c) <= _MAX_CAPTION_CHARS))[:_MAX_CAPTIONS]
 
 
-def context_line(title: str, page: Optional[int], names: List[str]) -> str:
+def context_line(title: str, page: Optional[int], names: List[str], printed: Optional[str] = None) -> str:
     """The line embedded (and reranked, and shown to the model) before each chunk of a page with captions.
 
     The TMP manual's asphalt (p. 37) and concrete (p. 38) deflection tables
     differ only in their numbers and the caption under each table, which the
     splitter leaves in a chunk of its own; with the caption on every chunk of
     the page, the search can tell the two tables apart (DAR-651).
+
+    `p.N` is the page's index in the PDF (what the citation link opens). When the
+    page prints another number (`printed`, DAR-654: TMP p.37 prints "Page 13"),
+    a `printed p.13` segment follows it, so the model and a reader quoting
+    "page 13" meet the same words; the segments keep this order and format, the
+    shared contract (DAR-652) for anything that reads the line by position.
     """
-    return "[" + " · ".join([title, f"p.{page}", "; ".join(names)]) + "]"
+    segments = [title, f"p.{page}"]
+    if printed is not None and printed != str(page):
+        segments.append(f"printed p.{printed}")
+    return "[" + " · ".join(segments + ["; ".join(names)]) + "]"
 
 
 def section_headings(text: str) -> List[str]:
@@ -110,9 +130,65 @@ def chunk_sections(texts: List[str]) -> List[Optional[str]]:
     return sections
 
 
+def _flags(metadata: Dict) -> List[str]:
+    """The page's quality flags (rag.loader keeps them as one comma-separated string)."""
+    return [f for f in str(metadata.get("flags") or "").split(",") if f]
+
+
+def _figure_chunks(pages, title: str, division: str, chunks: List[Dict],
+                   identities: Optional[Dict[int, "pages.PageIdentity"]] = None) -> List[Dict]:
+    """One `kind: "figure"` chunk per figure or drawing caption on the document's pages (rag.figures).
+
+    A figure chunk takes the section of the page's first text chunk (else the
+    last one before it), and goes after all of the document's text chunks so
+    the runtime's next-chunk and merge steps, which go by position, don't mix
+    it into the page text.
+    """
+    first_on: Dict[int, Optional[str]] = {}  # page -> section of its first text chunk
+    last_on: Dict[int, Optional[str]] = {}  # page -> section of its last text chunk
+    for c in chunks:
+        if c["page"] is not None:
+            first_on.setdefault(c["page"], c["section"])
+            last_on[c["page"]] = c["section"]
+    numbered = sorted(last_on)
+    out: List[Dict] = []
+    for page_doc in pages:
+        page = _page(page_doc.metadata)
+        found = figure_chunks(page_doc.text) if page is not None else []
+        if not found:
+            continue
+        before = bisect.bisect_right(numbered, page)
+        section = first_on[page] if page in first_on else (last_on[numbered[before - 1]] if before else None)
+        flags = _flags(page_doc.metadata)
+        identity = (identities or {}).get(page)
+        printed = identity.printed if identity else None
+        for caption, text in found:
+            chunk = {
+                "text": text,
+                "source": page_doc.metadata.get("source"),
+                "page": page,
+                "section": section,
+                "division": division,
+                "printed_page": printed,
+                "context": context_line(title, page, [caption], printed=printed),
+                "kind": "figure",
+            }
+            if flags:
+                chunk["flags"] = flags
+            out.append(chunk)
+    return out
+
+
 def _page(metadata: Dict) -> Optional[int]:
     label = str(metadata.get("page_label", ""))
     return int(label) if label.isdigit() else None
+
+
+def page_identities(path: Path) -> Dict[int, pages.PageIdentity]:
+    """What each page of a PDF prints as its number, by PDF page index; {} for other formats."""
+    if path.suffix.lower() != ".pdf":
+        return {}
+    return {identity.pdf_index: identity for identity in pages.document_identities(path)}
 
 
 def document_root(config: AppConfig, division: Division, document: Document,
@@ -130,7 +206,7 @@ def document_root(config: AppConfig, division: Division, document: Document,
 
 def build_division(config: AppConfig, division: Division, chunk_size: int, chunk_overlap: int,
                    documents_dir: Path = DOCUMENTS_DIR, stats: Optional[List[Dict]] = None,
-                   with_context: bool = True, ocr: bool = False) -> List[Dict]:
+                   with_context: bool = True, ocr: bool = False, with_figures: bool = True) -> List[Dict]:
     """The division's chunks, its documents in divisions.py order.
 
     With `with_context`, a chunk on a page with figure or table captions gets a
@@ -155,22 +231,51 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
     for document in division.documents:
         root = roots[document.file]
         started = time.perf_counter()
-        pages = loader.load(root, only=[root / document.file], ocr=ocr)
-        page_captions = {_page(p.metadata): captions(p.text) for p in pages}
-        nodes = [n for n in splitter.get_nodes_from_documents(pages) if n.get_content().strip()]
+        loaded = loader.load(root, only=[root / document.file], ocr=ocr, tables=True)
+        # A table that runs over a page break is joined into the first page's Document (DAR-655).
+        merged = merge_continued_tables(loaded)
+        lines_by_page = page_lines(loaded)
+        page_captions = {_page(p.metadata): captions(p.text) for p in loaded}
+        identities = page_identities(root / document.file)
+        nodes = [n for n in splitter.get_nodes_from_documents(merged) if n.get_content().strip()]
         texts = [n.get_content().strip() for n in nodes]
+        document_chunks: List[Dict] = []
         for node, text, section in zip(nodes, texts, chunk_sections(texts)):
-            page = _page(node.metadata)
+            page, page_end = _page(node.metadata), None
+            if node.metadata.get("page_end") and page is not None:
+                # A chunk of a joined table cites the pages its own rows came from.
+                page, page_end = page_span(text, lines_by_page, page, int(node.metadata["page_end"]))
+            identity = identities.get(page)
             chunk = {
                 "text": text,
                 "source": node.metadata.get("source"),
-                "page": page,
+                "page": page,  # the page's index in the PDF, what the citation link opens
                 "section": section,
                 "division": division.id,
+                # The number printed on the page when it is known ("13", "5-13", "A-3"), else None (DAR-654).
+                "printed_page": identity.printed if identity else None,
+                **({"kind": node.metadata["kind"]} if node.metadata.get("kind") else {}),
             }
+            if page_end:
+                chunk["page_end"] = page_end
+                # A joined table's last printed page; with none there, no printed page at all, rather
+                # than label pages 33-35 with page 33's number alone (DAR-654).
+                end = identities.get(page_end)
+                if end is not None and end.printed:
+                    chunk["printed_page_end"] = end.printed
+                else:
+                    chunk["printed_page"] = None
             if with_context and page is not None and page_captions.get(page):
-                chunk["context"] = context_line(document.title, page, page_captions[page])
-            chunks.append(chunk)
+                chunk["context"] = context_line(document.title, page, page_captions[page],
+                                                printed=identity.printed if identity else None)
+            if flags := _flags(node.metadata):
+                chunk["flags"] = flags  # OCR flags; flag_chunks keeps them beside the table flags
+            document_chunks.append(chunk)
+        # Table-quality `flags` on each chunk (DAR-655), read with the page's rotation from the PDF.
+        flag_chunks(document_chunks, root / document.file)
+        figures = (_figure_chunks(loaded, document.title, division.id, document_chunks, identities)
+                   if with_figures else [])
+        chunks += document_chunks + figures
         if stats is not None:
             stats.append({
                 "division": division.id,
@@ -178,9 +283,10 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
                 "seconds": time.perf_counter() - started,
                 "pdf_pages": _pdf_pages(root / document.file),
                 # The loader drops pages with no text, so a scanned page is missing here.
-                "pages_with_text": len({_page(p.metadata) for p in pages}),
+                "pages_with_text": len({_page(p.metadata) for p in loaded}),
                 "chunks": len(nodes),
-                "last_page": max((_page(n.metadata) or 0 for n in nodes), default=0),
+                "figure_chunks": len(figures),
+                "last_page": max((int(n.metadata.get("page_end") or _page(n.metadata) or 0) for n in nodes), default=0),
             })
     return chunks
 
@@ -231,7 +337,8 @@ def embed(embedder: Embedder, texts: List[str], reuse: Optional[IndexFile] = Non
 def build(config: AppConfig, divisions: List[Division], embedder: Embedder,
           chunk_size: int = CHUNK_SIZE, chunk_overlap: int = CHUNK_OVERLAP,
           timings: Optional[Dict] = None, reuse: Optional[IndexFile] = None,
-          with_context: bool = True, keyword: bool = True, ocr: bool = False) -> IndexFile:
+          with_context: bool = True, keyword: bool = True, ocr: bool = False,
+          with_figures: bool = True) -> IndexFile:
     """The index of these divisions' documents.
 
     `timings` (when given) gets "documents" (one row per document, see
@@ -239,7 +346,8 @@ def build(config: AppConfig, divisions: List[Division], embedder: Embedder,
     (prototype.stress_test) can record where build time goes. `reuse` is an
     earlier index whose vectors are kept for unchanged chunks (see embed);
     `with_context` adds the caption context lines, `keyword` the BM25 index
-    and `ocr` reads pages without a text layer with OCR (rag.loader).
+    `ocr` reads pages without a text layer with OCR (rag.loader) and
+    `with_figures` adds the figure chunks (rag.figures).
     """
     chunks: List[Dict] = []
     stats: List[Dict] = []
@@ -248,11 +356,11 @@ def build(config: AppConfig, divisions: List[Division], embedder: Embedder,
         started = time.perf_counter()
         first = len(stats)
         division_chunks = build_division(config, division, chunk_size, chunk_overlap, stats=stats,
-                                         with_context=with_context, ocr=ocr)
+                                         with_context=with_context, ocr=ocr, with_figures=with_figures)
         print(f"{division.id}: {len(division_chunks)} chunks ({time.perf_counter() - started:.0f}s to read and split)")
         # The last page of each document, for its "Pages" column in docs/source-documents/SOURCES.md.
         for row in stats[first:]:
-            print(f"  {row['source']}: {row['chunks']} chunks, last page {row['last_page']}, "
+            print(f"  {row['source']}: {row['chunks']} chunks (+{row['figure_chunks']} figure), last page {row['last_page']}, "
                   f"{row['pages_with_text']} page(s) with text, {row['seconds']:.1f}s")
             warning = text_warning(row)
             if warning:
@@ -266,7 +374,10 @@ def build(config: AppConfig, divisions: List[Division], embedder: Embedder,
     if timings is not None:
         timings.update(documents=stats, read_split=read_split, embed=embed_seconds)
     index = IndexFile(embedder.model_name, chunks, vectors)
-    return index.with_keyword_index() if keyword else index
+    if not keyword:
+        return index
+    k1, b = bm25_parameters()  # BM25_K1 and BM25_B are baked into bm25.npz here (DAR-657)
+    return index.with_keyword_index(k1=k1, b=b)
 
 
 def compare(config: AppConfig, index: IndexFile, embedder: Embedder) -> None:
@@ -303,6 +414,9 @@ def main(argv: List[str]) -> int:
     parser.add_argument("--no-context", action="store_true", help="no caption context lines (the index as before DAR-651)")
     parser.add_argument("--no-keyword", action="store_true", help="no keyword (BM25) index")
     parser.add_argument("--ocr", action="store_true", help="OCR the PDF pages that have no text layer (needs rapidocr)")
+    parser.add_argument("--report", type=Path, help="also write the build report (page coverage and table-quality "
+                        "flags per document, see prototype.build_report) as JSON here")
+    parser.add_argument("--no-figures", action="store_true", help="no separate figure chunks (the index as before DAR-658)")
     args = parser.parse_args(argv)
 
     load_dotenv()
@@ -313,7 +427,8 @@ def main(argv: List[str]) -> int:
     timings: Dict = {}
     reuse = IndexFile.load(args.reuse) if args.reuse else None
     index = build(config, divisions, embedder, args.chunk_size, args.chunk_overlap, timings, reuse=reuse,
-                  with_context=not args.no_context, keyword=not args.no_keyword, ocr=args.ocr)
+                  with_context=not args.no_context, keyword=not args.no_keyword, ocr=args.ocr,
+                  with_figures=not args.no_figures)
     index.save(args.out)
     size = sum(f.stat().st_size for f in args.out.iterdir() if f.is_file())
     total = time.perf_counter() - started
@@ -325,6 +440,16 @@ def main(argv: List[str]) -> int:
         timings.update(total=total, index_bytes=size, chunks=len(index.chunks))
         args.timings.parent.mkdir(parents=True, exist_ok=True)
         args.timings.write_text(json.dumps(timings, indent=1), encoding="utf-8")
+    if args.report:
+        from prototype.build_report import write_report
+
+        settings = {"mode": "ingest", "model": embedder.model_name, "divisions": [d.id for d in divisions],
+                    "chunk_size": args.chunk_size, "chunk_overlap": args.chunk_overlap, "ocr": args.ocr,
+                    "context": not args.no_context, "keyword": not args.no_keyword, "reuse": str(args.reuse or "")}
+        report = write_report(args.report, index.chunks, timings["documents"], settings, index=str(args.out))
+        totals = report["totals"].get("all", {})
+        print(f"build report: {totals.get('flagged_chunks', 0)} of {totals.get('table_chunks', 0)} table chunks "
+              f"flagged ({totals.get('flagged_structure', 0)} beyond no_caption) -> {args.report}")
     if args.compare:
         compare(config, index, embedder)
     return 0

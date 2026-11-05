@@ -41,6 +41,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Sequence
 
 from prototype import HOSTED_DIR
+from divrag.config import retrieval_options
 from divrag.divisions import BY_ID, DIVISIONS
 from divrag.embedder import Embedder, Reranker, model_cache_dir
 from divrag.index_file import IndexFile
@@ -168,13 +169,14 @@ def wrong_division(retriever: Retriever, questions: Sequence[Sequence[str]]) -> 
 
 
 def hit_at_5(retriever: Retriever, cases: List[Dict]) -> Dict:
+    # A chunk of a table joined over a page break (DAR-655) carries page..page_end and is a hit on any of them.
     index = retriever.index
     rows = []
     for case in cases:
         division = case["division"]
         pages, source = gold_pages(case, index), GOLD_SOURCE[division]
         hits = retriever.retrieve(case["question"], division, k=TOP)
-        rank = next((i for i, h in enumerate(hits, 1) if h.chunk.get("source") == source and h.chunk.get("page") in pages),
+        rank = next((i for i, h in enumerate(hits, 1) if h.chunk.get("source") == source and _covers(h.chunk, pages)),
                     None)
         rows.append({"id": case["id"], "division": division, "rank": rank,
                      "other_documents_in_top5": sum(1 for h in hits if h.chunk.get("source") != source),
@@ -323,7 +325,8 @@ def measure(args: argparse.Namespace) -> int:
     index = IndexFile.load(args.index)
     load_ms = (time.perf_counter() - started) * 1000
     cache = model_cache_dir()
-    retriever = Retriever(index, Embedder(index.model, cache_dir=cache), Reranker(cache_dir=cache))
+    retriever = Retriever(index, Embedder(index.model, cache_dir=cache), Reranker(cache_dir=cache),
+                          **retrieval_options())  # PAGE_AGGREGATION, RRF_K... from the environment, as in the app
     retriever.warm_up()
     for division, question in QUESTIONS[:3]:  # the first real-length reranks are slower than later ones
         retriever.retrieve(question, division, k=TOP)

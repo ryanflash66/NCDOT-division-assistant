@@ -95,6 +95,106 @@ def test_a_rule_spanning_two_pages_is_cited_with_both():
     assert (sources[0].page, sources[0].page_end) == (16, 17)
 
 
+def test_a_cited_table_joined_over_a_page_break_keeps_its_last_page():
+    # DAR-655: the second part is one table merged over pages 33-35 at build time.
+    passage = _merged(
+        ("Barrier types: concrete barrier weighs 3,900 lbs.", 32, "5.4 Types"),
+        ("|Offset (ft)|Max deflection (ft)|\n|---|---|\n|14|27.42|\n|20|31.10|", 33, "5.4.2 Deflection"),
+    )
+    passage["parts"][1]["page_end"] = 35
+    passage["page_end"] = 35
+
+    _, sources = attach_sources("At an offset of 20 ft the max deflection is 31.10 ft [1].", [Hit(1.0, passage)])
+
+    assert (sources[0].page, sources[0].page_end) == (33, 35)
+
+
+def test_a_table_joined_over_a_page_break_cites_its_last_printed_page():
+    # DAR-654 + DAR-655: one chunk spans PDF pages 37-38, printed 13-14.
+    table = dict(_printed(37, "13", "|Offset (ft)|Max deflection (ft)|\n|---|---|\n|14|27.42|"), page_end=38,
+                 printed_page_end="14")
+
+    _, [source] = attach_sources("At 14 ft it is 27.42 ft [1].", [Hit(1.0, table)])
+
+    assert (source.page, source.page_end, source.printed_page, source.printed_page_end) == (37, 38, "13", "14")
+
+
+def _printed(page, printed_page, text="text", section="2.4"):
+    """A chunk whose page prints another number than its PDF index (the TMP manual's p.13 is PDF page 37)."""
+    return {"text": text, "source": TMP, "page": page, "section": section, "division": "wztc", "printed_page": printed_page}
+
+
+def test_a_source_carries_the_printed_page_and_the_pdf_page_stays_the_link():
+    _, sources = attach_sources("Deflection is 3 feet [1].", [Hit(1.0, _printed(37, "13"))])
+
+    (source,) = sources
+    assert (source.page, source.printed_page, source.printed_page_end) == (37, "13", None)
+    assert source.url.endswith("#page=37")
+    assert source.as_dict()["printed_page"] == "13" and source.as_dict()["printed_page_end"] is None
+
+
+def test_chunks_without_a_printed_page_are_cited_exactly_as_before():
+    hits = [_hit(126, section="3.6.4.1 Lane and Road Closures")]
+
+    _, sources = attach_sources("Within 5 feet [1].", hits)
+    _, user = build_messages("Q?", BY_ID["wztc"], BY_ID["utilities"], hits)
+
+    assert sources[0].as_dict()["printed_page"] is None and sources[0].as_dict()["printed_page_end"] is None
+    assert ", PDF page 126, section 3.6.4.1 Lane and Road Closures)" in user["content"]
+    assert "printed_page_end" not in answer_module.narrow(_merged(("a", 16, "2.4"), ("b", 17, "2.4")), "a b")
+
+
+def test_the_locator_puts_the_printed_page_before_the_pdf_page_when_they_differ():
+    same = dict(_printed(5, "5"))
+    span = dict(_printed(37, "13"), page_end=38, parts=[_printed(37, "13"), _printed(38, "14")])
+    hits = [Hit(1.0, _printed(37, "13")), Hit(1.0, same), Hit(1.0, span)]
+
+    _, user = build_messages("Q?", BY_ID["utilities"], BY_ID["wztc"], hits)
+
+    assert ", p.13 (PDF page 37), section 2.4)" in user["content"]
+    assert ", PDF page 5, section 2.4)" in user["content"]  # the same number: unchanged
+    assert ", pp.13–14 (PDF pages 37–38), section 2.4)" in user["content"]
+    # The model is told to write pages the same way, and the history rule comes after that rule.
+    system, _ = build_messages("Q?", BY_ID["utilities"], BY_ID["wztc"], hits, [{"question": "Q", "answer": "A"}])
+    assert '8. When you mention a page, write it exactly as the passage\'s heading does, for example "p.13 (PDF page 37)"' in system["content"]
+    assert "9. The earlier conversation" in system["content"]
+    # Without a printed page that differs, neither the rule nor the number appears.
+    system, _ = build_messages("Q?", BY_ID["utilities"], BY_ID["wztc"], [Hit(1.0, same)])
+    assert "When you mention a page" not in system["content"] and "\n8. " not in system["content"]
+
+
+def test_a_merged_passage_cites_the_printed_pages_of_the_parts_the_answer_drew_on():
+    parts = [_printed(36, "12", "Barrier types: concrete barrier weighs 3,900 lbs."),
+             _printed(37, "13", "The NC-PCB is 10 ft long, 24 in wide at the base and 32 in high."),
+             _printed(38, "14", "Water-filled barrier is for 45 mph or less; it needs 6 feet of deflection room.")]
+    passage = dict(parts[0], text="\n\n".join(p["text"] for p in parts), page_end=38, parts=parts)
+
+    _, [one] = attach_sources("The NC-PCB is 10 ft long and 32 in high [1].", [Hit(1.0, passage)])
+    _, [two] = attach_sources("The NC-PCB is 10 ft long, 24 in wide and 32 in high; water-filled barrier is for 45 mph "
+                              "or less [1].", [Hit(1.0, passage)])
+    _, [whole] = attach_sources("Nothing matches [1].", [Hit(1.0, passage)])  # no part stands out: the whole run
+
+    assert (one.page, one.page_end, one.printed_page, one.printed_page_end) == (37, None, "13", None)
+    assert (two.page, two.page_end, two.printed_page, two.printed_page_end) == (37, 38, "13", "14")
+    assert (whole.page, whole.page_end, whole.printed_page, whole.printed_page_end) == (36, 38, "12", "14")
+
+
+def test_a_run_of_pages_ending_on_an_unnumbered_page_shows_no_printed_page():
+    """One printed number for PDF pages 36-38 would claim the unnumbered plate on 38 is printed page 12."""
+    parts = [_printed(36, "12", "Barrier types: concrete barrier weighs 3,900 lbs."),
+             _printed(38, None, "Water-filled barrier is for 45 mph or less; it needs 6 feet of deflection room.")]
+    passage = dict(parts[0], text="\n\n".join(p["text"] for p in parts), page_end=38, parts=parts)
+
+    _, [whole] = attach_sources("Nothing matches [1].", [Hit(1.0, passage)])
+    _, [both] = attach_sources("Concrete barrier weighs 3,900 lbs; water-filled barrier is for 45 mph or less [1].",
+                               [Hit(1.0, passage)])
+    _, user = build_messages("Q?", BY_ID["utilities"], BY_ID["wztc"], [Hit(1.0, passage)])
+
+    assert (whole.page, whole.page_end, whole.printed_page, whole.printed_page_end) == (36, 38, None, None)
+    assert (both.page, both.page_end, both.printed_page, both.printed_page_end) == (36, 38, None, None)
+    assert ", PDF pages 36–38, section 2.4)" in user["content"]
+
+
 def test_cited_numbers_handles_ranges_and_lists():
     assert cited_numbers("x [2-3] y [1; 3] z [5]", 4) == [2, 3, 1]
 

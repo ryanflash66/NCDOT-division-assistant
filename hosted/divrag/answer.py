@@ -5,14 +5,20 @@ The flow for one question:
 1. retrieve the asked ("target") division's best passages, and only theirs;
 2. ask the model to answer from those passages alone, citing them as [n];
 3. keep the passages the answer cites, renumbered 1..m in order of first
-   mention (one source per document page), with document title, PDF page,
-   section and a link to the public PDF at that page.
+   mention (one source per document page), with document title, PDF page
+   (and the number printed on the page, when it differs), section and a link
+   to the public PDF at that page.
 
 When the model says the passages don't answer the question, the reply is a
 refusal that names the division's documents and shows no sources; if another
 division's documents look relevant, it suggests asking that division instead.
 An answer that cites none of the passages is kept and marked `uncited`, so the
 page can flag it ("No source cited") instead of hiding it (DAR-629).
+
+Every number the answer states is checked against the passages it cites
+(verify.py, DAR-659). When one is missing, the model is asked once more with a
+stricter rule, time allowing, and the numbers still missing from the final
+answer are returned as `unverified` for the page to flag.
 
 answer() waits for the model's whole reply; answer_stream() passes the text on
 as it is written. Both grade, retry and refuse the same way.
@@ -36,8 +42,10 @@ from typing import Any, Awaitable, Callable, Dict, List, Optional, Sequence, Tup
 from .divisions import BY_ID, DIVISIONS, Division, document_for
 from .index_file import Hit
 from .llm import Completion, LLMError, OpenRouterClient
+from .pages_static import image_url
 from .retrieval import Retriever
 from .timing import StepTimer, timed
+from .verify import unverified_numbers
 
 # emit(event, data): one server-sent event of a streamed answer ("step", "delta", "replace").
 Emit = Callable[[str, Dict[str, Any]], None]
@@ -68,6 +76,10 @@ RETRY_MIN_SCORE = 1.0
 RETRY_MIN_SECONDS = 15.0
 # The retry stops this long before the request's deadline so the refusal can still be returned.
 RETRY_MARGIN_SECONDS = 1.0
+# An answer with a number missing from its cited passages is asked again with
+# NUMBERS_RULE when at least this much of the request is left: the second call
+# is a whole answer, like the retry, and the retry's 15 s held for free models.
+RECHECK_MIN_SECONDS = RETRY_MIN_SECONDS
 EXCERPT_CHARS = 700
 # The best hits also bring the next chunk of their document (see Retriever.with_following).
 FOLLOWING_FOR_TOP = 2
@@ -94,20 +106,30 @@ Rules:
 2. Cite the passage that supports each sentence inline, like [1] or [2][3]. Every sentence that states a fact, number or requirement needs a citation.
 3. If the passages do not answer the question, reply with exactly {not_found} and nothing else.
 4. If the passages answer only part of the question, answer that part with citations and say plainly which part the documents don't cover.
-5. When reading a table, find the row and the column that match the question, and take the unit from that column's header. Answer in the units the question uses, and always state the unit.
+5. When reading a table, find the row and the column that match the question, and take the unit from that column's header. Say which row and column labels you used, answer in the units the question uses, and always state the unit.
 6. Start with the direct answer. Keep it short: one to four sentences, or a short list when there are several requirements. Use plain language.
 7. Don't mention "passages" or "context"; refer to the document by name if needed."""
 
-# Added to the rules only when the question comes with earlier turns, so a first
-# question gets exactly the prompt the known-page checks were run with.
-HISTORY_RULE = """
-8. The earlier conversation, when shown, is only there to understand what the question refers to (for example "it" or "that barrier"). It is not a source: take every fact from the numbered passages and cite them, never from the earlier answers. If the passages do not answer the question, reply with exactly {not_found}, even if the earlier conversation did."""
+# Rules added after the fixed ones, numbered from 8 in this order, only when they
+# apply, so a first question without printed page numbers gets exactly the
+# prompt the known-page checks were run with.
+# Added when a passage's heading shows a printed page (DAR-654): a reader checks
+# the answer against the number printed on the page, so the answer must say it.
+PAGE_RULE = """When you mention a page, write it exactly as the passage's heading does, for example "p.13 (PDF page 37)": the first number is the one printed on the page, the second is the PDF reader's page index."""
+# Added when the question comes with earlier turns.
+HISTORY_RULE = """The earlier conversation, when shown, is only there to understand what the question refers to (for example "it" or "that barrier"). It is not a source: take every fact from the numbered passages and cite them, never from the earlier answers. If the passages do not answer the question, reply with exactly {not_found}, even if the earlier conversation did."""
 
 USER_PROMPT = """{history}Passages from the {target_name} division's documents:
 
 {context}
 
 Question: {question}"""
+
+# Asked after an answer stated numbers its cited passages don't contain (DAR-659).
+# The model sees its first answer and which numbers were not found, so it can
+# re-read the table instead of rephrasing the same cell.
+NUMBERS_RULE = """These numbers in your answer are not in the passages you cited: {numbers}.
+Answer the question again from the passages. For every number, quote the row label, the column header, the value and its unit exactly as the passage writes them, and the page, with its citation. State only numbers that appear in the passages; do not convert, round or calculate. If the passages do not answer the question, reply with exactly {not_found} and nothing else."""
 
 HISTORY_PROMPT = """Earlier conversation, oldest first (only to understand what the question refers to; not a source):
 
@@ -133,11 +155,19 @@ class Source:
     section: Optional[str]
     url: str
     excerpt: str
+    # The number printed on the page (DAR-654), when the index knows it: `page` is the PDF
+    # reader's index, which the link uses, but a reader checking the manual sees the printed
+    # one (Dr. Namian read "page 37" as wrong because the page prints "13").
+    printed_page: Optional[str] = None
+    printed_page_end: Optional[str] = None
+    image: Optional[str] = None  # site-relative URL of the page's image, when rendered (DAR-654)
 
     def as_dict(self) -> Dict:
         return {
             "n": self.n, "division": self.division, "title": self.title, "page": self.page,
             "page_end": self.page_end, "section": self.section, "url": self.url, "excerpt": self.excerpt,
+            "printed_page": self.printed_page, "printed_page_end": self.printed_page_end,
+            "image": self.image,
         }
 
 
@@ -151,12 +181,14 @@ class Answer:
     retried: bool = False  # a refusal was followed by a second model call
     first_model: Optional[str] = None  # the model that answered the first call (differs from `model` after a retry)
     uncited: bool = False  # an answer (not a refusal) that cites none of the passages
+    unverified: List[str] = field(default_factory=list)  # numbers not found in the cited passages (verify.py)
 
     def as_dict(self) -> Dict:
         return {
             "answer": self.answer,
             "refused": self.refused,
             "uncited": self.uncited,
+            "unverified": list(self.unverified),
             "sources": [s.as_dict() for s in self.sources],
             "model": self.model,
             "first_model": self.first_model,
@@ -177,9 +209,50 @@ def _locator(hit: Hit) -> str:
 
 
 def _pages(chunk: Dict) -> str:
-    if chunk.get("page_end") and chunk["page_end"] != chunk.get("page"):
-        return f"PDF pages {chunk['page']}–{chunk['page_end']}"
-    return f"PDF page {chunk['page']}"
+    """The page label: "PDF page 37", or "p.13 (PDF page 37)" when the page prints another number.
+
+    Both numbers are given because readers check citations against the printed
+    one (Dr. Namian read "page 37" as wrong: the page prints "13") while the
+    link can only open the PDF at its index. The model is told to write pages
+    the same way (rule 8).
+    """
+    page, page_end = chunk.get("page"), chunk.get("page_end")
+    pdf = f"PDF pages {page}–{page_end}" if page_end and page_end != page else f"PDF page {page}"
+    if not _shows_printed_page(chunk):
+        return pdf
+    printed, printed_end = printed_pages(chunk)
+    return f"pp.{printed}–{printed_end} ({pdf})" if printed_end else f"p.{printed} ({pdf})"
+
+
+def _shows_printed_page(chunk: Dict) -> bool:
+    """Whether the chunk's page label names a printed page: it has one, and it isn't just the PDF index again."""
+    printed, printed_end = printed_pages(chunk)
+    page, page_end = chunk.get("page"), chunk.get("page_end")
+    return printed is not None and (printed, printed_end or printed) != (str(page), str(page_end or page))
+
+
+def printed_pages(chunk: Dict) -> Tuple[Optional[str], Optional[str]]:
+    """The printed page number of a chunk, and the last one of a merged passage; (None, None) when the index has none.
+
+    A merged passage (Retriever.as_passages) copies the first chunk's
+    `printed_page` and keeps the chunks as `parts`, so its last page is the
+    last part's; narrow() sets `printed_page_end` on the chunk it builds
+    instead. The end is None when it is the same number, like `page_end`. An
+    empty label (PyMuPDF's get_label() for an unlabelled page) counts as none,
+    and so does a merged passage whose last page has none: "p.12 (PDF pages
+    36–38)" for a run ending on an unnumbered plate would claim all of it is
+    printed page 12.
+    """
+    first = chunk.get("printed_page")
+    if first is None or first == "":
+        return None, None
+    parts = chunk.get("parts") or []
+    # A table joined over a page break (DAR-655) is one chunk with its own printed_page_end.
+    tail = parts[-1] if len(parts) > 1 else None
+    last = chunk.get("printed_page_end") or (tail.get("printed_page_end") or tail.get("printed_page") if tail else first)
+    if last is None or last == "":
+        return None, None
+    return str(first), None if str(last) == str(first) else str(last)
 
 
 def recent_turns(history: Sequence[Dict[str, str]]) -> List[Dict[str, str]]:
@@ -252,8 +325,10 @@ def build_messages(question: str, asker: Division, target: Division, hits: List[
     system = SYSTEM_PROMPT.format(
         target_name=target.name, target_unit=target.unit, asker_line=asker_line, not_found=NOT_FOUND
     )
+    extra = [PAGE_RULE] if any(_shows_printed_page(hit.chunk) for hit in hits) else []
     if earlier:
-        system += HISTORY_RULE.format(not_found=NOT_FOUND)
+        extra.append(HISTORY_RULE.format(not_found=NOT_FOUND))
+    system += "".join(f"\n{n}. {rule}" for n, rule in enumerate(extra, 8))
     context = "\n\n---\n\n".join(f"[{n}] ({_locator(hit)})\n{passage_text(hit.chunk)}" for n, hit in enumerate(hits, 1))
     user = USER_PROMPT.format(history=earlier, target_name=target.name, context=context, question=question)
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
@@ -293,6 +368,7 @@ def _source_for(hit: Hit, n: int) -> Source:
     url = document.url if document else ""
     if url and page:
         url = f"{url}#page={page}"
+    printed, printed_end = printed_pages(chunk)
     return Source(
         n=n,
         division=chunk.get("division") or "",
@@ -302,6 +378,9 @@ def _source_for(hit: Hit, n: int) -> Source:
         section=chunk.get("section"),
         url=url,
         excerpt=_excerpt(chunk.get("text") or ""),
+        printed_page=printed,
+        printed_page_end=printed_end,
+        image=image_url(chunk),
     )
 
 
@@ -341,7 +420,8 @@ def narrow(chunk: Dict, sentences: str) -> Dict:
     if best == 0:
         return chunk
     kept = [part for part, score in zip(parts, scores) if score >= _PART_SHARE * best]
-    pages = [part["page"] for part in kept if part.get("page")]
+    # A kept part that is a table joined over a page break spans page..page_end on its own.
+    pages = [p for part in kept for p in (part.get("page"), part.get("page_end")) if p]
     sections = [s for part in kept if part.get("section") for s in part["section"].split("; ")]
     narrowed = dict(kept[0], text="\n\n".join(part["text"] for part in kept), section="; ".join(dict.fromkeys(sections)) or None)
     narrowed.pop("page_end", None)
@@ -349,6 +429,14 @@ def narrow(chunk: Dict, sentences: str) -> Dict:
         narrowed["page"] = min(pages)
         if max(pages) != min(pages):
             narrowed["page_end"] = max(pages)
+    # The printed pages of the first and last kept parts (kept[0]'s is already copied). If
+    # either is unnumbered, drop both rather than label a run of pages with one printed page.
+    printed_first, (last_start, last_end) = printed_pages(kept[0])[0], printed_pages(kept[-1])
+    printed_last = last_end or last_start
+    if printed_first is None or printed_last is None:
+        narrowed.pop("printed_page", None)
+    elif printed_last != printed_first:
+        narrowed["printed_page_end"] = printed_last
     return narrowed
 
 
@@ -422,6 +510,21 @@ def _grade(raw: str, hits: List[Hit]) -> Tuple[str, List[Source]]:
     if NOT_FOUND in raw and not sources:
         return "", []
     return text, sources
+
+
+def _unverified(raw: str, text: str, hits: List[Hit], asked: str) -> List[str]:
+    """The numbers of a graded answer `text` missing from the passages `raw` cites.
+
+    `asked` is the question with the earlier turns' questions: numbers the
+    visitor gave are not the documents' to verify. An answer citing nothing is
+    checked against all the passages it was given, so its numbers are still
+    checked; it is already flagged "No source cited". The locator ("TMP Design
+    Manual, PDF page 37") verifies a bare page number the answer names.
+    """
+    cited = cited_numbers(_EMPTY_CITATION.sub("", raw.replace(NOT_FOUND, "")), len(hits))
+    shown = [hits[n - 1] for n in cited] or hits
+    return unverified_numbers(text, [passage_text(hit.chunk) for hit in shown], asked,
+                              labels=[_locator(hit) for hit in shown])
 
 
 def _lead(text: str) -> str:
@@ -502,13 +605,14 @@ LIVE_STEPS: Tuple[Tuple[str, Tuple[str, ...]], ...] = (
     ("write", ("llm",)),
     ("check", ("citations",)),
     ("retry", ("retry",)),
+    ("recheck", ("recheck",)),
     ("suggest", ("suggest",)),
 )
 
 # Steps that only run after a refusal, so the page isn't told about them in
 # advance: most answers never retry or suggest, and a step left "not started"
 # at the end would read as if the answer stopped short (DAR-636).
-OCCASIONAL_STEPS = ("retry", "suggest")
+OCCASIONAL_STEPS = ("retry", "recheck", "suggest")
 
 
 def live_step_labels(target: Division, passages: int, top_k: int) -> Dict[str, str]:
@@ -520,6 +624,7 @@ def live_step_labels(target: Division, passages: int, top_k: int) -> Dict[str, s
         "write": "Writing the answer",
         "check": "Checking sources",
         "retry": "Double-checking the source…",
+        "recheck": "Checking the numbers against the source…",
         "suggest": "Checking whether another division covers it",
     }
 
@@ -571,6 +676,18 @@ class LiveSteps:
     def _send(self, live: str, status: str, ms: int) -> None:
         if self._emit:
             self._emit("step", {"id": live, "label": self._labels[live], "status": status, "ms": ms})
+
+
+def _time_left(deadline: Optional[float], needed: float) -> bool:
+    """At least `needed` seconds of the request are left (always, without a deadline).
+
+    More than the margin must be left too, or a second call would get no time
+    and be reported as a retry that never ran.
+    """
+    if deadline is None:
+        return True
+    left = deadline - time.monotonic()
+    return left >= needed and left > RETRY_MARGIN_SECONDS
 
 
 class Answerer:
@@ -628,8 +745,11 @@ class Answerer:
             if deadline is not None and deadline - time.monotonic() < SUGGEST_MIN_SECONDS:
                 log.info("skipping the remaining division suggestions: too little time left")
                 break
-            hits = self.retriever.retrieve(question, division=division.id, k=1, candidates=SUGGEST_CANDIDATES)
-            if hits and hits[0].score >= SUGGEST_THRESHOLD:
+            # All the candidates, not k=1: with PAGE_AGGREGATION=sum or MAX_CHUNKS_PER_DOCUMENT the first hit
+            # need not be the best-scoring chunk (DAR-657); the retrieval cost is the same either way.
+            hits = self.retriever.retrieve(question, division=division.id, k=SUGGEST_CANDIDATES,
+                                           candidates=SUGGEST_CANDIDATES)
+            if hits and max(h.score for h in hits) >= SUGGEST_THRESHOLD:
                 suggest.append(division.id)
         return suggest
 
@@ -639,11 +759,7 @@ class Answerer:
             return False
         if max(hit.score for hit in hits) < self.retry_min_score:
             return False
-        if deadline is None:
-            return True
-        left = deadline - time.monotonic()
-        # More than the margin must be left, or _retry would give the call no time and report a retry that never ran.
-        return left >= self.retry_min_seconds and left > RETRY_MARGIN_SECONDS
+        return _time_left(deadline, self.retry_min_seconds)
 
     async def _retry(self, messages: List[Dict[str, str]], first: Completion, hits: List[Hit],
                      deadline: Optional[float], call: _Call) -> Optional[Tuple[Completion, str, List[Source]]]:
@@ -668,6 +784,30 @@ class Answerer:
         log.info("retry by %s: %s", second.model,
                  "cited answer" if sources else "uncited answer, keeping the refusal" if text else "refused again")
         return second, text, sources
+
+    async def _recheck(self, messages: List[Dict[str, str]], first: Completion, unverified: List[str],
+                       hits: List[Hit], asked: str, deadline: Optional[float],
+                       call: _Call) -> Optional[Tuple[Completion, str, List[Source], List[str]]]:
+        """Ask once more with NUMBERS_RULE: the reply graded with its unverified numbers, or None if the call failed."""
+        log.info("answer by %s states numbers not in its cited passages (%s): asking again", first.model,
+                 ", ".join(unverified))
+        again = messages + [
+            {"role": "assistant", "content": first.text},
+            {"role": "user", "content": NUMBERS_RULE.format(numbers=", ".join(unverified), not_found=NOT_FOUND)},
+        ]
+        # The model that wrote the answer is asked to correct it (after a retry, not the one that refused).
+        models = [first.model, *[m for m in self.llm.retry_models(first.model) if m != first.model]]
+        timeout = None if deadline is None else deadline - time.monotonic() - RETRY_MARGIN_SECONDS
+        try:
+            second = await asyncio.wait_for(call(again, models=models), timeout=timeout)
+        except (LLMError, asyncio.TimeoutError) as exc:
+            log.warning("number recheck failed (%s); keeping the first answer", exc.__class__.__name__)
+            return None
+        text, sources = _grade(second.text, hits)
+        still = _unverified(second.text, text, hits, asked) if text else []
+        log.info("recheck by %s: %s", second.model,
+                 f"cited answer, unverified {still or 'none'}" if sources else "uncited answer" if text else "refused")
+        return second, text, sources, still
 
     async def answer(self, question: str, asker: Division, target: Division, hits: List[Hit],
                      deadline: Optional[float] = None, timer: Optional[StepTimer] = None,
@@ -741,6 +881,17 @@ class Answerer:
                 # Still a refusal, now from the retry's model: name that one, so the
                 # page shows which two models refused instead of the first one twice.
                 completion = second[0]
+        asked = "\n".join([question, *(turn.get("question") or "" for turn in recent_turns(history))])
+        unverified = _unverified(completion.text, text, hits, asked) if text else []
+        if unverified and _time_left(deadline, RECHECK_MIN_SECONDS):
+            with timed(timer, "recheck"):
+                again = await self._recheck(messages, completion, unverified, hits, asked, deadline, call)
+            # The second answer replaces the first only when it is a cited answer with
+            # fewer unverified numbers: a refusal or an uncited answer after "only numbers
+            # in the passages" is no better than a flagged answer that cites its pages,
+            # and one unsupported number swapped for another is no correction.
+            if again and again[2] and len(again[3]) < len(unverified):
+                completion, text, sources, unverified = again
         if not text:
             with timed(timer, "suggest"):
                 # The same text the question was searched with, so a refused follow-up is matched on its topic.
@@ -749,4 +900,4 @@ class Answerer:
             return Answer(refusal_text(target, suggest), refused=True, model=completion.model, suggest=suggest,
                           retried=retried, first_model=first_model)
         return Answer(text, refused=False, sources=sources, model=completion.model, retried=retried,
-                      first_model=first_model, uncited=not sources)
+                      first_model=first_model, uncited=not sources, unverified=unverified)

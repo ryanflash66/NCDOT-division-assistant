@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { carryForSuggestion, messageText, refusedBySoFar, type QuestionMetadata } from "@/runtime/history";
 import { useApp } from "@/state";
 import type { AnswerMetadata, AnswerPayload } from "@/types";
-import { CITE_PREFIX, linkCitations, searchedText } from "./format";
+import { CITE_PREFIX, linkCitations, searchedText, unverifiedText } from "./format";
 
 // An answer's text with clickable [n] citations, a refusal with its "Ask … instead"
 // buttons, and the lines under each answer. Everything comes from the message's
@@ -102,13 +102,14 @@ function Refusal({ text, payload }: { text: string; payload: AnswerPayload }) {
   );
 }
 
-/** Under each finished answer: the "No source cited" flag and what was searched. */
+/** Under each finished answer: the "No source cited" and unverified-number flags, and what was searched. */
 export function AnswerFooter() {
   const payload = usePayload();
   const divisions = useApp((s) => s.divisions);
   if (!payload) return null;
   const searched = payload.searched;
   const shown = searched && typeof searched.passages === "number" && typeof searched.documents === "number";
+  const unverified = payload.refused ? null : unverifiedText(payload.unverified);
   const total = divisions.find((d) => d.id === payload.target?.id)?.documents.length ?? searched?.documents ?? 0;
   return (
     <>
@@ -116,6 +117,16 @@ export function AnswerFooter() {
         <p className="aui-uncited mt-2 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-2 text-sm dark:border-amber-800 dark:bg-amber-950/40">
           <strong>No source cited.</strong> This answer doesn't point to a page of the documents, so check it there
           before relying on it.
+        </p>
+      )}
+      {unverified && (
+        <p
+          role="alert"
+          className="aui-unverified mt-2 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-2 text-sm dark:border-amber-800 dark:bg-amber-950/40"
+        >
+          <strong>{unverified}</strong>{" "}
+          {payload.uncited ? "The passages searched don't contain this" : "The cited pages don't contain this"}, so check
+          the number in the document before relying on it.
         </p>
       )}
       {shown && <p className="aui-searched text-muted-foreground mt-2 text-xs">{searchedText(searched, total)}</p>}
