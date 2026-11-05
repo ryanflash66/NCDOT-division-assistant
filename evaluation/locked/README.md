@@ -54,13 +54,13 @@ locked split is only ever run on purpose), `--stage retrieval|answer|all`,
 `--limit N`, `--max-requests N` (cap on new model calls, the free models share
 one daily quota), `--env-file PATH` (default: the repo's `.env`, found above a
 git worktree too; it is never copied), `--questions DIR` (default this
-directory), `--out DIR`, `--cache PATH`, `--pause SECONDS`.
+directory), `--out DIR`, `--cache PATH`, `--pause SECONDS`, `--tag NAME`.
 
 The answer stage runs exactly what `/api/ask` runs (`hosted/index.py
 _answer`): the same index, retriever, prompt, citation check, retry, refusal
 and request budget, from the same settings (`divrag.config`). Answers are
 cached in `results/cache.jsonl` keyed by item id, the model list and the
-index's fingerprint, and tied to the question's wording; a run stopped by the
+index's fingerprint (plus `#k<N>` when `TOP_K` isn't 5 and `#<tag>` with `--tag`, so a run of changed answering code asks again instead of scoring cached answers), and tied to the question's wording; a run stopped by the
 free models' daily cap (`DAILY_LIMIT`) writes the report for what it has and
 the next run continues from there. Per-minute limits are waited out.
 
