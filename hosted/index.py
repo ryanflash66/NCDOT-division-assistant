@@ -88,8 +88,11 @@ class _Runtime:
                 cache = model_cache_dir()
                 embedder = Embedder(self.index.model, cache_dir=cache)
                 reranker = Reranker(cache_dir=cache) if self.settings.rerank else None
-                retriever = Retriever(self.index, embedder, reranker, candidates=self.settings.rerank_candidates,
-                                      keyword=self.settings.keyword_search)
+                s = self.settings
+                retriever = Retriever(self.index, embedder, reranker, candidates=s.rerank_candidates,
+                                      keyword=s.keyword_search,
+                                      field_boost=s.keyword_field_boost if s.keyword_field else 0.0,
+                                      id_boost=s.keyword_id_boost)
                 retriever.warm_up()
                 tls_context()  # for the model calls, off the event loop
                 log.info("models loaded from %s in %.1fs", cache, time.perf_counter() - started)
@@ -269,6 +272,11 @@ def health() -> Dict:
         "rerank": settings.rerank,
         # On only when the setting allows it and bm25.npz shipped with the index (a missing file turns it off silently).
         "keyword_search": settings.keyword_search and runtime.index.keyword is not None,
+        # The caption/ID field (DAR-657) counts only with the keyword search on and a field in the index.
+        "keyword_field": (settings.keyword_search and settings.keyword_field and runtime.index.keyword is not None
+                          and runtime.index.keyword.field is not None),
+        "keyword_field_boost": settings.keyword_field_boost,
+        "keyword_id_boost": settings.keyword_id_boost,
         "llm_models": list(settings.models),
         "llm_configured": bool(settings.openrouter_api_key),
         "cpus": cpu_info(),
