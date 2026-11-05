@@ -190,6 +190,7 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
                 "division": division.id,
                 # The number printed on the page when it is known ("13", "5-13", "A-3"), else None (DAR-654).
                 "printed_page": identity.printed if identity else None,
+                **({"kind": node.metadata["kind"]} if node.metadata.get("kind") else {}),
             }
             if with_context and page is not None and page_captions.get(page):
                 chunk["context"] = context_line(document.title, page, page_captions[page],

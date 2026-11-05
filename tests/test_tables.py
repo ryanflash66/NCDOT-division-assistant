@@ -72,8 +72,11 @@ def test_large_table_splits_between_rows_repeating_caption_and_header():
     for chunk in chunks:
         lines = chunk.split("\n")
         assert lines[:3] == ["Table 7 Big numbers", "|Radius|Low|High|", "|---|---|---|"]
-        body = lines[3:]
+        # The grid rows, then their labelled lines (DAR-655) after the "Rows (...)" heading.
+        heading = lines.index("Rows (Table 7 Big numbers):")
+        body = lines[3:heading]
         assert body and all(line.startswith("|") and line.count("|") == 4 for line in body)
+        assert lines[heading + 1:] == [f"Radius={r} | Low={r}.0 | High={r}.5" for r in (int(b.split("|")[1]) for b in body)]
         seen += body
     assert seen == rows  # every row exactly once, in order
 
