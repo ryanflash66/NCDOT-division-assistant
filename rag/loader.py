@@ -21,6 +21,7 @@ format has one: the heading path for Markdown, "Slide N" for .pptx, the sheet
 name for spreadsheets and "Page N" for PDFs.
 """
 
+import logging
 import os
 import re
 import shutil
@@ -33,6 +34,8 @@ from llama_index.core.readers.base import BaseReader
 
 from rag.classify import classify
 from rag.tables import clean_markdown_tables
+
+log = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -185,6 +188,47 @@ class _PlainTextReader(BaseReader):
 _PDF_MARKUP = re.compile(r"</?(?:mark|u)>|\ufffd")
 
 
+class _RotatedLines:
+    """Text-layer lines that do not run left to right, per page, read only for pages with a table.
+
+    TMP Design Manual p. 37: the row header "Offset (ft)" is printed
+    vertically (line dir (0, -1)) and is whole in the text layer, while the
+    Markdown grid scatters it over four cells; rag.table_rows uses these
+    lines to recognise and remove the pieces.
+    """
+
+    def __init__(self, file):
+        self._file = file
+        self._doc = None
+
+    def on(self, page_number, markdown: str) -> List[str]:
+        if not page_number or not any(line.lstrip().startswith("|") for line in markdown.split("\n")):
+            return []
+        try:
+            import pymupdf
+
+            if self._doc is None:
+                self._doc = pymupdf.open(str(self._file))
+            page = self._doc[int(page_number) - 1]
+            lines = [line for block in page.get_text("dict")["blocks"] for line in block.get("lines", [])]
+            rotated = [
+                "".join(span["text"] for span in line["spans"]).strip()
+                for line in lines
+                if tuple(round(x, 2) for x in line["dir"]) != (1.0, 0.0)
+            ]
+            # On a page set sideways most lines are "rotated", and they are the
+            # table's own cells, not a label beside it (TMP p. 37 has 1 of ~150).
+            return rotated if len(rotated) <= max(3, len(lines) // 5) else []
+        except Exception:  # the grid is still cleaned without them
+            log.debug("no text layer for %s p. %s", self._file, page_number, exc_info=True)
+            return []
+
+    def close(self) -> None:
+        if self._doc is not None:
+            self._doc.close()
+            self._doc = None
+
+
 # OCR resolution: pymupdf4llm's default is 150 dpi; the scanned UAM attachments are small type.
 OCR_DPI = 200
 
@@ -215,18 +259,26 @@ class _PdfMarkdownReader(BaseReader):
 
             options = {"use_ocr": True, "ocr_function": rapidocr_api.exec_ocr, "ocr_dpi": OCR_DPI}
         pages = pymupdf4llm.to_markdown(str(file), page_chunks=True, show_progress=False, **options)
-        return [
-            Document(
-                text=clean_markdown_tables(_PDF_MARKUP.sub("", page["text"]).replace("<br>", " ")),
-                metadata={
-                    # "page" on pymupdf4llm's fallback path (no pymupdf.layout); both are 1-based.
-                    "page_label": str(page["metadata"].get("page_number", page["metadata"].get("page"))),
-                    "file_name": Path(file).name,
-                    **(extra_info or {}),
-                },
-            )
-            for page in pages
-        ]
+        rotated = _RotatedLines(file)
+        try:
+            return [
+                Document(
+                    # `<br>` is kept until the tables are cleaned: it marks rows stacked into
+                    # one and the pieces of a rotated label (rag/table_rows.py).
+                    text=clean_markdown_tables(_PDF_MARKUP.sub("", page["text"]),
+                                               rotated.on(page["metadata"].get("page_number", page["metadata"].get("page")),
+                                                          page["text"])),
+                    metadata={
+                        # "page" on pymupdf4llm's fallback path (no pymupdf.layout); both are 1-based.
+                        "page_label": str(page["metadata"].get("page_number", page["metadata"].get("page"))),
+                        "file_name": Path(file).name,
+                        **(extra_info or {}),
+                    },
+                )
+                for page in pages
+            ]
+        finally:
+            rotated.close()
 
 
 _HEADING = re.compile(r"^ {0,3}(#{1,6})\s+(.*?)(?:\s+#+)?\s*$")

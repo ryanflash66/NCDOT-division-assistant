@@ -167,6 +167,7 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
                 "page": page,
                 "section": section,
                 "division": division.id,
+                **({"kind": node.metadata["kind"]} if node.metadata.get("kind") else {}),
             }
             if with_context and page is not None and page_captions.get(page):
                 chunk["context"] = context_line(document.title, page, page_captions[page])

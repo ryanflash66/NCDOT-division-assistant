@@ -130,7 +130,7 @@ def patched(index: IndexFile, embedder: Embedder, extracted: List[Dict], with_ca
     new_chunks: Dict[PageKey, List[Dict]] = {}
     for key, row in replaced.items():
         # The cleanup rag.loader's PDF reader applies (inline HTML, U+FFFD, in-cell breaks, table cells).
-        text = loader.clean_markdown_tables(loader._PDF_MARKUP.sub("", row["text"]).replace("<br>", " ")).strip()
+        text = loader.clean_markdown_tables(loader._PDF_MARKUP.sub("", row["text"])).strip()
         if not text:
             new_chunks[key] = []
             continue
