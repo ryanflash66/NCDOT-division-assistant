@@ -1,0 +1,92 @@
+{
+  "description": "Development fixture for evaluation/locked (DAR-653): the schema shape with one item on each side of the split rule. Not a test set; the real question files live in evaluation/locked/.",
+  "division": "wztc",
+  "items": [
+    {
+      "id": "wztc-fx-001",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What is the maximum deflection for an offset of 14 ft at 40 mph?",
+      "type": "table",
+      "edge_cases": ["merged_header", "landscape"],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [37],
+        "printed_pages": ["13"],
+        "value": "27.42",
+        "accept": ["27.42 ft"],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": ""
+    },
+    {
+      "id": "wztc-fx-002",
+      "division": "wztc",
+      "asker": "wztc",
+      "question": "What is the maximum vertical difference in elevation allowed between open lanes of traffic when the posted speed limit is 30 mph or more?",
+      "type": "scan",
+      "edge_cases": ["no_text_layer"],
+      "expected": {
+        "source": "Chapter_5.pdf",
+        "pdf_pages": [4],
+        "printed_pages": [""],
+        "value": "2 in",
+        "accept": ["2 inches", "two inches"],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_image",
+      "note": ""
+    },
+    {
+      "id": "wztc-fx-003",
+      "division": "wztc",
+      "asker": "wztc",
+      "question": "What lane width does the TMP manual give for a freeway work zone?",
+      "type": "text",
+      "edge_cases": [],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [23],
+        "printed_pages": [""],
+        "value": "11 ft",
+        "accept": ["11 feet", "11-foot"],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "fixture only: the page is a placeholder, not verified"
+    },
+    {
+      "id": "wztc-fx-004",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What is the speed of light in a vacuum?",
+      "type": "unanswerable",
+      "edge_cases": ["out_of_scope"],
+      "expected": null,
+      "refuse": true,
+      "split": "tuning",
+      "verified_by": "author",
+      "note": ""
+    },
+    {
+      "id": "wztc-fx-005",
+      "division": "wztc",
+      "asker": "wztc",
+      "question": "How many moons does Mars have?",
+      "type": "unanswerable",
+      "edge_cases": ["out_of_scope"],
+      "expected": null,
+      "refuse": true,
+      "split": "locked",
+      "verified_by": "author",
+      "note": ""
+    }
+  ]
+}
