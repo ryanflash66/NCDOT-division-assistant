@@ -17,7 +17,7 @@ is what a citation can point at. A page already rendered is skipped unless
 of a setting can be measured: 60 dpi at JPEG quality 60 reads well enough to
 check a table's row and is about 43 KB a page.
 
-This is a build-time tool (Vercel runs it when RENDER_PAGES=1, see README),
+This is a build-time tool (Vercel runs it from scripts/build.sh when RENDER_PAGES=1, see README),
 not part of the app: pymupdf is not a runtime dependency. From the repo root,
 `py -m prototype.render_pages` runs the same thing.
 """
