@@ -59,11 +59,18 @@ NOTES: Dict[Tuple[str, int], str] = {
 
 
 def page_text(chunks: List[Dict]) -> Dict[Key, int]:
-    """Indexed characters per page, text chunks only."""
+    """Indexed characters per page, text chunks only.
+
+    A table joined over a page break (DAR-655) is one chunk on page..page_end; its
+    characters are shared out over those pages, or the pages after the first look
+    empty (TMP Design Manual pp. 5-7 were reported as having lost all their text).
+    """
     out: Dict[Key, int] = defaultdict(int)
     for c in chunks:
         if c.get("kind") != "figure" and isinstance(c.get("page"), int):
-            out[(c["division"], c["source"], c["page"])] += len(c["text"].strip())
+            pages = range(c["page"], int(c.get("page_end") or c["page"]) + 1)
+            for page in pages:
+                out[(c["division"], c["source"], page)] += len(c["text"].strip()) // len(pages)
     return out
 
 
