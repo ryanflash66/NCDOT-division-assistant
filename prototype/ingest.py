@@ -39,6 +39,7 @@ from divrag.index_file import IndexFile, search_text
 from rag import loader
 from rag.config import AppConfig, load_config
 from rag.tables import TableAwareSplitter
+from prototype.table_quality import flag_chunks
 
 DEFAULT_OUT = HOSTED_DIR / "index"
 # Smaller than the Chainlit app's 1024-token chunks: bge-small (and the
@@ -159,6 +160,7 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
         page_captions = {_page(p.metadata): captions(p.text) for p in pages}
         nodes = [n for n in splitter.get_nodes_from_documents(pages) if n.get_content().strip()]
         texts = [n.get_content().strip() for n in nodes]
+        first = len(chunks)
         for node, text, section in zip(nodes, texts, chunk_sections(texts)):
             page = _page(node.metadata)
             chunk = {
@@ -171,6 +173,8 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
             if with_context and page is not None and page_captions.get(page):
                 chunk["context"] = context_line(document.title, page, page_captions[page])
             chunks.append(chunk)
+        # Table-quality `flags` on each chunk (DAR-655), read with the page's rotation from the PDF.
+        flag_chunks(chunks[first:], root / document.file)
         if stats is not None:
             stats.append({
                 "division": division.id,
@@ -303,6 +307,8 @@ def main(argv: List[str]) -> int:
     parser.add_argument("--no-context", action="store_true", help="no caption context lines (the index as before DAR-651)")
     parser.add_argument("--no-keyword", action="store_true", help="no keyword (BM25) index")
     parser.add_argument("--ocr", action="store_true", help="OCR the PDF pages that have no text layer (needs rapidocr)")
+    parser.add_argument("--report", type=Path, help="also write the build report (page coverage and table-quality "
+                        "flags per document, see prototype.build_report) as JSON here")
     args = parser.parse_args(argv)
 
     load_dotenv()
@@ -325,6 +331,16 @@ def main(argv: List[str]) -> int:
         timings.update(total=total, index_bytes=size, chunks=len(index.chunks))
         args.timings.parent.mkdir(parents=True, exist_ok=True)
         args.timings.write_text(json.dumps(timings, indent=1), encoding="utf-8")
+    if args.report:
+        from prototype.build_report import write_report
+
+        settings = {"mode": "ingest", "model": embedder.model_name, "divisions": [d.id for d in divisions],
+                    "chunk_size": args.chunk_size, "chunk_overlap": args.chunk_overlap, "ocr": args.ocr,
+                    "context": not args.no_context, "keyword": not args.no_keyword, "reuse": str(args.reuse or "")}
+        report = write_report(args.report, index.chunks, timings["documents"], settings, index=str(args.out))
+        totals = report["totals"].get("all", {})
+        print(f"build report: {totals.get('flagged_chunks', 0)} of {totals.get('table_chunks', 0)} table chunks "
+              f"flagged ({totals.get('flagged_structure', 0)} beyond no_caption) -> {args.report}")
     if args.compare:
         compare(config, index, embedder)
     return 0
