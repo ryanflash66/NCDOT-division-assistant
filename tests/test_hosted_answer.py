@@ -15,8 +15,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "hosted"))
 from divrag import answer as answer_module  # noqa: E402
 from divrag import llm as llm_module  # noqa: E402
 from divrag.answer import (  # noqa: E402
-    HISTORY_ANSWER_CHARS, HISTORY_QUESTION_CHARS, HISTORY_TURNS, NOT_FOUND, SUGGEST_CANDIDATES, Answerer, LiveSteps,
-    _VisibleText, attach_sources, build_messages, cited_numbers, live_step_labels, refusal_text,
+    CITE_RULE, HISTORY_ANSWER_CHARS, HISTORY_QUESTION_CHARS, HISTORY_TURNS, NOT_FOUND, SUGGEST_CANDIDATES, Answerer,
+    LiveSteps, _VisibleText, attach_sources, build_messages, cited_numbers, live_step_labels, number_source,
+    refusal_text, with_marker,
 )
 from divrag.config import load_settings  # noqa: E402
 from divrag.divisions import BY_ID, Division, Document  # noqa: E402
@@ -513,13 +514,61 @@ def test_a_follow_up_is_retrieved_answered_retried_and_suggested_with_its_histor
     assert retriever.questions[1:] == [f"{BRIDGE} {FOLLOW_UP}"] * 2  # the other divisions are checked on the same topic
 
 
-def test_an_uncited_answer_is_kept_not_retried():
-    # Only a "not found" is retried (DAR-629); before, an uncited answer counted as one.
+def test_an_uncited_answer_is_not_retried_but_asked_again_for_its_citation():
+    # Only a "not found" is retried with the next model (DAR-629). An uncited answer is
+    # asked once more, by the model that wrote it, to cite its passage.
     result, llm = _ask_with_retry(["The rate is three feet.", "Three feet [1]."], score=3.5, seconds_left=40)
 
-    assert not result.refused and not result.retried and result.uncited
-    assert result.answer == "The rate is three feet."
-    assert len(llm.calls) == 1
+    assert not result.refused and not result.retried and not result.uncited
+    assert result.answer == "Three feet [1]." and result.citation_fix == "asked_again"
+    assert len(llm.calls) == 2 and llm.models_used[1][0] == "test/model:free"
+    assert llm.calls[1][-2] == {"role": "assistant", "content": "The rate is three feet."}
+    assert llm.calls[1][-1]["content"] == CITE_RULE.format(not_found=NOT_FOUND)
+
+
+def test_an_uncited_answer_still_uncited_when_asked_again_is_kept_as_it_was():
+    result, llm = _ask_with_retry(["The rate is three feet.", "It is three feet."], score=3.5, seconds_left=40)
+
+    assert result.uncited and result.answer == "The rate is three feet." and result.citation_fix is None
+    assert len(llm.calls) == 2
+
+
+def test_a_refusal_after_asking_for_the_citation_does_not_replace_the_answer():
+    result, _ = _ask_with_retry(["The rate is three feet.", NOT_FOUND], score=3.5, seconds_left=40)
+    assert not result.refused and result.uncited and result.answer == "The rate is three feet."
+
+
+def test_an_uncited_answer_is_not_asked_again_without_time_left():
+    result, llm = _ask_with_retry(["The rate is three feet.", "Three feet [1]."], score=3.5, seconds_left=5)
+    assert result.uncited and len(llm.calls) == 1
+
+
+def test_an_uncited_answer_is_cited_to_the_one_passage_holding_its_number():
+    hits = [_hit(10, "Lanes are 12 ft wide."), _hit(11, "A closure needs a 5 ft buffer."), _hit(12, "No numbers.")]
+    assert number_source("The buffer is 5 feet.", hits, "How wide is the buffer?") == 2
+    assert with_marker("The buffer is 5 feet.", 2) == "The buffer is 5 feet [2]."
+    assert with_marker("5 feet", 2) == "5 feet [2]"
+
+
+def test_no_passage_is_picked_when_the_number_is_in_several_or_none_or_only_in_the_question():
+    hits = [_hit(10, "Use a 5 ft buffer."), _hit(11, "Keep 5 ft clear."), _hit(12, "A 12 ft lane.")]
+    assert number_source("5 feet", hits, "q") is None  # in two passages: the first-ranked was often the wrong page
+    assert number_source("30 feet", hits, "q") is None
+    assert number_source("12 feet", hits, "Is the lane 12 feet wide?") is None  # the visitor's own number
+    assert number_source("Close the lane.", hits, "q") is None
+
+
+def test_an_answer_still_uncited_after_asking_again_is_cited_by_its_number():
+    retriever = _FakeRetriever({"wztc": -9.0, "utilities": 3.5})
+    retriever.retrieve = lambda *a, **k: [_hit(10, "Lanes are 12 ft wide."), _hit(11, "Use a 5 ft buffer.")]
+    llm = _FakeLLM(["The buffer is 5 feet.", "It is 5 feet."])
+    hits = retriever.retrieve("q", "utilities")
+    result = asyncio.run(Answerer(retriever, llm).answer("How wide is the buffer?", BY_ID["utilities"],
+                                                         BY_ID["utilities"], hits, time.monotonic() + 40))
+
+    assert not result.uncited and result.citation_fix == "number_match"
+    assert result.answer == "The buffer is 5 feet [1]." and [s.page for s in result.sources] == [11]
+    assert result.unverified == [] and result.as_dict()["citation_fix"] == "number_match"
 
 
 def test_an_uncited_answer_from_the_retry_does_not_replace_the_refusal():
@@ -1019,6 +1068,14 @@ def test_a_streamed_retry_clears_the_text_and_streams_the_next_model():
 
 
 def test_a_streamed_uncited_answer_is_kept_and_flagged():
-    result, events, llm = _stream_answer("The rate is three feet.", score=3.5)
+    result, events, llm = _stream_answer("The rate is three feet.", score=3.5, seconds_left=5)
     assert result.uncited and not result.refused and not result.retried and len(llm.calls) == 1
     assert "".join(data["text"] for _, data in events) == "The rate is three feet."
+
+
+def test_a_streamed_uncited_answer_asked_again_clears_the_text_and_streams_the_cited_one():
+    result, events, llm = _stream_answer(["The rate is three feet.", "Three feet [1]."], score=3.5)
+    replace = events.index(("replace", {"text": ""}))
+    assert "".join(data["text"] for _, data in events[:replace]) == "The rate is three feet."
+    assert "".join(data["text"] for _, data in events[replace + 1:]) == "Three feet."
+    assert result.answer == "Three feet [1]." and result.citation_fix == "asked_again" and len(llm.calls) == 2

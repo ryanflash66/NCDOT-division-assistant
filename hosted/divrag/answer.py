@@ -131,6 +131,12 @@ Question: {question}"""
 NUMBERS_RULE = """These numbers in your answer are not in the passages you cited: {numbers}.
 Answer the question again from the passages. For every number, quote the row label, the column header, the value and its unit exactly as the passage writes them, and the page, with its citation. State only numbers that appear in the passages; do not convert, round or calculate. If the passages do not answer the question, reply with exactly {not_found} and nothing else."""
 
+# Asked once after an answer that cites no passage. In the DAR-652 final run 72 of
+# the 82 answers whose cited page was wrong cited nothing at all: the free model
+# replied with the bare value ("5 feet"), right 69 times, with no [n] to show where it came from.
+CITE_RULE = """Your answer has no citation, so the reader cannot check it.
+Answer the question again from the passages. Put the number of the passage that supports each sentence right after it, even when the answer is a single value, for example: "The minimum is 5 ft [2]." If the passages do not answer the question, reply with exactly {not_found} and nothing else."""
+
 HISTORY_PROMPT = """Earlier conversation, oldest first (only to understand what the question refers to; not a source):
 
 {turns}
@@ -182,6 +188,9 @@ class Answer:
     first_model: Optional[str] = None  # the model that answered the first call (differs from `model` after a retry)
     uncited: bool = False  # an answer (not a refusal) that cites none of the passages
     unverified: List[str] = field(default_factory=list)  # numbers not found in the cited passages (verify.py)
+    # How an answer the model first gave without citations got its sources: "asked_again"
+    # (CITE_RULE) or "number_match" (number_source); None when the model cited on its own.
+    citation_fix: Optional[str] = None
 
     def as_dict(self) -> Dict:
         return {
@@ -193,6 +202,7 @@ class Answer:
             "model": self.model,
             "first_model": self.first_model,
             "retried": self.retried,
+            "citation_fix": self.citation_fix,
             "suggest": [{"id": d, "name": BY_ID[d].name} for d in self.suggest],
         }
 
@@ -527,6 +537,26 @@ def _unverified(raw: str, text: str, hits: List[Hit], asked: str) -> List[str]:
                               labels=[_locator(hit) for hit in shown])
 
 
+def number_source(text: str, hits: List[Hit], asked: str) -> Optional[int]:
+    """The passage (1-based) that alone holds every number of an uncited answer, or None.
+
+    Only numbers the question didn't give count, and only when exactly one passage
+    has them all: a bare "5 feet" was in 2 to 5 of the passages for most uncited
+    answers of the DAR-652 final run, and citing the best-ranked of those picked the
+    wrong page 19 times in 62. With exactly one, it picked the right page 33 times in 34.
+    """
+    if not unverified_numbers(text, [], asked):
+        return None
+    holding = [n for n, hit in enumerate(hits, 1)
+               if not unverified_numbers(text, [passage_text(hit.chunk)], asked, labels=[_locator(hit)])]
+    return holding[0] if len(holding) == 1 else None
+
+
+def with_marker(text: str, n: int) -> str:
+    """The answer with "[n]" at its end, before a closing full stop: "The minimum is 5 ft [2]."."""
+    return re.sub(r"\s*([.!?]?)\s*$", rf" [{n}]\1", text, count=1)
+
+
 def _lead(text: str) -> str:
     """The text without leading whitespace and Markdown emphasis, where a reply that refuses starts with NOT_FOUND."""
     return text.lstrip(" \t\r\n*_`")
@@ -605,6 +635,7 @@ LIVE_STEPS: Tuple[Tuple[str, Tuple[str, ...]], ...] = (
     ("write", ("llm",)),
     ("check", ("citations",)),
     ("retry", ("retry",)),
+    ("recite", ("recite",)),
     ("recheck", ("recheck",)),
     ("suggest", ("suggest",)),
 )
@@ -612,7 +643,7 @@ LIVE_STEPS: Tuple[Tuple[str, Tuple[str, ...]], ...] = (
 # Steps that only run after a refusal, so the page isn't told about them in
 # advance: most answers never retry or suggest, and a step left "not started"
 # at the end would read as if the answer stopped short (DAR-636).
-OCCASIONAL_STEPS = ("retry", "recheck", "suggest")
+OCCASIONAL_STEPS = ("retry", "recite", "recheck", "suggest")
 
 
 def live_step_labels(target: Division, passages: int, top_k: int) -> Dict[str, str]:
@@ -624,6 +655,7 @@ def live_step_labels(target: Division, passages: int, top_k: int) -> Dict[str, s
         "write": "Writing the answer",
         "check": "Checking sources",
         "retry": "Double-checking the source…",
+        "recite": "Finding the source for the answer…",
         "recheck": "Checking the numbers against the source…",
         "suggest": "Checking whether another division covers it",
     }
@@ -809,6 +841,26 @@ class Answerer:
                  f"cited answer, unverified {still or 'none'}" if sources else "uncited answer" if text else "refused")
         return second, text, sources, still
 
+    async def _recite(self, messages: List[Dict[str, str]], first: Completion, hits: List[Hit],
+                      deadline: Optional[float], call: _Call) -> Optional[Tuple[Completion, str, List[Source]]]:
+        """Ask once more with CITE_RULE: the reply and that reply graded, or None if the call failed."""
+        log.info("answer by %s cites no passage: asking again for citations", first.model)
+        again = messages + [
+            {"role": "assistant", "content": first.text},
+            {"role": "user", "content": CITE_RULE.format(not_found=NOT_FOUND)},
+        ]
+        models = [first.model, *[m for m in self.llm.retry_models(first.model) if m != first.model]]
+        timeout = None if deadline is None else deadline - time.monotonic() - RETRY_MARGIN_SECONDS
+        try:
+            second = await asyncio.wait_for(call(again, models=models), timeout=timeout)
+        except (LLMError, asyncio.TimeoutError) as exc:
+            log.warning("citation recheck failed (%s); keeping the first answer", exc.__class__.__name__)
+            return None
+        text, sources = _grade(second.text, hits)
+        log.info("citation recheck by %s: %s", second.model,
+                 "cited answer" if sources else "uncited answer" if text else "refused")
+        return second, text, sources
+
     async def answer(self, question: str, asker: Division, target: Division, hits: List[Hit],
                      deadline: Optional[float] = None, timer: Optional[StepTimer] = None,
                      history: Sequence[Dict[str, str]] = (), refused_by: Sequence[str] = ()) -> Answer:
@@ -882,6 +934,22 @@ class Answerer:
                 # page shows which two models refused instead of the first one twice.
                 completion = second[0]
         asked = "\n".join([question, *(turn.get("question") or "" for turn in recent_turns(history))])
+        citation_fix = None
+        if text and not sources:
+            if _time_left(deadline, RECHECK_MIN_SECONDS):
+                with timed(timer, "recite"):
+                    again = await self._recite(messages, completion, hits, deadline, call)
+                # Only a cited answer replaces the first: a refusal after "cite your
+                # passages" is no better than an answer the reader can't check yet.
+                if again and again[2]:
+                    completion, text, sources = again
+                    citation_fix = "asked_again"
+            n = None if sources else number_source(text, hits, asked)
+            if n:
+                # Cited as if the model had written the marker, so the number check reads that passage.
+                completion = Completion(with_marker(text, n), completion.model)
+                text, sources = _grade(completion.text, hits)
+                citation_fix = "number_match"
         unverified = _unverified(completion.text, text, hits, asked) if text else []
         if unverified and _time_left(deadline, RECHECK_MIN_SECONDS):
             with timed(timer, "recheck"):
@@ -900,4 +968,4 @@ class Answerer:
             return Answer(refusal_text(target, suggest), refused=True, model=completion.model, suggest=suggest,
                           retried=retried, first_model=first_model)
         return Answer(text, refused=False, sources=sources, model=completion.model, retried=retried,
-                      first_model=first_model, uncited=not sources, unverified=unverified)
+                      first_model=first_model, uncited=not sources, unverified=unverified, citation_fix=citation_fix)

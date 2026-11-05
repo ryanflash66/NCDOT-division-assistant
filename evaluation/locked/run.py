@@ -297,6 +297,11 @@ async def run_command(args) -> int:
     index = index_info(settings.index_dir, len(runtime.index.chunks))
     retrievals = {item["id"]: runtime.retrieval(item) for item in items}
     answer_config = f"{config_label(OPENROUTER_URL, settings.models)}@{index['sha256_12']}"
+    # The default top-k and no tag keep the key the earlier runs were cached under.
+    if settings.top_k != 5:
+        answer_config += f"#k{settings.top_k}"
+    if args.tag:
+        answer_config += f"#{args.tag}"
     stopped = None
     records: Dict[str, Optional[Dict[str, Any]]] = {}
     if args.stage in ("answer", "all"):
@@ -403,6 +408,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     r.add_argument("--runs-file", default=str(RUNS_FILE))
     r.add_argument("--pause", type=float, default=2.0, help="seconds between model calls, to pace a shared free quota")
     r.add_argument("--max-requests", type=int, help="stop the answer stage after this many new questions")
+    r.add_argument("--tag", help="part of the answer cache key: answers from changed answering code are asked again")
     common(r)
     f = sub.add_parser("freeze", help="write the hash of the locked items")
     f.add_argument("--hash-file", default=str(HASH_FILE))

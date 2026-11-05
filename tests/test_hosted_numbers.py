@@ -194,8 +194,14 @@ def test_no_second_call_when_too_little_time_is_left():
 
 
 def test_an_uncited_answer_is_checked_against_every_passage():
-    result, _ = _ask(_LLM("The maximum deflection is 27.42 ft."))
-    assert result.uncited and result.unverified == []
+    result, _ = _ask(_LLM("The maximum deflection is 28 ft."), seconds_left=5)
+    assert result.uncited and result.unverified == ["28 ft"]
+
+
+def test_an_uncited_answer_whose_number_only_one_passage_holds_is_cited_to_it():
+    result, _ = _ask(_LLM("The maximum deflection is 27.42 ft."), seconds_left=5)
+    assert not result.uncited and result.citation_fix == "number_match" and result.unverified == []
+    assert result.answer == "The maximum deflection is 27.42 ft [1]."
 
 
 def test_the_streamed_done_answer_carries_the_unverified_numbers():

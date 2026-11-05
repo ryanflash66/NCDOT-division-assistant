@@ -598,7 +598,8 @@ def test_ask_without_a_stream_reports_only_the_finished_steps(api):
 
 def test_an_uncited_answer_is_kept_and_flagged_by_both_endpoints(api):
     client, _, llm = api
-    llm.reply = "Within 5 feet of the travel lane."
+    # No number either, so neither asking again (the same reply) nor the number match can cite it.
+    llm.reply = "Close the lane next to the work."
 
     streamed = _events(_stream(client))[-1]
     asked = _ask(client).json()
@@ -606,7 +607,7 @@ def test_an_uncited_answer_is_kept_and_flagged_by_both_endpoints(api):
     assert streamed[0] == "done"
     for data in (streamed[1], asked):
         assert data["uncited"] is True and data["refused"] is False and data["sources"] == []
-        assert data["answer"] == "Within 5 feet of the travel lane."
+        assert data["answer"] == "Close the lane next to the work." and data["citation_fix"] is None
 
 
 def test_half_of_a_character_split_across_two_events_does_not_break_the_stream(api):
