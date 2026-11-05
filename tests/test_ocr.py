@@ -167,3 +167,14 @@ def test_the_no_text_report_lists_image_only_and_text_loss_pages_with_their_stat
 
 def test_short_captions_count_and_prose_naming_a_figure_does_not():
     assert figures.figure_captions("Figure 5\nDETAIL A\nExhibit 3 shows the required taper lengths.") == ["Figure 5", "DETAIL A"]
+
+
+def test_pages_inside_a_table_joined_over_a_page_break_keep_their_text():
+    # TMP Design Manual pp. 5-7: one joined table chunk from p. 5 was reported as pp. 6-7 losing all their text.
+    from prototype.no_text_pages import page_text
+
+    chunks = [{"division": "wztc", "source": "tmp.pdf", "page": 5, "page_end": 7, "text": "x" * 300},
+              {"division": "wztc", "source": "tmp.pdf", "page": 9, "text": "caption", "kind": "figure"}]
+    text = page_text(chunks)
+    assert [text[("wztc", "tmp.pdf", p)] for p in (5, 6, 7)] == [100, 100, 100]
+    assert ("wztc", "tmp.pdf", 9) not in text
