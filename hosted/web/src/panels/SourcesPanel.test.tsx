@@ -129,6 +129,17 @@ describe("SourcesPanel", () => {
     expect(screen.queryByText(/Safari/)).toBeNull();
   });
 
+  it("shows a passage's page image only when the server sent one", () => {
+    const withImage = [
+      question("q1", "Deflection?"),
+      answer("a1", payload([source(1, { image: "/pages/utilities/uam/11.jpg" }), source(2)])),
+    ];
+    const { container } = render(<Harness messages={withImage} />);
+    const imgs = container.querySelectorAll("img");
+    expect(imgs).toHaveLength(1);
+    expect(imgs[0].getAttribute("src")).toBe("/pages/utilities/uam/11.jpg");
+  });
+
   it("says no passages were used for a refusal", () => {
     render(<Harness messages={[question("q1", "Where do I park?"), answer("a1", payload([]))]} />);
     expect(screen.getByText(/No passages were used to answer/)).toBeTruthy();

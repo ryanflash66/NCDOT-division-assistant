@@ -40,6 +40,8 @@ export type Source = {
    */
   printed_page?: string | null;
   printed_page_end?: string | null;
+  /** Site-relative URL of the cited page's image (/pages/...), when it was rendered (DAR-654). */
+  image: string | null;
 };
 
 export type StepEvent = {

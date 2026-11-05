@@ -18,6 +18,7 @@ export function payload(overrides: Partial<AnswerPayload> = {}): AnswerPayload {
         section: "6E.02",
         url: "https://example.org/wztc.pdf#page=12",
         excerpt: "Flaggers…",
+        image: null,
       },
     ],
     model: "nvidia/nemotron-3-ultra-550b-a55b:free",

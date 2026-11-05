@@ -37,6 +37,7 @@ from typing import Any, Awaitable, Callable, Dict, List, Optional, Sequence, Tup
 from .divisions import BY_ID, DIVISIONS, Division, document_for
 from .index_file import Hit
 from .llm import Completion, LLMError, OpenRouterClient
+from .pages_static import image_url
 from .retrieval import Retriever
 from .timing import StepTimer, timed
 
@@ -143,12 +144,14 @@ class Source:
     # one (Dr. Namian read "page 37" as wrong because the page prints "13").
     printed_page: Optional[str] = None
     printed_page_end: Optional[str] = None
+    image: Optional[str] = None  # site-relative URL of the page's image, when rendered (DAR-654)
 
     def as_dict(self) -> Dict:
         return {
             "n": self.n, "division": self.division, "title": self.title, "page": self.page,
             "page_end": self.page_end, "section": self.section, "url": self.url, "excerpt": self.excerpt,
             "printed_page": self.printed_page, "printed_page_end": self.printed_page_end,
+            "image": self.image,
         }
 
 
@@ -359,6 +362,7 @@ def _source_for(hit: Hit, n: int) -> Source:
         excerpt=_excerpt(chunk.get("text") or ""),
         printed_page=printed,
         printed_page_end=printed_end,
+        image=image_url(chunk),
     )
 
 

@@ -3,6 +3,7 @@ import { useAuiState } from "@assistant-ui/react";
 import { cn } from "@/lib/utils";
 import { pagesText, pagesTitle, pickAnswer } from "@/panels/answers";
 import { webUrl } from "@/panels/format";
+import { PageImage } from "@/panels/PageImage";
 import { useApp } from "@/state";
 import type { Source } from "@/types";
 
@@ -181,6 +182,7 @@ function SourceItem({ source: s, current }: { source: Source; current: boolean }
           </p>
         </div>
       )}
+      <PageImage key={String(s.image ?? "")} source={s} />
       {(long || href) && (
         <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-0.5">
           {long && (

@@ -38,6 +38,7 @@ export function source(n: number, extra: Partial<Source> = {}): Source {
     section: `${n}.1`,
     url: `https://example.org/uam.pdf#page=${10 + n}`,
     excerpt: `Passage ${n} text.`,
+    image: null,
     ...extra,
   };
 }
