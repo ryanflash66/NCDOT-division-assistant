@@ -5,7 +5,8 @@ IndexFile.keyword_search), so the reranker and the answer only ever see the
 asked division's chunks.
 """
 
-from typing import Dict, List, Optional, Sequence, Tuple
+import re
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 from .embedder import Embedder, Reranker
 from .index_file import Hit, IndexFile, is_figure, search_text
@@ -37,6 +38,16 @@ DEFAULT_FUSION_WEIGHTS = (1.0, 1.0)
 # 2 CPUs: reranking took 5.4 s for 40 against 3.0 s for 20 (0.45 s and 0.26 s locally).
 DEFAULT_CANDIDATES = 40
 
+# A Markdown pipe table: a row of cells, then the separator row (|---|---|) the
+# PDF reader writes under the header. Chunks the index build tags kind="table"
+# count too; this catches those of an index built before the tag existed.
+_PIPE_TABLE = re.compile(r"^\s*\|.*\|\s*$\n^\s*\|?\s*:?-{3,}", re.MULTILINE)
+
+
+def is_table(chunk: Dict[str, Any]) -> bool:
+    """Whether the chunk is a table (tagged kind="table", or holding a Markdown pipe table)."""
+    return chunk.get("kind") == "table" or bool(_PIPE_TABLE.search(chunk.get("text") or ""))
+
 
 class Retriever:
     def __init__(self, index: IndexFile, embedder: Embedder, reranker: Optional[Reranker] = None,
@@ -45,13 +56,16 @@ class Retriever:
                  page_aggregation: str = DEFAULT_PAGE_AGGREGATION,
                  max_chunks_per_page: int = DEFAULT_MAX_CHUNKS_PER_PAGE,
                  max_chunks_per_document: int = DEFAULT_MAX_CHUNKS_PER_DOCUMENT,
-                 rrf_k: int = RRF_K, fusion_weights: Tuple[float, float] = DEFAULT_FUSION_WEIGHTS):
+                 rrf_k: int = RRF_K, fusion_weights: Tuple[float, float] = DEFAULT_FUSION_WEIGHTS,
+                 text_only: bool = False):
         """`keyword` adds the keyword (BM25) search, when the index has one; `field_boost` 0 turns its caption/ID field off.
 
         `page_aggregation`, `max_chunks_per_page` and `max_chunks_per_document`
         are aggregate_pages' settings, applied to the reranked candidates before
         the top k. `rrf_k` and `fusion_weights` (vector, keyword) go to the
-        reciprocal rank fusion of the two searches.
+        reciprocal rank fusion of the two searches. `text_only` (RERANK_TEXT_ONLY)
+        reranks only the text chunks and leaves tables at their fused rank (see
+        `rerank_text_only`).
         """
         if page_aggregation not in PAGE_AGGREGATION_MODES:
             raise ValueError(f"page_aggregation must be one of {PAGE_AGGREGATION_MODES}, got {page_aggregation!r}")
@@ -69,6 +83,7 @@ class Retriever:
         self.max_chunks_per_document = max_chunks_per_document
         self.rrf_k = rrf_k
         self.fusion_weights = fusion_weights
+        self.text_only = text_only
 
     def retrieve(self, question: str, division: Optional[str], k: int = 5,
                  timer: Optional[StepTimer] = None, candidates: Optional[int] = None,
@@ -87,6 +102,22 @@ class Retriever:
         and rerank steps.
         """
         pool = max(k, candidates or self.candidates) if self.reranker else k
+        hits = self.candidates_for(question, division, pool, timer=timer, sources=sources)
+        if self.reranker and len(hits) > 1:
+            with timed(timer, "rerank"):
+                hits = rerank_text_only(self.reranker, question, hits) if self.text_only else rerank(self.reranker, question, hits)
+        # Pages are only aggregated after a rerank (__init__ turns it off without a reranker): unreranked,
+        # a chunk only the keyword search found carries its BM25 score (8.4) and the others their cosine
+        # (under 1), so ranking pages by score would throw away the fusion's order.
+        return aggregate_pages(hits, self.page_aggregation, k, max_per_page=self.max_chunks_per_page,
+                               max_per_document=self.max_chunks_per_document)
+
+    def candidates_for(self, question: str, division: Optional[str], pool: int,
+                       timer: Optional[StepTimer] = None, sources: Optional[Sequence[str]] = None) -> List[Hit]:
+        """The `pool` best chunks before any rerank: the vector hits, fused with the keyword hits when on.
+
+        evaluation/rerank_ab.py reranks this same pool once per reranker.
+        """
         with timed(timer, "embed"):
             vector = self.embedder.query(question)
         with timed(timer, "search"):
@@ -97,15 +128,7 @@ class Retriever:
                                                   field_boost=self.field_boost, ids=parsed.ids + parsed.doc_codes,
                                                   id_boost=self.id_boost)
                 hits = _fused(hits, words, k=self.rrf_k, weights=self.fusion_weights)[:pool]
-        if self.reranker and len(hits) > 1:
-            with timed(timer, "rerank"):
-                scores = self.reranker.scores(question, [search_text(h.chunk) for h in hits])
-            hits = [Hit(s, h.chunk) for s, h in sorted(zip(scores, hits), key=lambda pair: -pair[0])]
-        # Pages are only aggregated after a rerank (__init__ turns it off without a reranker): unreranked,
-        # a chunk only the keyword search found carries its BM25 score (8.4) and the others their cosine
-        # (under 1), so ranking pages by score would throw away the fusion's order.
-        return aggregate_pages(hits, self.page_aggregation, k, max_per_page=self.max_chunks_per_page,
-                               max_per_document=self.max_chunks_per_document)
+        return hits
 
     def warm_up(self) -> None:
         """Load the models and run each once on a few words.
@@ -255,6 +278,45 @@ def aggregate_pages(hits: List[Hit], mode: str, k: int, max_per_page: int = DEFA
 
 def _page_key(chunk) -> Tuple:
     return (chunk.get("source"), chunk.get("page"), chunk.get("page_end"))
+
+
+def rerank(reranker: Reranker, question: str, hits: List[Hit]) -> List[Hit]:
+    """The hits re-ordered by the cross-encoder, their scores now the cross-encoder's."""
+    scores = reranker.scores(question, [search_text(h.chunk) for h in hits])
+    return [Hit(s, h.chunk) for s, h in sorted(zip(scores, hits), key=lambda pair: -pair[0])]
+
+
+def rerank_text_only(reranker: Reranker, question: str, hits: List[Hit]) -> List[Hit]:
+    """Rerank the text chunks only; a table keeps the position the fused search gave it.
+
+    The T2-RAGBench figure that motivated RERANK_TEXT_ONLY (.handoff/redo-nov4/B-retrieval.md):
+    MiniLM-L6, trained on web passages, ranked text+table data worse than no reranker.
+    Merge rule: the table hits stay at their fused positions; the text hits, sorted by
+    cross-encoder score, fill the other positions top down. So a table that was fused
+    3rd stays 3rd, and the best text chunk takes the first position that isn't a
+    table's. A table's score becomes that of the reranked text hit just above it (the
+    one just below when it is first), so the scores still read as cross-encoder scores
+    (the refusal retry and the division suggestion compare them with thresholds).
+    A pool of tables only keeps its fused order but takes the cross-encoder's scores,
+    since fused scores (cosine or BM25) aren't on the thresholds' scale.
+    """
+    tables = [is_table(h.chunk) for h in hits]
+    text_hits = [h for h, table in zip(hits, tables) if not table]
+    if not text_hits:
+        scores = reranker.scores(question, [search_text(h.chunk) for h in hits])
+        return [Hit(s, h.chunk) for s, h in zip(scores, hits)]
+    reranked = iter(rerank(reranker, question, text_hits))
+    merged = [h if table else next(reranked) for h, table in zip(hits, tables)]
+    first_text = next(h.score for h, table in zip(merged, tables) if not table)
+    out: List[Hit] = []
+    last_text_score = None
+    for hit, table in zip(merged, tables):
+        if table:
+            hit = Hit(first_text if last_text_score is None else last_text_score, hit.chunk)
+        else:
+            last_text_score = hit.score
+        out.append(hit)
+    return out
 
 
 def _fused(vector_hits: List[Hit], keyword_hits: List[Hit], k: int = RRF_K,

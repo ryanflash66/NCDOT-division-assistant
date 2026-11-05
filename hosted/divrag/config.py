@@ -9,6 +9,13 @@ for the public demo.
     LLM_TEMPERATURE             default 0.1
     LLM_REASONING               "off" (default), "low", "medium" or "high" for reasoning models
     RERANK                      "on" (default) or "off": rerank vector hits with the cross-encoder
+    RERANK_MODEL                the cross-encoder (a name fastembed supports, see embedder.known_cross_encoders),
+                                or "none" (the same as RERANK=off); default Xenova/ms-marco-MiniLM-L-6-v2
+    RERANK_MODEL_FILE           an ONNX file of that model's repo (default: the int8 MiniLM file, else fastembed's)
+    RERANK_TEXT_ONLY            "off" (default) or "on": tables keep their fused rank, only text chunks are reranked
+    RERANK_BATCH_SIZE           passages per cross-encoder call (default 1; see embedder.RERANK_BATCH_SIZE)
+                                RETRY_MIN_SCORE and answer.SUGGEST_THRESHOLD are MiniLM-L-6 logits: another
+                                RERANK_MODEL scores on its own scale, so retune them before deploying it.
     KEYWORD_SEARCH              "on" (default) or "off": add the index's keyword (BM25) search to the vector search
     KEYWORD_FIELD               "on" (default) or "off": score the keyword index's caption/ID field as well as the body
     KEYWORD_FIELD_BOOST         how many times the field's score counts next to the body's (default 1.5; see keyword.DEFAULT_FIELD_BOOST)
@@ -46,7 +53,10 @@ from .keyword import B, DEFAULT_FIELD_BOOST, DEFAULT_ID_BOOST, K1, RRF_K
 from .retrieval import (DEFAULT_MAX_CHUNKS_PER_DOCUMENT, DEFAULT_MAX_CHUNKS_PER_PAGE, DEFAULT_PAGE_AGGREGATION,
                         PAGE_AGGREGATION_MODES)
 
+from .embedder import RERANK_BATCH_SIZE, RERANK_MODEL_NAME, default_model_file
+
 HOSTED_DIR = Path(__file__).resolve().parent.parent
+NO_RERANKER = "none"
 
 # Free models only, so the public link cannot spend the account's credits.
 # Chosen from https://openrouter.ai/api/v1/models on 2026-10-10: Nemotron 3 Ultra
@@ -67,6 +77,10 @@ class Settings:
     temperature: float
     reasoning: str
     rerank: bool
+    rerank_model: str
+    rerank_model_file: Optional[str]
+    rerank_text_only: bool
+    rerank_batch_size: int
     keyword_search: bool
     keyword_field: bool
     keyword_field_boost: float
@@ -97,7 +111,7 @@ class Settings:
                     max_chunks_per_document=self.max_chunks_per_document, rrf_k=self.rrf_k,
                     fusion_weights=self.fusion_weights,
                     field_boost=self.keyword_field_boost if self.keyword_field else 0.0,
-                    id_boost=self.keyword_id_boost)
+                    id_boost=self.keyword_id_boost, text_only=self.rerank_text_only)
 
 
 def _csv(value: str) -> Tuple[str, ...]:
@@ -176,6 +190,24 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     rerank = env.get("RERANK", "on").strip().lower()
     if rerank not in ("on", "off", "1", "0", "true", "false"):
         raise ValueError(f"RERANK must be on or off, got {rerank!r}")
+    rerank_model = env.get("RERANK_MODEL", "").strip() or RERANK_MODEL_NAME
+    if rerank_model.lower() == NO_RERANKER:
+        rerank, rerank_model = "off", NO_RERANKER
+    elif rerank_model != RERANK_MODEL_NAME:
+        # The default needs no model import at startup; another name is checked against
+        # fastembed's list now, so a typo stops the deploy instead of the first question.
+        from .embedder import known_cross_encoders
+
+        known = known_cross_encoders()
+        if rerank_model not in known:
+            raise ValueError(f"RERANK_MODEL must be {NO_RERANKER!r} or one of {', '.join(known)}; got {rerank_model!r}")
+    rerank_model_file = env.get("RERANK_MODEL_FILE", "").strip() or default_model_file(rerank_model)
+    text_only = env.get("RERANK_TEXT_ONLY", "off").strip().lower()
+    if text_only not in ("on", "off", "1", "0", "true", "false"):
+        raise ValueError(f"RERANK_TEXT_ONLY must be on or off, got {text_only!r}")
+    batch = env.get("RERANK_BATCH_SIZE", "").strip() or str(RERANK_BATCH_SIZE)
+    if not (batch.isdigit() and int(batch) >= 1):
+        raise ValueError(f"RERANK_BATCH_SIZE must be a whole number of 1 or more, got {batch!r}")
     keyword = env.get("KEYWORD_SEARCH", "on").strip().lower()
     if keyword not in ("on", "off", "1", "0", "true", "false"):
         raise ValueError(f"KEYWORD_SEARCH must be on or off, got {keyword!r}")
@@ -212,6 +244,10 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         temperature=float(env.get("LLM_TEMPERATURE", "0.1")),
         reasoning=reasoning,
         rerank=rerank in ("on", "1", "true"),
+        rerank_model=rerank_model,
+        rerank_model_file=rerank_model_file,
+        rerank_text_only=text_only in ("on", "1", "true"),
+        rerank_batch_size=int(batch),
         keyword_search=keyword in ("on", "1", "true"),
         keyword_field=keyword_field in ("on", "1", "true"),
         keyword_field_boost=field_boost,

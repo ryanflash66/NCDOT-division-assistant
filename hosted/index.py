@@ -40,7 +40,7 @@ from pydantic import BaseModel, Field
 from divrag.answer import Answer, Answerer, Emit, LiveSteps, live_step_labels
 from divrag.config import Settings, load_settings
 from divrag.divisions import BY_ID, DIVISIONS, Division
-from divrag.embedder import Embedder, Reranker, cpu_info, model_cache_dir
+from divrag.embedder import Embedder, cpu_info, model_cache_dir, reranker_from_settings
 from divrag.index_file import IndexFile
 from divrag.llm import MISCONFIGURED, TOO_SLOW, LLMError, OpenRouterClient, tls_context
 from divrag.retrieval import Retriever
@@ -97,7 +97,7 @@ class _Runtime:
                 started = time.perf_counter()
                 cache = model_cache_dir()
                 embedder = Embedder(self.index.model, cache_dir=cache)
-                reranker = Reranker(cache_dir=cache) if self.settings.rerank else None
+                reranker = reranker_from_settings(self.settings, cache_dir=cache)
                 retriever = Retriever(self.index, embedder, reranker, **self.settings.retriever_options())
                 retriever.warm_up()
                 tls_context()  # for the model calls, off the event loop
@@ -276,6 +276,10 @@ def health() -> Dict:
         "chunks": dict(counts),
         "embedding_model": runtime.index.model,
         "rerank": settings.rerank,
+        "rerank_model": settings.rerank_model if settings.rerank else None,
+        "rerank_model_file": settings.rerank_model_file if settings.rerank else None,
+        "rerank_text_only": settings.rerank and settings.rerank_text_only,
+        "rerank_batch_size": settings.rerank_batch_size if settings.rerank else None,
         # On only when the setting allows it and bm25.npz shipped with the index (a missing file turns it off silently).
         "keyword_search": settings.keyword_search and runtime.index.keyword is not None,
         # The caption/ID field (DAR-657) counts only with the keyword search on and a field in the index.
