@@ -1,0 +1,2654 @@
+{
+  "division": "wztc",
+  "description": "Locked test set for the Work Zone Traffic Control division (DAR-653). Authored from the page text of the wztc PDFs; see docs/locked-set/authoring-wztc.md.",
+  "items": [
+    {
+      "id": "wztc-001",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In the FHWA work zone road user cost report's table of NHTS vehicle occupancy factors, what was the 2009 occupancy for trips to visit friends or relatives?",
+      "type": "table",
+      "edge_cases": [
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          25
+        ],
+        "printed_pages": [
+          "13"
+        ],
+        "value": "2.08",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 2; printed page 13."
+    },
+    {
+      "id": "wztc-002",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Per the OST guidelines table in the work zone road user cost report, what percent of the wage rate is the per person-hour value of intercity personal travel?",
+      "type": "table",
+      "edge_cases": [
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          25
+        ],
+        "printed_pages": [
+          "13"
+        ],
+        "value": "70%",
+        "accept": [
+          "70 percent"
+        ],
+        "unit": "%"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 3; the range 60-90% is also printed."
+    },
+    {
+      "id": "wztc-003",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What crash modification factor does the road user cost report give for nighttime property-damage-only crashes during temporary lane closures on freeways?",
+      "type": "table",
+      "edge_cases": [
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          50
+        ],
+        "printed_pages": [
+          "38"
+        ],
+        "value": "1.63",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 24."
+    },
+    {
+      "id": "wztc-004",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In the Indiana Interstate work zone crash table, what was the crash rate with the work zone at sites using partial lane closure with 3 lanes in each direction?",
+      "type": "table",
+      "edge_cases": [
+        "merged_header",
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          50
+        ],
+        "printed_pages": [
+          "38"
+        ],
+        "value": "10.1006",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 25; per 10 million VMT."
+    },
+    {
+      "id": "wztc-005",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Under NCDOT's guidelines for determining work zone level of significance, what project length puts a rural widening project at Level 2?",
+      "type": "table",
+      "edge_cases": [
+        "merged_header",
+        "multi_row_header"
+      ],
+      "expected": {
+        "source": "GLWZSIG.pdf",
+        "pdf_pages": [
+          1
+        ],
+        "printed_pages": [
+          ""
+        ],
+        "value": "5 to 8 Miles",
+        "accept": [
+          "5-8 miles"
+        ],
+        "unit": "mi"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": ""
+    },
+    {
+      "id": "wztc-006",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Per the MUTCD advance warning sign spacing table, what is the B distance between signs on an expressway or freeway?",
+      "type": "table",
+      "edge_cases": [
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          9
+        ],
+        "printed_pages": [
+          "773"
+        ],
+        "value": "1,500 feet",
+        "accept": [],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 6B-1; printed page 773."
+    },
+    {
+      "id": "wztc-007",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What stopping sight distance does MUTCD Part 6 give for a speed of 65 mph?",
+      "type": "table",
+      "edge_cases": [
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          11
+        ],
+        "printed_pages": [
+          "775"
+        ],
+        "value": "645 feet",
+        "accept": [],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 6B-2."
+    },
+    {
+      "id": "wztc-008",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What freeway or expressway size does the MUTCD give for a Large Arrow (one-direction, W1-6) sign in temporary traffic control?",
+      "type": "table",
+      "edge_cases": [
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          39
+        ],
+        "printed_pages": [
+          "803"
+        ],
+        "value": "60 x 30",
+        "accept": [
+          "60 by 30"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 6H-1."
+    },
+    {
+      "id": "wztc-009",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What size does the MUTCD list for the End Work Zone Speed Limit (R2-12) sign on a freeway or expressway?",
+      "type": "table",
+      "edge_cases": [
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          32
+        ],
+        "printed_pages": [
+          "796"
+        ],
+        "value": "36 x 54",
+        "accept": [
+          "36 by 54"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "Table 6G-1."
+    },
+    {
+      "id": "wztc-010",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In the MUTCD temporary traffic control guide sign sizes, what conventional-road size is given for the Detour sign designated M4-10?",
+      "type": "table",
+      "edge_cases": [
+        "near_identical_rows"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          47
+        ],
+        "printed_pages": [
+          "811"
+        ],
+        "value": "48 x 18",
+        "accept": [
+          "48 by 18"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 6I-1 has three Detour rows (M4-8P, M4-9, M4-10)."
+    },
+    {
+      "id": "wztc-011",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In the TMP Design Manual's barrier performance attributes chart, what maximum deflection is listed for the Quickchange Movable Barrier?",
+      "type": "table",
+      "edge_cases": [
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          35
+        ],
+        "printed_pages": [
+          "11"
+        ],
+        "value": "53 in.",
+        "accept": [
+          "53 inches"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Figure 2 - Performance Attributes Chart (NCHRP 350 TL-3)."
+    },
+    {
+      "id": "wztc-012",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In MUTCD Table 6B-1, what is distance C between advance warning signs on an expressway or freeway?",
+      "type": "table_id",
+      "edge_cases": [
+        "table_caption_named"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          9
+        ],
+        "printed_pages": [
+          "773"
+        ],
+        "value": "2,640 feet",
+        "accept": [
+          "half a mile",
+          "0.5 mile"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": ""
+    },
+    {
+      "id": "wztc-013",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "According to MUTCD Table 6B-3, how long must a shoulder taper be?",
+      "type": "table_id",
+      "edge_cases": [
+        "table_caption_named"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          11
+        ],
+        "printed_pages": [
+          "775"
+        ],
+        "value": "at least 0.33 L",
+        "accept": [
+          "0.33 L",
+          "0.33L"
+        ],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "L comes from Table 6B-4."
+    },
+    {
+      "id": "wztc-014",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Per Table 1101-1 of the NCDOT Standard Specifications, how far from active travel lanes must materials and equipment be stored when the posted speed limit is 55 mph?",
+      "type": "table_id",
+      "edge_cases": [
+        "table_caption_named",
+        "chapter_page_number"
+      ],
+      "expected": {
+        "source": "2024 Standard Specifications for Roads and Structures.pdf",
+        "pdf_pages": [
+          661
+        ],
+        "printed_pages": [
+          "11-3"
+        ],
+        "value": "32",
+        "accept": [
+          "32 ft",
+          "32 feet"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Printed page 11-3; the table prints '>= 32'."
+    },
+    {
+      "id": "wztc-015",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In Table 17 of the TMP Design Manual, what project duration does New York use as a criterion for temporary positive protection?",
+      "type": "table_id",
+      "edge_cases": [
+        "table_caption_named"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          64
+        ],
+        "printed_pages": [
+          "40"
+        ],
+        "value": "60 days",
+        "accept": [],
+        "unit": "days"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "Printed Part 2 Ch.5 page 40."
+    },
+    {
+      "id": "wztc-016",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What minimum size does MUTCD Table 6G-1 list for a Yield (R1-2) sign?",
+      "type": "table_id",
+      "edge_cases": [
+        "table_caption_named"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          32
+        ],
+        "printed_pages": [
+          "796"
+        ],
+        "value": "30 x 30 x 30",
+        "accept": [],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": ""
+    },
+    {
+      "id": "wztc-017",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In the road user cost report's table of average truck payload by State, what is North Carolina's average payload for a 3-axle single-unit truck?",
+      "type": "multipage_table",
+      "edge_cases": [
+        "continuation_page",
+        "merged_header"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          35,
+          34
+        ],
+        "printed_pages": [
+          "23",
+          "22"
+        ],
+        "value": "24,688",
+        "accept": [
+          "24688 lb"
+        ],
+        "unit": "lb"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 9 runs over pp.34-35 (printed 22-23); North Carolina is on the second page."
+    },
+    {
+      "id": "wztc-018",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "Per the road user cost report's average payload by State table, what is North Carolina's average payload for a 5-axle truck/tractor trailer?",
+      "type": "multipage_table",
+      "edge_cases": [
+        "continuation_page",
+        "merged_header",
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          35,
+          34
+        ],
+        "printed_pages": [
+          "23",
+          "22"
+        ],
+        "value": "41,852",
+        "accept": [
+          "41852 lb"
+        ],
+        "unit": "lb"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 9, second page."
+    },
+    {
+      "id": "wztc-019",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In the table of added time and vehicle running cost per 1,000 stops (2010 dollars), what is the added cost for a combination truck at an initial speed of 70 mph?",
+      "type": "multipage_table",
+      "edge_cases": [
+        "continuation_page",
+        "merged_header"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          41,
+          40
+        ],
+        "printed_pages": [
+          "29",
+          "28"
+        ],
+        "value": "$1,247.36",
+        "accept": [
+          "1,247.36"
+        ],
+        "unit": "$/1000 stops"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 12 starts on p.40 and its rows are on p.41."
+    },
+    {
+      "id": "wztc-020",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What idling cost per vehicle-hour does the road user cost report's stops-and-idling table give for single-unit trucks?",
+      "type": "multipage_table",
+      "edge_cases": [
+        "continuation_page"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          41,
+          40
+        ],
+        "printed_pages": [
+          "29",
+          "28"
+        ],
+        "value": "$1.04",
+        "accept": [
+          "1.04"
+        ],
+        "unit": "$/veh-hr"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 12, last row."
+    },
+    {
+      "id": "wztc-021",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In the road user cost report's table of performance thresholds used by various agencies, what queue length does Ohio DOT consider acceptable?",
+      "type": "multipage_table",
+      "edge_cases": [
+        "continuation_page"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          94,
+          93
+        ],
+        "printed_pages": [
+          "82",
+          "81"
+        ],
+        "value": "0.75 miles",
+        "accept": [
+          "0.75 mi"
+        ],
+        "unit": "mi"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 42 continues from p.93 to p.94."
+    },
+    {
+      "id": "wztc-022",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "According to the agency performance thresholds table in the road user cost report, above how many minutes of delay does Missouri DOT consider delays excessive?",
+      "type": "multipage_table",
+      "edge_cases": [
+        "continuation_page"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          94,
+          93
+        ],
+        "printed_pages": [
+          "82",
+          "81"
+        ],
+        "value": "15 minutes",
+        "accept": [],
+        "unit": "min"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 42, second page."
+    },
+    {
+      "id": "wztc-023",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What freeway or expressway size does the MUTCD warning sign size table give for the No Passing Zone pennant (W14-3)?",
+      "type": "multipage_table",
+      "edge_cases": [
+        "continuation_page",
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          40,
+          39
+        ],
+        "printed_pages": [
+          "804",
+          "803"
+        ],
+        "value": "64 x 64 x 48",
+        "accept": [],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 6H-1 runs over pp.39-40."
+    },
+    {
+      "id": "wztc-024",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "Per NCDOT Roadway Standard Drawing 1101.11 (buffer space and sight distance), what minimum longitudinal buffer space applies at a 60 mph design speed?",
+      "type": "rotated",
+      "edge_cases": [
+        "landscape",
+        "rotated_text"
+      ],
+      "expected": {
+        "source": "Division 11 Combined.pdf",
+        "pdf_pages": [
+          38
+        ],
+        "printed_pages": [
+          ""
+        ],
+        "value": "345",
+        "accept": [
+          "345 ft",
+          "345 feet"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Sheet 2 of 4; text layer is scrambled by rotation, checked against the rendered page."
+    },
+    {
+      "id": "wztc-025",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Per Roadway Standard Drawing 1101.11, what anchored flare rate applies to temporary barrier at a 65 mph posted speed?",
+      "type": "rotated",
+      "edge_cases": [
+        "landscape",
+        "rotated_text",
+        "ratio_value"
+      ],
+      "expected": {
+        "source": "Division 11 Combined.pdf",
+        "pdf_pages": [
+          39
+        ],
+        "printed_pages": [
+          ""
+        ],
+        "value": "19 : 1",
+        "accept": [
+          "19:1"
+        ],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Sheet 3 of 4; checked against the rendered page."
+    },
+    {
+      "id": "wztc-026",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Under Roadway Standard Drawing 1110.01, signs larger than how many square feet must be mounted on two or more supports?",
+      "type": "rotated",
+      "edge_cases": [
+        "landscape",
+        "rotated_text"
+      ],
+      "expected": {
+        "source": "Division 11 Combined.pdf",
+        "pdf_pages": [
+          41
+        ],
+        "printed_pages": [
+          ""
+        ],
+        "value": "10 square feet",
+        "accept": [
+          "10 sq ft"
+        ],
+        "unit": "sq ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "General note 2."
+    },
+    {
+      "id": "wztc-027",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What minimum mounting height does Roadway Standard Drawing 1115.01 require for trailer-mounted flashing arrow boards?",
+      "type": "rotated",
+      "edge_cases": [
+        "landscape",
+        "rotated_text"
+      ],
+      "expected": {
+        "source": "Division 11 Combined.pdf",
+        "pdf_pages": [
+          45
+        ],
+        "printed_pages": [
+          ""
+        ],
+        "value": "7 feet",
+        "accept": [
+          "7 ft"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "General note 2."
+    },
+    {
+      "id": "wztc-028",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In NCDOT's guidelines for implementing the Work Zone Safety and Mobility Policy, which unit leads the strategy to incorporate value engineering earlier in design?",
+      "type": "rotated",
+      "edge_cases": [
+        "landscape",
+        "rotated_text"
+      ],
+      "expected": {
+        "source": "WZSafetyAndMobilityGuidelines.pdf",
+        "pdf_pages": [
+          9
+        ],
+        "printed_pages": [
+          "9"
+        ],
+        "value": "ADU",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Landscape owners table."
+    },
+    {
+      "id": "wztc-029",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In NCDOT's Work Zone Safety and Mobility implementation guidelines, which unit is the lead for hosting national or regional work zone safety conferences?",
+      "type": "rotated",
+      "edge_cases": [
+        "landscape",
+        "rotated_text"
+      ],
+      "expected": {
+        "source": "WZSafetyAndMobilityGuidelines.pdf",
+        "pdf_pages": [
+          10
+        ],
+        "printed_pages": [
+          "10"
+        ],
+        "value": "WZTCU",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": ""
+    },
+    {
+      "id": "wztc-030",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Which unit leads the revision of the Feasibility Study process to account for work zone impacts in NCDOT's Work Zone Safety and Mobility implementation guidelines?",
+      "type": "rotated",
+      "edge_cases": [
+        "landscape",
+        "rotated_text"
+      ],
+      "expected": {
+        "source": "WZSafetyAndMobilityGuidelines.pdf",
+        "pdf_pages": [
+          7
+        ],
+        "printed_pages": [
+          "7"
+        ],
+        "value": "FSU",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "WZTCU is the unit affected."
+    },
+    {
+      "id": "wztc-031",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In the NCDOT criteria for level of project significance reproduced in the road user cost report, what user cost per day makes a project Level 1?",
+      "type": "rotated",
+      "edge_cases": [
+        "landscape",
+        "rotated_text",
+        "merged_header"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          90
+        ],
+        "printed_pages": [
+          "78"
+        ],
+        "value": "$50,000/day",
+        "accept": [
+          "$50,000 per day"
+        ],
+        "unit": "$/day"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 40, landscape page (printed 78)."
+    },
+    {
+      "id": "wztc-032",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In Table 1080-2 of the NCDOT Standard Specifications, what is the maximum water content for gray waterborne paint vehicle?",
+      "type": "rotated",
+      "edge_cases": [
+        "rotated_text",
+        "merged_header"
+      ],
+      "expected": {
+        "source": "2024 Standard Specifications for Roads and Structures.pdf",
+        "pdf_pages": [
+          581
+        ],
+        "printed_pages": [
+          "10-165"
+        ],
+        "value": "58%",
+        "accept": [
+          "58 percent"
+        ],
+        "unit": "%"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table printed sideways on a portrait page (printed 10-165)."
+    },
+    {
+      "id": "wztc-033",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Per Table 1080-2 of the Standard Specifications, what minimum Texanol content is required for gray waterborne paint vehicle?",
+      "type": "rotated",
+      "edge_cases": [
+        "rotated_text",
+        "merged_header",
+        "non_first_row_col"
+      ],
+      "expected": {
+        "source": "2024 Standard Specifications for Roads and Structures.pdf",
+        "pdf_pages": [
+          581
+        ],
+        "printed_pages": [
+          "10-165"
+        ],
+        "value": "4%",
+        "accept": [
+          "4 percent"
+        ],
+        "unit": "%"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": ""
+    },
+    {
+      "id": "wztc-034",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In the Work Zone ITS Implementation Guide's table of sample work zone ITS applications, on which Interstate did Texas DOT deploy its queue warning example?",
+      "type": "rotated",
+      "edge_cases": [
+        "rotated_text"
+      ],
+      "expected": {
+        "source": "fhwahop14008.pdf",
+        "pdf_pages": [
+          11
+        ],
+        "printed_pages": [
+          "03"
+        ],
+        "value": "I-35",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "Table 1; most characters on the page are rotated."
+    },
+    {
+      "id": "wztc-035",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Per NCDOT's maintenance and utility flagging guidelines (Chapter 2), how high above the ground must the STOP/SLOW paddle be held?",
+      "type": "scan",
+      "edge_cases": [
+        "scanned_page"
+      ],
+      "expected": {
+        "source": "Chapter_2.pdf",
+        "pdf_pages": [
+          4
+        ],
+        "printed_pages": [
+          "10"
+        ],
+        "value": "7 feet",
+        "accept": [
+          "7 ft"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "ocr_text_match",
+      "note": "Scanned page, printed 10."
+    },
+    {
+      "id": "wztc-036",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In Chapter 2 of NCDOT's maintenance traffic control guidelines, stationary work zone signs larger than what surface area must be dual mounted?",
+      "type": "scan",
+      "edge_cases": [
+        "scanned_page"
+      ],
+      "expected": {
+        "source": "Chapter_2.pdf",
+        "pdf_pages": [
+          22
+        ],
+        "printed_pages": [
+          "28"
+        ],
+        "value": "10 sf",
+        "accept": [
+          "10 square feet"
+        ],
+        "unit": "sq ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "ocr_text_match",
+      "note": "Scanned page, printed 28."
+    },
+    {
+      "id": "wztc-037",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "According to NCDOT's maintenance traffic control guidelines, what share of a traffic cone's weight must be in its base?",
+      "type": "scan",
+      "edge_cases": [
+        "scanned_page"
+      ],
+      "expected": {
+        "source": "Chapter_2.pdf",
+        "pdf_pages": [
+          26
+        ],
+        "printed_pages": [
+          "32"
+        ],
+        "value": "Seventy percent",
+        "accept": [
+          "70%",
+          "70 percent"
+        ],
+        "unit": "%"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "ocr_text_match",
+      "note": "Scanned page, printed 32."
+    },
+    {
+      "id": "wztc-038",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What is the maximum length of a Type III barricade in NCDOT's maintenance guidelines unless it is NCHRP 350 crash tested and approved?",
+      "type": "scan",
+      "edge_cases": [
+        "scanned_page"
+      ],
+      "expected": {
+        "source": "Chapter_2.pdf",
+        "pdf_pages": [
+          32
+        ],
+        "printed_pages": [
+          "38"
+        ],
+        "value": "8 feet",
+        "accept": [
+          "8 ft"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "ocr_text_match",
+      "note": "Scanned page, printed 38."
+    },
+    {
+      "id": "wztc-039",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Per Chapter 2 of NCDOT's maintenance traffic control guidelines, how many automated flagger assistance devices may a single operator run at the same time?",
+      "type": "scan",
+      "edge_cases": [
+        "scanned_page"
+      ],
+      "expected": {
+        "source": "Chapter_2.pdf",
+        "pdf_pages": [
+          37
+        ],
+        "printed_pages": [
+          "43"
+        ],
+        "value": "two AFADS",
+        "accept": [
+          "2"
+        ],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "ocr_text_match",
+      "note": "Scanned page, printed 43; only with an unobstructed view of both."
+    },
+    {
+      "id": "wztc-040",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "Under Chapter 5 of NCDOT's maintenance work zone guidelines, what is the maximum vertical pavement edge drop-off allowed at the end of the work day on roads posted 45 mph or more?",
+      "type": "scan",
+      "edge_cases": [
+        "scanned_page"
+      ],
+      "expected": {
+        "source": "Chapter_5.pdf",
+        "pdf_pages": [
+          3
+        ],
+        "printed_pages": [
+          "68"
+        ],
+        "value": "2 inches",
+        "accept": [
+          "2 in"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "ocr_text_match",
+      "note": "Scanned page, printed 68."
+    },
+    {
+      "id": "wztc-041",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "How long may mobile work stop at a time under the work duration definitions in Chapter 5 of NCDOT's maintenance guidelines?",
+      "type": "scan",
+      "edge_cases": [
+        "scanned_page"
+      ],
+      "expected": {
+        "source": "Chapter_5.pdf",
+        "pdf_pages": [
+          5
+        ],
+        "printed_pages": [
+          "70"
+        ],
+        "value": "5 minutes",
+        "accept": [],
+        "unit": "min"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "ocr_text_match",
+      "note": "Scanned page, printed 70."
+    },
+    {
+      "id": "wztc-042",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "For short-term stationary work on a 2-lane, 2-way road posted 55 mph or less, to what width may the adjacent travel lane be narrowed under NCDOT's maintenance guidelines?",
+      "type": "scan",
+      "edge_cases": [
+        "scanned_page"
+      ],
+      "expected": {
+        "source": "Chapter_5.pdf",
+        "pdf_pages": [
+          9
+        ],
+        "printed_pages": [
+          "74"
+        ],
+        "value": "10 feet",
+        "accept": [
+          "10 ft"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "ocr_text_match",
+      "note": "Scanned page, printed 74."
+    },
+    {
+      "id": "wztc-043",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In the FHWA work zone self-assessment project classification scheme in the Work Zone Impacts Assessment guide, which project type lists pothole patching as an example?",
+      "type": "scan",
+      "edge_cases": [
+        "image_table"
+      ],
+      "expected": {
+        "source": "wzi_guide.pdf",
+        "pdf_pages": [
+          41
+        ],
+        "printed_pages": [
+          "3-9"
+        ],
+        "value": "Type IV",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "ocr_text_match",
+      "note": "Table 3.2 is an image; only its caption is in the text layer (printed 3-9)."
+    },
+    {
+      "id": "wztc-044",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In MUTCD Figure 6K-2 (pedestrian channelizing device), what minimum gap should there be between the hand-trailing edge and its support?",
+      "type": "figure",
+      "edge_cases": [
+        "figure_callout"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          53
+        ],
+        "printed_pages": [
+          "817"
+        ],
+        "value": "2-inch",
+        "accept": [
+          "2 inches",
+          "2 in"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Figure note 1; printed page 817."
+    },
+    {
+      "id": "wztc-045",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "Per the notes for MUTCD Figure 6P-2 (blasting zone), blasting caps used within what distance of a roadway require the signing shown?",
+      "type": "figure",
+      "edge_cases": [
+        "figure_notes"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          98
+        ],
+        "printed_pages": [
+          "862"
+        ],
+        "value": "1,000 feet",
+        "accept": [],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "Printed page 862."
+    },
+    {
+      "id": "wztc-046",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In the TMP Design Manual's Detour User Cost program screenshot, what cost update factor is shown for an analysis-year consumer price index of 218?",
+      "type": "figure",
+      "edge_cases": [
+        "screenshot"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          152
+        ],
+        "printed_pages": [
+          "4"
+        ],
+        "value": "1.67",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "Part 5 Ch.3 page 4."
+    },
+    {
+      "id": "wztc-047",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "Up to what speed does the Chapter 5 mowing-operation layout for a median mower within four feet of the edgeline on a multilane road apply?",
+      "type": "figure",
+      "edge_cases": [
+        "figure_callout",
+        "rotated_text"
+      ],
+      "expected": {
+        "source": "Chapter_5.pdf",
+        "pdf_pages": [
+          16
+        ],
+        "printed_pages": [
+          ""
+        ],
+        "value": "55 MPH",
+        "accept": [
+          "55 mph"
+        ],
+        "unit": "mph"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Figure header 'Speed: 55 MPH and Below'."
+    },
+    {
+      "id": "wztc-048",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "For flagging operations restricted to daylight hours only, what kind of legends, borders and backgrounds does NCDOT's STOP/SLOW paddle detail allow?",
+      "type": "figure",
+      "edge_cases": [
+        "figure_callout"
+      ],
+      "expected": {
+        "source": "Chapter_2.pdf",
+        "pdf_pages": [
+          5
+        ],
+        "printed_pages": [
+          ""
+        ],
+        "value": "non-reflectorized",
+        "accept": [
+          "non-reflective"
+        ],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Note on the paddle detail."
+    },
+    {
+      "id": "wztc-049",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "According to the notes under the TMP Design Manual's barrier performance attributes chart, water-filled barrier may only be used in speed zones up to what speed?",
+      "type": "footnote",
+      "edge_cases": [
+        "footnote_changes_value"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          35
+        ],
+        "printed_pages": [
+          "11"
+        ],
+        "value": "45 mph",
+        "accept": [],
+        "unit": "mph"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Note 2."
+    },
+    {
+      "id": "wztc-050",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In the MUTCD advance warning sign spacing table, the C dimension is the distance between which signs?",
+      "type": "footnote",
+      "edge_cases": [
+        "footnote_defines_column"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          9
+        ],
+        "printed_pages": [
+          "773"
+        ],
+        "value": "second and third signs",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Footnote ** of Table 6B-1."
+    },
+    {
+      "id": "wztc-051",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "Besides posted speed and the off-peak 85th-percentile speed, what speed may be used for 'Speed' in MUTCD Table 6B-2 per its footnote?",
+      "type": "footnote",
+      "edge_cases": [
+        "footnote_defines_column"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          11
+        ],
+        "printed_pages": [
+          "775"
+        ],
+        "value": "anticipated operating speed",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Footnote * of Table 6B-2."
+    },
+    {
+      "id": "wztc-052",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Under what work zone conditions were the crash modification factors in Table 24 of the road user cost report reported?",
+      "type": "footnote",
+      "edge_cases": [
+        "table_note"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          50
+        ],
+        "printed_pages": [
+          "38"
+        ],
+        "value": "active work and temporary lane closure",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Note under Table 24."
+    },
+    {
+      "id": "wztc-053",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What 2010 consumer price index was used to adjust the stops and idling costs in Table 12 of the road user cost report?",
+      "type": "footnote",
+      "edge_cases": [
+        "table_note"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          41
+        ],
+        "printed_pages": [
+          "29"
+        ],
+        "value": "193.396",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Original CPI 142.8 (1996)."
+    },
+    {
+      "id": "wztc-054",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What does the superscript A on HG-56 Solids mean in Table 1080-2 of the NCDOT Standard Specifications?",
+      "type": "footnote",
+      "edge_cases": [
+        "table_note",
+        "rotated_text"
+      ],
+      "expected": {
+        "source": "2024 Standard Specifications for Roads and Structures.pdf",
+        "pdf_pages": [
+          581
+        ],
+        "printed_pages": [
+          "10-165"
+        ],
+        "value": "Or approved equivalent",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": ""
+    },
+    {
+      "id": "wztc-055",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "Per the note to Table 1080-1 of the Standard Specifications, what solution is used to determine acid soluble pigments in waterborne paint?",
+      "type": "footnote",
+      "edge_cases": [
+        "table_note",
+        "rotated_text"
+      ],
+      "expected": {
+        "source": "2024 Standard Specifications for Roads and Structures.pdf",
+        "pdf_pages": [
+          580
+        ],
+        "printed_pages": [
+          "10-164"
+        ],
+        "value": "5% acetic acid",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Note A, printed page 10-164."
+    },
+    {
+      "id": "wztc-056",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "23 CFR 630 cites the MMUCC guideline in a footnote; what property damage amount sets that guideline's crash reporting threshold?",
+      "type": "footnote",
+      "edge_cases": [
+        "page_footnote"
+      ],
+      "expected": {
+        "source": "CFR-2024-title23-vol1-part630.pdf",
+        "pdf_pages": [
+          8
+        ],
+        "printed_pages": [
+          "252"
+        ],
+        "value": "$1,000",
+        "accept": [
+          "1000"
+        ],
+        "unit": "$"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Footnote 3 to the definitions, printed page 252."
+    },
+    {
+      "id": "wztc-057",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In metres, what work zone clear-zone width does RDG Table 9-1 (reproduced in the TMP Design Manual) give for 70-80 km/h?",
+      "type": "units",
+      "edge_cases": [
+        "metric_units"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          59
+        ],
+        "printed_pages": [
+          "35"
+        ],
+        "value": "5",
+        "accept": [
+          "5 m"
+        ],
+        "unit": "m"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "Same row gives [16] ft for 45-50 mph."
+    },
+    {
+      "id": "wztc-058",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Curves flatter than what radius, in metres, need no adjusted clear zone according to the curve correction note in the TMP Design Manual?",
+      "type": "units",
+      "edge_cases": [
+        "metric_units"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          59
+        ],
+        "printed_pages": [
+          "35"
+        ],
+        "value": "900 m",
+        "accept": [
+          "2860 ft"
+        ],
+        "unit": "m"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "Note under Table 3-2."
+    },
+    {
+      "id": "wztc-059",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What maximum deflection does the TMP Design Manual's performance attributes chart give for water-filled barrier, in feet and inches?",
+      "type": "units",
+      "edge_cases": [
+        "unit_conversion"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          35
+        ],
+        "printed_pages": [
+          "11"
+        ],
+        "value": "12 ft. 10 in.",
+        "accept": [
+          "12 ft 10 in",
+          "154 in"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": ""
+    },
+    {
+      "id": "wztc-060",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What hourly value of local personal travel time per person (2010) does the work zone road user cost report calculate?",
+      "type": "units",
+      "edge_cases": [
+        "currency_rate"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          25
+        ],
+        "printed_pages": [
+          "13"
+        ],
+        "value": "$11.89",
+        "accept": [
+          "11.89"
+        ],
+        "unit": "$/person-hr"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "0.5 x $49,445 / 2080."
+    },
+    {
+      "id": "wztc-061",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In what units are the Ohio work zone crash rates in Table 26 of the road user cost report expressed?",
+      "type": "units",
+      "edge_cases": [
+        "unit_of_measure"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          50
+        ],
+        "printed_pages": [
+          "38"
+        ],
+        "value": "per Million VMT",
+        "accept": [
+          "per million vehicle miles traveled"
+        ],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 25 (Indiana) uses per 10 million VMT."
+    },
+    {
+      "id": "wztc-062",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In what units, and in which order, are the dimensions in the MUTCD temporary traffic control sign size tables shown?",
+      "type": "units",
+      "edge_cases": [
+        "unit_of_measure"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          32
+        ],
+        "printed_pages": [
+          "796"
+        ],
+        "value": "inches",
+        "accept": [
+          "width x height"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "Notes under Table 6G-1."
+    },
+    {
+      "id": "wztc-063",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What does Part 2, Chapter 8, page 5 of the TMP Design Manual give as the minimum existing speed limit for a Work Zone Speed Limit reduction ordinance?",
+      "type": "page_ref",
+      "edge_cases": [
+        "printed_vs_pdf_page",
+        "chapter_page_number"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          78
+        ],
+        "printed_pages": [
+          "5"
+        ],
+        "value": "65 MPH",
+        "accept": [
+          "65 mph"
+        ],
+        "unit": "mph"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Section I warrant 1; PDF page 78."
+    },
+    {
+      "id": "wztc-064",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "On page 783 of MUTCD Part 6, what should be the primary and preferred hand-signaling device?",
+      "type": "page_ref",
+      "edge_cases": [
+        "printed_vs_pdf_page"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          19
+        ],
+        "printed_pages": [
+          "783"
+        ],
+        "value": "STOP/SLOW paddle",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "PDF page 19."
+    },
+    {
+      "id": "wztc-065",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Which best practices category begins on page 71 of the FHWA Work Zone Operations Best Practices Guidebook?",
+      "type": "page_ref",
+      "edge_cases": [
+        "printed_vs_pdf_page"
+      ],
+      "expected": {
+        "source": "bpguidebook.pdf",
+        "pdf_pages": [
+          85
+        ],
+        "printed_pages": [
+          "71"
+        ],
+        "value": "Modeling and Impact Analysis",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Category C; PDF page 85."
+    },
+    {
+      "id": "wztc-066",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "Which best practices category starts on page 101 of the Work Zone Operations Best Practices Guidebook?",
+      "type": "page_ref",
+      "edge_cases": [
+        "printed_vs_pdf_page"
+      ],
+      "expected": {
+        "source": "bpguidebook.pdf",
+        "pdf_pages": [
+          115
+        ],
+        "printed_pages": [
+          "101"
+        ],
+        "value": "Project Development and Design",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Category E; PDF page 115."
+    },
+    {
+      "id": "wztc-067",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "According to page 253 of 23 CFR (April 1, 2024 edition), how often must States perform a work zone process review?",
+      "type": "page_ref",
+      "edge_cases": [
+        "printed_vs_pdf_page"
+      ],
+      "expected": {
+        "source": "CFR-2024-title23-vol1-part630.pdf",
+        "pdf_pages": [
+          9
+        ],
+        "printed_pages": [
+          "253"
+        ],
+        "value": "every two years",
+        "accept": [
+          "every 2 years"
+        ],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "630.1008(e); PDF page 9."
+    },
+    {
+      "id": "wztc-068",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "On page 38 of the FHWA work zone road user cost report, what crash modification factor is given for all crash types and severities during temporary lane closures on freeways?",
+      "type": "page_ref",
+      "edge_cases": [
+        "printed_vs_pdf_page"
+      ],
+      "expected": {
+        "source": "fhwahop12005.pdf",
+        "pdf_pages": [
+          50
+        ],
+        "printed_pages": [
+          "38"
+        ],
+        "value": "1.77",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Table 24 first row; PDF page 50."
+    },
+    {
+      "id": "wztc-069",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "On page 11-3 of the NCDOT Standard Specifications, how far must vehicles, equipment and materials protected by concrete barrier or guardrail be offset from it?",
+      "type": "page_ref",
+      "edge_cases": [
+        "printed_vs_pdf_page",
+        "chapter_page_number"
+      ],
+      "expected": {
+        "source": "2024 Standard Specifications for Roads and Structures.pdf",
+        "pdf_pages": [
+          661
+        ],
+        "printed_pages": [
+          "11-3"
+        ],
+        "value": "5 feet",
+        "accept": [
+          "5 ft"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "PDF page 661."
+    },
+    {
+      "id": "wztc-070",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "For NC-PCB on asphalt pavement, what maximum deflection does the TMP impact design table give at a 32 ft offset and 60 mph?",
+      "type": "duplicate_pages",
+      "edge_cases": [
+        "near_identical_tables"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          37
+        ],
+        "printed_pages": [
+          "13"
+        ],
+        "value": "38.82",
+        "accept": [
+          "38.82 in"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Concrete table, same cell: 27.98."
+    },
+    {
+      "id": "wztc-071",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "For NC-PCB on concrete pavement, what maximum deflection does the TMP impact design table give at a 44 ft offset and 70 mph?",
+      "type": "duplicate_pages",
+      "edge_cases": [
+        "near_identical_tables"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          38
+        ],
+        "printed_pages": [
+          "14"
+        ],
+        "value": "33.46",
+        "accept": [
+          "33.46 in"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Asphalt table, same cell: 44.53."
+    },
+    {
+      "id": "wztc-072",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What maximum deflection does the TMP manual's concrete pavement NC-PCB table give for an 8 ft offset at 80 mph?",
+      "type": "duplicate_pages",
+      "edge_cases": [
+        "near_identical_tables"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          38
+        ],
+        "printed_pages": [
+          "14"
+        ],
+        "value": "25.74",
+        "accept": [
+          "25.74 in"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Asphalt table, same cell: 39.12."
+    },
+    {
+      "id": "wztc-073",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What maximum deflection does the TMP manual's asphalt pavement NC-PCB table give for a 20 ft offset at 50 mph?",
+      "type": "duplicate_pages",
+      "edge_cases": [
+        "near_identical_tables",
+        "precision"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          37
+        ],
+        "printed_pages": [
+          "13"
+        ],
+        "value": "33.30",
+        "accept": [
+          "33.3",
+          "33.3 in"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Concrete table, same cell: 23.61."
+    },
+    {
+      "id": "wztc-074",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What impact angle do the TMP manual's NC-PCB impact design tables give for a 26 ft offset at 50 mph?",
+      "type": "duplicate_pages",
+      "edge_cases": [
+        "near_identical_tables",
+        "two_page_gold"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          37,
+          38
+        ],
+        "printed_pages": [
+          "13",
+          "14"
+        ],
+        "value": "12.6",
+        "accept": [
+          "12.6 deg",
+          "12.6 degrees"
+        ],
+        "unit": "deg"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Same value on the asphalt (p.37) and concrete (p.38) tables; either page is right."
+    },
+    {
+      "id": "wztc-075",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "The MUTCD says Table 6B-2 may be used to set the length of a longitudinal buffer space. What length does it give for 50 mph?",
+      "type": "cross_ref",
+      "edge_cases": [
+        "cross_reference",
+        "two_page_gold"
+      ],
+      "expected": {
+        "source": "part6.pdf",
+        "pdf_pages": [
+          11,
+          9
+        ],
+        "printed_pages": [
+          "775",
+          "773"
+        ],
+        "value": "425 feet",
+        "accept": [
+          "425 ft"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Reference on p.9 (printed 773), table on p.11 (printed 775)."
+    },
+    {
+      "id": "wztc-076",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "Chapter 5 of the TMP Design Manual says RDG Table 9-1 gives example work zone clear zones. What width does that table give for 60-70 mph?",
+      "type": "cross_ref",
+      "edge_cases": [
+        "cross_reference",
+        "two_page_gold"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          59,
+          29
+        ],
+        "printed_pages": [
+          "35",
+          "5"
+        ],
+        "value": "30",
+        "accept": [
+          "30 ft",
+          "30 feet"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "Reference on p.29 (printed 5), table on p.59 (printed 35)."
+    },
+    {
+      "id": "wztc-077",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "The TMP Design Manual says RDG Table 3-2 gives the clear-zone adjustment for curves. What curve correction factor does it give for an 820 ft radius at 50 mph?",
+      "type": "cross_ref",
+      "edge_cases": [
+        "cross_reference",
+        "two_page_gold"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          59,
+          30
+        ],
+        "printed_pages": [
+          "35",
+          "6"
+        ],
+        "value": "1.4",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": "Reference on p.30, table on p.59."
+    },
+    {
+      "id": "wztc-078",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "Note 1 of the TMP manual's barrier performance attributes chart points to figures for NC-PCB deflection. Per the concrete pavement figure, what is the maximum deflection at a 56 ft offset and 30 mph?",
+      "type": "cross_ref",
+      "edge_cases": [
+        "cross_reference",
+        "two_page_gold",
+        "near_identical_tables"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          38,
+          35
+        ],
+        "printed_pages": [
+          "14",
+          "11"
+        ],
+        "value": "25.48",
+        "accept": [
+          "25.48 in"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Note on p.35, Figure 5 on p.38."
+    },
+    {
+      "id": "wztc-079",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Roadway Standard Drawing 1150.01 says to provide stopping sight distance to each flagger station and refers to RSD 1101.11 sheet 2. What stopping sight distance does that sheet give for 55 mph?",
+      "type": "cross_ref",
+      "edge_cases": [
+        "cross_reference",
+        "two_page_gold",
+        "rotated_text"
+      ],
+      "expected": {
+        "source": "Division 11 Combined.pdf",
+        "pdf_pages": [
+          38,
+          49
+        ],
+        "printed_pages": [
+          "",
+          ""
+        ],
+        "value": "495",
+        "accept": [
+          "495 ft",
+          "495 feet"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Reference on p.49 (1150.01 note 3), table on p.38."
+    },
+    {
+      "id": "wztc-080",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In the TMP Design Manual's Detour User Cost program, what calculated detour delay cost means an ICT is needed?",
+      "type": "text",
+      "edge_cases": [],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          149
+        ],
+        "printed_pages": [
+          "1"
+        ],
+        "value": "$1000",
+        "accept": [
+          "1,000"
+        ],
+        "unit": "$"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Unless the detour is a full closure for the project duration."
+    },
+    {
+      "id": "wztc-081",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "When computing the highest aggregate value for a detour route in the TMP Design Manual, what weight is given to a left turn?",
+      "type": "text",
+      "edge_cases": [
+        "numeric_weight"
+      ],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          151
+        ],
+        "printed_pages": [
+          "3"
+        ],
+        "value": "0.5",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Stops 1, right turns 0.25; the manual's worked example uses 0.7 by mistake."
+    },
+    {
+      "id": "wztc-082",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "In the TMP Design Manual's engineering study example for End Bent #2, what construction year ADT was used for the clear zone?",
+      "type": "text",
+      "edge_cases": [],
+      "expected": {
+        "source": "TMP Design Manual (Combined, No Links).pdf",
+        "pdf_pages": [
+          67
+        ],
+        "printed_pages": [
+          "43"
+        ],
+        "value": "1300 vpd",
+        "accept": [
+          "1,300"
+        ],
+        "unit": "vpd"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Clear zone 16 to 20 ft at 50 mph."
+    },
+    {
+      "id": "wztc-083",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What class of high-visibility safety vest must flaggers wear under NCDOT SOP 10-9?",
+      "type": "text",
+      "edge_cases": [],
+      "expected": {
+        "source": "SOP 10-9 Flagging traffic.pdf",
+        "pdf_pages": [
+          1
+        ],
+        "printed_pages": [
+          "1"
+        ],
+        "value": "Class 2 or 3",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "ANSI/ISEA 107-2020."
+    },
+    {
+      "id": "wztc-084",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Per NCDOT SOP 10-9, signs for flagging must be mounted so traffic can see over what?",
+      "type": "text",
+      "edge_cases": [],
+      "expected": {
+        "source": "SOP 10-9 Flagging traffic.pdf",
+        "pdf_pages": [
+          2
+        ],
+        "printed_pages": [
+          "2"
+        ],
+        "value": "the first stopped car",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": ""
+    },
+    {
+      "id": "wztc-085",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "Projects with a letting date on or after what date must coordinate with the WZTC Section on positive protection documentation, per the December 2025 TMSD memo?",
+      "type": "text",
+      "edge_cases": [],
+      "expected": {
+        "source": "Work Zone - Guidelines on the Use of Positive Protection Device Memo.pdf",
+        "pdf_pages": [
+          1
+        ],
+        "printed_pages": [
+          "1"
+        ],
+        "value": "January 1, 2027",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": ""
+    },
+    {
+      "id": "wztc-086",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "Who documents positive protection revisions, additions or exceptions during construction under the 2025 positive protection memo?",
+      "type": "text",
+      "edge_cases": [],
+      "expected": {
+        "source": "Work Zone - Guidelines on the Use of Positive Protection Device Memo.pdf",
+        "pdf_pages": [
+          2
+        ],
+        "printed_pages": [
+          "2"
+        ],
+        "value": "Resident Engineer",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "On the Positive Work Zone Protection Supplement form."
+    },
+    {
+      "id": "wztc-087",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What effective date does the 2004 Federal Register final rule on work zone safety and mobility give?",
+      "type": "text",
+      "edge_cases": [],
+      "expected": {
+        "source": "04-20340.pdf",
+        "pdf_pages": [
+          1
+        ],
+        "printed_pages": [
+          "54562"
+        ],
+        "value": "October 12, 2007",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Printed page 54562."
+    },
+    {
+      "id": "wztc-088",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "As of 12/1/2023, how many submissions had NCDOT's online TMA crash report form received, per the 2023 process review?",
+      "type": "text",
+      "edge_cases": [],
+      "expected": {
+        "source": "2023 WZ Safety & Mobility Process Review.pdf",
+        "pdf_pages": [
+          5
+        ],
+        "printed_pages": [
+          "5"
+        ],
+        "value": "2 submissions",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "tuning",
+      "verified_by": "page_text_match",
+      "note": ""
+    },
+    {
+      "id": "wztc-089",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "How many work zone fatalities did NCDOT's 2023 process review report for 2023 as of November 24, 2023?",
+      "type": "text",
+      "edge_cases": [],
+      "expected": {
+        "source": "2023 WZ Safety & Mobility Process Review.pdf",
+        "pdf_pages": [
+          9
+        ],
+        "printed_pages": [
+          "9"
+        ],
+        "value": "27 fatalities",
+        "accept": [],
+        "unit": null
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "28% lower than 2022 YTD; statistics preliminary."
+    },
+    {
+      "id": "wztc-090",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What example goal does FHWA's guide to implementing the work zone safety and mobility rule give for reducing work zone related crashes?",
+      "type": "text",
+      "edge_cases": [],
+      "expected": {
+        "source": "rule_guide.pdf",
+        "pdf_pages": [
+          29
+        ],
+        "printed_pages": [
+          "3-3"
+        ],
+        "value": "25%",
+        "accept": [
+          "25 percent"
+        ],
+        "unit": "%"
+      },
+      "refuse": false,
+      "split": "locked",
+      "verified_by": "page_text_match",
+      "note": "Within the next 5 years."
+    },
+    {
+      "id": "wztc-091",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What maximum deflection does the TMP Design Manual's NC-PCB asphalt table give for a 14 ft offset at 90 mph?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "beyond_table_range"
+      ],
+      "expected": null,
+      "refuse": true,
+      "split": "locked",
+      "verified_by": "absent_from_corpus_search",
+      "note": "The design tables stop at 80 mph."
+    },
+    {
+      "id": "wztc-092",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What minimum longitudinal buffer space does Roadway Standard Drawing 1101.11 give for an 85 mph design speed?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "beyond_table_range"
+      ],
+      "expected": null,
+      "refuse": true,
+      "split": "locked",
+      "verified_by": "absent_from_corpus_search",
+      "note": "Sheet 2 stops at 80 mph."
+    },
+    {
+      "id": "wztc-093",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What hourly wage does NCDOT pay certified flaggers in 2026?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "out_of_scope"
+      ],
+      "expected": null,
+      "refuse": true,
+      "split": "tuning",
+      "verified_by": "absent_from_corpus_search",
+      "note": ""
+    },
+    {
+      "id": "wztc-094",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What maximum pavement edge drop-off does South Carolina DOT allow at the end of the work day?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "other_state"
+      ],
+      "expected": null,
+      "refuse": true,
+      "split": "locked",
+      "verified_by": "absent_from_corpus_search",
+      "note": "TMP Table 17 lists other states' drop-off criteria, but not South Carolina."
+    },
+    {
+      "id": "wztc-095",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "How many work zone fatalities did North Carolina record in 2024?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "year_not_covered"
+      ],
+      "expected": null,
+      "refuse": true,
+      "split": "locked",
+      "verified_by": "absent_from_corpus_search",
+      "note": "The 2023 process review stops at 2023 (as of 11/24/23)."
+    },
+    {
+      "id": "wztc-096",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What wind load must a portable changeable message sign trailer be designed for under NCDOT rules?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "out_of_scope"
+      ],
+      "expected": null,
+      "refuse": true,
+      "split": "locked",
+      "verified_by": "absent_from_corpus_search",
+      "note": ""
+    },
+    {
+      "id": "wztc-097",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What speed limit applies to autonomous vehicles in North Carolina work zones?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "out_of_scope"
+      ],
+      "expected": null,
+      "refuse": true,
+      "split": "locked",
+      "verified_by": "absent_from_corpus_search",
+      "note": ""
+    },
+    {
+      "id": "wztc-098",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "What per-hour rate does NCDOT pay off-duty law enforcement officers for work zone enforcement in 2026?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "out_of_scope"
+      ],
+      "expected": null,
+      "refuse": true,
+      "split": "tuning",
+      "verified_by": "absent_from_corpus_search",
+      "note": ""
+    },
+    {
+      "id": "wztc-099",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What minimum lane width does the Virginia DOT work area protection manual require for a lane shift on an interstate?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "other_state"
+      ],
+      "expected": null,
+      "refuse": true,
+      "split": "locked",
+      "verified_by": "absent_from_corpus_search",
+      "note": ""
+    },
+    {
+      "id": "wztc-100",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "How many days in advance must a contractor notify the Asheville city government before a lane closure on a city street?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "out_of_scope"
+      ],
+      "expected": null,
+      "refuse": true,
+      "split": "locked",
+      "verified_by": "absent_from_corpus_search",
+      "note": ""
+    }
+  ]
+}
