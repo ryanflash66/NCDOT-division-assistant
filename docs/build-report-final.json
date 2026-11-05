@@ -1,7 +1,7 @@
 {
  "generated": "2026-11-05T15:11:38+00:00",
  "git_commit": "d60f7d0a33bf6be4dd527272b6e87472790e07da",
- "index": "C:\\Users\\ryanf\\AppData\\Local\\Temp\\claude\\1910b88adde6e62c\\465e5f75-f1f2-481c-afdc-22253f3167e2\\scratchpad\\index-final",
+ "index": "hosted/index",
  "settings": {
   "mode": "ingest",
   "model": "BAAI/bge-small-en-v1.5",
@@ -23,12 +23,7 @@
    "source": "TMP Design Manual (Combined, No Links).pdf",
    "pdf_pages": 172,
    "pages_with_text": 172,
-   "empty_text_pages": [
-    5,
-    6,
-    7,
-    114
-   ],
+   "empty_text_pages": [],
    "ocr_pages": [],
    "chunks": 277,
    "table_chunks": 64,
@@ -150,9 +145,7 @@
    "source": "WZSafetyAndMobilityGuidelines.pdf",
    "pdf_pages": 26,
    "pages_with_text": 26,
-   "empty_text_pages": [
-    8
-   ],
+   "empty_text_pages": [],
    "ocr_pages": [],
    "chunks": 82,
    "table_chunks": 64,
@@ -3265,10 +3258,7 @@
    "source": "bpguidebook.pdf",
    "pdf_pages": 293,
    "pages_with_text": 293,
-   "empty_text_pages": [
-    64,
-    94
-   ],
+   "empty_text_pages": [],
    "ocr_pages": [],
    "chunks": 373,
    "table_chunks": 79,
@@ -4754,9 +4744,7 @@
    "source": "fhwahop12005.pdf",
    "pdf_pages": 208,
    "pages_with_text": 208,
-   "empty_text_pages": [
-    9
-   ],
+   "empty_text_pages": [],
    "ocr_pages": [],
    "chunks": 694,
    "table_chunks": 350,
@@ -6012,9 +6000,6 @@
    "pdf_pages": 311,
    "pages_with_text": 310,
    "empty_text_pages": [
-    3,
-    190,
-    274,
     286
    ],
    "ocr_pages": [
@@ -6996,9 +6981,7 @@
    "source": "DOT Encroachment Submissions User Manual - July 2023.pdf",
    "pdf_pages": 77,
    "pages_with_text": 77,
-   "empty_text_pages": [
-    3
-   ],
+   "empty_text_pages": [],
    "ocr_pages": [],
    "chunks": 98,
    "table_chunks": 17,
@@ -7208,7 +7191,6 @@
    "pages_with_text": 311,
    "empty_text_pages": [
     4,
-    171,
     238,
     308,
     314,
@@ -8129,10 +8111,7 @@
    "source": "Signal System Timing Philosophy Manual.pdf",
    "pdf_pages": 61,
    "pages_with_text": 61,
-   "empty_text_pages": [
-    16,
-    19
-   ],
+   "empty_text_pages": [],
    "ocr_pages": [],
    "chunks": 112,
    "table_chunks": 31,
@@ -16790,11 +16769,7 @@
    "source": "C34 - Manual 2012.pdf",
    "pdf_pages": 124,
    "pages_with_text": 124,
-   "empty_text_pages": [
-    7,
-    54,
-    56
-   ],
+   "empty_text_pages": [],
    "ocr_pages": [],
    "chunks": 164,
    "table_chunks": 33,
@@ -17560,10 +17535,7 @@
    "source": "fhwa_hop_08_024.pdf",
    "pdf_pages": 274,
    "pages_with_text": 274,
-   "empty_text_pages": [
-    6,
-    9
-   ],
+   "empty_text_pages": [],
    "ocr_pages": [
     1
    ],
@@ -18023,7 +17995,6 @@
    "pdf_pages": 164,
    "pages_with_text": 161,
    "empty_text_pages": [
-    6,
     47,
     67,
     89
@@ -18596,7 +18567,6 @@
    "pdf_pages": 114,
    "pages_with_text": 111,
    "empty_text_pages": [
-    6,
     22,
     60,
     72
@@ -20775,9 +20745,6 @@
    "pdf_pages": 372,
    "pages_with_text": 358,
    "empty_text_pages": [
-    6,
-    7,
-    8,
     18,
     20,
     26,

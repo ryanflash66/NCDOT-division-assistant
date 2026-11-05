@@ -65,7 +65,10 @@ def document_report(division: str, source: str, chunks: Sequence[Dict], pdf: Opt
     were read by OCR (`ocr_pages`, null without the PDF).
     """
     pages = pdf_page_stats(pdf) if pdf is not None else {}
-    chunk_pages = {c["page"] for c in chunks if c.get("page") is not None}
+    # A table joined over a page break (DAR-655) is one chunk on page..page_end: the pages after
+    # its first have text in the index too (TMP Design Manual pp. 5-7, the index's continuation).
+    chunk_pages = {p for c in chunks if c.get("page") is not None
+                   for p in range(c["page"], int(c.get("page_end") or c["page"]) + 1)}
     tables = [c for c in chunks if c.get("kind") == "table" or has_table(c["text"])]
     pdf_pages = stats.get("pdf_pages") if stats else (len(pages) or None)
     row = {

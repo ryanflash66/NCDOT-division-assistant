@@ -117,6 +117,14 @@ def test_the_report_has_a_row_per_document_with_flagged_pages_and_totals(tmp_pat
     assert "tmp.pdf" not in br.markdown_summary(report).split("| Document |")[1]  # under 5 tables: not ranked
 
 
+def test_pages_inside_a_table_joined_over_a_page_break_are_not_empty(tmp_path):
+    # TMP Design Manual pp. 4-7: the index's table runs over four pages and is one chunk from p. 4.
+    chunks = [{"text": CLEAN, "source": "tmp.pdf", "page": 4, "page_end": 7, "division": "wztc"}]
+    stats = [{"division": "wztc", "source": "tmp.pdf", "pdf_pages": 8, "pages_with_text": 8}]
+    report = br.write_report(tmp_path / "report.json", chunks, stats, {"mode": "test"}, documents_dir=tmp_path)
+    assert report["documents"][0]["empty_text_pages"] == [1, 2, 3, 8]
+
+
 def test_the_standalone_mode_reads_an_index_directory(tmp_path):
     index = tmp_path / "index"
     index.mkdir()
