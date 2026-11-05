@@ -48,6 +48,8 @@ export type AnswerPayload = {
   answer: string;
   refused: boolean;
   uncited: boolean;
+  /** Numbers the answer states that its cited passages don't contain (DAR-659); absent in answers saved before it. */
+  unverified?: string[];
   sources: Source[];
   model: string | null;
   first_model: string | null;

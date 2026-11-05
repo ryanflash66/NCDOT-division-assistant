@@ -463,6 +463,7 @@ def test_a_streamed_answer_sends_the_steps_and_the_text_as_they_happen_then_the_
     assert {k: v for k, v in done.items() if k not in timed} == {k: v for k, v in asked.items() if k not in timed}
     assert list(done["timing_ms"]) == list(asked["timing_ms"])
     assert done["refused"] is False and done["uncited"] is False and done["sources"][0]["page"] == 126
+    assert done["unverified"] == []  # "5 feet" is the passage's "5 feet"
     assert retriever.divisions == ["utilities", "utilities"]
     lines = [r.getMessage() for r in caplog.records if r.getMessage().startswith("ask ")]
     assert len(lines) == 1 and "stream=True" in lines[0] and "uncited=False" in lines[0]
@@ -486,6 +487,23 @@ def test_a_streamed_refusal_with_strong_retrieval_double_checks_and_replaces_the
     done = events[-1][1]
     assert done["retried"] is True and done["refused"] is False and done["answer"] == "Within 5 feet [1]."
     assert (done["first_model"], done["model"]) == ("test/model:free", "test/second:free")
+
+
+def test_a_streamed_answer_with_a_number_not_in_its_passage_rechecks_and_sends_it_unverified_in_done(api):
+    client, _, llm = api
+    llm.reply = ["Within 6 feet of the travel lane [1].", "Within 7 feet [1]."]  # the passage says 5 feet
+
+    events = _events(_stream(client))
+
+    order = _order(events)
+    recheck = order.index("recheck:start")
+    assert events[recheck][1]["label"] == "Checking the numbers against the source…"
+    assert events[recheck + 1] == ("replace", {"text": ""})
+    assert order[-2:] == ["recheck:done", "done"]
+    done = events[-1][1]
+    assert done["unverified"] == ["6 ft"] and done["answer"] == "Within 6 feet of the travel lane [1]."
+    llm.calls = 0  # the same two replies for the fallback
+    assert _ask(client).json()["unverified"] == ["6 ft"]
 
 
 def test_a_streamed_refusal_refused_again_suggests_another_division(api):

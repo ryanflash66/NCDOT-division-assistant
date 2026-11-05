@@ -21,7 +21,7 @@ import time
 from contextlib import contextmanager
 from typing import Callable, Dict, Iterator, Optional
 
-STEPS = ("model_load", "embed", "search", "rerank", "llm", "citations", "retry", "suggest")
+STEPS = ("model_load", "embed", "search", "rerank", "llm", "citations", "retry", "recheck", "suggest")
 
 # listener(step, "start" | "done", ms): ms is 0 at the start, and this run's time when it is done.
 Listener = Callable[[str, str, int], None]
