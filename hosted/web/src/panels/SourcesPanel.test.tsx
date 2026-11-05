@@ -69,7 +69,9 @@ describe("SourcesPanel", () => {
     expect(items).toHaveLength(2);
     const one = within(items[0]);
     expect(one.getByText("Utilities Accommodation Manual")).toBeTruthy();
-    expect(one.getByText("PDF page 11 · Section 1.1")).toBeTruthy();
+    const pages = one.getByText("PDF page 11");
+    expect(pages.parentElement?.textContent).toBe("PDF page 11 · Section 1.1");
+    expect(pages.getAttribute("title")).toBeNull(); // nothing to explain without a printed number
     const link = one.getByRole("link");
     expect(link.getAttribute("href")).toBe("https://example.org/uam.pdf#page=11");
     expect(link.getAttribute("target")).toBe("_blank");
@@ -77,6 +79,28 @@ describe("SourcesPanel", () => {
     expect(link.textContent).toBe("Open the PDF at this page (source 1, opens in a new tab)");
     expect(within(items[1]).getByText("PDF pages 12–14")).toBeTruthy();
     expect(screen.getByText(/Safari may open the PDF at page 1/)).toBeTruthy();
+  });
+
+  it("shows the printed page number before the PDF page and keeps the link on the PDF page", () => {
+    const printed = [
+      question("q1", "What is the maximum deflection?"),
+      answer(
+        "a1",
+        payload([
+          source(1, { page: 37, printed_page: "13", url: "https://example.org/tmp.pdf#page=37", section: "4.2" }),
+          source(2, { page: 37, page_end: 38, printed_page: "13", printed_page_end: "14", section: null }),
+          source(3, { page: 5, printed_page: "5" }),
+        ]),
+      ),
+    ];
+    render(<Harness messages={printed} />);
+    const items = screen.getAllByRole("listitem");
+    const label = within(items[0]).getByText("p.13 (PDF p.37)");
+    expect(label.getAttribute("title")).toBe("Printed page number (PDF page index)");
+    expect(label.parentElement?.textContent).toBe("p.13 (PDF p.37) · Section 4.2");
+    expect(within(items[0]).getByRole("link").getAttribute("href")).toBe("https://example.org/tmp.pdf#page=37");
+    expect(within(items[1]).getByText("pp.13–14 (PDF pp.37–38)")).toBeTruthy();
+    expect(within(items[2]).getByText("PDF page 5").getAttribute("title")).toBeNull();
   });
 
   it("clamps a long passage with Show more / Show less", () => {

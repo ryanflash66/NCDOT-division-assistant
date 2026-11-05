@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useAuiState } from "@assistant-ui/react";
 import { cn } from "@/lib/utils";
-import { pagesText, pickAnswer } from "@/panels/answers";
+import { pagesText, pagesTitle, pickAnswer } from "@/panels/answers";
 import { webUrl } from "@/panels/format";
 import { useApp } from "@/state";
 import type { Source } from "@/types";
@@ -139,7 +139,8 @@ function SourceItem({ source: s, current }: { source: Source; current: boolean }
   const long = text.length > CLAMP_CHARS;
   const [open, setOpen] = useState(false);
   const textId = useId();
-  const meta = [pagesText(s), s.section ? `Section ${s.section}` : null].filter(Boolean).join(" · ");
+  const pages = pagesText(s);
+  const section = s.section ? `Section ${s.section}` : null;
   const href = webUrl(s.url);
 
   return (
@@ -164,7 +165,14 @@ function SourceItem({ source: s, current }: { source: Source; current: boolean }
         </span>
         <span className="leading-snug font-semibold">{String(s.title || "")}</span>
       </div>
-      {meta && <div className="mt-0.5 text-[0.85rem] text-muted-foreground">{meta}</div>}
+      {(pages || section) && (
+        <div className="mt-0.5 text-[0.85rem] text-muted-foreground">
+          {/* The title explains the two numbers of "p.13 (PDF p.37)"; the link still opens the PDF index. */}
+          {pages && <span title={pagesTitle(s)}>{pages}</span>}
+          {pages && section && " · "}
+          {section}
+        </div>
+      )}
       {text && (
         // The clamp is on the inner <p>: on the padded box, the sixth line would show in the padding.
         <div className="mt-2 rounded-r border-l-[3px] bg-muted/60 px-2.5 py-2 text-[0.9rem] leading-relaxed">
