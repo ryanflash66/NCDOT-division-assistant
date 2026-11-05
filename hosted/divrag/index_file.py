@@ -36,6 +36,11 @@ def search_text(chunk: Dict[str, Any]) -> str:
     return f"{context}\n{chunk['text']}" if context else chunk["text"]
 
 
+def is_figure(chunk: Dict[str, Any]) -> bool:
+    """A figure chunk (caption, nearby lines, drawing labels), not part of the page's reading order."""
+    return chunk.get("kind") == "figure"
+
+
 @dataclass(frozen=True)
 class Hit:
     score: float
@@ -108,12 +113,16 @@ class IndexFile:
         return self._position.get(id(chunk), len(self.chunks))
 
     def following(self, chunk: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """The chunk after this one in the same document (chunks are saved in reading order)."""
+        """The chunk after this one in the same document (chunks are saved in reading order).
+
+        Figure chunks (DAR-658) repeat a page's caption and labels after all of a
+        document's text chunks, so they never follow or are followed in reading order.
+        """
         i = self._position.get(id(chunk))
-        if i is None or i + 1 >= len(self.chunks):
+        if i is None or i + 1 >= len(self.chunks) or is_figure(chunk):
             return None
         after = self.chunks[i + 1]
-        return after if after.get("source") == chunk.get("source") else None
+        return after if after.get("source") == chunk.get("source") and not is_figure(after) else None
 
     def search(self, query_vector: Sequence[float], k: int = 3, division: Optional[str] = None,
                sources: Optional[Sequence[str]] = None) -> List[Hit]:

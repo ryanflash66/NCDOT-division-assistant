@@ -95,6 +95,39 @@ def test_the_build_records_each_documents_chunks_and_time_in_division_order(fold
     assert all(s["division"] == "demo" and s["seconds"] >= 0 for s in stats)
 
 
+def test_a_figure_caption_gets_its_own_figure_chunk_after_the_documents_text(folders):
+    import pymupdf
+
+    documents, _, config = folders
+    pdf = pymupdf.open()
+    page = pdf.new_page()
+    lines = ["2.1 Lane closures", "Closures follow the layout below.", "", "Figure 3 - Lane closure sign layout",
+             "ROAD WORK AHEAD 500 FT", "RIGHT LANE CLOSED 1000 FT"]
+    for i, line in enumerate(lines):
+        page.insert_text((72, 72 + 40 * i), line, fontsize=11)
+    pdf.save(documents / "demo" / "fig.pdf")
+    division = Division(id="demo", name="Demo", unit="Demo Unit",
+                        documents=(Document(file="fig.pdf", title="Fig", url="https://connect.ncdot.gov/fig.pdf"),))
+
+    chunks = build_division(config, division, 512, 64, documents)
+    without = build_division(config, division, 512, 64, documents, with_figures=False)
+
+    assert [c.get("kind") for c in chunks] == [None, "figure"]
+    figure = chunks[-1]
+    assert figure["text"].startswith("Figure 3 - Lane closure sign layout")
+    assert "ROAD WORK AHEAD 500 FT" in figure["text"]
+    assert figure["context"] == "[Fig · p.1 · Figure 3 - Lane closure sign layout]"
+    assert (figure["page"], figure["source"], figure["division"]) == (1, "fig.pdf", "demo")
+    assert [c.get("kind") for c in without] == [None]
+
+
+def test_page_flags_from_the_loader_reach_the_chunks():
+    from prototype.ingest import _flags
+
+    assert _flags({"flags": "ocr_low_conf,rotated"}) == ["ocr_low_conf", "rotated"]
+    assert _flags({}) == []
+
+
 def test_a_document_without_text_or_with_many_empty_pages_is_flagged():
     assert "scanned" in text_warning({"chunks": 0, "pages_with_text": 0, "pdf_pages": 5})
     assert "26 of 48 pages" in text_warning({"chunks": 30, "pages_with_text": 26, "pdf_pages": 48})

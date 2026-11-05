@@ -185,6 +185,21 @@ def test_passages_are_in_reading_order_with_consecutive_chunks_merged():
     assert "page_end" not in chunks[1]  # the index's own chunks are not changed
 
 
+def test_figure_chunks_are_never_a_following_chunk_or_merged_into_page_text():
+    # DAR-658: a document's figure chunks sit after all its text chunks; by
+    # position the last page's chunk would otherwise be "followed" by a figure.
+    chunks = [_chunk(t, p, "b") for t, p in [("p1", 1), ("p2", 2), ("fig1", 1), ("fig2", 2)]]
+    chunks[2]["kind"] = chunks[3]["kind"] = "figure"
+    index = IndexFile("m", chunks, _unit([[1, 0, 0]] * 4))
+    retriever = Retriever(index, _FakeEmbedder(), None)
+
+    passages = retriever.as_passages([Hit(0.9, c) for c in chunks])
+
+    assert index.following(chunks[0]) is chunks[1]
+    assert index.following(chunks[1]) is None and index.following(chunks[2]) is None
+    assert [p.chunk["text"] for p in passages] == ["p1\n\np2", "fig1", "fig2"]
+
+
 def test_committed_index_tags_every_chunk_with_a_configured_division():
     from divrag.config import HOSTED_DIR
     from divrag.divisions import BY_ID, document_for
