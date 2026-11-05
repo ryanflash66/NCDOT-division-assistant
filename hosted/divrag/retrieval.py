@@ -9,7 +9,8 @@ from typing import List, Optional, Sequence
 
 from .embedder import Embedder, Reranker
 from .index_file import Hit, IndexFile, is_figure, search_text
-from .keyword import fuse
+from .keyword import DEFAULT_FIELD_BOOST, DEFAULT_ID_BOOST, fuse
+from .query import parse
 from .timing import StepTimer, timed
 
 # Vector hits handed to the reranker. 20 was enough for the 4 original manuals,
@@ -25,13 +26,16 @@ DEFAULT_CANDIDATES = 40
 
 class Retriever:
     def __init__(self, index: IndexFile, embedder: Embedder, reranker: Optional[Reranker] = None,
-                 candidates: int = DEFAULT_CANDIDATES, keyword: bool = True):
-        """`keyword` adds the keyword (BM25) search, when the index has one."""
+                 candidates: int = DEFAULT_CANDIDATES, keyword: bool = True,
+                 field_boost: float = DEFAULT_FIELD_BOOST, id_boost: float = DEFAULT_ID_BOOST):
+        """`keyword` adds the keyword (BM25) search, when the index has one; `field_boost` 0 turns its caption/ID field off."""
         self.index = index
         self.embedder = embedder
         self.reranker = reranker
         self.candidates = candidates
         self.keyword = keyword and index.keyword is not None
+        self.field_boost = field_boost if index.keyword is not None and index.keyword.field is not None else 0.0
+        self.id_boost = id_boost
 
     def retrieve(self, question: str, division: Optional[str], k: int = 5,
                  timer: Optional[StepTimer] = None, candidates: Optional[int] = None,
@@ -43,8 +47,11 @@ class Retriever:
         are re-ordered by the cross-encoder and their scores are the
         cross-encoder's. With keyword search, those candidates are the top of
         the vector and keyword rankings fused (reciprocal rank fusion), each
-        search giving `candidates` hits. `timer` records the embed, search
-        (both searches) and rerank steps.
+        search giving `candidates` hits. The keyword search scores the
+        caption/ID field too, counting the table, figure and document numbers
+        the question names (query.parse) more; the vector search gets the
+        question as asked. `timer` records the embed, search (both searches)
+        and rerank steps.
         """
         pool = max(k, candidates or self.candidates) if self.reranker else k
         with timed(timer, "embed"):
@@ -52,7 +59,10 @@ class Retriever:
         with timed(timer, "search"):
             hits = self.index.search(vector, k=pool, division=division, sources=sources)
             if self.keyword:
-                words = self.index.keyword_search(question, k=pool, division=division, sources=sources)
+                parsed = parse(question)
+                words = self.index.keyword_search(question, k=pool, division=division, sources=sources,
+                                                  field_boost=self.field_boost, ids=parsed.ids + parsed.doc_codes,
+                                                  id_boost=self.id_boost)
                 hits = _fused(hits, words)[:pool]
         if self.reranker and len(hits) > 1:
             with timed(timer, "rerank"):

@@ -10,7 +10,10 @@ for the public demo.
     LLM_REASONING               "off" (default), "low", "medium" or "high" for reasoning models
     RERANK                      "on" (default) or "off": rerank vector hits with the cross-encoder
     KEYWORD_SEARCH              "on" (default) or "off": add the index's keyword (BM25) search to the vector search
-    RERANK_CANDIDATES           vector hits handed to the reranker (default 40; see retrieval.DEFAULT_CANDIDATES)
+    KEYWORD_FIELD               "on" (default) or "off": score the keyword index's caption/ID field as well as the body
+    KEYWORD_FIELD_BOOST         how many times the field's score counts next to the body's (default 1.5; see keyword.DEFAULT_FIELD_BOOST)
+    KEYWORD_ID_BOOST            how many times more a table, figure or document number the question names counts in the field (default 2)
+    RERANK_CANDIDATES          vector hits handed to the reranker (default 40; see retrieval.DEFAULT_CANDIDATES)
     TOP_K                       passages given to the model (default 5)
     MODEL_CACHE_DIR             fastembed model directory (see embedder.model_cache_dir)
     ONNX_THREADS                onnxruntime threads per model (default: onnxruntime's own choice; see embedder.onnx_threads)
@@ -25,10 +28,13 @@ for the public demo.
                                 (default none: only the page served by this app can call it)
 """
 
+import math
 import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping, Optional, Tuple
+
+from .keyword import DEFAULT_FIELD_BOOST, DEFAULT_ID_BOOST
 
 HOSTED_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,6 +58,9 @@ class Settings:
     reasoning: str
     rerank: bool
     keyword_search: bool
+    keyword_field: bool
+    keyword_field_boost: float
+    keyword_id_boost: float
     rerank_candidates: int
     top_k: int
     index_dir: Path
@@ -68,6 +77,17 @@ def _csv(value: str) -> Tuple[str, ...]:
     return tuple(part.strip() for part in value.split(",") if part.strip())
 
 
+def _boost(env: Mapping[str, str], name: str, default: float) -> float:
+    raw = env.get(name, str(default))
+    try:
+        value = float(raw)
+    except ValueError:
+        raise ValueError(f"{name} must be a number, got {raw!r}") from None
+    if not math.isfinite(value) or value < 0:  # nan would turn every keyword score to nan: no hits at all
+        raise ValueError(f"{name} must be a finite number, 0 or more, got {raw!r}")
+    return value
+
+
 def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     env = os.environ if env is None else env
     primary = env.get("OPENROUTER_MODEL", "").strip() or DEFAULT_MODEL
@@ -82,6 +102,11 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     keyword = env.get("KEYWORD_SEARCH", "on").strip().lower()
     if keyword not in ("on", "off", "1", "0", "true", "false"):
         raise ValueError(f"KEYWORD_SEARCH must be on or off, got {keyword!r}")
+    keyword_field = env.get("KEYWORD_FIELD", "on").strip().lower()
+    if keyword_field not in ("on", "off", "1", "0", "true", "false"):
+        raise ValueError(f"KEYWORD_FIELD must be on or off, got {keyword_field!r}")
+    field_boost = _boost(env, "KEYWORD_FIELD_BOOST", DEFAULT_FIELD_BOOST)
+    id_boost = _boost(env, "KEYWORD_ID_BOOST", DEFAULT_ID_BOOST)
     reasoning = env.get("LLM_REASONING", "off").strip().lower()
     if reasoning not in ("off", "low", "medium", "high"):
         raise ValueError(f"LLM_REASONING must be off, low, medium or high, got {reasoning!r}")
@@ -109,6 +134,9 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         reasoning=reasoning,
         rerank=rerank in ("on", "1", "true"),
         keyword_search=keyword in ("on", "1", "true"),
+        keyword_field=keyword_field in ("on", "1", "true"),
+        keyword_field_boost=field_boost,
+        keyword_id_boost=id_boost,
         rerank_candidates=int(env.get("RERANK_CANDIDATES", "40")),
         top_k=top_k,
         index_dir=index_dir if index_dir.is_absolute() else HOSTED_DIR / index_dir,
