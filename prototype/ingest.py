@@ -33,6 +33,7 @@ import numpy as np
 from dotenv import load_dotenv
 
 from prototype import HOSTED_DIR  # noqa: F401  (puts hosted/ on sys.path)
+from divrag.config import bm25_parameters
 from divrag.divisions import BY_ID, DIVISIONS, DOCUMENTS_DIR, Division, Document
 from divrag.embedder import Embedder
 from divrag.index_file import IndexFile, search_text
@@ -266,7 +267,10 @@ def build(config: AppConfig, divisions: List[Division], embedder: Embedder,
     if timings is not None:
         timings.update(documents=stats, read_split=read_split, embed=embed_seconds)
     index = IndexFile(embedder.model_name, chunks, vectors)
-    return index.with_keyword_index() if keyword else index
+    if not keyword:
+        return index
+    k1, b = bm25_parameters()  # BM25_K1 and BM25_B are baked into bm25.npz here (DAR-657)
+    return index.with_keyword_index(k1=k1, b=b)
 
 
 def compare(config: AppConfig, index: IndexFile, embedder: Embedder) -> None:

@@ -245,6 +245,10 @@ def test_page_divisions_and_health_expose_no_secrets(api, monkeypatch, tmp_path)
     assert all(u.scheme == "https" and u.hostname in PUBLIC_DOCUMENT_HOSTS for u in urls)
     assert health["llm_configured"] is True
     assert health["keyword_search"] is True  # the committed index ships bm25.npz
+    # The retrieval settings (DAR-657), so a deployment's ranking can be read off its health check.
+    assert (health["page_aggregation"], health["max_chunks_per_page"], health["max_chunks_per_document"]) == ("off", 2, 0)
+    assert (health["rrf_k"], health["fusion_weights"], health["bm25_k1"], health["bm25_b"]) == (60, [1.0, 1.0], 1.2, 0.75)
+    assert health["index_bm25"] == {"k1": 1.2, "b": 0.75}  # what the committed bm25.npz was built with
     assert health["cpus"]["cpu_count"] >= 1
     assert all(m.endswith(":free") for m in health["llm_models"])
     for text in (page.text, str(divisions), str(health)):

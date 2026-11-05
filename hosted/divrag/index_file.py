@@ -24,7 +24,7 @@ from typing import Any, Dict, List, Optional, Sequence
 
 import numpy as np
 
-from .keyword import KEYWORD_FILE, KeywordIndex
+from .keyword import B, K1, KEYWORD_FILE, KeywordIndex
 
 CHUNKS_FILE = "chunks.json"
 VECTORS_FILE = "vectors.npy"
@@ -74,9 +74,13 @@ class IndexFile:
         elif (directory / KEYWORD_FILE).exists():
             (directory / KEYWORD_FILE).unlink()  # an earlier build's, for other chunks
 
-    def with_keyword_index(self) -> "IndexFile":
-        """This index with a keyword index built from its chunks (prototype.ingest calls it before saving)."""
-        self.keyword = KeywordIndex.build([search_text(c) for c in self.chunks], [c.get("division") for c in self.chunks])
+    def with_keyword_index(self, k1: float = K1, b: float = B) -> "IndexFile":
+        """This index with a keyword index built from its chunks (prototype.ingest calls it before saving).
+
+        `k1` and `b` are BM25's (config.py's BM25_K1 and BM25_B at a rebuild).
+        """
+        self.keyword = KeywordIndex.build([search_text(c) for c in self.chunks], [c.get("division") for c in self.chunks],
+                                          k1=k1, b=b)
         return self
 
     def divisions(self) -> List[str]:

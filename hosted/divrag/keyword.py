@@ -27,8 +27,15 @@ from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 import numpy as np
 
 KEYWORD_FILE = "bm25.npz"
+# BM25 defaults (Robertson's usual values). They are baked into the saved
+# weights, so changing them (BM25_K1, BM25_B in config.py) takes a rebuild of
+# bm25.npz: the file holds neither term counts nor chunk lengths, and
+# recomputing them from the chunks takes 4.5 s for the 10,746 committed chunks,
+# too long for a cold start.
 K1 = 1.2
 B = 0.75
+# Reciprocal rank fusion constant (Cormack et al., 2009); RRF_K in config.py.
+RRF_K = 60
 
 # Words, and numbers with their decimals or section dots ("42.89", "3.6.4.1").
 _TOKEN = re.compile(r"[a-z0-9]+(?:\.[0-9]+)*")
@@ -52,17 +59,20 @@ def tokens(text: str) -> List[str]:
 
 
 class KeywordIndex:
-    def __init__(self, terms: np.ndarray, starts: np.ndarray, rows: np.ndarray, weights: np.ndarray, n_chunks: int):
+    def __init__(self, terms: np.ndarray, starts: np.ndarray, rows: np.ndarray, weights: np.ndarray, n_chunks: int,
+                 k1: float = K1, b: float = B):
         self.terms = terms
         self.starts = starts
         self.rows = rows
         self.weights = weights
         self.n_chunks = n_chunks
+        self.k1 = k1  # the BM25 parameters the weights were computed with
+        self.b = b
         self._lookup = {str(t): i for i, t in enumerate(terms)}
 
     @classmethod
-    def build(cls, texts: Sequence[str], divisions: Sequence[Optional[str]]) -> "KeywordIndex":
-        """The index of these chunk texts; `divisions[i]` is chunk i's division."""
+    def build(cls, texts: Sequence[str], divisions: Sequence[Optional[str]], k1: float = K1, b: float = B) -> "KeywordIndex":
+        """The index of these chunk texts; `divisions[i]` is chunk i's division; `k1` and `b` are BM25's."""
         counts = [Counter(tokens(t)) for t in texts]
         lengths = np.array([sum(c.values()) for c in counts], dtype=np.float64)
         by_division: Dict[Optional[str], List[int]] = {}
@@ -74,10 +84,10 @@ class KeywordIndex:
             df = Counter(term for i in members for term in counts[i])
             n = len(members)
             for i in members:
-                norm = K1 * (1 - B + B * lengths[i] / avg)
+                norm = k1 * (1 - b + b * lengths[i] / avg)
                 for term, tf in counts[i].items():
                     idf = math.log(1 + (n - df[term] + 0.5) / (df[term] + 0.5))
-                    postings.setdefault(term, []).append((i, idf * tf * (K1 + 1) / (tf + norm)))
+                    postings.setdefault(term, []).append((i, idf * tf * (k1 + 1) / (tf + norm)))
         terms = sorted(postings)
         starts = np.zeros(len(terms) + 1, dtype=np.int64)
         rows: List[int] = []
@@ -88,7 +98,7 @@ class KeywordIndex:
                 weights.append(weight)
             starts[j + 1] = len(rows)
         return cls(np.array(terms), starts, np.array(rows, dtype=np.int32),
-                   np.array(weights, dtype=np.float32), len(texts))
+                   np.array(weights, dtype=np.float32), len(texts), k1=k1, b=b)
 
     @classmethod
     def load(cls, directory: "str | Path", n_chunks: int) -> Optional["KeywordIndex"]:
@@ -97,14 +107,19 @@ class KeywordIndex:
         if not path.is_file():
             return None
         with np.load(path, allow_pickle=False) as data:
-            index = cls(data["terms"], data["starts"], data["rows"], data["weights"].astype(np.float32), n_chunks)
+            # k1 and b were added in DAR-657; a file saved before then was built with the defaults.
+            k1 = float(data["k1"]) if "k1" in data else K1
+            b = float(data["b"]) if "b" in data else B
+            index = cls(data["terms"], data["starts"], data["rows"], data["weights"].astype(np.float32), n_chunks,
+                        k1=k1, b=b)
         if len(index.rows) and int(index.rows.max()) >= n_chunks:
             raise ValueError(f"{KEYWORD_FILE} refers to chunk {int(index.rows.max())} but the index has {n_chunks}")
         return index
 
     def save(self, directory: "str | Path") -> None:
         np.savez_compressed(Path(directory) / KEYWORD_FILE, terms=self.terms, starts=self.starts,
-                            rows=self.rows, weights=self.weights.astype(np.float16))
+                            rows=self.rows, weights=self.weights.astype(np.float16),
+                            k1=np.float64(self.k1), b=np.float64(self.b))
 
     def scores(self, query: str) -> np.ndarray:
         """The query's BM25 score for every chunk (0 where no query term occurs)."""
@@ -125,14 +140,18 @@ class KeywordIndex:
         return [(int(rows[i]), float(scores[i])) for i in order if scores[i] > 0]
 
 
-def fuse(rankings: Iterable[Sequence[int]], k: int = 60) -> List[int]:
-    """Reciprocal rank fusion: items by the sum of 1 / (k + rank) over the rankings they appear in.
+def fuse(rankings: Iterable[Sequence[int]], k: int = RRF_K, weights: Optional[Sequence[float]] = None) -> List[int]:
+    """Reciprocal rank fusion: items by the sum of w / (k + rank) over the rankings they appear in.
 
     k = 60 is the usual constant (Cormack et al., 2009); ties keep the order of
     first appearance, so the vector ranking wins a tie when it is passed first.
+    `weights` gives each ranking's multiplier w (default 1 each); a ranking
+    past the end of the list gets 1.
     """
+    weights = list(weights or [])
     score: Dict[int, float] = {}
-    for ranking in rankings:
+    for n, ranking in enumerate(rankings):
+        w = weights[n] if n < len(weights) else 1.0
         for rank, item in enumerate(ranking, 1):
-            score[item] = score.get(item, 0.0) + 1.0 / (k + rank)
+            score[item] = score.get(item, 0.0) + w / (k + rank)
     return sorted(score, key=lambda item: -score[item])

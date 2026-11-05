@@ -12,6 +12,14 @@ for the public demo.
     KEYWORD_SEARCH              "on" (default) or "off": add the index's keyword (BM25) search to the vector search
     RERANK_CANDIDATES           vector hits handed to the reranker (default 40; see retrieval.DEFAULT_CANDIDATES)
     TOP_K                       passages given to the model (default 5)
+    PAGE_AGGREGATION            "off" (default), "max" or "sum": rank the reranked chunks by page before the top k
+                                (see retrieval.aggregate_pages)
+    MAX_CHUNKS_PER_PAGE         chunks one page may give to the top k when PAGE_AGGREGATION is on (default 2)
+    MAX_CHUNKS_PER_DOCUMENT     chunks one document may give to the top k after the rerank (default 0: no cap)
+    RRF_K                       reciprocal rank fusion constant (default 60; see keyword.fuse)
+    FUSION_WEIGHTS              "vector,keyword" multipliers inside the fusion (default "1,1")
+    BM25_K1, BM25_B             BM25 parameters (defaults 1.2 and 0.75); they are baked into bm25.npz, so a change
+                                takes a rebuild of the index (prototype.ingest)
     MODEL_CACHE_DIR             fastembed model directory (see embedder.model_cache_dir)
     ONNX_THREADS                onnxruntime threads per model (default: onnxruntime's own choice; see embedder.onnx_threads)
     INDEX_DIR                   directory with chunks.json and vectors.npy (default hosted/index)
@@ -25,10 +33,15 @@ for the public demo.
                                 (default none: only the page served by this app can call it)
 """
 
+import math
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Mapping, Optional, Tuple
+from typing import Dict, Mapping, Optional, Tuple
+
+from .keyword import B, K1, RRF_K
+from .retrieval import (DEFAULT_MAX_CHUNKS_PER_DOCUMENT, DEFAULT_MAX_CHUNKS_PER_PAGE, DEFAULT_PAGE_AGGREGATION,
+                        PAGE_AGGREGATION_MODES)
 
 HOSTED_DIR = Path(__file__).resolve().parent.parent
 
@@ -54,6 +67,13 @@ class Settings:
     keyword_search: bool
     rerank_candidates: int
     top_k: int
+    page_aggregation: str
+    max_chunks_per_page: int
+    max_chunks_per_document: int
+    rrf_k: int
+    fusion_weights: Tuple[float, float]
+    bm25_k1: float
+    bm25_b: float
     index_dir: Path
     max_question_chars: int
     rate_limit_per_minute: int
@@ -64,8 +84,66 @@ class Settings:
     allowed_origins: Tuple[str, ...]
 
 
+    def retriever_options(self) -> Dict[str, object]:
+        """Retriever's keyword arguments for these settings (index.py's _Runtime builds its Retriever with them)."""
+        return dict(candidates=self.rerank_candidates, keyword=self.keyword_search,
+                    page_aggregation=self.page_aggregation, max_chunks_per_page=self.max_chunks_per_page,
+                    max_chunks_per_document=self.max_chunks_per_document, rrf_k=self.rrf_k,
+                    fusion_weights=self.fusion_weights)
+
+
 def _csv(value: str) -> Tuple[str, ...]:
     return tuple(part.strip() for part in value.split(",") if part.strip())
+
+
+def _setting(env: Mapping[str, str], name: str, default: object) -> str:
+    """The variable's value, or the default when it is unset or blank (a `BM25_K1=` line left in .env)."""
+    return env.get(name, "").strip() or str(default)
+
+
+def bm25_parameters(env: Optional[Mapping[str, str]] = None) -> Tuple[float, float]:
+    """BM25_K1 and BM25_B, validated (prototype.ingest reads only these, so other settings can't stop a rebuild)."""
+    env = os.environ if env is None else env
+    k1 = float(_setting(env, "BM25_K1", K1))
+    if not (math.isfinite(k1) and k1 >= 0):
+        raise ValueError(f"BM25_K1 must be 0 or more, got {k1}")
+    b = float(_setting(env, "BM25_B", B))
+    if not 0 <= b <= 1:
+        raise ValueError(f"BM25_B must be between 0 and 1, got {b}")
+    return k1, b
+
+
+def retrieval_options(env: Optional[Mapping[str, str]] = None) -> Dict[str, object]:
+    """PAGE_AGGREGATION, MAX_CHUNKS_PER_PAGE, MAX_CHUNKS_PER_DOCUMENT, RRF_K and FUSION_WEIGHTS, validated,
+    as Retriever's keyword arguments.
+
+    load_settings reads them through here, and the offline measurements
+    (prototype.search, stress_test, image_table_check) call it alone, so they
+    rank as the app would and an unrelated setting can't stop them.
+    """
+    env = os.environ if env is None else env
+    aggregation = _setting(env, "PAGE_AGGREGATION", DEFAULT_PAGE_AGGREGATION).lower()
+    if aggregation not in PAGE_AGGREGATION_MODES:
+        raise ValueError(f"PAGE_AGGREGATION must be off, max or sum, got {aggregation!r}")
+    per_page = int(_setting(env, "MAX_CHUNKS_PER_PAGE", DEFAULT_MAX_CHUNKS_PER_PAGE))
+    if per_page < 1:
+        raise ValueError(f"MAX_CHUNKS_PER_PAGE must be 1 or more, got {per_page}")
+    per_document = int(_setting(env, "MAX_CHUNKS_PER_DOCUMENT", DEFAULT_MAX_CHUNKS_PER_DOCUMENT))
+    if per_document < 0:
+        raise ValueError(f"MAX_CHUNKS_PER_DOCUMENT must be 0 (no cap) or more, got {per_document}")
+    rrf_k = int(_setting(env, "RRF_K", RRF_K))
+    if rrf_k < 1:
+        raise ValueError(f"RRF_K must be 1 or more, got {rrf_k}")
+    weights = _csv(env.get("FUSION_WEIGHTS", "")) or ("1", "1")
+    try:
+        fusion_weights = tuple(float(w) for w in weights)
+    except ValueError:
+        raise ValueError(f"FUSION_WEIGHTS must be two numbers, vector,keyword; got {weights}") from None
+    if (len(fusion_weights) != 2 or not all(math.isfinite(w) and w >= 0 for w in fusion_weights)
+            or sum(fusion_weights) == 0):
+        raise ValueError(f"FUSION_WEIGHTS must be two numbers of 0 or more (not both 0), vector,keyword; got {weights}")
+    return dict(page_aggregation=aggregation, max_chunks_per_page=per_page, max_chunks_per_document=per_document,
+                rrf_k=rrf_k, fusion_weights=fusion_weights)
 
 
 def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
@@ -88,6 +166,8 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     top_k = int(env.get("TOP_K", "5"))
     if not 1 <= top_k <= 10:
         raise ValueError(f"TOP_K must be 1-10, got {top_k}")
+    retrieval = retrieval_options(env)
+    bm25_k1, bm25_b = bm25_parameters(env)
     budget = float(env.get("REQUEST_BUDGET_SECONDS", "55"))
     if not 10 <= budget <= 58:
         raise ValueError(f"REQUEST_BUDGET_SECONDS must be 10-58 (Vercel stops the function at 60), got {budget}")
@@ -111,6 +191,9 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         keyword_search=keyword in ("on", "1", "true"),
         rerank_candidates=int(env.get("RERANK_CANDIDATES", "40")),
         top_k=top_k,
+        **retrieval,
+        bm25_k1=bm25_k1,
+        bm25_b=bm25_b,
         index_dir=index_dir if index_dir.is_absolute() else HOSTED_DIR / index_dir,
         max_question_chars=int(env.get("MAX_QUESTION_CHARS", "500")),
         rate_limit_per_minute=int(env.get("RATE_LIMIT_PER_MINUTE", "8")),
