@@ -42,7 +42,7 @@ def test_default_reranker_is_unchanged():
     settings = load_settings({})
     assert settings.rerank and settings.rerank_model == RERANK_MODEL_NAME
     assert settings.rerank_model_file == RERANK_MODEL_FILE == "onnx/model_quantized.onnx"
-    assert not settings.rerank_text_only and settings.rerank_batch_size == 1
+    assert settings.rerank_text_only and settings.rerank_batch_size == 1
     reranker = reranker_from_settings(settings)
     assert (reranker.model_name, reranker.model_file, reranker.batch_size) == (RERANK_MODEL_NAME, RERANK_MODEL_FILE, 1)
 

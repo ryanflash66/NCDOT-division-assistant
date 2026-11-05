@@ -12,7 +12,7 @@ for the public demo.
     RERANK_MODEL                the cross-encoder (a name fastembed supports, see embedder.known_cross_encoders),
                                 or "none" (the same as RERANK=off); default Xenova/ms-marco-MiniLM-L-6-v2
     RERANK_MODEL_FILE           an ONNX file of that model's repo (default: the int8 MiniLM file, else fastembed's)
-    RERANK_TEXT_ONLY            "off" (default) or "on": tables keep their fused rank, only text chunks are reranked
+    RERANK_TEXT_ONLY            "on" (default) or "off": tables keep their fused rank, only text chunks are reranked
     RERANK_BATCH_SIZE           passages per cross-encoder call (default 1; see embedder.RERANK_BATCH_SIZE)
                                 RETRY_MIN_SCORE and answer.SUGGEST_THRESHOLD are MiniLM-L-6 logits: another
                                 RERANK_MODEL scores on its own scale, so retune them before deploying it.
@@ -202,7 +202,12 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         if rerank_model not in known:
             raise ValueError(f"RERANK_MODEL must be {NO_RERANKER!r} or one of {', '.join(known)}; got {rerank_model!r}")
     rerank_model_file = env.get("RERANK_MODEL_FILE", "").strip() or default_model_file(rerank_model)
-    text_only = env.get("RERANK_TEXT_ONLY", "off").strip().lower()
+    # On by default since DAR-652: on the locked set (rebuilt index, retrieval only) it gave hit@1
+    # 152/204 and hit@5 183/204 against MiniLM-L-6 on every chunk's 147 and 180, the same lead
+    # it had on the tuning split it was picked on (33 and 39 of 41 against 32 and 38); see
+    # docs/locked-set/reranker-pick.md. The cross-encoder, trained on web passages, ranks
+    # labelled table rows below prose that only mentions the numbers.
+    text_only = env.get("RERANK_TEXT_ONLY", "on").strip().lower()
     if text_only not in ("on", "off", "1", "0", "true", "false"):
         raise ValueError(f"RERANK_TEXT_ONLY must be on or off, got {text_only!r}")
     batch = env.get("RERANK_BATCH_SIZE", "").strip() or str(RERANK_BATCH_SIZE)
