@@ -10,8 +10,11 @@ read and chunked as the Chainlit app does (rag.loader's PDF-to-Markdown reader,
 rag.tables' table-aware splitter) but into 512-token chunks, tagged with their division and the numbered section heading in
 effect, embedded with the hosted app's embedder and saved as one index
 (chunks.json + vectors.npy, plus the keyword index bm25.npz) that the hosted
-app loads. A chunk on a page with figure or table captions also gets a
-`context` line naming the document, page and captions, embedded with its text.
+app loads. Each chunk keeps its page's index in the PDF (`page`) and, when the
+page prints another number in its footer, header or PDF page label, that
+number too (`printed_page`, rag.pages). A chunk on a page with figure or table
+captions also gets a `context` line naming the document, page (printed number
+too, when it differs) and captions, embedded with its text.
 --reuse keeps the vectors of chunks that haven't changed. Building the index needs
 requirements.txt (llama-index, pymupdf4llm) as well as hosted/requirements.txt;
 the hosted app needs only the latter.
@@ -36,7 +39,7 @@ from prototype import HOSTED_DIR  # noqa: F401  (puts hosted/ on sys.path)
 from divrag.divisions import BY_ID, DIVISIONS, DOCUMENTS_DIR, Division, Document
 from divrag.embedder import Embedder
 from divrag.index_file import IndexFile, search_text
-from rag import loader
+from rag import loader, pages
 from rag.config import AppConfig, load_config
 from rag.tables import TableAwareSplitter
 
@@ -75,15 +78,24 @@ def captions(text: str) -> List[str]:
     return list(dict.fromkeys(c for c in found if 8 < len(c) <= _MAX_CAPTION_CHARS))[:_MAX_CAPTIONS]
 
 
-def context_line(title: str, page: Optional[int], names: List[str]) -> str:
+def context_line(title: str, page: Optional[int], names: List[str], printed: Optional[str] = None) -> str:
     """The line embedded (and reranked, and shown to the model) before each chunk of a page with captions.
 
     The TMP manual's asphalt (p. 37) and concrete (p. 38) deflection tables
     differ only in their numbers and the caption under each table, which the
     splitter leaves in a chunk of its own; with the caption on every chunk of
     the page, the search can tell the two tables apart (DAR-651).
+
+    `p.N` is the page's index in the PDF (what the citation link opens). When the
+    page prints another number (`printed`, DAR-654: TMP p.37 prints "Page 13"),
+    a `printed p.13` segment follows it, so the model and a reader quoting
+    "page 13" meet the same words; the segments keep this order and format, the
+    shared contract (DAR-652) for anything that reads the line by position.
     """
-    return "[" + " · ".join([title, f"p.{page}", "; ".join(names)]) + "]"
+    segments = [title, f"p.{page}"]
+    if printed is not None and printed != str(page):
+        segments.append(f"printed p.{printed}")
+    return "[" + " · ".join(segments + ["; ".join(names)]) + "]"
 
 
 def section_headings(text: str) -> List[str]:
@@ -113,6 +125,13 @@ def chunk_sections(texts: List[str]) -> List[Optional[str]]:
 def _page(metadata: Dict) -> Optional[int]:
     label = str(metadata.get("page_label", ""))
     return int(label) if label.isdigit() else None
+
+
+def page_identities(path: Path) -> Dict[int, pages.PageIdentity]:
+    """What each page of a PDF prints as its number, by PDF page index; {} for other formats."""
+    if path.suffix.lower() != ".pdf":
+        return {}
+    return {identity.pdf_index: identity for identity in pages.document_identities(path)}
 
 
 def document_root(config: AppConfig, division: Division, document: Document,
@@ -155,21 +174,26 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
     for document in division.documents:
         root = roots[document.file]
         started = time.perf_counter()
-        pages = loader.load(root, only=[root / document.file], ocr=ocr)
-        page_captions = {_page(p.metadata): captions(p.text) for p in pages}
-        nodes = [n for n in splitter.get_nodes_from_documents(pages) if n.get_content().strip()]
+        loaded = loader.load(root, only=[root / document.file], ocr=ocr)
+        page_captions = {_page(p.metadata): captions(p.text) for p in loaded}
+        identities = page_identities(root / document.file)
+        nodes = [n for n in splitter.get_nodes_from_documents(loaded) if n.get_content().strip()]
         texts = [n.get_content().strip() for n in nodes]
         for node, text, section in zip(nodes, texts, chunk_sections(texts)):
             page = _page(node.metadata)
+            identity = identities.get(page)
             chunk = {
                 "text": text,
                 "source": node.metadata.get("source"),
-                "page": page,
+                "page": page,  # the page's index in the PDF, what the citation link opens
                 "section": section,
                 "division": division.id,
+                # The number printed on the page when it is known ("13", "5-13", "A-3"), else None (DAR-654).
+                "printed_page": identity.printed if identity else None,
             }
             if with_context and page is not None and page_captions.get(page):
-                chunk["context"] = context_line(document.title, page, page_captions[page])
+                chunk["context"] = context_line(document.title, page, page_captions[page],
+                                                printed=identity.printed if identity else None)
             chunks.append(chunk)
         if stats is not None:
             stats.append({
@@ -178,7 +202,7 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
                 "seconds": time.perf_counter() - started,
                 "pdf_pages": _pdf_pages(root / document.file),
                 # The loader drops pages with no text, so a scanned page is missing here.
-                "pages_with_text": len({_page(p.metadata) for p in pages}),
+                "pages_with_text": len({_page(p.metadata) for p in loaded}),
                 "chunks": len(nodes),
                 "last_page": max((_page(n.metadata) or 0 for n in nodes), default=0),
             })

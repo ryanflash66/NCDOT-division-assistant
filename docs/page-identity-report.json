@@ -1,0 +1,2084 @@
+{
+ "totals": {
+  "documents": 60,
+  "indexed": 58,
+  "pages": 5924,
+  "labelled": 988,
+  "printed": 5107,
+  "printed_differs": 4166,
+  "sources": {
+   "footer": 4145,
+   "label": 870,
+   "header": 92
+  },
+  "documents_without_printed": [
+   "tmsd/09. At Grade Intersections.pdf",
+   "tmsd/Revised Rumble Strip Guidelines.pdf",
+   "utilities/09utilcoordcert.pdf",
+   "utilities/16-1-Two-Party-Utility-Primary-and-Secondary-Highways-Non-C-A.pdf",
+   "utilities/EDC-8_Factsheet_SUE.pdf",
+   "utilities/Encroachment_Requirements_Involving_Excessive_Height_Direct_Bury_Poles_5-26-2026.pdf",
+   "utilities/NCDOT Utility Cost Reimbursement Guidance_8-20-2026.pdf",
+   "utilities/Utility-Encroachment-Plan-Requirements.pdf",
+   "utilities/hif22040.pdf",
+   "wztc/04-20340.pdf",
+   "wztc/Chapter_2.pdf",
+   "wztc/Chapter_5.pdf",
+   "wztc/Division 11 Combined.pdf",
+   "wztc/GLWZSIG.pdf",
+   "wztc/NCDOTFinalRuleImplementation.pdf",
+   "wztc/SOP 10-9 Flagging traffic.pdf",
+   "wztc/WZSafety_and_Mobility.pdf"
+  ]
+ },
+ "documents": {
+  "wztc/TMP Design Manual (Combined, No Links).pdf": {
+   "indexed": true,
+   "pages": 172,
+   "labelled": 0,
+   "printed": 169,
+   "printed_differs": 169,
+   "sources": {
+    "footer": 169
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     44,
+     null,
+     "20"
+    ],
+    [
+     87,
+     null,
+     "14"
+    ],
+    [
+     129,
+     null,
+     "4"
+    ],
+    [
+     172,
+     null,
+     "1"
+    ]
+   ]
+  },
+  "wztc/WZSafetyAndMobilityGuidelines.pdf": {
+   "indexed": true,
+   "pages": 26,
+   "labelled": 0,
+   "printed": 26,
+   "printed_differs": 0,
+   "sources": {
+    "footer": 26
+   },
+   "samples": [
+    [
+     1,
+     null,
+     "1"
+    ],
+    [
+     7,
+     null,
+     "7"
+    ],
+    [
+     13,
+     null,
+     "13"
+    ],
+    [
+     20,
+     null,
+     "20"
+    ],
+    [
+     26,
+     null,
+     "26"
+    ]
+   ]
+  },
+  "wztc/GLWZSIG.pdf": {
+   "indexed": true,
+   "pages": 1,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/Work Zone - Guidelines on the Use of Positive Protection Device Memo.pdf": {
+   "indexed": true,
+   "pages": 2,
+   "labelled": 2,
+   "printed": 2,
+   "printed_differs": 0,
+   "sources": {
+    "label": 2
+   },
+   "samples": [
+    [
+     1,
+     "1",
+     "1"
+    ],
+    [
+     2,
+     "2",
+     "2"
+    ]
+   ]
+  },
+  "wztc/SOP 10-9 Flagging traffic.pdf": {
+   "indexed": true,
+   "pages": 2,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/Division 11 Combined.pdf": {
+   "indexed": true,
+   "pages": 59,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     15,
+     null,
+     null
+    ],
+    [
+     30,
+     null,
+     null
+    ],
+    [
+     45,
+     null,
+     null
+    ],
+    [
+     59,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/2024 Standard Specifications for Roads and Structures.pdf": {
+   "indexed": true,
+   "pages": 857,
+   "labelled": 0,
+   "printed": 829,
+   "printed_differs": 829,
+   "sources": {
+    "footer": 829
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     215,
+     null,
+     "4-79"
+    ],
+    [
+     429,
+     null,
+     "10-13"
+    ],
+    [
+     643,
+     null,
+     "10-227"
+    ],
+    [
+     857,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/Chapter_2.pdf": {
+   "indexed": true,
+   "pages": 48,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     13,
+     null,
+     null
+    ],
+    [
+     25,
+     null,
+     null
+    ],
+    [
+     36,
+     null,
+     null
+    ],
+    [
+     48,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/Chapter_5.pdf": {
+   "indexed": true,
+   "pages": 93,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     24,
+     null,
+     null
+    ],
+    [
+     47,
+     null,
+     null
+    ],
+    [
+     70,
+     null,
+     null
+    ],
+    [
+     93,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/2023 WZ Safety & Mobility Process Review.pdf": {
+   "indexed": true,
+   "pages": 10,
+   "labelled": 0,
+   "printed": 9,
+   "printed_differs": 0,
+   "sources": {
+    "header": 9
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     3,
+     null,
+     "3"
+    ],
+    [
+     5,
+     null,
+     "5"
+    ],
+    [
+     8,
+     null,
+     "8"
+    ],
+    [
+     10,
+     null,
+     "10"
+    ]
+   ]
+  },
+  "wztc/NCDOTFinalRuleImplementation.pdf": {
+   "indexed": true,
+   "pages": 5,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ],
+    [
+     3,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     5,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/part6.pdf": {
+   "indexed": true,
+   "pages": 204,
+   "labelled": 204,
+   "printed": 204,
+   "printed_differs": 204,
+   "sources": {
+    "label": 204
+   },
+   "samples": [
+    [
+     1,
+     "765",
+     "765"
+    ],
+    [
+     52,
+     "816",
+     "816"
+    ],
+    [
+     103,
+     "867",
+     "867"
+    ],
+    [
+     153,
+     "917",
+     "917"
+    ],
+    [
+     204,
+     "968",
+     "968"
+    ]
+   ]
+  },
+  "wztc/bpguidebook.pdf": {
+   "indexed": true,
+   "pages": 293,
+   "labelled": 293,
+   "printed": 293,
+   "printed_differs": 293,
+   "sources": {
+    "label": 293
+   },
+   "samples": [
+    [
+     1,
+     "A",
+     "A"
+    ],
+    [
+     74,
+     "60",
+     "60"
+    ],
+    [
+     147,
+     "133",
+     "133"
+    ],
+    [
+     220,
+     "206",
+     "206"
+    ],
+    [
+     293,
+     "279",
+     "279"
+    ]
+   ]
+  },
+  "wztc/rule_guide.pdf": {
+   "indexed": true,
+   "pages": 103,
+   "labelled": 0,
+   "printed": 80,
+   "printed_differs": 80,
+   "sources": {
+    "footer": 80
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     27,
+     null,
+     "3-1"
+    ],
+    [
+     52,
+     null,
+     "4-14"
+    ],
+    [
+     77,
+     null,
+     null
+    ],
+    [
+     103,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/trans_mgmt_plans.pdf": {
+   "indexed": true,
+   "pages": 131,
+   "labelled": 0,
+   "printed": 101,
+   "printed_differs": 101,
+   "sources": {
+    "footer": 101
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     33,
+     null,
+     "3-3"
+    ],
+    [
+     66,
+     null,
+     null
+    ],
+    [
+     99,
+     null,
+     "B-17"
+    ],
+    [
+     131,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/wzi_guide.pdf": {
+   "indexed": true,
+   "pages": 184,
+   "labelled": 0,
+   "printed": 136,
+   "printed_differs": 136,
+   "sources": {
+    "footer": 136
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     47,
+     null,
+     "3-15"
+    ],
+    [
+     93,
+     null,
+     "6-3"
+    ],
+    [
+     138,
+     null,
+     "8-12"
+    ],
+    [
+     184,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/fhwahop14008.pdf": {
+   "indexed": true,
+   "pages": 80,
+   "labelled": 0,
+   "printed": 68,
+   "printed_differs": 68,
+   "sources": {
+    "header": 68
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     21,
+     null,
+     "13"
+    ],
+    [
+     41,
+     null,
+     "33"
+    ],
+    [
+     60,
+     null,
+     "52"
+    ],
+    [
+     80,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/fhwahop12005.pdf": {
+   "indexed": true,
+   "pages": 208,
+   "labelled": 0,
+   "printed": 201,
+   "printed_differs": 201,
+   "sources": {
+    "footer": 201
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     53,
+     null,
+     "41"
+    ],
+    [
+     105,
+     null,
+     "93"
+    ],
+    [
+     156,
+     null,
+     "144"
+    ],
+    [
+     208,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/CFR-2024-title23-vol1-part630.pdf": {
+   "indexed": true,
+   "pages": 16,
+   "labelled": 0,
+   "printed": 16,
+   "printed_differs": 16,
+   "sources": {
+    "footer": 16
+   },
+   "samples": [
+    [
+     1,
+     null,
+     "245"
+    ],
+    [
+     5,
+     null,
+     "249"
+    ],
+    [
+     9,
+     null,
+     "253"
+    ],
+    [
+     12,
+     null,
+     "256"
+    ],
+    [
+     16,
+     null,
+     "260"
+    ]
+   ]
+  },
+  "wztc/04-20340.pdf": {
+   "indexed": true,
+   "pages": 11,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     3,
+     null,
+     null
+    ],
+    [
+     6,
+     null,
+     null
+    ],
+    [
+     9,
+     null,
+     null
+    ],
+    [
+     11,
+     null,
+     null
+    ]
+   ]
+  },
+  "wztc/WZSafety_and_Mobility.pdf": {
+   "indexed": false,
+   "pages": 5,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ],
+    [
+     3,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     5,
+     null,
+     null
+    ]
+   ]
+  },
+  "utilities/20220713 NCDOT UAM Ver 2-0.pdf": {
+   "indexed": true,
+   "pages": 311,
+   "labelled": 0,
+   "printed": 223,
+   "printed_differs": 223,
+   "sources": {
+    "footer": 223
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     79,
+     null,
+     "3-6"
+    ],
+    [
+     156,
+     null,
+     "4-13"
+    ],
+    [
+     233,
+     null,
+     null
+    ],
+    [
+     311,
+     null,
+     null
+    ]
+   ]
+  },
+  "utilities/NCDOT Utility Cost Reimbursement Guidance_8-20-2026.pdf": {
+   "indexed": true,
+   "pages": 5,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ],
+    [
+     3,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     5,
+     null,
+     null
+    ]
+   ]
+  },
+  "utilities/Encroachment_Requirements_Involving_Excessive_Height_Direct_Bury_Poles_5-26-2026.pdf": {
+   "indexed": true,
+   "pages": 2,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ]
+   ]
+  },
+  "utilities/18. Utility Plans.pdf": {
+   "indexed": true,
+   "pages": 1,
+   "labelled": 1,
+   "printed": 1,
+   "printed_differs": 0,
+   "sources": {
+    "label": 1
+   },
+   "samples": [
+    [
+     1,
+     "1",
+     "1"
+    ]
+   ]
+  },
+  "utilities/09. Right of Way.pdf": {
+   "indexed": true,
+   "pages": 10,
+   "labelled": 0,
+   "printed": 8,
+   "printed_differs": 8,
+   "sources": {
+    "header": 8
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     3,
+     null,
+     "9-2"
+    ],
+    [
+     5,
+     null,
+     "9-3"
+    ],
+    [
+     8,
+     null,
+     "9-8"
+    ],
+    [
+     10,
+     null,
+     "9-10"
+    ]
+   ]
+  },
+  "utilities/UtilitiesCoordination-Encroachments-presentation-notes.pdf": {
+   "indexed": true,
+   "pages": 45,
+   "labelled": 0,
+   "printed": 45,
+   "printed_differs": 29,
+   "sources": {
+    "footer": 45
+   },
+   "samples": [
+    [
+     1,
+     null,
+     "1"
+    ],
+    [
+     12,
+     null,
+     "12"
+    ],
+    [
+     23,
+     null,
+     "21"
+    ],
+    [
+     34,
+     null,
+     "32"
+    ],
+    [
+     45,
+     null,
+     "42"
+    ]
+   ]
+  },
+  "utilities/DOT Encroachment Submissions User Manual - July 2023.pdf": {
+   "indexed": true,
+   "pages": 77,
+   "labelled": 0,
+   "printed": 76,
+   "printed_differs": 76,
+   "sources": {
+    "footer": 76
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     20,
+     null,
+     "19"
+    ],
+    [
+     39,
+     null,
+     "38"
+    ],
+    [
+     58,
+     null,
+     "57"
+    ],
+    [
+     77,
+     null,
+     "76"
+    ]
+   ]
+  },
+  "utilities/Utility-Encroachment-Plan-Requirements.pdf": {
+   "indexed": true,
+   "pages": 2,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ]
+   ]
+  },
+  "utilities/16-1-Two-Party-Utility-Primary-and-Secondary-Highways-Non-C-A.pdf": {
+   "indexed": true,
+   "pages": 2,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ]
+   ]
+  },
+  "utilities/if03014.pdf": {
+   "indexed": true,
+   "pages": 100,
+   "labelled": 0,
+   "printed": 100,
+   "printed_differs": 100,
+   "sources": {
+    "footer": 100
+   },
+   "samples": [
+    [
+     1,
+     null,
+     "B-1"
+    ],
+    [
+     26,
+     null,
+     "B-26"
+    ],
+    [
+     51,
+     null,
+     "B-51"
+    ],
+    [
+     75,
+     null,
+     "B-75"
+    ],
+    [
+     100,
+     null,
+     "B-100"
+    ]
+   ]
+  },
+  "utilities/utility_row.pdf": {
+   "indexed": true,
+   "pages": 15,
+   "labelled": 0,
+   "printed": 14,
+   "printed_differs": 0,
+   "sources": {
+    "footer": 14
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     5,
+     null,
+     "5"
+    ],
+    [
+     8,
+     null,
+     "8"
+    ],
+    [
+     11,
+     null,
+     "11"
+    ],
+    [
+     15,
+     null,
+     "15"
+    ]
+   ]
+  },
+  "utilities/EDC-8_Factsheet_SUE.pdf": {
+   "indexed": true,
+   "pages": 2,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ]
+   ]
+  },
+  "utilities/hif22002.pdf": {
+   "indexed": true,
+   "pages": 6,
+   "labelled": 0,
+   "printed": 5,
+   "printed_differs": 0,
+   "sources": {
+    "footer": 5
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     "2"
+    ],
+    [
+     3,
+     null,
+     "3"
+    ],
+    [
+     5,
+     null,
+     "5"
+    ],
+    [
+     6,
+     null,
+     "6"
+    ]
+   ]
+  },
+  "utilities/hif22040.pdf": {
+   "indexed": true,
+   "pages": 6,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ],
+    [
+     3,
+     null,
+     null
+    ],
+    [
+     5,
+     null,
+     null
+    ],
+    [
+     6,
+     null,
+     null
+    ]
+   ]
+  },
+  "utilities/010604.pdf": {
+   "indexed": true,
+   "pages": 316,
+   "labelled": 0,
+   "printed": 192,
+   "printed_differs": 192,
+   "sources": {
+    "footer": 192
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     80,
+     null,
+     "64"
+    ],
+    [
+     159,
+     null,
+     "143"
+    ],
+    [
+     237,
+     null,
+     null
+    ],
+    [
+     316,
+     null,
+     null
+    ]
+   ]
+  },
+  "utilities/09utilcoordcert.pdf": {
+   "indexed": true,
+   "pages": 3,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ],
+    [
+     3,
+     null,
+     null
+    ]
+   ]
+  },
+  "utilities/fhwahop09021.pdf": {
+   "indexed": true,
+   "pages": 140,
+   "labelled": 140,
+   "printed": 140,
+   "printed_differs": 114,
+   "sources": {
+    "label": 26,
+    "footer": 114
+   },
+   "samples": [
+    [
+     1,
+     "1",
+     "1"
+    ],
+    [
+     36,
+     "36",
+     "36"
+    ],
+    [
+     71,
+     "71",
+     "5-4"
+    ],
+    [
+     105,
+     "105",
+     "7-4"
+    ],
+    [
+     140,
+     "140",
+     "D-1"
+    ]
+   ]
+  },
+  "utilities/CFR-2024-title23-vol1-part645.pdf": {
+   "indexed": true,
+   "pages": 19,
+   "labelled": 0,
+   "printed": 19,
+   "printed_differs": 19,
+   "sources": {
+    "footer": 19
+   },
+   "samples": [
+    [
+     1,
+     null,
+     "327"
+    ],
+    [
+     5,
+     null,
+     "331"
+    ],
+    [
+     10,
+     null,
+     "336"
+    ],
+    [
+     15,
+     null,
+     "341"
+    ],
+    [
+     19,
+     null,
+     "345"
+    ]
+   ]
+  },
+  "utilities/CFR-2024-title23-vol1-part710.pdf": {
+   "indexed": true,
+   "pages": 23,
+   "labelled": 0,
+   "printed": 23,
+   "printed_differs": 23,
+   "sources": {
+    "footer": 23
+   },
+   "samples": [
+    [
+     1,
+     null,
+     "491"
+    ],
+    [
+     7,
+     null,
+     "497"
+    ],
+    [
+     12,
+     null,
+     "502"
+    ],
+    [
+     17,
+     null,
+     "507"
+    ],
+    [
+     23,
+     null,
+     "513"
+    ]
+   ]
+  },
+  "tmsd/TODS Manual - September 2024.pdf": {
+   "indexed": true,
+   "pages": 46,
+   "labelled": 0,
+   "printed": 40,
+   "printed_differs": 40,
+   "sources": {
+    "footer": 40
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     12,
+     null,
+     "9"
+    ],
+    [
+     23,
+     null,
+     "20"
+    ],
+    [
+     35,
+     null,
+     "32"
+    ],
+    [
+     46,
+     null,
+     "43"
+    ]
+   ]
+  },
+  "tmsd/Fatal Investigation Guidelines.pdf": {
+   "indexed": true,
+   "pages": 5,
+   "labelled": 5,
+   "printed": 5,
+   "printed_differs": 0,
+   "sources": {
+    "label": 1,
+    "header": 4
+   },
+   "samples": [
+    [
+     1,
+     "1",
+     "1"
+    ],
+    [
+     2,
+     "2",
+     "2"
+    ],
+    [
+     3,
+     "3",
+     "3"
+    ],
+    [
+     4,
+     "4",
+     "4"
+    ],
+    [
+     5,
+     "5",
+     "5"
+    ]
+   ]
+  },
+  "tmsd/Policy on Access Manual.pdf": {
+   "indexed": true,
+   "pages": 90,
+   "labelled": 80,
+   "printed": 80,
+   "printed_differs": 80,
+   "sources": {
+    "label": 80
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     23,
+     "13",
+     "13"
+    ],
+    [
+     45,
+     "35",
+     "35"
+    ],
+    [
+     68,
+     "58",
+     "58"
+    ],
+    [
+     90,
+     "80",
+     "80"
+    ]
+   ]
+  },
+  "tmsd/Signal System Timing Philosophy Manual.pdf": {
+   "indexed": true,
+   "pages": 61,
+   "labelled": 0,
+   "printed": 31,
+   "printed_differs": 31,
+   "sources": {
+    "footer": 31
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     16,
+     null,
+     "2"
+    ],
+    [
+     31,
+     null,
+     "1"
+    ],
+    [
+     46,
+     null,
+     "1"
+    ],
+    [
+     61,
+     null,
+     null
+    ]
+   ]
+  },
+  "tmsd/L18_TSLG_Guide.pdf": {
+   "indexed": true,
+   "pages": 706,
+   "labelled": 0,
+   "printed": 705,
+   "printed_differs": 0,
+   "sources": {
+    "footer": 705
+   },
+   "samples": [
+    [
+     1,
+     null,
+     "1"
+    ],
+    [
+     177,
+     null,
+     "177"
+    ],
+    [
+     353,
+     null,
+     "353"
+    ],
+    [
+     530,
+     null,
+     "530"
+    ],
+    [
+     706,
+     null,
+     "706"
+    ]
+   ]
+  },
+  "tmsd/C34 - Manual 2012.pdf": {
+   "indexed": true,
+   "pages": 124,
+   "labelled": 0,
+   "printed": 123,
+   "printed_differs": 6,
+   "sources": {
+    "footer": 123
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     32,
+     null,
+     "32"
+    ],
+    [
+     63,
+     null,
+     "63"
+    ],
+    [
+     93,
+     null,
+     "93"
+    ],
+    [
+     124,
+     null,
+     "124"
+    ]
+   ]
+  },
+  "tmsd/03. Guardrail, Barriers and Attenuators.pdf": {
+   "indexed": true,
+   "pages": 31,
+   "labelled": 0,
+   "printed": 3,
+   "printed_differs": 3,
+   "sources": {
+    "header": 3
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     9,
+     null,
+     null
+    ],
+    [
+     16,
+     null,
+     null
+    ],
+    [
+     23,
+     null,
+     null
+    ],
+    [
+     31,
+     null,
+     null
+    ]
+   ]
+  },
+  "tmsd/09. At Grade Intersections.pdf": {
+   "indexed": true,
+   "pages": 41,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     11,
+     null,
+     null
+    ],
+    [
+     21,
+     null,
+     null
+    ],
+    [
+     31,
+     null,
+     null
+    ],
+    [
+     41,
+     null,
+     null
+    ]
+   ]
+  },
+  "tmsd/bikeped_Ped_Policy.pdf": {
+   "indexed": true,
+   "pages": 15,
+   "labelled": 0,
+   "printed": 15,
+   "printed_differs": 0,
+   "sources": {
+    "footer": 15
+   },
+   "samples": [
+    [
+     1,
+     null,
+     "1"
+    ],
+    [
+     5,
+     null,
+     "5"
+    ],
+    [
+     8,
+     null,
+     "8"
+    ],
+    [
+     11,
+     null,
+     "11"
+    ],
+    [
+     15,
+     null,
+     "15"
+    ]
+   ]
+  },
+  "tmsd/interim-design-safety-pilot-program.pdf": {
+   "indexed": true,
+   "pages": 58,
+   "labelled": 58,
+   "printed": 58,
+   "printed_differs": 58,
+   "sources": {
+    "label": 58
+   },
+   "samples": [
+    [
+     1,
+     "i",
+     "i"
+    ],
+    [
+     15,
+     "13",
+     "13"
+    ],
+    [
+     29,
+     "27",
+     "27"
+    ],
+    [
+     44,
+     "42",
+     "42"
+    ],
+    [
+     58,
+     "56",
+     "56"
+    ]
+   ]
+  },
+  "tmsd/fhwa_hop_08_024.pdf": {
+   "indexed": true,
+   "pages": 274,
+   "labelled": 0,
+   "printed": 240,
+   "printed_differs": 240,
+   "sources": {
+    "footer": 240
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     69,
+     null,
+     "3-11"
+    ],
+    [
+     137,
+     null,
+     "5-12"
+    ],
+    [
+     206,
+     null,
+     "6-48"
+    ],
+    [
+     274,
+     null,
+     null
+    ]
+   ]
+  },
+  "tmsd/Chapter2c.pdf": {
+   "indexed": true,
+   "pages": 58,
+   "labelled": 58,
+   "printed": 58,
+   "printed_differs": 58,
+   "sources": {
+    "label": 58
+   },
+   "samples": [
+    [
+     1,
+     "145",
+     "145"
+    ],
+    [
+     15,
+     "159",
+     "159"
+    ],
+    [
+     29,
+     "173",
+     "173"
+    ],
+    [
+     44,
+     "188",
+     "188"
+    ],
+    [
+     58,
+     "202",
+     "202"
+    ]
+   ]
+  },
+  "tmsd/part3.pdf": {
+   "indexed": true,
+   "pages": 106,
+   "labelled": 106,
+   "printed": 106,
+   "printed_differs": 106,
+   "sources": {
+    "label": 106
+   },
+   "samples": [
+    [
+     1,
+     "537",
+     "537"
+    ],
+    [
+     27,
+     "563",
+     "563"
+    ],
+    [
+     53,
+     "589",
+     "589"
+    ],
+    [
+     80,
+     "616",
+     "616"
+    ],
+    [
+     106,
+     "642",
+     "642"
+    ]
+   ]
+  },
+  "tmsd/01102.pdf": {
+   "indexed": true,
+   "pages": 164,
+   "labelled": 0,
+   "printed": 158,
+   "printed_differs": 158,
+   "sources": {
+    "footer": 158
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     42,
+     null,
+     "36"
+    ],
+    [
+     83,
+     null,
+     "76"
+    ],
+    [
+     123,
+     null,
+     "117"
+    ],
+    [
+     164,
+     null,
+     "158"
+    ]
+   ]
+  },
+  "tmsd/04100.pdf": {
+   "indexed": true,
+   "pages": 114,
+   "labelled": 0,
+   "printed": 96,
+   "printed_differs": 96,
+   "sources": {
+    "footer": 96
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     29,
+     null,
+     "19"
+    ],
+    [
+     57,
+     null,
+     "47"
+    ],
+    [
+     86,
+     null,
+     "76"
+    ],
+    [
+     114,
+     null,
+     "104"
+    ]
+   ]
+  },
+  "tmsd/STEP-guide-improving-ped-safety.pdf": {
+   "indexed": true,
+   "pages": 41,
+   "labelled": 41,
+   "printed": 41,
+   "printed_differs": 41,
+   "sources": {
+    "label": 41
+   },
+   "samples": [
+    [
+     1,
+     "A1",
+     "A1"
+    ],
+    [
+     11,
+     "4",
+     "4"
+    ],
+    [
+     21,
+     "14",
+     "14"
+    ],
+    [
+     31,
+     "24",
+     "24"
+    ],
+    [
+     41,
+     "34",
+     "34"
+    ]
+   ]
+  },
+  "tmsd/04091.pdf": {
+   "indexed": true,
+   "pages": 372,
+   "labelled": 0,
+   "printed": 354,
+   "printed_differs": 354,
+   "sources": {
+    "footer": 354
+   },
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     94,
+     null,
+     "76"
+    ],
+    [
+     187,
+     null,
+     "169"
+    ],
+    [
+     279,
+     null,
+     "261"
+    ],
+    [
+     372,
+     null,
+     null
+    ]
+   ]
+  },
+  "tmsd/CFR-2024-title23-vol1-part924.pdf": {
+   "indexed": true,
+   "pages": 6,
+   "labelled": 0,
+   "printed": 6,
+   "printed_differs": 6,
+   "sources": {
+    "footer": 6
+   },
+   "samples": [
+    [
+     1,
+     null,
+     "605"
+    ],
+    [
+     2,
+     null,
+     "606"
+    ],
+    [
+     3,
+     null,
+     "607"
+    ],
+    [
+     5,
+     null,
+     "609"
+    ],
+    [
+     6,
+     null,
+     "610"
+    ]
+   ]
+  },
+  "tmsd/CFR-2024-title23-vol1-part655.pdf": {
+   "indexed": true,
+   "pages": 8,
+   "labelled": 0,
+   "printed": 8,
+   "printed_differs": 8,
+   "sources": {
+    "footer": 8
+   },
+   "samples": [
+    [
+     1,
+     null,
+     "383"
+    ],
+    [
+     3,
+     null,
+     "385"
+    ],
+    [
+     5,
+     null,
+     "387"
+    ],
+    [
+     6,
+     null,
+     "388"
+    ],
+    [
+     8,
+     null,
+     "390"
+    ]
+   ]
+  },
+  "tmsd/Revised Rumble Strip Guidelines.pdf": {
+   "indexed": false,
+   "pages": 9,
+   "labelled": 0,
+   "printed": 0,
+   "printed_differs": 0,
+   "sources": {},
+   "samples": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     3,
+     null,
+     null
+    ],
+    [
+     5,
+     null,
+     null
+    ],
+    [
+     7,
+     null,
+     null
+    ],
+    [
+     9,
+     null,
+     null
+    ]
+   ]
+  }
+ }
+}
