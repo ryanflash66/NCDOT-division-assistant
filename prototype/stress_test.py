@@ -168,13 +168,14 @@ def wrong_division(retriever: Retriever, questions: Sequence[Sequence[str]]) -> 
 
 
 def hit_at_5(retriever: Retriever, cases: List[Dict]) -> Dict:
+    # A chunk of a table joined over a page break (DAR-655) carries page..page_end and is a hit on any of them.
     index = retriever.index
     rows = []
     for case in cases:
         division = case["division"]
         pages, source = gold_pages(case, index), GOLD_SOURCE[division]
         hits = retriever.retrieve(case["question"], division, k=TOP)
-        rank = next((i for i, h in enumerate(hits, 1) if h.chunk.get("source") == source and h.chunk.get("page") in pages),
+        rank = next((i for i, h in enumerate(hits, 1) if h.chunk.get("source") == source and _covers(h.chunk, pages)),
                     None)
         rows.append({"id": case["id"], "division": division, "rank": rank,
                      "other_documents_in_top5": sum(1 for h in hits if h.chunk.get("source") != source),

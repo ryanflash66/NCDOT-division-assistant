@@ -95,6 +95,20 @@ def test_a_rule_spanning_two_pages_is_cited_with_both():
     assert (sources[0].page, sources[0].page_end) == (16, 17)
 
 
+def test_a_cited_table_joined_over_a_page_break_keeps_its_last_page():
+    # DAR-655: the second part is one table merged over pages 33-35 at build time.
+    passage = _merged(
+        ("Barrier types: concrete barrier weighs 3,900 lbs.", 32, "5.4 Types"),
+        ("|Offset (ft)|Max deflection (ft)|\n|---|---|\n|14|27.42|\n|20|31.10|", 33, "5.4.2 Deflection"),
+    )
+    passage["parts"][1]["page_end"] = 35
+    passage["page_end"] = 35
+
+    _, sources = attach_sources("At an offset of 20 ft the max deflection is 31.10 ft [1].", [Hit(1.0, passage)])
+
+    assert (sources[0].page, sources[0].page_end) == (33, 35)
+
+
 def test_cited_numbers_handles_ranges_and_lists():
     assert cited_numbers("x [2-3] y [1; 3] z [5]", 4) == [2, 3, 1]
 
