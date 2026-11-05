@@ -538,6 +538,12 @@ def test_a_refusal_after_asking_for_the_citation_does_not_replace_the_answer():
     assert not result.refused and result.uncited and result.answer == "The rate is three feet."
 
 
+def test_an_answer_asked_again_that_changes_the_number_does_not_replace_the_first():
+    result, llm = _ask_with_retry(["The width is 5 ft.", "The width is 6 ft [1]."], score=3.5, seconds_left=40)
+    assert result.uncited and result.answer == "The width is 5 ft." and result.citation_fix is None
+    assert llm.calls[1][-1]["content"] == CITE_RULE.format(not_found=NOT_FOUND)
+
+
 def test_an_uncited_answer_is_not_asked_again_without_time_left():
     result, llm = _ask_with_retry(["The rate is three feet.", "Three feet [1]."], score=3.5, seconds_left=5)
     assert result.uncited and len(llm.calls) == 1

@@ -2442,7 +2442,9 @@
           "5"
         ],
         "value": "2 submissions",
-        "accept": [],
+        "accept": [
+          "2"
+        ],
         "unit": null
       },
       "refuse": false,

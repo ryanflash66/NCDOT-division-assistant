@@ -939,9 +939,12 @@ class Answerer:
             if _time_left(deadline, RECHECK_MIN_SECONDS):
                 with timed(timer, "recite"):
                     again = await self._recite(messages, completion, hits, deadline, call)
-                # Only a cited answer replaces the first: a refusal after "cite your
-                # passages" is no better than an answer the reader can't check yet.
-                if again and again[2]:
+                # Only a cited answer that keeps every number of the first replaces it: a
+                # refusal after "cite your passages" is no better than an answer the reader
+                # can't check yet, and asked again the model sometimes re-read the table and
+                # changed the value (Detail 3-2A, DAR-652 tuning split: N width 5 ft became 6 ft,
+                # runout length 330 ft became 290 ft). Then the first answer's numbers decide.
+                if again and again[2] and not unverified_numbers(text, [again[1]], asked):
                     completion, text, sources = again
                     citation_fix = "asked_again"
             n = None if sources else number_source(text, hits, asked)
