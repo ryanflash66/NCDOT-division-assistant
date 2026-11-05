@@ -157,6 +157,7 @@ def test_a_chunk_of_a_joined_table_cites_the_pages_its_rows_came_from():
     # A later part of the split table repeats page 1's header; its rows are on pages 2 and 3.
     assert page_span(f"{HEADER}\n|26|40 mph|12.1|34.80|\n|32|40 mph|12.1|36.95|", lines, 1, 3) == (2, 3)
     assert page_span(f"{HEADER}\n|32|40 mph|12.1|36.95|", lines, 1, 3) == (3, None)
+    assert page_span(f"More prose.\n\n{HEADER}\n|32|40 mph|12.1|36.95|", lines, 1, 3) == (3, None)  # caption repeated from p.1
     # The page's other table and prose stay on page 1 alone.
     assert page_span("Prose on page one.\n\n|Sign|Size|\n|---|---|\n|W20-1|48 in|", lines, 1, 3) == (1, None)
     assert page_span(f"{HEADER}\n|14|40 mph|12.1|27.42|\n|20|40 mph|12.1|31.10|", lines, 1, 3) == (1, 2)

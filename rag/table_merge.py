@@ -383,19 +383,23 @@ def page_span(text: str, lines_by_page: Dict[int, set], first: int, last: int) -
 
     Each line of the chunk is looked up on the original pages; a line found on
     exactly one of them places the chunk there. A row of the Legal Guide's page
-    300 then cites page 300, not the page 1 where the joined table starts. The
-    first row of each table block is skipped: a split table repeats page N's
-    header on every part. With no line placed, the whole span is kept.
+    300 then cites page 300, not the page 1 where the joined table starts. A
+    split table repeats page N's caption and header on every part
+    (rag.tables), so the lines above the first table and the first row of each
+    table block are skipped; the first part's own rows still place it on page
+    N. With no line placed, the whole span is kept.
     """
     found = set()
     previous_was_table = False
+    seen_table = False
     for line in text.split("\n"):
         if not line.strip() or is_separator(line):
             continue
         table = is_table_line(line)
         header = table and not previous_was_table
         previous_was_table = table
-        if header:
+        seen_table = seen_table or table
+        if header or not seen_table:
             continue
         key = _line_key(line)
         where = [n for n in range(first, last + 1) if key in lines_by_page.get(n, ())]
