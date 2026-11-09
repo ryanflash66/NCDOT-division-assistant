@@ -1,11 +1,11 @@
-"""Document classification: incident taxonomy derived from a Document's relative path.
+"""Document classification: NCDOT topic labels derived from a Document's relative path.
 
 The path is split into lowercase alphanumeric tokens (the file extension is
 dropped). A keyword matches a token exactly; keywords of four or more characters
-also match as a token prefix, so "encrypt" matches "encryption" while "ot" never
-matches "other" or "notes". Multi-word keywords match consecutive tokens.
-When several incident labels match, the most specific keyword wins (more
-words, then more characters); ties go to the earlier label in INCIDENT_KEYWORDS.
+also match as a token prefix, so "encroach" matches "encroachments" while "tim"
+never matches "timeline" or "estimate". Multi-word keywords match consecutive
+tokens. When several topic labels match, the most specific keyword wins (more
+words, then more characters); ties go to the earlier label in TOPIC_KEYWORDS.
 Content, the absolute path and the repository location never affect the result.
 """
 
@@ -16,48 +16,49 @@ from typing import Dict, List, Sequence, Tuple
 
 _PREFIX_MIN_LEN = 4
 
-INCIDENT_KEYWORDS: Dict[str, List[str]] = {
-    "ransomware": ["ransomware", "encrypt", "crypto"],
-    "phishing": ["phishing", "credential", "spearphish", "spoof"],
-    "data_breach": ["breach", "exfil", "pii", "leak"],
-    "malware": ["malware", "trojan", "worm", "virus", "backdoor", "c2", "command and control"],
-    "insider_threat": ["insider", "privilege abuse", "usb", "data theft"],
-    "credential_dumping": ["dcsync", "credential dump", "ad attack", "kerberoast", "pass the hash", "mimikatz", "ntds"],
-    "supply_chain": ["supply chain", "dependency", "package", "ci cd", "zero day"],
-    "ddos": ["ddos", "network attack", "brute force", "botnet", "cryptojack"],
-    "iot_ot": ["iot", "ot", "scada", "hvac", "ics"],
+TOPIC_KEYWORDS: Dict[str, List[str]] = {
+    "work_zone": [
+        "work zone", "wz", "wztc", "tmp", "ttc", "temporary traffic control",
+        "flagging", "flagger", "lane closure", "detour", "positive protection",
+    ],
+    "utilities": ["utilit", "uam", "encroach", "directional drilling", "frac out", "right of way"],
+    "mobility_safety": ["mobility", "safety", "tmsd", "crash", "traffic incident management", "tim"],
+    "signals_signing": ["signal", "signing", "signs", "pavement marking", "its", "tods"],
+    "roadside": ["guardrail", "barrier", "clear zone", "attenuator", "roadside"],
+    "construction": ["construction", "specification", "roads and structures", "bridge", "pavement"],
 }
 
-IR_KEYWORDS: List[str] = [
-    "incident",
-    "response",
-    "playbook",
-    "mitre",
-    "nist",
-    "threat",
-    "ransomware",
-    "phishing",
-    "malware",
-    "forensic",
-    "siem",
-    "edr",
+# Paths naming one of these are NCDOT reference documents (manuals, guidance, policy).
+REFERENCE_KEYWORDS: List[str] = [
+    "manual",
+    "handbook",
+    "guide",
+    "specification",
+    "standard",
+    "policy",
+    "procedure",
+    "sop",
+    "memo",
+    "directive",
+    "provision",
+    "chapter",
 ]
 
-ASSET_INVENTORY_KEYWORD = "asset inventory"
+# The Roadway Standard Drawings are a set of their own: sheets of details, not
+# prose, so they get their own domain instead of a topic.
+STANDARD_DRAWINGS_KEYWORD = "standard drawing"
 
 
 @dataclass(frozen=True)
 class DocClassification:
-    incident_type: str
+    topic: str
     doc_domain: str
-    asset_scope: str
     tags: str
 
     def as_metadata(self) -> Dict[str, str]:
         return {
-            "incident_type": self.incident_type,
+            "topic": self.topic,
             "doc_domain": self.doc_domain,
-            "asset_scope": self.asset_scope,
             "tags": self.tags,
         }
 
@@ -99,24 +100,22 @@ def classify(relative_path: "str | PurePath") -> DocClassification:
     """Classify a Document by its path relative to the data directory."""
     tokens = _tokens(PurePath(relative_path))
 
-    if _matches(ASSET_INVENTORY_KEYWORD, tokens):
+    if _matches(STANDARD_DRAWINGS_KEYWORD, tokens):
         return DocClassification(
-            incident_type="general",
-            doc_domain="asset_inventory",
-            asset_scope="org_inventory",
-            tags="asset,inventory",
+            topic="general",
+            doc_domain="standard_drawings",
+            tags="standard,drawings",
         )
 
-    scores = {label: _best_match(keywords, tokens) for label, keywords in INCIDENT_KEYWORDS.items()}
+    scores = {label: _best_match(keywords, tokens) for label, keywords in TOPIC_KEYWORDS.items()}
     matched = [label for label, score in scores.items() if score > (0, 0)]
     # Most specific keyword wins; max() keeps the first label (dict order) on ties.
-    incident_type = max(matched, key=scores.__getitem__) if matched else "unknown"
-    doc_domain = "ir" if _any(IR_KEYWORDS, tokens) else "general"
-    tags = matched + (["ir"] if doc_domain == "ir" else [])
+    topic = max(matched, key=scores.__getitem__) if matched else "unknown"
+    doc_domain = "reference" if _any(REFERENCE_KEYWORDS, tokens) else "general"
+    tags = matched + (["reference"] if doc_domain == "reference" else [])
 
     return DocClassification(
-        incident_type=incident_type,
+        topic=topic,
         doc_domain=doc_domain,
-        asset_scope="unknown",
         tags=",".join(tags) if tags else "none",
     )

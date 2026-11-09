@@ -53,7 +53,7 @@ class SourceNode(BaseModel):
     text: str
     source: Optional[str] = None
     score: Optional[float] = None
-    incident_type: Optional[str] = None
+    topic: Optional[str] = None
     doc_domain: Optional[str] = None
     page: Optional[str] = None
     section: Optional[str] = None
@@ -127,7 +127,7 @@ def query_rag(body: QueryRequest, index: RetrievalIndex = Depends(get_index)):
     """Retrieve the top-k most relevant chunks for a query.
 
     Read-only: this never rebuilds the index. Optional `where` filters on
-    Document classification fields, e.g. {"incident_type": "ransomware"}.
+    Document classification fields, e.g. {"topic": "work_zone"}.
 
     Each result carries `page` (the PDF page label the chunk came from) and
     `section` (the heading it sits under) when the source records them;
@@ -145,7 +145,7 @@ def query_rag(body: QueryRequest, index: RetrievalIndex = Depends(get_index)):
                 text=hit.text,
                 source=hit.source,
                 score=hit.score,
-                incident_type=hit.metadata.get("incident_type"),
+                topic=hit.metadata.get("topic"),
                 doc_domain=hit.metadata.get("doc_domain"),
                 page=_optional_label(hit.metadata.get("page_label")),
                 section=_optional_label(hit.metadata.get("section")),

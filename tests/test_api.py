@@ -2,7 +2,7 @@
 
 The `client` fixture wires the api router into a minimal FastAPI app and injects
 a Retrieval index (via dependency_overrides) that uses:
-  - tmp_path data and ChromaDB directories, seeded with one ransomware playbook
+  - tmp_path data and ChromaDB directories, seeded with one work zone manual
   - _HashEmbedding instead of the HuggingFace model (no download, no GPU)
 
 ChromaDB is real -- vectors are written to and read from a persistent client.
@@ -19,14 +19,14 @@ from tests.conftest import make_client
 
 def test_ingest_markdown_returns_success(client):
     content = (
-        "# Phishing Playbook\n\n"
-        "## Containment\nReset compromised credentials immediately.\n\n"
-        "## Eradication\nBlock sender domains at the email gateway.\n"
+        "# Utility Relocation Guide\n\n"
+        "## Coordination\nNotify the utility owner before the preconstruction meeting.\n\n"
+        "## Relocation\nThe owner moves facilities that conflict with the project.\n"
     ).encode()
 
     resp = client.post(
         "/api/ingest",
-        files={"files": ("phishing_response.md", io.BytesIO(content), "text/plain")},
+        files={"files": ("utility_relocation.md", io.BytesIO(content), "text/plain")},
     )
 
     assert resp.status_code == 200
@@ -40,20 +40,20 @@ def test_ingest_markdown_returns_success(client):
 
 def test_ingest_multiple_files_returns_correct_count(client):
     files = [
-        ("files", ("ransomware.md", b"# Ransomware\n\nIsolate hosts.", "text/plain")),
-        ("files", ("malware.md",    b"# Malware\n\nRun EDR scan.",     "text/plain")),
+        ("files", ("flagging.md", b"# Flagging\n\nStop and slow traffic.", "text/plain")),
+        ("files", ("detour.md",   b"# Detour\n\nSign the detour route.",  "text/plain")),
     ]
     resp = client.post("/api/ingest", files=files)
 
     assert resp.status_code == 200
-    # seed_ransomware.md + 2 uploaded files
+    # seed_work_zone_manual.md + 2 uploaded files
     assert resp.json()["indexed_docs"] == 3
 
 
 def test_ingest_plain_text_file(client):
     resp = client.post(
         "/api/ingest",
-        files={"files": ("notes.txt", b"Incident notes: server unreachable.", "text/plain")},
+        files={"files": ("notes.txt", b"Site notes: shoulder closed until Friday.", "text/plain")},
     )
     assert resp.status_code == 200
     assert resp.json()["success"] is True
@@ -62,13 +62,13 @@ def test_ingest_plain_text_file(client):
 def test_ingest_json_file(client):
     resp = client.post(
         "/api/ingest",
-        files={"files": ("asset_inventory.json", b'{"hosts": ["dc01"]}', "application/json")},
+        files={"files": ("standard_drawings.json", b'{"drawings": ["1101.01"]}', "application/json")},
     )
     assert resp.status_code == 200
     results = client.post(
-        "/api/query", json={"query": "hosts", "top_k": 10, "where": {"doc_domain": "asset_inventory"}}
+        "/api/query", json={"query": "drawings", "top_k": 10, "where": {"doc_domain": "standard_drawings"}}
     ).json()["results"]
-    assert [r["source"] for r in results] == ["asset_inventory.json"]
+    assert [r["source"] for r in results] == ["standard_drawings.json"]
 
 
 def test_ingest_unsupported_extension_returns_400(client):
@@ -114,7 +114,7 @@ def test_ingest_path_traversal_is_contained(client, index):
 
 
 def test_ingest_failure_restores_overwritten_file(client, index, monkeypatch):
-    seed = index.config.data_dir / "seed_ransomware.md"
+    seed = index.config.data_dir / "seed_work_zone_manual.md"
     original = seed.read_bytes()
 
     def failing_refresh():
@@ -124,7 +124,7 @@ def test_ingest_failure_restores_overwritten_file(client, index, monkeypatch):
     resp = client.post(
         "/api/ingest",
         files=[
-            ("files", ("seed_ransomware.md", b"replacement", "text/plain")),
+            ("files", ("seed_work_zone_manual.md", b"replacement", "text/plain")),
             ("files", ("new.md", b"# New", "text/plain")),
         ],
     )
@@ -142,14 +142,14 @@ def test_ingest_failure_restores_overwritten_file(client, index, monkeypatch):
 def test_query_returns_results_after_ingest(client):
     client.post(
         "/api/ingest",
-        files={"files": ("incident.md", b"# Incident Response\n\nContain and isolate.", "text/plain")},
+        files={"files": ("lane_closure.md", b"# Lane Closure\n\nTaper and close the lane.", "text/plain")},
     )
 
-    resp = client.post("/api/query", json={"query": "incident response containment"})
+    resp = client.post("/api/query", json={"query": "lane closure taper"})
 
     assert resp.status_code == 200
     body = resp.json()
-    assert body["query"] == "incident response containment"
+    assert body["query"] == "lane closure taper"
     assert len(body["results"]) > 0
 
 
@@ -162,39 +162,39 @@ def test_query_results_have_required_fields(client):
     for result in results:
         assert result["text"]
         assert isinstance(result["score"], float)
-        assert result["source"] == "seed_ransomware.md"
-        assert result["incident_type"] == "ransomware"
-        assert result["doc_domain"] == "ir"
+        assert result["source"] == "seed_work_zone_manual.md"
+        assert result["topic"] == "work_zone"
+        assert result["doc_domain"] == "reference"
 
 
 def test_query_top_k_limits_result_count(client):
-    resp = client.post("/api/query", json={"query": "ransomware containment", "top_k": 1})
+    resp = client.post("/api/query", json={"query": "work zone setup", "top_k": 1})
     assert resp.status_code == 200
     assert len(resp.json()["results"]) == 1
 
 
 def test_query_top_k_default_is_four(client):
-    resp = client.post("/api/query", json={"query": "ransomware"})
+    resp = client.post("/api/query", json={"query": "work zone"})
     assert resp.status_code == 200
     assert len(resp.json()["results"]) <= 4
 
 
 def test_query_seed_document_is_retrievable(client):
-    resp = client.post("/api/query", json={"query": "EDR containment isolation"})
+    resp = client.post("/api/query", json={"query": "flaggers warning signs taper"})
     assert resp.status_code == 200
     combined_text = " ".join(r["text"] for r in resp.json()["results"]).lower()
-    assert any(word in combined_text for word in ("isolat", "edr", "contain", "eradicat", "backup"))
+    assert any(word in combined_text for word in ("flagger", "warning", "taper", "lane", "devices"))
 
 
 def test_query_where_filters_results(client):
     client.post(
         "/api/ingest",
-        files={"files": ("phishing_playbook.md", b"# Phishing\n\nReset credentials.", "text/plain")},
+        files={"files": ("utility_manual.md", b"# Utilities\n\nRelocate conflicting poles.", "text/plain")},
     )
     resp = client.post(
-        "/api/query", json={"query": "playbook", "top_k": 10, "where": {"incident_type": "phishing"}}
+        "/api/query", json={"query": "manual", "top_k": 10, "where": {"topic": "utilities"}}
     )
-    assert {r["source"] for r in resp.json()["results"]} == {"phishing_playbook.md"}
+    assert {r["source"] for r in resp.json()["results"]} == {"utility_manual.md"}
 
 
 def test_query_does_not_pick_up_unrefreshed_files(client, index):
@@ -259,7 +259,7 @@ def _pdf(page_texts) -> bytes:
 
 
 def test_query_markdown_results_have_no_page(client):
-    resp = client.post("/api/query", json={"query": "ransomware containment", "top_k": 10})
+    resp = client.post("/api/query", json={"query": "work zone setup", "top_k": 10})
 
     assert resp.status_code == 200
     results = resp.json()["results"]

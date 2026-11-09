@@ -37,13 +37,13 @@ def test_import_builds_nothing(monkeypatch):
 
 def test_build_prompt_includes_sources_and_question():
     hits = [
-        Hit(text="Isolate the host.", score=0.9, source="playbooks/ransomware.md"),
-        Hit(text="Reset credentials.", score=0.8, source="phishing.md"),
+        Hit(text="Place the taper.", score=0.9, source="manuals/work_zone.md"),
+        Hit(text="Notify the utility owner.", score=0.8, source="utilities.md"),
     ]
     prompt = app._build_prompt("What first?", hits)
 
-    assert "[1] (playbooks/ransomware.md)\nIsolate the host." in prompt
-    assert "[2] (phishing.md)\nReset credentials." in prompt
+    assert "[1] (manuals/work_zone.md)\nPlace the taper." in prompt
+    assert "[2] (utilities.md)\nNotify the utility owner." in prompt
     assert prompt.rstrip().endswith("Question: What first?\nAnswer:")
 
 

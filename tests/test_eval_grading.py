@@ -14,14 +14,27 @@ _spec.loader.exec_module(run_eval)
 
 CASES = {case["id"]: case for case in run_eval.load_cases()}
 
+# The grader also takes refusal cases (no pages, refusal phrasings to accept, invented answers to reject).
+# The question set has none since DAR-678 dropped the old IT refusal probe, so this one is inline.
+NOT_COVERED = {
+    "id": "R1",
+    "question": "What is the toll rate on the I-77 Express Lanes?",
+    "refusal": True,
+    "accept": [["not contain"], ["doesn't cover"], ["no information"]],
+    "reject": [["toll is"], ["per mile"], ["cents"]],
+    "source": None,
+    "pages": [],
+    "note": "No document covers toll rates; the answer must say so and must not invent a rate.",
+}
+
 
 def test_cases_file_is_well_formed():
-    assert len(CASES) == 14
+    assert len(CASES) == 13
     assert sum(bool(c.get("holdout")) for c in CASES.values()) == 5
     for case in CASES.values():
         assert case["question"] and case["note"]
         assert case["accept"] and all(group for group in case["accept"])
-    assert sum(bool(c.get("refusal")) for c in CASES.values()) == 1
+    assert not any(c.get("refusal") for c in CASES.values())
 
 
 @pytest.mark.parametrize("case_id, answer", [
@@ -34,7 +47,6 @@ def test_cases_file_is_well_formed():
     ("Q6", "The smallest radius at 70 mph is 1,640 ft."),
     ("Q7", "The clear zone is 20 – 22 ft."),
     ("Q8", "Between 24 and 28 feet."),
-    ("Q9", "The context does not contain information about a password reset policy."),
     ("H1", "The correction factor is 1.4."),
     ("H2", "The clear zone is 16 - 18 feet."),
     ("H3", "Use a run-out length of 425 ft."),
@@ -52,7 +64,6 @@ def test_correct_answers_pass(case_id, answer):
     ("Q4", "New York and Ohio."),
     ("Q5", "The factor is 1.2."),
     ("Q7", "The clear zone is 22-24 ft."),
-    ("Q9", "Passwords must be at least 8 characters long and reset every 90 days."),
 ])
 def test_wrong_answers_fail(case_id, answer):
     assert not run_eval.grade(answer, CASES[case_id])
@@ -68,23 +79,27 @@ def test_mid_answer_source_line_is_graded():
     assert run_eval.grade(answer, CASES["Q1"])
 
 
-def test_invented_policy_is_not_a_refusal():
-    assert not run_eval.grade("Passwords must be reset every 60 days and cannot be reused.", CASES["Q9"])
+def test_refusal_passes():
+    assert run_eval.grade("The context does not contain the I-77 Express Lanes toll rate.", NOT_COVERED)
+
+
+def test_invented_answer_is_not_a_refusal():
+    assert not run_eval.grade("The toll is 50 cents per mile at peak hours.", NOT_COVERED)
 
 
 def test_reject_overrides_accept():
-    answer = "The context does not say, but passwords must be at least 8 characters long."
-    assert not run_eval.grade(answer, CASES["Q9"])
+    answer = "The context does not contain it, but the toll is usually 50 cents per mile."
+    assert not run_eval.grade(answer, NOT_COVERED)
 
 
 def test_retrieval_hit_checks_source_and_page():
     case = CASES["Q5"]
     right = Hit(text="", score=1.0, source="TMP Design Manual (Combined, No Links).pdf", metadata={"page_label": "59"})
     wrong_page = Hit(text="", score=1.0, source=right.source, metadata={"page_label": "58"})
-    other_doc = Hit(text="", score=1.0, source="K-Maps.pdf", metadata={"page_label": "59"})
+    other_doc = Hit(text="", score=1.0, source="Chapter_2.pdf", metadata={"page_label": "59"})
     assert run_eval.retrieval_hit([wrong_page, right], case) is True
     assert run_eval.retrieval_hit([wrong_page, other_doc], case) is False
-    assert run_eval.retrieval_hit([right], CASES["Q9"]) is None
+    assert run_eval.retrieval_hit([right], NOT_COVERED) is None
 
 
 @pytest.mark.parametrize("case_id, answer", [

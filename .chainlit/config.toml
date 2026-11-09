@@ -115,7 +115,7 @@ reaction_on_message_received = false
 
 [UI]
 # Name of the assistant.
-name = "IT Support Assistant"
+name = "NCDOT Document Chat"
 
 # default_theme = "dark"
 

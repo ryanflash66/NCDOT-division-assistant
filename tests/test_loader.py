@@ -39,12 +39,12 @@ def test_files_needing_a_missing_tool_are_skipped(tmp_path, monkeypatch):
 
 @pytest.mark.parametrize("ext", TEXT_EXTENSIONS + [".md"])
 def test_text_formats_yield_text(tmp_path, ext):
-    (tmp_path / f"sample{ext}").write_text("hello incident responders", encoding="utf-8")
+    (tmp_path / f"sample{ext}").write_text("hello work zone inspectors", encoding="utf-8")
 
     docs = loader.load(tmp_path)
 
     assert docs
-    assert "hello incident responders" in " ".join(d.text for d in docs)
+    assert "hello work zone inspectors" in " ".join(d.text for d in docs)
     assert docs[0].metadata["doc_type"] == loader.FORMATS[ext].doc_type
 
 
@@ -66,25 +66,25 @@ def test_empty_documents_are_dropped(tmp_path):
 
 
 def test_metadata_uses_relative_posix_source(tmp_path):
-    (tmp_path / "ir").mkdir()
-    (tmp_path / "ir" / "phishing.md").write_text("reset credentials", encoding="utf-8")
+    (tmp_path / "utilities").mkdir()
+    (tmp_path / "utilities" / "relocation.md").write_text("move the poles", encoding="utf-8")
 
     meta = loader.load(tmp_path)[0].metadata
 
-    assert meta["source"] == "ir/phishing.md"
-    assert meta["filename"] == "phishing.md"
-    assert meta["incident_type"] == "phishing"
+    assert meta["source"] == "utilities/relocation.md"
+    assert meta["filename"] == "relocation.md"
+    assert meta["topic"] == "utilities"
 
 
 def test_docx_uses_default_reader(tmp_path):
     docx = pytest.importorskip("docx")
     document = docx.Document()
-    document.add_paragraph("Isolate the domain controller.")
-    document.save(tmp_path / "containment.docx")
+    document.add_paragraph("Close the right lane before paving.")
+    document.save(tmp_path / "lane_closure.docx")
 
     docs = loader.load(tmp_path)
 
-    assert "Isolate the domain controller." in docs[0].text
+    assert "Close the right lane before paving." in docs[0].text
     assert docs[0].metadata["doc_type"] == "word"
 
 
@@ -179,37 +179,37 @@ def test_pdf_reader_strips_inline_markup_and_accepts_legacy_page_key(tmp_path, m
 
 
 def test_html_uses_unstructured(tmp_path):
-    (tmp_path / "runbook.html").write_text(
-        "<html><body><h1>Runbook</h1><p>Rotate the TLS certificates quarterly.</p></body></html>",
+    (tmp_path / "flagging.html").write_text(
+        "<html><body><h1>Flagging</h1><p>Flaggers wear high-visibility apparel.</p></body></html>",
         encoding="utf-8",
     )
     docs = loader.load(tmp_path)
-    assert "Rotate the TLS certificates quarterly." in " ".join(d.text for d in docs)
+    assert "Flaggers wear high-visibility apparel." in " ".join(d.text for d in docs)
     assert docs[0].metadata["doc_type"] == "html"
 
 
 def test_eml_uses_unstructured(tmp_path):
-    (tmp_path / "alert.eml").write_text(
-        "From: soc@example.com\r\nTo: it@example.com\r\nSubject: Alert\r\n"
-        "Content-Type: text/plain; charset=utf-8\r\n\r\nDisable the compromised account now.\r\n",
+    (tmp_path / "permit.eml").write_text(
+        "From: utilities@example.com\r\nTo: district@example.com\r\nSubject: Permit\r\n"
+        "Content-Type: text/plain; charset=utf-8\r\n\r\nThe encroachment permit is approved.\r\n",
         encoding="utf-8",
         newline="",
     )
     docs = loader.load(tmp_path)
-    assert "Disable the compromised account now." in " ".join(d.text for d in docs)
+    assert "The encroachment permit is approved." in " ".join(d.text for d in docs)
     assert docs[0].metadata["doc_type"] == "email"
 
 
 def test_xlsx_yields_sheet_text(tmp_path):
     openpyxl = pytest.importorskip("openpyxl")
     book = openpyxl.Workbook()
-    book.active.append(["hostname", "owner"])
-    book.active.append(["dc01", "infra-team"])
-    book.save(tmp_path / "assets.xlsx")
+    book.active.append(["device", "owner"])
+    book.active.append(["drum", "wztc-crew"])
+    book.save(tmp_path / "devices.xlsx")
 
     docs = loader.load(tmp_path)
 
-    assert "infra-team" in " ".join(d.text for d in docs)
+    assert "wztc-crew" in " ".join(d.text for d in docs)
     assert docs[0].metadata["doc_type"] == "spreadsheet"
 
 
@@ -218,12 +218,12 @@ def test_image_ocr(tmp_path):
     from PIL import Image, ImageDraw, ImageFont
 
     image = Image.new("RGB", (600, 120), "white")
-    ImageDraw.Draw(image).text((10, 30), "FIREWALL RULE 42", fill="black", font=ImageFont.load_default(size=40))
-    image.save(tmp_path / "screenshot.png")
+    ImageDraw.Draw(image).text((10, 30), "SPEED LIMIT 45", fill="black", font=ImageFont.load_default(size=40))
+    image.save(tmp_path / "sign.png")
 
     docs = loader.load(tmp_path)
 
-    assert "FIREWALL" in " ".join(d.text for d in docs).upper()
+    assert "SPEED" in " ".join(d.text for d in docs).upper()
 
 
 @pytest.mark.skipif(shutil.which("soffice") is None, reason="LibreOffice not installed")
@@ -258,7 +258,7 @@ def test_document_metadata_omits_section_unless_given():
         ("manual.pdf", {"page_label": "12"}, "Page 12"),
         ("manual.pdf", {"page_label": "iv"}, "Page iv"),
         ("deck.pptx", {"page_label": 3}, "Slide 3"),
-        ("playbook.md", {"section": "Ransomware > Containment"}, "Ransomware > Containment"),
+        ("manual.md", {"section": "Work Zones > Setup"}, "Work Zones > Setup"),
         ("manual.pdf", {}, None),
         ("notes.txt", {"page_label": "1"}, None),
     ],
@@ -270,35 +270,35 @@ def test_section_for(path, reader_metadata, expected):
 def test_markdown_sections_follow_heading_path():
     text = (
         "Preamble line.\n"
-        "# Ransomware Playbook\n"
+        "# Work Zone Manual\n"
         "Overview text.\n"
-        "## Containment\n"
-        "Isolate hosts.\n"
+        "## Setup\n"
+        "Place the taper.\n"
         "```\n# not a heading\n```\n"
-        "### Network\n"
-        "Block SMB.\n"
-        "## Recovery\n"
-        "Restore backups.\n"
+        "### Signs\n"
+        "Space signs 500 ft apart.\n"
+        "## Removal\n"
+        "Remove devices.\n"
     )
 
     sections = loader.markdown_sections(text)
 
     assert [s for s, _ in sections] == [
         None,
-        "Ransomware Playbook",
-        "Ransomware Playbook > Containment",
-        "Ransomware Playbook > Containment > Network",
-        "Ransomware Playbook > Recovery",
+        "Work Zone Manual",
+        "Work Zone Manual > Setup",
+        "Work Zone Manual > Setup > Signs",
+        "Work Zone Manual > Removal",
     ]
-    containment = dict(sections)["Ransomware Playbook > Containment"]
-    assert containment.startswith("## Containment\n")
-    assert "# not a heading" in containment and "Isolate hosts." in containment
+    setup = dict(sections)["Work Zone Manual > Setup"]
+    assert setup.startswith("## Setup\n")
+    assert "# not a heading" in setup and "Place the taper." in setup
 
 
 def test_markdown_sections_skip_heading_only_sections():
-    sections = loader.markdown_sections("# Playbook\n\n## Containment\nIsolate hosts.\n")
+    sections = loader.markdown_sections("# Manual\n\n## Setup\nPlace the taper.\n")
 
-    assert [s for s, _ in sections] == ["Playbook > Containment"]
+    assert [s for s, _ in sections] == ["Manual > Setup"]
 
 
 def test_markdown_sections_keep_trailing_hash_in_heading_text():
@@ -317,18 +317,18 @@ def test_markdown_sections_nested_fences_hide_headings():
 
 
 def test_markdown_documents_carry_heading_section(tmp_path):
-    (tmp_path / "ransomware.md").write_text(
-        "# Ransomware Playbook\n\n## Containment\n\nIsolate infected hosts.\n\n## Recovery\n\nRestore from backups.\n",
+    (tmp_path / "work_zone.md").write_text(
+        "# Work Zone Manual\n\n## Setup\n\nPlace advance warning signs.\n\n## Removal\n\nRemove devices in reverse order.\n",
         encoding="utf-8",
     )
 
     docs = loader.load(tmp_path)
 
     by_section = {d.metadata["section"]: d.text for d in docs}
-    assert set(by_section) == {"Ransomware Playbook > Containment", "Ransomware Playbook > Recovery"}
-    assert "Isolate infected hosts." in by_section["Ransomware Playbook > Containment"]
-    assert "Restore from backups." in by_section["Ransomware Playbook > Recovery"]
-    assert all(d.metadata["source"] == "ransomware.md" for d in docs)
+    assert set(by_section) == {"Work Zone Manual > Setup", "Work Zone Manual > Removal"}
+    assert "Place advance warning signs." in by_section["Work Zone Manual > Setup"]
+    assert "Remove devices in reverse order." in by_section["Work Zone Manual > Removal"]
+    assert all(d.metadata["source"] == "work_zone.md" for d in docs)
 
 
 def test_markdown_without_headings_has_no_section(tmp_path):
@@ -358,18 +358,18 @@ def test_xlsx_documents_carry_sheet_section(tmp_path):
     book = openpyxl.Workbook()
     book.active.title = "Contacts"
     book.active.append(["team", "phone"])
-    book.active.append(["soc", "555-0100"])
-    assets = book.create_sheet("Assets")
-    assets.append(["hostname", "owner"])
-    assets.append(["dc01", "infra-team"])
-    book.save(tmp_path / "inventory.xlsx")
+    book.active.append(["utilities", "555-0100"])
+    devices = book.create_sheet("Devices")
+    devices.append(["device", "owner"])
+    devices.append(["drum", "wztc-crew"])
+    book.save(tmp_path / "devices.xlsx")
 
     docs = loader.load(tmp_path)
 
     sections = {d.metadata["section"]: d.text for d in docs}
-    assert set(sections) == {"Contacts", "Assets"}
-    assert "555-0100" in sections["Contacts"] and "infra-team" not in sections["Contacts"]
-    assert "infra-team" in sections["Assets"]
+    assert set(sections) == {"Contacts", "Devices"}
+    assert "555-0100" in sections["Contacts"] and "wztc-crew" not in sections["Contacts"]
+    assert "wztc-crew" in sections["Devices"]
 
 
 def test_pdf_documents_carry_page_section(tmp_path):
