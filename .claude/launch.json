@@ -1,0 +1,35 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "hosted",
+      "runtimeExecutable": ".venv/Scripts/python.exe",
+      "runtimeArgs": ["-m", "uvicorn", "index:app", "--app-dir", "hosted", "--env-file", ".env", "--port", "8000"],
+      "port": 8000
+    },
+    {
+      "name": "test-current",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": ["/c", "set RATE_LIMIT_PER_MINUTE=1000&& .venv\\Scripts\\python.exe -m uvicorn index:app --app-dir hosted --env-file .env --port 8101"],
+      "port": 8101
+    },
+    {
+      "name": "test-pymupdf4llm-ocr",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": ["/c", "set RATE_LIMIT_PER_MINUTE=1000&& set INDEX_DIR=C:\\Users\\ryanf\\AppData\\Local\\Temp\\claude\\1910b88adde6e62c\\f815659b-b5b5-44bf-b277-8f915a88c2c0\\scratchpad\\index-pymupdf4llm-ocr&& .venv\\Scripts\\python.exe -m uvicorn index:app --app-dir hosted --env-file .env --port 8102"],
+      "port": 8102
+    },
+    {
+      "name": "test-docling-ocr",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": ["/c", "set RATE_LIMIT_PER_MINUTE=1000&& set INDEX_DIR=C:\\Users\\ryanf\\AppData\\Local\\Temp\\claude\\1910b88adde6e62c\\f815659b-b5b5-44bf-b277-8f915a88c2c0\\scratchpad\\index-docling-ocr&& .venv\\Scripts\\python.exe -m uvicorn index:app --app-dir hosted --env-file .env --port 8103"],
+      "port": 8103
+    },
+    {
+      "name": "test-fix1-ocr",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": ["/c", "set RATE_LIMIT_PER_MINUTE=1000&& set INDEX_DIR=C:\\Users\\ryanf\\AppData\\Local\\Temp\\claude\\1910b88adde6e62c\\f815659b-b5b5-44bf-b277-8f915a88c2c0\\scratchpad\\index-fix1-ocr&& .venv\\Scripts\\python.exe -m uvicorn index:app --app-dir hosted --env-file .env --port 8104"],
+      "port": 8104
+    }
+  ]
+}
