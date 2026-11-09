@@ -49,12 +49,12 @@ class _HashEmbedding(BaseEmbedding):
 # Fixtures
 # ---------------------------------------------------------------------------
 
-SEED_PLAYBOOK = (
-    "# Ransomware Playbook\n\n"
-    "## Identification\nDetect encryption activity via EDR alerts.\n\n"
-    "## Containment\nIsolate affected hosts from the network immediately.\n\n"
-    "## Eradication\nRemove malicious binaries and restore from clean backups.\n\n"
-    "## Recovery\nVerify integrity of restored systems before returning to production.\n"
+SEED_MANUAL = (
+    "# Work Zone Traffic Control Manual\n\n"
+    "## Planning\nPrepare a transportation management plan before closing a lane.\n\n"
+    "## Setup\nPlace advance warning signs and the taper before work begins.\n\n"
+    "## Flagging\nFlaggers wear high-visibility apparel and stand clear of open traffic.\n\n"
+    "## Removal\nRemove devices in the reverse order of installation once work ends.\n"
 )
 
 
@@ -79,7 +79,7 @@ def config(tmp_path):
 @pytest.fixture()
 def seeded_config(config):
     """config with one seed Document in the data directory."""
-    (config.data_dir / "seed_ransomware.md").write_text(SEED_PLAYBOOK, encoding="utf-8")
+    (config.data_dir / "seed_work_zone_manual.md").write_text(SEED_MANUAL, encoding="utf-8")
     return config
 
 

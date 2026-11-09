@@ -48,13 +48,13 @@ def test_refresh_empty_data_dir_raises(config, hash_embed):
 
 def test_failed_refresh_keeps_previous_index(index, seeded_config):
     before = index.refresh()
-    os.remove(seeded_config.data_dir / "seed_ransomware.md")
+    os.remove(seeded_config.data_dir / "seed_work_zone_manual.md")
 
     with pytest.raises(NoDocumentsError):
         index.refresh()
 
     assert index.stats().vectors == before.vectors
-    assert index.retrieve("ransomware")
+    assert index.retrieve("work zone")
 
 
 def test_stats_survive_reopen(index, seeded_config, hash_embed):
@@ -85,56 +85,56 @@ def test_retrieve_on_empty_index_raises(index):
 
 def test_retrieve_returns_hits_with_metadata(index):
     index.refresh()
-    hits = index.retrieve("EDR containment isolation", k=2)
+    hits = index.retrieve("flaggers warning signs taper", k=2)
 
     assert 0 < len(hits) <= 2
     hit = hits[0]
     assert hit.text
     assert isinstance(hit.score, float)
-    assert hit.source == "seed_ransomware.md"
-    assert hit.metadata["incident_type"] == "ransomware"
-    assert hit.metadata["doc_domain"] == "ir"
+    assert hit.source == "seed_work_zone_manual.md"
+    assert hit.metadata["topic"] == "work_zone"
+    assert hit.metadata["doc_domain"] == "reference"
     assert hit.metadata["doc_type"] == "markdown"
 
 
 def test_retrieve_never_refreshes(index, seeded_config):
     index.refresh()
-    (seeded_config.data_dir / "phishing_playbook.md").write_text("# Phishing\nReset.", encoding="utf-8")
+    (seeded_config.data_dir / "utility_manual.md").write_text("# Utilities\nRelocate poles.", encoding="utf-8")
     before = index.stats()
 
-    hits = index.retrieve("phishing", k=10)
+    hits = index.retrieve("utilities", k=10)
 
-    assert "phishing_playbook.md" not in _sources(hits)
+    assert "utility_manual.md" not in _sources(hits)
     assert index.stats() == before
 
 
 def test_refresh_picks_up_added_and_deleted_documents(index, seeded_config):
     index.refresh()
-    (seeded_config.data_dir / "phishing_playbook.md").write_text("# Phishing\nReset.", encoding="utf-8")
+    (seeded_config.data_dir / "utility_manual.md").write_text("# Utilities\nRelocate poles.", encoding="utf-8")
     index.refresh()
-    assert "phishing_playbook.md" in _sources(index.retrieve("phishing", k=10))
+    assert "utility_manual.md" in _sources(index.retrieve("utilities", k=10))
 
-    os.remove(seeded_config.data_dir / "phishing_playbook.md")
+    os.remove(seeded_config.data_dir / "utility_manual.md")
     index.refresh()
-    assert "phishing_playbook.md" not in _sources(index.retrieve("phishing", k=10))
+    assert "utility_manual.md" not in _sources(index.retrieve("utilities", k=10))
 
 
 def test_retrieve_filters_on_classification(index, seeded_config):
-    (seeded_config.data_dir / "phishing_playbook.md").write_text("# Phishing\nReset.", encoding="utf-8")
+    (seeded_config.data_dir / "utility_manual.md").write_text("# Utilities\nRelocate poles.", encoding="utf-8")
     (seeded_config.data_dir / "cafeteria_menu.md").write_text("# Menu\nSoup.", encoding="utf-8")
     index.refresh()
 
-    hits = index.retrieve("playbook", k=10, where={"incident_type": "phishing"})
+    hits = index.retrieve("manual", k=10, where={"topic": "utilities"})
 
-    assert _sources(hits) == {"phishing_playbook.md"}
+    assert _sources(hits) == {"utility_manual.md"}
 
 
 def test_classification_ignores_location_of_data_dir(tmp_path, hash_embed):
-    """A data dir under a path like 'rag-chatbot' must not label documents iot_ot."""
+    """A data dir under a path like 'work-zone/utility-manuals' must not label its documents."""
     from rag.config import load_config
 
     cfg = load_config({
-        "DATA_DIR": str(tmp_path / "rag-chatbot" / "incident-response" / "data"),
+        "DATA_DIR": str(tmp_path / "work-zone" / "utility-manuals" / "data"),
         "CHROMA_PERSIST_DIR": str(tmp_path / "chroma"),
         "CHROMA_COLLECTION": "loc_col",
     })
@@ -146,32 +146,32 @@ def test_classification_ignores_location_of_data_dir(tmp_path, hash_embed):
     hit = index.retrieve("karnaugh", k=1)[0]
 
     assert hit.source == "K-Maps Lecture Notes page.md"
-    assert hit.metadata["incident_type"] == "unknown"
+    assert hit.metadata["topic"] == "unknown"
     assert hit.metadata["doc_domain"] == "general"
 
 
 def test_json_documents_are_indexed(index, seeded_config):
-    (seeded_config.data_dir / "asset_inventory.json").write_text(
-        '{"hosts": ["dc01", "web01"]}', encoding="utf-8"
+    (seeded_config.data_dir / "standard_drawings.json").write_text(
+        '{"drawings": ["1101.01", "1101.02"]}', encoding="utf-8"
     )
     index.refresh()
 
-    hits = index.retrieve("hosts", k=10, where={"doc_domain": "asset_inventory"})
+    hits = index.retrieve("drawings", k=10, where={"doc_domain": "standard_drawings"})
 
-    assert _sources(hits) == {"asset_inventory.json"}
-    assert hits[0].metadata["asset_scope"] == "org_inventory"
+    assert _sources(hits) == {"standard_drawings.json"}
+    assert hits[0].metadata["tags"] == "standard,drawings"
     assert hits[0].metadata["doc_type"] == "json"
 
 
 def test_subdirectories_are_indexed_with_relative_source(index, seeded_config):
-    sub = seeded_config.data_dir / "playbooks"
+    sub = seeded_config.data_dir / "manuals"
     sub.mkdir()
-    (sub / "malware.md").write_text("# Malware\nScan.", encoding="utf-8")
+    (sub / "encroachment.md").write_text("# Encroachment\nPermit.", encoding="utf-8")
     index.refresh()
 
-    hits = index.retrieve("scan", k=10, where={"incident_type": "malware"})
+    hits = index.retrieve("permit", k=10, where={"topic": "utilities"})
 
-    assert _sources(hits) == {"playbooks/malware.md"}
+    assert _sources(hits) == {"manuals/encroachment.md"}
 
 
 # ---------------------------------------------------------------------------
@@ -181,12 +181,12 @@ def test_subdirectories_are_indexed_with_relative_source(index, seeded_config):
 def test_second_instance_sees_refresh(index, seeded_config, hash_embed):
     index.refresh()
     other = RetrievalIndex(seeded_config, hash_embed)
-    assert _sources(other.retrieve("ransomware", k=10)) == {"seed_ransomware.md"}
+    assert _sources(other.retrieve("work zone", k=10)) == {"seed_work_zone_manual.md"}
 
-    (seeded_config.data_dir / "phishing_playbook.md").write_text("# Phishing\nReset.", encoding="utf-8")
+    (seeded_config.data_dir / "utility_manual.md").write_text("# Utilities\nRelocate poles.", encoding="utf-8")
     index.refresh()
 
-    assert "phishing_playbook.md" in _sources(other.retrieve("phishing", k=10))
+    assert "utility_manual.md" in _sources(other.retrieve("utilities", k=10))
     assert other.stats() == index.stats()
 
 
@@ -197,7 +197,7 @@ def test_instance_created_before_first_build_sees_it(index, seeded_config, hash_
     index.refresh()
 
     assert other.stats().vectors > 0
-    assert other.retrieve("ransomware")
+    assert other.retrieve("work zone")
 
 
 _REFRESH_IN_SUBPROCESS = """
@@ -217,8 +217,8 @@ def test_refresh_in_another_process_is_visible(index, seeded_config):
     from pathlib import Path
 
     index.refresh()
-    assert index.retrieve("ransomware")
-    (seeded_config.data_dir / "phishing_playbook.md").write_text("# Phishing\nReset.", encoding="utf-8")
+    assert index.retrieve("work zone")
+    (seeded_config.data_dir / "utility_manual.md").write_text("# Utilities\nRelocate poles.", encoding="utf-8")
 
     result = subprocess.run(
         [
@@ -232,19 +232,19 @@ def test_refresh_in_another_process_is_visible(index, seeded_config):
     assert result.stdout.strip().splitlines()[-1] == "2"
 
     assert index.stats().documents == 2
-    assert "phishing_playbook.md" in _sources(index.retrieve("phishing", k=10))
+    assert "utility_manual.md" in _sources(index.retrieve("utilities", k=10))
 
 
 # ---------------------------------------------------------------------------
 # chunking / top-k
 # ---------------------------------------------------------------------------
 
-LONG_TEXT = " ".join(f"Sentence number {i} describes host containment step {i}." for i in range(400))
+LONG_TEXT = " ".join(f"Sentence number {i} describes lane closure step {i}." for i in range(400))
 
 
 def _long_index(config, hash_embed, **overrides):
     """An index over one long plain-text Document, with chunking settings overridden."""
-    (config.data_dir / "long_runbook.txt").write_text(LONG_TEXT, encoding="utf-8")
+    (config.data_dir / "long_manual.txt").write_text(LONG_TEXT, encoding="utf-8")
     return RetrievalIndex(replace(config, **overrides), hash_embed)
 
 
@@ -260,8 +260,8 @@ def test_retrieve_honours_k(config, hash_embed):
     index = _long_index(config, hash_embed, chunk_size=128, chunk_overlap=0)
     assert index.refresh().vectors > 5
 
-    assert len(index.retrieve("containment", k=1)) == 1
-    assert len(index.retrieve("containment", k=5)) == 5
+    assert len(index.retrieve("closure", k=1)) == 1
+    assert len(index.retrieve("closure", k=5)) == 5
 
 
 def test_refresh_keeps_markdown_tables_whole(config, hash_embed):

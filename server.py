@@ -13,7 +13,7 @@ from rag.index import RetrievalIndex
 
 load_dotenv()
 
-app = FastAPI(title="RAG-Chatbot API")
+app = FastAPI(title="NCDOT Division Assistant: local retrieval API")
 app.include_router(api.router)
 
 

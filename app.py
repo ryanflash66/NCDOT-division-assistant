@@ -1,6 +1,7 @@
 """
-RAG Chatbot for IT Support Documentation
+Local development chat for the NCDOT division assistant's documents.
 Chainlit entrypoint: an adapter over the shared Retrieval index plus an LLM.
+The deployed demo is hosted/; this app is for trying questions against data/ locally.
 
 Nothing heavy runs at import time. The index, embedding model and LLM are
 created on the first chat session.
@@ -339,15 +340,15 @@ async def factory():
         cl.user_session.set("session_id", str(uuid.uuid4()))
         cl.user_session.set("messages", [])
 
-        welcome_msg = f"""🤖 **IT Support RAG Chatbot Ready!**
+        welcome_msg = f"""🤖 **NCDOT Document Chat (local) Ready!**
 
-I can help you find information from your uploaded documentation.
+I answer questions from the NCDOT documents in the data folder, with citations.
 
 📁 **Data Directory**: `{config.data_dir}`
 🧠 **Model**: {_model_label(config)}
 🔄 **To add files**: upload them via `POST /api/ingest`, or place them in the data folder and run `py -m rag refresh`
 
-Ask me anything about your IT documentation!"""
+Ask me anything about these NCDOT documents!"""
 
         await cl.Message(content=welcome_msg, author="Assistant").send()
 
