@@ -252,3 +252,6 @@ hosted/public/
 # from them is committed.
 hosted/documents/*
 !hosted/documents/README.md
+
+# Locked test set answer cache (evaluation/locked/run.py); the question files beside it are committed
+evaluation/locked/results/

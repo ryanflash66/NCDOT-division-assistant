@@ -26,6 +26,12 @@ index without bm25.npz gets one built in memory) on these 15 questions and on
 the 83 known-page questions of prototype.stress_test (right page of the gold
 document in the top 5), one row per index and setting.
 
+The retrieval settings come from the environment as in the hosted app
+(PAGE_AGGREGATION, MAX_CHUNKS_PER_PAGE, MAX_CHUNKS_PER_DOCUMENT, RRF_K,
+FUSION_WEIGHTS; see divrag.config), so `PAGE_AGGREGATION=sum py -m
+prototype.image_table_check measure --index sum=hosted/index` measures that
+setting under the name "sum".
+
 `answers` posts each question to a running server's /api/ask (start it with
 INDEX_DIR pointing at the index to test) and records the cited pages. The free
 models' daily cap is shared, so this is one LLM call per question (more on a retry).
@@ -46,6 +52,7 @@ import numpy as np
 from prototype import HOSTED_DIR
 from prototype.ingest import CHUNK_OVERLAP, CHUNK_SIZE, captions
 from prototype.stress_test import _covers, _json_or_error, _source_file
+from divrag.config import bm25_parameters, retrieval_options
 from divrag.divisions import DIVISIONS, DOCUMENTS_DIR
 from divrag.embedder import Embedder, Reranker, model_cache_dir
 from divrag.index_file import IndexFile
@@ -130,7 +137,7 @@ def patched(index: IndexFile, embedder: Embedder, extracted: List[Dict], with_ca
     new_chunks: Dict[PageKey, List[Dict]] = {}
     for key, row in replaced.items():
         # The cleanup rag.loader's PDF reader applies (inline HTML, U+FFFD, in-cell breaks, table cells).
-        text = loader.clean_markdown_tables(loader._PDF_MARKUP.sub("", row["text"]).replace("<br>", " ")).strip()
+        text = loader.clean_markdown_tables(loader._PDF_MARKUP.sub("", row["text"])).strip()
         if not text:
             new_chunks[key] = []
             continue
@@ -187,7 +194,7 @@ def check(retriever: Retriever, cases: List[Dict]) -> List[Dict]:
         ms = (time.perf_counter() - started) * 1000
         in_document = [h for h in hits if h.chunk["source"] == case["source"]]
         rank = next((i for i, h in enumerate(hits, 1)
-                     if h.chunk["source"] == case["source"] and h.chunk["page"] in case["pages"]), None)
+                     if h.chunk["source"] == case["source"] and _covers(h.chunk, case["pages"])), None)
         rows.append({"id": case["id"], "right_document": bool(in_document), "page_rank": rank,
                      "top": [f"{h.chunk['source']} p.{h.chunk['page']}" for h in hits], "ms": ms})
     return rows
@@ -214,7 +221,7 @@ def search(args: argparse.Namespace) -> int:
             print(f"  saved -> {save[name]}")
     results = {}
     for name, idx in indexes:
-        retriever = Retriever(idx, embedder, reranker)
+        retriever = Retriever(idx, embedder, reranker, **retrieval_options())
         retriever.warm_up()
         results[name] = check(retriever, cases)
 
@@ -243,15 +250,17 @@ def measure(args: argparse.Namespace) -> int:
     cache = model_cache_dir()
     reranker = Reranker(cache_dir=cache)
     cases, known = load_cases(), eval_cases()
+    options = retrieval_options()
+    print(f"retrieval settings: {options}")
     results = {}
     for name, path in _pairs(args.index):
         index = IndexFile.load(path)
         if index.keyword is None:
-            index.with_keyword_index()  # an index built before bm25.npz: same chunks, keyword index built here
+            index.with_keyword_index(*bm25_parameters())  # an index built before bm25.npz: built here
         embedder = Embedder(index.model, cache_dir=cache)
         for keyword in (False, True):
             label = f"{name}{' + keyword' if keyword else ''}"
-            retriever = Retriever(index, embedder, reranker, keyword=keyword)
+            retriever = Retriever(index, embedder, reranker, keyword=keyword, **options)
             retriever.warm_up()
             rows = check(retriever, cases)
             started = time.perf_counter()

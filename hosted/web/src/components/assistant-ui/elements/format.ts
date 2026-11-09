@@ -32,4 +32,10 @@ export function linkCitations(text: string, sources: number): string {
   });
 }
 
+/** "Unverified number: 27.5 ft." / "Unverified numbers: 27.5 ft, 12 %."; null when every number was found. */
+export function unverifiedText(numbers: string[] | null | undefined): string | null {
+  if (!numbers?.length) return null;
+  return `Unverified number${numbers.length === 1 ? "" : "s"}: ${numbers.join(", ")}.`;
+}
+
 export const CITE_PREFIX = "#cite-";

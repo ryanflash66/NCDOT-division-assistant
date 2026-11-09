@@ -16,15 +16,24 @@ answer pages it ranked the same (median Spearman 0.994 against fp32 over 20
 candidates, the expected page at the same rank for all 32) in half the CPU time,
 and it is 23 MB instead of 91 MB.
 
+RERANK_MODEL picks another cross-encoder fastembed supports (DAR-657; the A/B
+over the dev sets is in docs/reranker-ab.md), RERANK_MODEL_FILE another ONNX
+file of its repo (as the quantized MiniLM file above), and RERANK_BATCH_SIZE
+the passages per call. config.load_settings checks the name at startup;
+`reranker_from_settings` builds the reranker the settings describe.
+
 Model files are read from (and on first use downloaded into) `model_cache_dir()`.
 """
 
 import os
 import tempfile
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Union
+from typing import TYPE_CHECKING, Dict, Iterable, List, Optional, Union
 
 import numpy as np
+
+if TYPE_CHECKING:  # the settings type only; config.py stays free of model imports
+    from .config import Settings
 
 MODEL_NAME = "BAAI/bge-small-en-v1.5"
 RERANK_MODEL_NAME = "Xenova/ms-marco-MiniLM-L-6-v2"
@@ -111,32 +120,59 @@ class Embedder:
         return _unit(vector[None, :])[0]
 
 
-def cross_encoder_name(repo: str = RERANK_MODEL_NAME, model_file: str = RERANK_MODEL_FILE) -> str:
+def known_cross_encoders() -> List[str]:
+    """The cross-encoder names fastembed ships (RERANK_MODEL takes one of them, or "none").
+
+    Custom models are left out: `cross_encoder_name` registers the int8 MiniLM file as
+    one, so including them would make the answer depend on what ran before.
+    """
+    from fastembed.rerank.cross_encoder import TextCrossEncoder
+
+    return [m.model for encoder in TextCrossEncoder.CROSS_ENCODER_REGISTRY
+            if not encoder.__name__.startswith("Custom") for m in encoder._list_supported_models()]
+
+
+def default_model_file(model_name: str) -> Optional[str]:
+    """The ONNX file a reranker reads when RERANK_MODEL_FILE is unset: the int8 MiniLM file, else fastembed's own."""
+    return RERANK_MODEL_FILE if model_name == RERANK_MODEL_NAME else None
+
+
+def cross_encoder_name(repo: str = RERANK_MODEL_NAME, model_file: Optional[str] = RERANK_MODEL_FILE) -> str:
     """The fastembed model name that loads `model_file` from the Hugging Face repo `repo`.
 
     fastembed lists one file per repo, so another file of the same repo is
     registered once as a custom model. It is read from the same cache folder
     (models--Xenova--ms-marco-MiniLM-L-6-v2), so a bundled copy loads offline.
+    `model_file` None means the file fastembed lists for `repo`.
     """
     from fastembed.common.model_description import ModelSource
     from fastembed.rerank.cross_encoder import TextCrossEncoder
 
     listed = {m.model: m for m in TextCrossEncoder._list_supported_models()}
-    if repo in listed and listed[repo].model_file == model_file:
+    if repo in listed and (model_file is None or listed[repo].model_file == model_file):
         return repo
+    if repo not in listed:
+        raise ValueError(f"fastembed has no cross-encoder {repo!r}; known: {', '.join(listed)}")
     name = f"{repo}-{Path(model_file).stem}"
     if name not in listed:
-        TextCrossEncoder.add_custom_model(name, sources=ModelSource(hf=repo), model_file=model_file, size_in_gb=0.03)
+        # The listed entry's hub repo, which can differ from the name (BAAI/bge-reranker-v2-m3 comes from onnx-community).
+        source = ModelSource(hf=listed[repo].sources.hf)
+        TextCrossEncoder.add_custom_model(name, sources=source, model_file=model_file, size_in_gb=0.03)
     return name
 
 
 class Reranker:
-    """Cross-encoder relevance scores for (question, passage) pairs; loads on first use."""
+    """Cross-encoder relevance scores for (question, passage) pairs; loads on first use.
+
+    `model_file` None reads the file `default_model_file` names; `batch_size`
+    passages go into each model call (see RERANK_BATCH_SIZE for why 1).
+    """
 
     def __init__(self, model_name: str = RERANK_MODEL_NAME, cache_dir: Optional[str] = None,
-                 model_file: str = RERANK_MODEL_FILE):
+                 model_file: Optional[str] = None, batch_size: int = RERANK_BATCH_SIZE):
         self.model_name = model_name
-        self.model_file = model_file
+        self.model_file = default_model_file(model_name) if model_file is None else model_file
+        self.batch_size = max(1, batch_size)
         self._cache_dir = cache_dir
         self._model = None
 
@@ -151,7 +187,15 @@ class Reranker:
     def scores(self, question: str, passages: List[str]) -> List[float]:
         if not passages:
             return []
-        return [float(s) for s in self._load().rerank(question, passages, batch_size=RERANK_BATCH_SIZE)]
+        return [float(s) for s in self._load().rerank(question, passages, batch_size=self.batch_size)]
+
+
+def reranker_from_settings(settings: "Settings", cache_dir: Optional[str] = None) -> Optional[Reranker]:
+    """The reranker the settings describe (RERANK_MODEL, RERANK_MODEL_FILE, RERANK_BATCH_SIZE), or None when off."""
+    if not settings.rerank:
+        return None
+    return Reranker(settings.rerank_model, cache_dir=cache_dir, model_file=settings.rerank_model_file,
+                    batch_size=settings.rerank_batch_size)
 
 
 def _unit(vectors: np.ndarray) -> np.ndarray:

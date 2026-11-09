@@ -8,14 +8,16 @@ caption and header rows in every piece.
 """
 
 import re
-from typing import Callable, List, Optional, Tuple
+from typing import Any, Callable, List, Optional, Sequence, Tuple
 
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.node_parser.interface import TextSplitter
 from llama_index.core.utils import get_tokenizer
 from pydantic import Field, PrivateAttr
 
-_SEPARATOR_CELL = re.compile(r"^\s*:?-{3,}:?\s*$")
+from rag import table_rows
+from rag.table_rows import cells, is_separator  # noqa: F401  (part of this module's API)
+
 # A data cell: numbers, ranges and placeholders such as "12 - 14", "1.3", "--", "**".
 _NUMERIC_CELL = re.compile(r"^[\s\d.,\-–*~<>≥≤%$/\[\]]+$")
 # Caption lines kept with a table: short lines just above it (title, units line).
@@ -31,20 +33,6 @@ _MIN_PROSE_TOKENS = 25
 
 def is_table_line(line: str) -> bool:
     return line.lstrip().startswith("|")
-
-
-def cells(line: str) -> List[str]:
-    inner = line.strip()
-    if inner.startswith("|"):
-        inner = inner[1:]
-    if inner.endswith("|"):
-        inner = inner[:-1]
-    return inner.split("|")
-
-
-def is_separator(line: str) -> bool:
-    row = cells(line)
-    return bool(row) and all(_SEPARATOR_CELL.match(cell) for cell in row)
 
 
 def _row(values: List[str]) -> str:
@@ -167,8 +155,34 @@ def _fill_row_group_labels(rows: List[str]) -> List[str]:
     return out
 
 
-def clean_markdown_tables(text: str) -> str:
-    """Tidy every pipe table in `text` (see `_merge_spanning_header`, `_unwrap_bracketed_units`, `_fill_row_group_labels`)."""
+def _clean_table(rows: List[str], rotated: Sequence[str]) -> List[str]:
+    """One pipe table made readable row by row (DAR-655, see rag/table_rows.py).
+
+    TMP Design Manual p. 37: the rows of offset 14 were stacked into one with
+    `<br>`, which broke the group detection, and the rotated row header
+    "Offset (ft)" was scattered over column 0 as "ft)", "et (", "ffs", "O", so
+    the rows for 14, 20 and 26 had no label and column 0 no header. Stacked
+    rows are split and rotated fragments removed while the `<br>` still marks
+    where cells were stacked; header spans and row labels are filled last,
+    once the older fixes have settled which rows are headers.
+    """
+    rows = table_rows.unstack_rows(rows)
+    rows, rotated_columns = table_rows.strip_rotated_fragments(rows, rotated)
+    rows = [line.replace("<br>", " ") for line in rows]
+    rows = _fill_row_group_labels(_unwrap_bracketed_units(_merge_spanning_header(rows)))
+    n_header = _header_row_count(rows)
+    rows = table_rows.fill_header_spans(rows, n_header)
+    rows = table_rows.label_column(rows, n_header, rotated_columns)
+    return table_rows.fill_row_labels(rows, n_header)
+
+
+def clean_markdown_tables(text: str, rotated: Sequence[str] = ()) -> str:
+    """Tidy every pipe table in `text` (see `_clean_table`); `<br>` elsewhere becomes a space.
+
+    `rotated` is the page's text-layer lines that do not run left to right
+    (pymupdf `line["dir"] != (1, 0)`), used to recognise a vertical label
+    that the Markdown grid scattered over cells.
+    """
     lines = text.split("\n")
     out: List[str] = []
     i = 0
@@ -177,10 +191,10 @@ def clean_markdown_tables(text: str) -> str:
             j = i
             while j < len(lines) and is_table_line(lines[j]):
                 j += 1
-            out.extend(_fill_row_group_labels(_unwrap_bracketed_units(_merge_spanning_header(lines[i:j]))))
+            out.extend(_clean_table(lines[i:j], rotated))
             i = j
         else:
-            out.append(lines[i])
+            out.append(lines[i].replace("<br>", " "))
             i += 1
     return "\n".join(out)
 
@@ -255,28 +269,77 @@ def _segments(text: str) -> List[Tuple[str, str]]:
     return segments
 
 
+# A caption line that names the table, repeated in the "Rows (...)" heading.
+_TABLE_CAPTION = re.compile(r"^[#*_\s]*((?:Table|TABLE|Figure|FIGURE|Exhibit)\b.*?)[*_\s]*$")
+
+
+def _caption_title(caption: List[str]) -> str:
+    for line in caption:
+        match = _TABLE_CAPTION.match(line)
+        if match:
+            return re.sub(r"\s+", " ", match.group(1)).strip()
+    return ""
+
+
+def _pack(units: List[List[int]], cost: Callable[[int], int], budget: int) -> List[List[int]]:
+    """Consecutive units of row indexes packed into pieces of at most `budget`; a unit too big alone is cut row by row."""
+    pieces: List[List[int]] = []
+    piece: List[int] = []
+    used = 0
+    for unit in units:
+        size = sum(cost(i) for i in unit)
+        if size > budget:
+            unit_rows = [[i] for i in unit]
+            if piece:
+                pieces.append(piece)
+                piece, used = [], 0
+            pieces.extend(_pack(unit_rows, cost, budget) if len(unit) > 1 else unit_rows)
+            continue
+        if piece and used + size > budget:
+            pieces.append(piece)
+            piece, used = [], 0
+        piece.extend(unit)
+        used += size
+    if piece:
+        pieces.append(piece)
+    return pieces
+
+
 def _split_table(block: str, chunk_size: int, count: Callable[[str], int]) -> List[str]:
-    """One chunk if the table fits; otherwise row groups that each repeat caption and header."""
-    if count(block) <= chunk_size:
-        return [block]
+    """The table as one chunk if it fits; otherwise row groups that each repeat caption and header.
+
+    When the table has labelled rows (DAR-655, `table_rows.row_labels`), each
+    piece is its grid rows followed by those rows' labelled lines, and a row
+    label's rows stay together (TMP p. 37: the Impact Angle and Maximum
+    Deflection rows of one offset), so a piece never holds a deflection
+    without its offset and design speed.
+    """
     lines = block.split("\n")
     first_row = next(i for i, line in enumerate(lines) if is_table_line(line))
     caption, rows = lines[:first_row], lines[first_row:]
     n_header = _header_row_count(rows)
+    header, _, body = table_rows.split_table(rows, n_header)
+    labels = table_rows.row_labels(header, body)
+    heading = table_rows.rows_heading(_caption_title(caption))
+    body_lines = rows[n_header:]
+    if labels is None or not any(labels):
+        if count(block) <= chunk_size:
+            return [block]
+        labels, heading = [None] * len(body_lines), ""
+    whole = "\n".join([block, heading] + [line for line in labels if line]) if heading else block
+    if count(whole) <= chunk_size:
+        return [whole]
     preamble = "\n".join(caption + rows[:n_header])
-    budget = max(chunk_size - count(preamble), 1)
+    budget = max(chunk_size - count(preamble) - (count(heading) + 1 if heading else 0), 1)
+
+    def cost(i: int) -> int:
+        return count(body_lines[i]) + 1 + (count(labels[i]) + 1 if labels[i] else 0)
+
+    units = table_rows.row_groups(body) if heading else [[i] for i in range(len(body_lines))]
     pieces: List[str] = []
-    group: List[str] = []
-    used = 0
-    for row in rows[n_header:]:
-        size = count(row) + 1
-        if group and used + size > budget:
-            pieces.append("\n".join([preamble] + group))
-            group, used = [], 0
-        group.append(row)
-        used += size
-    if group:
-        pieces.append("\n".join([preamble] + group))
+    for piece in _pack(units, cost, budget):
+        named = [labels[i] for i in piece if labels[i]]
+        pieces.append("\n".join([preamble] + [body_lines[i] for i in piece] + ([heading] + named if named else [])))
     return pieces
 
 
@@ -322,3 +385,13 @@ class TableAwareSplitter(TextSplitter):
 
     def split_text(self, text: str) -> List[str]:
         return split_text(text, self.chunk_size, self.chunk_overlap, self._count)
+
+    def _parse_nodes(self, nodes: Sequence[Any], show_progress: bool = False, **kwargs: Any) -> List[Any]:
+        """Tag chunks holding a table `kind="table"` (DAR-652 chunk contract), kept out of the embedded text."""
+        parsed = super()._parse_nodes(nodes, show_progress=show_progress, **kwargs)
+        for node in parsed:
+            if any(is_table_line(line) for line in node.get_content().split("\n")):
+                node.metadata = {**node.metadata, "kind": "table"}
+                node.excluded_embed_metadata_keys = [*node.excluded_embed_metadata_keys, "kind"]
+                node.excluded_llm_metadata_keys = [*node.excluded_llm_metadata_keys, "kind"]
+        return parsed

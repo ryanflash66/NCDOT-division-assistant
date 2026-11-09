@@ -15,8 +15,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "hosted"))
 from divrag import answer as answer_module  # noqa: E402
 from divrag import llm as llm_module  # noqa: E402
 from divrag.answer import (  # noqa: E402
-    HISTORY_ANSWER_CHARS, HISTORY_QUESTION_CHARS, HISTORY_TURNS, NOT_FOUND, SUGGEST_CANDIDATES, Answerer, LiveSteps,
-    _VisibleText, attach_sources, build_messages, cited_numbers, live_step_labels, refusal_text,
+    CITE_RULE, HISTORY_ANSWER_CHARS, HISTORY_QUESTION_CHARS, HISTORY_TURNS, NOT_FOUND, SUGGEST_CANDIDATES, Answerer,
+    LiveSteps, _VisibleText, attach_sources, build_messages, cited_numbers, live_step_labels, number_source,
+    refusal_text, with_marker,
 )
 from divrag.config import load_settings  # noqa: E402
 from divrag.divisions import BY_ID, Division, Document  # noqa: E402
@@ -93,6 +94,106 @@ def test_a_rule_spanning_two_pages_is_cited_with_both():
     )
 
     assert (sources[0].page, sources[0].page_end) == (16, 17)
+
+
+def test_a_cited_table_joined_over_a_page_break_keeps_its_last_page():
+    # DAR-655: the second part is one table merged over pages 33-35 at build time.
+    passage = _merged(
+        ("Barrier types: concrete barrier weighs 3,900 lbs.", 32, "5.4 Types"),
+        ("|Offset (ft)|Max deflection (ft)|\n|---|---|\n|14|27.42|\n|20|31.10|", 33, "5.4.2 Deflection"),
+    )
+    passage["parts"][1]["page_end"] = 35
+    passage["page_end"] = 35
+
+    _, sources = attach_sources("At an offset of 20 ft the max deflection is 31.10 ft [1].", [Hit(1.0, passage)])
+
+    assert (sources[0].page, sources[0].page_end) == (33, 35)
+
+
+def test_a_table_joined_over_a_page_break_cites_its_last_printed_page():
+    # DAR-654 + DAR-655: one chunk spans PDF pages 37-38, printed 13-14.
+    table = dict(_printed(37, "13", "|Offset (ft)|Max deflection (ft)|\n|---|---|\n|14|27.42|"), page_end=38,
+                 printed_page_end="14")
+
+    _, [source] = attach_sources("At 14 ft it is 27.42 ft [1].", [Hit(1.0, table)])
+
+    assert (source.page, source.page_end, source.printed_page, source.printed_page_end) == (37, 38, "13", "14")
+
+
+def _printed(page, printed_page, text="text", section="2.4"):
+    """A chunk whose page prints another number than its PDF index (the TMP manual's p.13 is PDF page 37)."""
+    return {"text": text, "source": TMP, "page": page, "section": section, "division": "wztc", "printed_page": printed_page}
+
+
+def test_a_source_carries_the_printed_page_and_the_pdf_page_stays_the_link():
+    _, sources = attach_sources("Deflection is 3 feet [1].", [Hit(1.0, _printed(37, "13"))])
+
+    (source,) = sources
+    assert (source.page, source.printed_page, source.printed_page_end) == (37, "13", None)
+    assert source.url.endswith("#page=37")
+    assert source.as_dict()["printed_page"] == "13" and source.as_dict()["printed_page_end"] is None
+
+
+def test_chunks_without_a_printed_page_are_cited_exactly_as_before():
+    hits = [_hit(126, section="3.6.4.1 Lane and Road Closures")]
+
+    _, sources = attach_sources("Within 5 feet [1].", hits)
+    _, user = build_messages("Q?", BY_ID["wztc"], BY_ID["utilities"], hits)
+
+    assert sources[0].as_dict()["printed_page"] is None and sources[0].as_dict()["printed_page_end"] is None
+    assert ", PDF page 126, section 3.6.4.1 Lane and Road Closures)" in user["content"]
+    assert "printed_page_end" not in answer_module.narrow(_merged(("a", 16, "2.4"), ("b", 17, "2.4")), "a b")
+
+
+def test_the_locator_puts_the_printed_page_before_the_pdf_page_when_they_differ():
+    same = dict(_printed(5, "5"))
+    span = dict(_printed(37, "13"), page_end=38, parts=[_printed(37, "13"), _printed(38, "14")])
+    hits = [Hit(1.0, _printed(37, "13")), Hit(1.0, same), Hit(1.0, span)]
+
+    _, user = build_messages("Q?", BY_ID["utilities"], BY_ID["wztc"], hits)
+
+    assert ", p.13 (PDF page 37), section 2.4)" in user["content"]
+    assert ", PDF page 5, section 2.4)" in user["content"]  # the same number: unchanged
+    assert ", pp.13–14 (PDF pages 37–38), section 2.4)" in user["content"]
+    # The model is told to write pages the same way, and the history rule comes after that rule.
+    system, _ = build_messages("Q?", BY_ID["utilities"], BY_ID["wztc"], hits, [{"question": "Q", "answer": "A"}])
+    assert '8. When you mention a page, write it exactly as the passage\'s heading does, for example "p.13 (PDF page 37)"' in system["content"]
+    assert "9. The earlier conversation" in system["content"]
+    # Without a printed page that differs, neither the rule nor the number appears.
+    system, _ = build_messages("Q?", BY_ID["utilities"], BY_ID["wztc"], [Hit(1.0, same)])
+    assert "When you mention a page" not in system["content"] and "\n8. " not in system["content"]
+
+
+def test_a_merged_passage_cites_the_printed_pages_of_the_parts_the_answer_drew_on():
+    parts = [_printed(36, "12", "Barrier types: concrete barrier weighs 3,900 lbs."),
+             _printed(37, "13", "The NC-PCB is 10 ft long, 24 in wide at the base and 32 in high."),
+             _printed(38, "14", "Water-filled barrier is for 45 mph or less; it needs 6 feet of deflection room.")]
+    passage = dict(parts[0], text="\n\n".join(p["text"] for p in parts), page_end=38, parts=parts)
+
+    _, [one] = attach_sources("The NC-PCB is 10 ft long and 32 in high [1].", [Hit(1.0, passage)])
+    _, [two] = attach_sources("The NC-PCB is 10 ft long, 24 in wide and 32 in high; water-filled barrier is for 45 mph "
+                              "or less [1].", [Hit(1.0, passage)])
+    _, [whole] = attach_sources("Nothing matches [1].", [Hit(1.0, passage)])  # no part stands out: the whole run
+
+    assert (one.page, one.page_end, one.printed_page, one.printed_page_end) == (37, None, "13", None)
+    assert (two.page, two.page_end, two.printed_page, two.printed_page_end) == (37, 38, "13", "14")
+    assert (whole.page, whole.page_end, whole.printed_page, whole.printed_page_end) == (36, 38, "12", "14")
+
+
+def test_a_run_of_pages_ending_on_an_unnumbered_page_shows_no_printed_page():
+    """One printed number for PDF pages 36-38 would claim the unnumbered plate on 38 is printed page 12."""
+    parts = [_printed(36, "12", "Barrier types: concrete barrier weighs 3,900 lbs."),
+             _printed(38, None, "Water-filled barrier is for 45 mph or less; it needs 6 feet of deflection room.")]
+    passage = dict(parts[0], text="\n\n".join(p["text"] for p in parts), page_end=38, parts=parts)
+
+    _, [whole] = attach_sources("Nothing matches [1].", [Hit(1.0, passage)])
+    _, [both] = attach_sources("Concrete barrier weighs 3,900 lbs; water-filled barrier is for 45 mph or less [1].",
+                               [Hit(1.0, passage)])
+    _, user = build_messages("Q?", BY_ID["utilities"], BY_ID["wztc"], [Hit(1.0, passage)])
+
+    assert (whole.page, whole.page_end, whole.printed_page, whole.printed_page_end) == (36, 38, None, None)
+    assert (both.page, both.page_end, both.printed_page, both.printed_page_end) == (36, 38, None, None)
+    assert ", PDF pages 36–38, section 2.4)" in user["content"]
 
 
 def test_cited_numbers_handles_ranges_and_lists():
@@ -413,13 +514,67 @@ def test_a_follow_up_is_retrieved_answered_retried_and_suggested_with_its_histor
     assert retriever.questions[1:] == [f"{BRIDGE} {FOLLOW_UP}"] * 2  # the other divisions are checked on the same topic
 
 
-def test_an_uncited_answer_is_kept_not_retried():
-    # Only a "not found" is retried (DAR-629); before, an uncited answer counted as one.
+def test_an_uncited_answer_is_not_retried_but_asked_again_for_its_citation():
+    # Only a "not found" is retried with the next model (DAR-629). An uncited answer is
+    # asked once more, by the model that wrote it, to cite its passage.
     result, llm = _ask_with_retry(["The rate is three feet.", "Three feet [1]."], score=3.5, seconds_left=40)
 
-    assert not result.refused and not result.retried and result.uncited
-    assert result.answer == "The rate is three feet."
-    assert len(llm.calls) == 1
+    assert not result.refused and not result.retried and not result.uncited
+    assert result.answer == "Three feet [1]." and result.citation_fix == "asked_again"
+    assert len(llm.calls) == 2 and llm.models_used[1][0] == "test/model:free"
+    assert llm.calls[1][-2] == {"role": "assistant", "content": "The rate is three feet."}
+    assert llm.calls[1][-1]["content"] == CITE_RULE.format(not_found=NOT_FOUND)
+
+
+def test_an_uncited_answer_still_uncited_when_asked_again_is_kept_as_it_was():
+    result, llm = _ask_with_retry(["The rate is three feet.", "It is three feet."], score=3.5, seconds_left=40)
+
+    assert result.uncited and result.answer == "The rate is three feet." and result.citation_fix is None
+    assert len(llm.calls) == 2
+
+
+def test_a_refusal_after_asking_for_the_citation_does_not_replace_the_answer():
+    result, _ = _ask_with_retry(["The rate is three feet.", NOT_FOUND], score=3.5, seconds_left=40)
+    assert not result.refused and result.uncited and result.answer == "The rate is three feet."
+
+
+def test_an_answer_asked_again_that_changes_the_number_does_not_replace_the_first():
+    result, llm = _ask_with_retry(["The width is 5 ft.", "The width is 6 ft [1]."], score=3.5, seconds_left=40)
+    assert result.uncited and result.answer == "The width is 5 ft." and result.citation_fix is None
+    assert llm.calls[1][-1]["content"] == CITE_RULE.format(not_found=NOT_FOUND)
+
+
+def test_an_uncited_answer_is_not_asked_again_without_time_left():
+    result, llm = _ask_with_retry(["The rate is three feet.", "Three feet [1]."], score=3.5, seconds_left=5)
+    assert result.uncited and len(llm.calls) == 1
+
+
+def test_an_uncited_answer_is_cited_to_the_one_passage_holding_its_number():
+    hits = [_hit(10, "Lanes are 12 ft wide."), _hit(11, "A closure needs a 5 ft buffer."), _hit(12, "No numbers.")]
+    assert number_source("The buffer is 5 feet.", hits, "How wide is the buffer?") == 2
+    assert with_marker("The buffer is 5 feet.", 2) == "The buffer is 5 feet [2]."
+    assert with_marker("5 feet", 2) == "5 feet [2]"
+
+
+def test_no_passage_is_picked_when_the_number_is_in_several_or_none_or_only_in_the_question():
+    hits = [_hit(10, "Use a 5 ft buffer."), _hit(11, "Keep 5 ft clear."), _hit(12, "A 12 ft lane.")]
+    assert number_source("5 feet", hits, "q") is None  # in two passages: the first-ranked was often the wrong page
+    assert number_source("30 feet", hits, "q") is None
+    assert number_source("12 feet", hits, "Is the lane 12 feet wide?") is None  # the visitor's own number
+    assert number_source("Close the lane.", hits, "q") is None
+
+
+def test_an_answer_still_uncited_after_asking_again_is_cited_by_its_number():
+    retriever = _FakeRetriever({"wztc": -9.0, "utilities": 3.5})
+    retriever.retrieve = lambda *a, **k: [_hit(10, "Lanes are 12 ft wide."), _hit(11, "Use a 5 ft buffer.")]
+    llm = _FakeLLM(["The buffer is 5 feet.", "It is 5 feet."])
+    hits = retriever.retrieve("q", "utilities")
+    result = asyncio.run(Answerer(retriever, llm).answer("How wide is the buffer?", BY_ID["utilities"],
+                                                         BY_ID["utilities"], hits, time.monotonic() + 40))
+
+    assert not result.uncited and result.citation_fix == "number_match"
+    assert result.answer == "The buffer is 5 feet [1]." and [s.page for s in result.sources] == [11]
+    assert result.unverified == [] and result.as_dict()["citation_fix"] == "number_match"
 
 
 def test_an_uncited_answer_from_the_retry_does_not_replace_the_refusal():
@@ -919,6 +1074,14 @@ def test_a_streamed_retry_clears_the_text_and_streams_the_next_model():
 
 
 def test_a_streamed_uncited_answer_is_kept_and_flagged():
-    result, events, llm = _stream_answer("The rate is three feet.", score=3.5)
+    result, events, llm = _stream_answer("The rate is three feet.", score=3.5, seconds_left=5)
     assert result.uncited and not result.refused and not result.retried and len(llm.calls) == 1
     assert "".join(data["text"] for _, data in events) == "The rate is three feet."
+
+
+def test_a_streamed_uncited_answer_asked_again_clears_the_text_and_streams_the_cited_one():
+    result, events, llm = _stream_answer(["The rate is three feet.", "Three feet [1]."], score=3.5)
+    replace = events.index(("replace", {"text": ""}))
+    assert "".join(data["text"] for _, data in events[:replace]) == "The rate is three feet."
+    assert "".join(data["text"] for _, data in events[replace + 1:]) == "Three feet."
+    assert result.answer == "Three feet [1]." and result.citation_fix == "asked_again" and len(llm.calls) == 2

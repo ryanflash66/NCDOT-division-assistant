@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd web && npm ci && npm run build && cd .. && python3 scripts/fetch_models.py",
+  "buildCommand": "bash scripts/build.sh",
   "redirects": [
     { "source": "/new", "destination": "/", "permanent": false },
     { "source": "/new/(.*)", "destination": "/", "permanent": false }
@@ -8,7 +8,8 @@
   "functions": {
     "index.py": {
       "maxDuration": 60,
-      "includeFiles": "public/**"
+      "includeFiles": "public/**",
+      "excludeFiles": "{public/pages/**,documents/**}"
     }
   },
   "headers": [
@@ -22,7 +23,7 @@
         { "key": "Content-Security-Policy", "value": "frame-ancestors 'none'; object-src 'none'; base-uri 'self'" },
         {
           "key": "Content-Security-Policy-Report-Only",
-          "value": "default-src 'self'; script-src 'self' 'sha256-cOaeFLT56JKInNvjXJB88nf3NRUOLTmmbO6QyqIyqsI='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+          "value": "default-src 'self'; script-src 'self' 'sha256-5Wm0e8fR/Pa7OhOEWp6KVIiQsrxFv1e+x3U++Z1V4lE='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
         }
       ]
     }

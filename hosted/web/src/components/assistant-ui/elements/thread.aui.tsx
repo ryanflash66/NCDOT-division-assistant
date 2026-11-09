@@ -1,6 +1,7 @@
 "use client";
 
 import { AnswerFooter, AnswerText } from "@/components/assistant-ui/elements/answer";
+import { useDivisionMention } from "@/components/assistant-ui/elements/division-mention";
 import { ThreadFollowupSuggestions } from "@/components/assistant-ui/elements/follow-up-suggestions.aui";
 import { StepsPart } from "@/components/assistant-ui/elements/steps";
 import { TooltipIconButton } from "@/components/assistant-ui/elements/tooltip-icon-button";
@@ -32,7 +33,7 @@ import {
   RefreshCwIcon,
   SquareIcon,
 } from "lucide-react";
-import { type ComponentType, createContext, type FC, useContext } from "react";
+import { type ComponentType, createContext, type FC, useContext, useRef } from "react";
 
 /**
  * Optional component overrides for the thread. `AssistantMessage` and `Welcome`
@@ -205,6 +206,8 @@ const ComposerFooter: FC = () => {
     if (aui.thread().getState().isRunning) return;
     aui.thread().reset();
     useApp.getState().showAnswer(null);
+    // The New chat button goes away with the messages; the focus goes to the composer, not the page.
+    document.querySelector<HTMLTextAreaElement>(".aui-composer-input")?.focus();
   };
   return (
     <div className="flex flex-col gap-2 px-1 text-xs">
@@ -233,14 +236,20 @@ const ComposerFooter: FC = () => {
 const Composer: FC<{ autoFocus: boolean }> = ({ autoFocus }) => {
   const maxChars = useApp((s) => s.maxChars);
   const target = useApp((s) => s.divisions.find((d) => d.id === s.target));
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const mention = useDivisionMention(inputRef);
   return (
     <ComposerPrimitive.Root className="aui-composer-root relative flex w-full flex-col">
+      {mention.list}
       <div
         data-slot="aui_composer-shell"
-        className="border-foreground/10 focus-within:border-foreground/25 flex w-full cursor-text flex-col gap-2 rounded-(--composer-radius) border bg-(--composer-bg) p-(--composer-padding) transition-[border-color]"
+        className="border-foreground/10 focus-within:border-foreground/25 flex w-full cursor-text flex-col gap-2 rounded-(--composer-radius) border bg-(--composer-bg) p-(--composer-padding) transition-[border-color] motion-reduce:transition-none"
       >
+        <div className="flex min-w-0 px-1 pt-0.5">{mention.chip}</div>
         <ComposerPrimitive.Input
-          placeholder={target ? `Ask the ${target.name} manuals a question…` : "Ask a question…"}
+          ref={inputRef}
+          {...mention.inputProps}
+          placeholder={target ? `Ask the ${target.name} manuals, or type @ to ask another division…` : "Ask a question…"}
           className="aui-composer-input caret-primary placeholder:text-muted-foreground/60 max-h-48 min-h-10 w-full resize-none bg-transparent px-2.5 py-1 text-base leading-6 outline-none"
           rows={1}
           maxLength={maxChars}

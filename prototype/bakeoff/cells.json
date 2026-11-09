@@ -1,0 +1,215 @@
+{
+ "description": "DAR-656 bake-off: hand-checked cells. A cell is read right when one output row (a table row, or a text line, or two consecutive rows for a value under a row-spanned label) holds both `row_label` and `value` as whole tokens after prototype.bakeoff.measure.normalize; with no row_label, `value` must appear verbatim on the page. Text-layer cells were checked against the PDF's own text and row order; scan cells come from the DAR-651 answers, which were checked against the page images.",
+ "cells": [
+  {
+   "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+   "value": "Offset (ft)",
+   "row_label": null,
+   "why": "rotated header that pymupdf4llm scrambled into 'ft)', 'et (', 'ffs', 'O' (DAR-652)",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+   "value": "Maximum Deflection (in)",
+   "row_label": null,
+   "why": "spanned header with the unit",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+   "value": "27.42",
+   "row_label": "14",
+   "why": "offset 14 ft, 40 mph; the offset spans two rows",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/TMP Design Manual (Combined, No Links).pdf#37",
+   "value": "44.53",
+   "row_label": "44",
+   "why": "DAR-651 wztc-pcb-asphalt (offset 44 ft, 70 mph)",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+   "value": "Offset (ft)",
+   "row_label": null,
+   "why": "near-duplicate of p.37 (concrete)",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/TMP Design Manual (Combined, No Links).pdf#38",
+   "value": "25.37",
+   "row_label": "20",
+   "why": "DAR-651 wztc-pcb-concrete (offset 20 ft, 60 mph)",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/TMP Design Manual (Combined, No Links).pdf#35",
+   "value": "12 ft. 10 in.",
+   "row_label": "Maximum Deflection",
+   "why": "barrier chart with vertical column headers; mixed units",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "tmsd/09. At Grade Intersections.pdf#21",
+   "value": "6.0",
+   "row_label": "SU-40",
+   "why": "DAR-651 tmsd-turn-radius (120 degrees, SU-40 offset)",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "tmsd/09. At Grade Intersections.pdf#21",
+   "value": "100",
+   "row_label": "WB-62",
+   "why": "row label repeats under three angles; 100 only under 120 degrees",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "tmsd/09. At Grade Intersections.pdf#21",
+   "value": "9.2",
+   "row_label": "WB-109D",
+   "why": "last row of the first angle block",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "tmsd/TODS Manual - September 2024.pdf#24",
+   "value": "067",
+   "row_label": "Onslow",
+   "why": "DAR-651 tmsd-tods-county; two counties per printed row",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "tmsd/TODS Manual - September 2024.pdf#24",
+   "value": "060",
+   "row_label": "Mecklenburg",
+   "why": "right-hand county column",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/part6.pdf#39",
+   "value": "60 x 30",
+   "row_label": "Large Arrow",
+   "why": "Table 6H-1, freeway column; non-breaking hyphens in the sign codes",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/part6.pdf#39",
+   "value": "18 x 24",
+   "row_label": "Chevron Alignment",
+   "why": "Table 6H-1, conventional road column",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "tmsd/04100.pdf#64",
+   "value": "(Number of Travel Lanes and Median Type)",
+   "row_label": null,
+   "why": "whole table printed sideways (rotated 90 degrees)",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "tmsd/04100.pdf#64",
+   "value": "Recommendations for installing marked crosswalks",
+   "row_label": null,
+   "why": "caption of the sideways Table 11",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+   "value": "AGGREGATE GRADATION - COARSE AGGREGATE",
+   "row_label": null,
+   "why": "caption of the sideways Table 1005-1",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/2024 Standard Specifications for Roads and Structures.pdf#444",
+   "value": "Percentage of Total by Weight Passing",
+   "row_label": null,
+   "why": "spanned header of the sideways table",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/Division 11 Combined.pdf#4",
+   "value": "GENERAL NOTES FOR PILOT CAR OPERATIONS",
+   "row_label": null,
+   "why": "standard drawing sheet, landscape text on a portrait page",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/fhwahop14008.pdf#11",
+   "value": "Real-time Traveler Information",
+   "row_label": null,
+   "why": "sideways table, first body cell wrapped over three lines",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "tmsd/C34 - Manual 2012.pdf#51",
+   "value": "Enter P.V.A.",
+   "row_label": "E",
+   "why": "near-duplicate of p.50: only this row differs",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "tmsd/C34 - Manual 2012.pdf#50",
+   "value": "Enter P.P.",
+   "row_label": "E",
+   "why": "near-duplicate of p.51",
+   "checked": "text layer (digital page: the value is the PDF's own text)"
+  },
+  {
+   "id": "wztc/Chapter_2.pdf#40",
+   "value": "20,000",
+   "row_label": null,
+   "why": "DAR-651 wztc-tma-weight (scan)",
+   "checked": "DAR-651 answer, checked against the page image (no text layer)"
+  },
+  {
+   "id": "wztc/Chapter_5.pdf#4",
+   "value": "W8-11",
+   "row_label": null,
+   "why": "DAR-651 wztc-uneven-lanes (scan)",
+   "checked": "DAR-651 answer, checked against the page image (no text layer)"
+  },
+  {
+   "id": "wztc/Chapter_5.pdf#4",
+   "value": "2 inches",
+   "row_label": null,
+   "why": "DAR-651 wztc-uneven-lanes (scan)",
+   "checked": "DAR-651 answer, checked against the page image (no text layer)"
+  },
+  {
+   "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#300",
+   "value": "removed by hand to a depth of 2",
+   "row_label": null,
+   "why": "DAR-651 utilities-fracout-depth (scan)",
+   "checked": "DAR-651 answer, checked against the page image (no text layer)"
+  },
+  {
+   "id": "utilities/010604.pdf#230",
+   "value": "2,600",
+   "row_label": "C",
+   "why": "DAR-651 utilities-sign-spacing: scanned table, expressway column",
+   "checked": "DAR-651 answer, checked against the page image (no text layer)"
+  },
+  {
+   "id": "utilities/010604.pdf#230",
+   "value": "1,600",
+   "row_label": "B",
+   "why": "DAR-651 utilities-sign-spacing",
+   "checked": "DAR-651 answer, checked against the page image (no text layer)"
+  },
+  {
+   "id": "utilities/010604.pdf#228",
+   "value": "flashing or revolving yellow light",
+   "row_label": null,
+   "why": "DAR-651 utilities-15ft-light (scan)",
+   "checked": "DAR-651 answer, checked against the page image (no text layer)"
+  },
+  {
+   "id": "utilities/20220713 NCDOT UAM Ver 2-0.pdf#244",
+   "value": "January 25, 1999",
+   "row_label": null,
+   "why": "DAR-651 utilities-effluent-moa (scan)",
+   "checked": "DAR-651 answer, checked against the page image (no text layer)"
+  }
+ ]
+}
