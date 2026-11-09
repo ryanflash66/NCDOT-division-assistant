@@ -139,13 +139,13 @@ def test_classification_ignores_location_of_data_dir(tmp_path, hash_embed):
         "CHROMA_COLLECTION": "loc_col",
     })
     cfg.data_dir.mkdir(parents=True)
-    (cfg.data_dir / "K-Maps Lecture Notes page.md").write_text("# K-maps\nKarnaugh maps.", encoding="utf-8")
+    (cfg.data_dir / "Meeting Notes page.md").write_text("# Notes\nMeeting minutes.", encoding="utf-8")
 
     index = RetrievalIndex(cfg, hash_embed)
     index.refresh()
-    hit = index.retrieve("karnaugh", k=1)[0]
+    hit = index.retrieve("minutes", k=1)[0]
 
-    assert hit.source == "K-Maps Lecture Notes page.md"
+    assert hit.source == "Meeting Notes page.md"
     assert hit.metadata["topic"] == "unknown"
     assert hit.metadata["doc_domain"] == "general"
 

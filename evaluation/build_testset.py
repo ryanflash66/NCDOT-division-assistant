@@ -7,8 +7,7 @@ measures the questions the pipeline was checked against rather than new ones:
 
   eval/retrieval_pages.json   70 questions with known PDF pages (`pages`) or a
                               phrase of the answer as it appears in the index (`key`)
-  eval/table_questions.json   13 table questions with pages and accept/reject
-                              strings, plus Q9, which no document answers
+  eval/table_questions.json   13 table questions with pages and accept/reject strings
   hosted/RESULTS-local.md     the hand-checked expected answers for the B, A and
                               X questions, and four not-in-the-documents questions (N1-N4)
 

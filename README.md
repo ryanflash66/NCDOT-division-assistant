@@ -262,7 +262,7 @@ The tests use a real ChromaDB in a temp directory and a deterministic hash embed
 
 ## Evaluating answers
 
-`eval/run_eval.py` asks the questions in [`eval/table_questions.json`](eval/table_questions.json) (values from tables in the TMP Design Manual, plus one question the documents can't answer) and grades the answers. It uses the chat app's own prompt and LLM setup, so the score is what users get.
+`eval/run_eval.py` asks the questions in [`eval/table_questions.json`](eval/table_questions.json) (values from tables in the TMP Design Manual) and grades the answers. It uses the chat app's own prompt and LLM setup, so the score is what users get.
 
 ```bash
 .venv\Scripts\python eval/run_eval.py --provider ollama --model qwen2.5:14b --rebuild
@@ -281,13 +281,13 @@ Each row shows whether the answer passed, whether retrieval found the expected p
 | ❌ | ❌ | **Retrieval miss.** The table's page wasn't among the top-k chunks, so the model never saw it. Improve chunking or retrieval, or try a larger `--top-k`. A bigger model won't help. |
 | ❌ | ✅ | **Reading miss.** The model saw the table but misread it, often by picking the wrong row or column. Improve how tables are extracted, or use a stronger model. |
 
-A case passes when every substring of any one of its `accept` groups appears in the answer and no `reject` group matches. Matching ignores case, extra whitespace, markdown emphasis and dash style, and a trailing `Sources:` list is ignored. The refusal case passes when the answer says the context doesn't cover the question and doesn't invent a policy. Only the answer is graded, not the citations.
+A case passes when every substring of any one of its `accept` groups appears in the answer and no `reject` group matches. Matching ignores case, extra whitespace, markdown emphasis and dash style, and a trailing `Sources:` list is ignored. Only the answer is graded, not the citations.
 
 Answers aren't fully deterministic, and on a shared Ollama the first question includes model load time, so treat a one-question difference between runs as noise.
 
 ### RAG metrics for the hosted demo (`evaluation/`)
 
-`evaluation/` scores the hosted demo's pipeline on the standard RAG metrics: the RAGAS set (faithfulness, answer relevancy, context precision, context recall), a no-LLM cross-check against the PDF pages known to hold each answer, and answer time. It uses 90 questions built from the gold sets above. [`evaluation/METRICS.md`](evaluation/METRICS.md) defines each metric and cites its sources, and [`evaluation/RESULTS.md`](evaluation/RESULTS.md) has the latest results and charts.
+`evaluation/` scores the hosted demo's pipeline on the standard RAG metrics: the RAGAS set (faithfulness, answer relevancy, context precision, context recall), a no-LLM cross-check against the PDF pages known to hold each answer, and answer time. It uses 89 questions built from the gold sets above. [`evaluation/METRICS.md`](evaluation/METRICS.md) defines each metric and cites its sources, and [`evaluation/RESULTS.md`](evaluation/RESULTS.md) has the latest results and charts.
 
 ```bash
 .venv\Scripts\python -m evaluation.build_testset            # rebuild evaluation/testset.json

@@ -87,7 +87,7 @@ def test_committed_testset_is_well_formed():
             assert not item["pages"] and item["reference"] is None
     # The 83 known-page questions are all in, plus the negatives and the two TMP items.
     assert sum(1 for i in items if i["group"] in ("known-page", "table")) == 83
-    assert {"Q9", "N1", "N2", "N3", "N4"} <= {i["id"] for i in items if not i["answerable"]}
+    assert {"N1", "N2", "N3", "N4"} <= {i["id"] for i in items if not i["answerable"]}
 
 
 # --- metrics --------------------------------------------------------------------

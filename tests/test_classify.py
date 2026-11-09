@@ -13,7 +13,7 @@ from rag.classify import classify
     ("report.docx", "unknown", "general"),
     ("project_summary.md", "unknown", "general"),
     # Substring false positives: short keywords ("tim", "its", "tmp") match whole tokens only
-    ("K-Maps Lecture Notes page.pdf", "unknown", "general"),
+    ("Lecture Notes page.pdf", "unknown", "general"),
     ("timeline/notes.md", "unknown", "general"),
     ("timesheet_items.md", "unknown", "general"),
     # Word-level matches

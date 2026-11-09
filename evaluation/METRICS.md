@@ -90,12 +90,12 @@ Each answerable question has the PDF page or pages known to hold its answer. The
 | Source | Questions | Gold pages | Reference answer |
 |---|---|---|---|
 | `eval/retrieval_pages.json` | 70 (B, A, X, T, U) | listed pages, or the pages of the chunks that hold the case's `key` phrase | B, A, X: the hand-checked "Expected" answers in `hosted/RESULTS-local.md`; T, U: the sentence of the manual holding the key phrase |
-| `eval/table_questions.json` | 13 table questions + Q9 (not in the documents) | listed pages | the first sentence of the case's note (the table value) |
+| `eval/table_questions.json` | 13 table questions | listed pages | the first sentence of the case's note (the table value) |
 | `hosted/RESULTS-local.md` | N1-N4 (not in the asked division's documents) | none | none |
 | `ncdot-agentic-ai/evaluation/tmp_manual_test_set_v1.md` | 15 items: 13 are questions already in the set (their origin is added) and 2 are new (TMP9, TMP12) | TMP9 and TMP12: chapter pages mapped to PDF pages and checked against the index text | the expected answer, where no hand-checked one exists |
 | `ncdot-agentic-ai/evaluation/demo_questions_v1.md` | 12, all already in the set | | origin only |
 
-That gives 90 questions: 85 the manuals answer (52 Work Zone, 33 Utilities) and 5 they don't. The reference answers have page and section locators removed ("; UAM 3.6.4.1, PDF p. 126"), because a page number is not a statement a passage can support. Locators left in would lower context recall.
+That gives 89 questions: 85 the manuals answer (52 Work Zone, 33 Utilities) and 4 they don't. The reference answers have page and section locators removed ("; UAM 3.6.4.1, PDF p. 126"), because a page number is not a statement a passage can support. Locators left in would lower context recall.
 
 ## How the run works
 
