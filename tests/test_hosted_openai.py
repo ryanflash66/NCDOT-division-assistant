@@ -72,7 +72,9 @@ def test_openai_is_used_only_when_the_provider_is_selected_on_purpose():
     chosen = load_settings(OPENAI)
     assert chosen.answers_with_openai and chosen.llm_configured
     assert chosen.answer_models == (DEFAULT_OPENAI_MODEL,) + chosen.models
-    assert load_settings({**OPENAI, "OPENAI_MODEL": "gpt-6.1-sol"}).answer_models[0] == "gpt-6.1-sol"
+    # Another model needs its price, so the monthly cap (DAR-715) can count it.
+    sol = load_settings({**OPENAI, "OPENAI_MODEL": "gpt-6.1-sol", "OPENAI_PRICE_PER_MILLION": "2,10"})
+    assert sol.answer_models[0] == "gpt-6.1-sol" and sol.openai_prices == (2.0, 10.0)
 
 
 def test_openrouter_models_must_still_be_free_with_the_openai_provider():

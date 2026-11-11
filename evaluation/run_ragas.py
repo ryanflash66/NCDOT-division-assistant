@@ -5,7 +5,7 @@
     py -m evaluation.run_ragas --stage report           # rescore and redraw from the cache
     py -m evaluation.run_ragas --only B1 A3 --stage all
     py -m evaluation.run_ragas --judge-base-url http://localhost:11434/v1 --judge-models gpt-oss:20b
-    py -m evaluation.run_ragas --judge-base-url https://api.openai.com/v1 --judge-models gpt-4o-mini  # JUDGE_API_KEY
+    py -m evaluation.run_ragas --judge-base-url https://api.openai.com/v1 --judge-models gpt-6.1-terra  # JUDGE_API_KEY
 
 For each question in evaluation/testset.json:
 
@@ -33,6 +33,16 @@ read from .env like the app); --answer-base-url points the same Answerer at
 another OpenAI-compatible endpoint (for example a local Ollama model when no
 OpenRouter key is available). The judge defaults to a free OpenRouter model
 from another family than the answering model, so the judge isn't grading its own answers.
+
+Calls to OpenAI's API (api.openai.com, as answerer or judge) count against the
+hosted app's monthly OpenAI budget (DAR-715, hosted/divrag/spend.py): before
+the run starts it prints the most the uncached questions could cost and stops
+if that would pass the month's limit (--start-anyway runs until the limit
+stops it), and every call is added to the month's total. With the app's
+KV_REST_API_URL and KV_REST_API_TOKEN in .env (vercel env pull) that is the
+same total the site counts; without them only this run's own spend is held
+under the limit. A model other than the app's needs ANSWER_PRICE_PER_MILLION or
+JUDGE_PRICE_PER_MILLION ("input,output" dollars per million tokens).
 """
 
 import argparse
@@ -67,6 +77,12 @@ DEFAULT_JUDGE_MODELS = ("google/gemma-4-31b-it:free", "dots-studio/dots-3-note-p
 BUSY_WAITS = (20, 40, 80)
 # hosted/index.py's minimum: the answer call always gets this long.
 MIN_ANSWER_SECONDS = 5.0
+# The most one question can cost on OpenAI, for the estimate before a run (DAR-715): an answer is
+# about 5,000 tokens in and 300 out per call and takes up to 3 calls (answer, citation and number
+# rechecks; config.DEFAULT_OPENAI_MODEL); a verdict reads the passages, answer and reference
+# (about 6,000 tokens) and writes up to about 1,500, with one more try when its JSON is unreadable.
+ANSWER_CALL_TOKENS, ANSWER_CALLS = (5000, 300), 3
+JUDGE_CALL_TOKENS, JUDGE_CALLS = (6000, 1500), 2
 
 
 def find_env_file() -> Optional[Path]:
@@ -203,8 +219,9 @@ class Pipeline:
 
 
 async def _with_busy_waits(call, label: str):
-    """`await call()`, waiting out per-minute rate limits; DAILY_LIMIT and a bad key stop the run."""
+    """`await call()`, waiting out per-minute rate limits; DAILY_LIMIT, the OpenAI monthly limit and a bad key stop the run."""
     from divrag.llm import BUSY, DAILY_LIMIT, MISCONFIGURED, LLMError
+    from divrag.spend import MONTHLY_LIMIT
 
     for attempt, wait in enumerate((*BUSY_WAITS, None)):
         try:
@@ -214,6 +231,8 @@ async def _with_busy_waits(call, label: str):
                 raise Stop(f"{label}: daily free-model limit reached ({exc})") from exc
             if exc.user_message == MISCONFIGURED:
                 raise Stop(f"{label}: the API key was refused ({exc})") from exc
+            if exc.user_message == MONTHLY_LIMIT:
+                raise Stop(f"{label}: the month's OpenAI spending limit is reached ({exc})") from exc
             if exc.user_message == BUSY and wait is not None:
                 print(f"  {label}: rate limited, waiting {wait}s", flush=True)
                 await asyncio.sleep(wait)
@@ -524,7 +543,22 @@ def _models(value: Optional[str]) -> Optional[List[str]]:
     return [part.strip() for part in value.split(",") if part.strip()] if value else None
 
 
-def _answer_client(args, settings) -> Tuple[Any, str]:
+def _openai_prices(base: str, models: Sequence[str], setting: str) -> Dict[str, Tuple[float, float]]:
+    """Each OpenAI model's (input, output) dollars per million tokens; none off OpenAI. An unknown price stops the run."""
+    from divrag.spend import price_for
+    from evaluation.judge import is_openai
+
+    if not is_openai(base):
+        return {}
+    prices = {m: price_for(m, os.environ, setting) for m in models}
+    unpriced = [m for m, p in prices.items() if p is None]
+    if unpriced:
+        raise SystemExit(f"no known OpenAI price for {', '.join(unpriced)}: set {setting} to input,output dollars "
+                         "per million tokens, so the run counts against the monthly budget")
+    return prices
+
+
+def _answer_client(args, settings, ledger=None) -> Tuple[Any, str]:
     """The answering client and its cache label: the hosted app's OpenRouterClient, or ChatClient elsewhere."""
     from divrag.llm import OpenRouterClient
     from evaluation.judge import ChatClient, is_openrouter
@@ -537,19 +571,24 @@ def _answer_client(args, settings) -> Tuple[Any, str]:
     if not models:
         raise SystemExit("--answer-models is required with --answer-base-url")
     key = os.environ.get("ANSWER_API_KEY", "none")
-    return ChatClient(base, key, models, temperature=settings.temperature), config_label(base, models)
+    prices = _openai_prices(base, models, "ANSWER_PRICE_PER_MILLION")
+    client = ChatClient(base, key, models, temperature=settings.temperature, ledger=ledger if prices else None,
+                        prices=prices)
+    return client, config_label(base, models)
 
 
-def _judge_client(base: str, models: Sequence[str], reasoning: Optional[str]) -> Tuple[Any, str]:
+def _judge_client(base: str, models: Sequence[str], reasoning: Optional[str], ledger=None) -> Tuple[Any, str]:
     from evaluation.judge import JUDGE_MAX_TOKENS, ChatClient, is_openrouter
 
     # OpenRouter takes the app's key; JUDGE_API_KEY is for any other endpoint (OpenAI), and is never sent to OpenRouter.
     key = (os.environ.get("OPENROUTER_API_KEY") if is_openrouter(base) else os.environ.get("JUDGE_API_KEY")) or "none"
-    client = ChatClient(base, key, models, temperature=0.0, max_tokens=JUDGE_MAX_TOKENS, json_mode=True, reasoning=reasoning)
+    prices = _openai_prices(base, models, "JUDGE_PRICE_PER_MILLION")
+    client = ChatClient(base, key, models, temperature=0.0, max_tokens=JUDGE_MAX_TOKENS, json_mode=True, reasoning=reasoning,
+                        ledger=ledger if prices else None, prices=prices)
     return client, config_label(base, models)
 
 
-def _judges(args) -> List[Tuple[Any, str]]:
+def _judges(args, ledger=None) -> List[Tuple[Any, str]]:
     """The judge, then the fallback judge if one is set: it scores what the first couldn't.
 
     The fallback is for a free judge that hits its daily cap or keeps failing on
@@ -559,12 +598,62 @@ def _judges(args) -> List[Tuple[Any, str]]:
     env = os.environ.get
     judges = [_judge_client(args.judge_base_url or env("JUDGE_BASE_URL") or OPENROUTER_URL,
                             _models(args.judge_models) or _models(env("JUDGE_MODELS")) or list(DEFAULT_JUDGE_MODELS),
-                            args.judge_reasoning or env("JUDGE_REASONING") or None)]
+                            args.judge_reasoning or env("JUDGE_REASONING") or None, ledger)]
     fallback_models = _models(args.fallback_judge_models) or _models(env("FALLBACK_JUDGE_MODELS"))
     if fallback_models:
         judges.append(_judge_client(args.fallback_judge_base_url or env("FALLBACK_JUDGE_BASE_URL") or OPENROUTER_URL,
-                                    fallback_models, args.fallback_judge_reasoning or env("FALLBACK_JUDGE_REASONING") or None))
+                                    fallback_models, args.fallback_judge_reasoning or env("FALLBACK_JUDGE_REASONING") or None,
+                                    ledger))
     return judges
+
+
+def openai_estimate_usd(answer_prices: Optional[Tuple[float, float]], answers: int,
+                        judge_prices: Optional[Tuple[float, float]], verdicts: int) -> float:
+    """The most `answers` new answers and `verdicts` new verdicts can cost on OpenAI (prices None: not on OpenAI)."""
+    from divrag.spend import cost_usd
+
+    total = 0.0
+    if answer_prices:
+        total += answers * ANSWER_CALLS * cost_usd(answer_prices, *ANSWER_CALL_TOKENS)
+    if judge_prices:
+        total += verdicts * JUDGE_CALLS * cost_usd(judge_prices, *JUDGE_CALL_TOKENS)
+    return total
+
+
+def _priciest(client) -> Optional[Tuple[float, float]]:
+    """The highest (input, output) price of a client that counts its OpenAI spend, or None."""
+    if getattr(client, "ledger", None) is None or not client.prices:
+        return None
+    return max(client.prices.values(), key=lambda p: p[0] + p[1])
+
+
+async def check_openai_budget(ledger, llm, answer_config: str, judges: Sequence[Tuple[Any, str]],
+                              items: Sequence[Dict[str, Any]], cache: Cache, args) -> float:
+    """Print the most this run can spend on OpenAI and the month's total so far; stop if it would pass the limit.
+
+    Returns the estimate (0 when nothing goes to OpenAI).
+    """
+    estimate = 0.0
+    if args.stage in ("answer", "all"):
+        todo = [i for i in items if cache.answer(i["id"], answer_config) is None]
+        estimate += openai_estimate_usd(_priciest(llm), len(todo), None, 0)
+    if args.stage in ("judge", "all"):
+        for judge, judge_config in judges:
+            # Every question without this judge's verdict, at most: some won't be answered or need none.
+            unjudged = [i for i in items if find_verdict(cache, i, answer_config, cache.answer(i["id"], answer_config),
+                                                         [judge_config]) is None]
+            estimate += openai_estimate_usd(None, 0, _priciest(judge), len(unjudged))
+    if not estimate:
+        return 0.0
+    spent = await ledger.total_usd()
+    room = ledger.limit_usd - spent
+    shared = "shared with the site" if ledger.store.shared else "this run only: no KV_REST_API_URL in .env"
+    print(f"OpenAI: this run costs at most ${estimate:.2f}; {ledger.month()} so far ${spent:.2f} of the "
+          f"${ledger.limit_usd:.2f} limit (budget ${ledger.budget_usd:.2f}; {shared})", flush=True)
+    if estimate > room and not args.start_anyway:
+        raise SystemExit(f"the estimate passes the ${max(room, 0):.2f} left this month: use --limit or --max-requests, "
+                         "or --start-anyway to run until the limit stops it")
+    return estimate
 
 
 async def warm_up(client, label: str) -> None:
@@ -610,9 +699,14 @@ async def run(args) -> int:
     print(f"retrieval: gold page in the top {settings.top_k} for {int(sum(hits))}/{len(hits)} questions", flush=True)
 
     cache = Cache(Path(args.cache))
-    llm, answer_config = _answer_client(args, settings)
-    judges = _judges(args)
+    from divrag.spend import SpendLedger, store_from_env
+
+    # The hosted app's monthly OpenAI total and limit (DAR-715): evaluation calls on OpenAI count against it too.
+    ledger = SpendLedger(settings.openai_monthly_budget_usd, settings.openai_budget_margin_usd, store_from_env(os.environ))
+    llm, answer_config = _answer_client(args, settings, ledger)
+    judges = _judges(args, ledger)
     judge_configs = [label for _, label in judges]
+    await check_openai_budget(ledger, llm, answer_config, judges, items, cache, args)
     stopped = None
     if args.stage in ("answer", "all"):
         if not args.answer_base_url and not settings.openrouter_api_key:
@@ -664,6 +758,9 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     parser.add_argument("--budget", type=float, help="seconds per question (default: REQUEST_BUDGET_SECONDS, 55)")
     parser.add_argument("--pause", type=float, default=2.0, help="seconds between model calls, to pace a shared free quota")
     parser.add_argument("--max-requests", type=int, help="stop each stage after this many new questions")
+    parser.add_argument("--start-anyway", action="store_true",
+                        help="start although the OpenAI estimate passes what is left of the month's limit "
+                        "(the limit still stops the run)")
     parser.add_argument("--env-file", help="default: the repo's .env (found above a git worktree too)")
     parser.add_argument("--cache", default=str(DEFAULT_CACHE))
     parser.add_argument("--scores", default=str(DEFAULT_SCORES))
