@@ -8,6 +8,12 @@ LLM_PROVIDER=openai. Everything else has a default suitable for the public demo.
                                 (when OPENROUTER_API_KEY is set) and answer whenever OpenAI can't.
     OPENAI_API_KEY              secret; only used with LLM_PROVIDER=openai
     OPENAI_MODEL                the OpenAI model (default gpt-6.1-terra; see DEFAULT_OPENAI_MODEL)
+    OPENAI_PRICE_PER_MILLION    "input,output" dollars per million tokens of OPENAI_MODEL (default: spend.PRICES_PER_MILLION;
+                                another model needs it, or startup stops)
+    OPENAI_MONTHLY_BUDGET_USD   the month's OpenAI budget (default 50, Dr. Namian's limit; see spend.py)
+    OPENAI_BUDGET_MARGIN_USD    how far under the budget answers switch to the free models (default 5: at $45)
+    KV_REST_API_URL, KV_REST_API_TOKEN   the Upstash Redis store that keeps the month's OpenAI total for every
+                                instance (or UPSTASH_REDIS_REST_URL and _TOKEN; read by spend.store_from_env)
     OPENROUTER_API_KEY          secret; never sent to the browser
     OPENROUTER_MODEL            primary model (must end in ":free")
     OPENROUTER_FALLBACK_MODELS  comma-separated backups, tried in order by OpenRouter (":free" only)
@@ -55,6 +61,7 @@ from pathlib import Path
 from typing import Dict, Mapping, Optional, Tuple
 
 from .keyword import B, DEFAULT_FIELD_BOOST, DEFAULT_ID_BOOST, K1, RRF_K
+from .spend import DEFAULT_BUDGET_USD, DEFAULT_MARGIN_USD, price_for
 from .retrieval import (DEFAULT_MAX_CHUNKS_PER_DOCUMENT, DEFAULT_MAX_CHUNKS_PER_PAGE, DEFAULT_PAGE_AGGREGATION,
                         PAGE_AGGREGATION_MODES)
 
@@ -90,6 +97,9 @@ class Settings:
     llm_provider: str
     openai_api_key: Optional[str]
     openai_model: str
+    openai_prices: Optional[Tuple[float, float]]  # dollars per million tokens in and out; None for an unknown model
+    openai_monthly_budget_usd: float
+    openai_budget_margin_usd: float
     openrouter_api_key: Optional[str]
     models: Tuple[str, ...]
     temperature: float
@@ -132,6 +142,11 @@ class Settings:
         if not self.answers_with_openai:
             return self.models
         return (self.openai_model,) + (self.models if self.openrouter_api_key else ())
+
+    @property
+    def openai_limit_usd(self) -> float:
+        """The month's estimated OpenAI spend at which answers switch to the free models (spend.SpendLedger)."""
+        return self.openai_monthly_budget_usd - self.openai_budget_margin_usd
 
     @property
     def llm_configured(self) -> bool:
@@ -284,10 +299,25 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     if threads and not (threads.isdigit() and int(threads) >= 1):
         raise ValueError(f"ONNX_THREADS must be a whole number of 1 or more, got {threads!r}")
     index_dir = Path(env.get("INDEX_DIR", "").strip() or HOSTED_DIR / "index")
+    openai_model = env.get("OPENAI_MODEL", "").strip() or DEFAULT_OPENAI_MODEL
+    openai_prices = price_for(openai_model, env)
+    if provider == "openai" and openai_prices is None:
+        # Without a price the monthly cap (DAR-715) would count nothing and never stop the paid model.
+        raise ValueError(f"OPENAI_MODEL {openai_model!r} has no known price: set OPENAI_PRICE_PER_MILLION to "
+                         "its input,output dollars per million tokens")
+    budget_usd = _boost(env, "OPENAI_MONTHLY_BUDGET_USD", DEFAULT_BUDGET_USD)
+    margin_usd = _boost(env, "OPENAI_BUDGET_MARGIN_USD", DEFAULT_MARGIN_USD)
+    if budget_usd > 0 and margin_usd >= budget_usd:
+        # A budget of 0 means no OpenAI spending at all; any other budget must leave room under it.
+        raise ValueError(f"OPENAI_BUDGET_MARGIN_USD ({margin_usd}) must be less than OPENAI_MONTHLY_BUDGET_USD "
+                         f"({budget_usd})")
     return Settings(
         llm_provider=provider,
         openai_api_key=env.get("OPENAI_API_KEY", "").strip() or None,
-        openai_model=env.get("OPENAI_MODEL", "").strip() or DEFAULT_OPENAI_MODEL,
+        openai_model=openai_model,
+        openai_prices=openai_prices,
+        openai_monthly_budget_usd=budget_usd,
+        openai_budget_margin_usd=margin_usd,
         openrouter_api_key=env.get("OPENROUTER_API_KEY", "").strip() or None,
         models=models,
         temperature=float(env.get("LLM_TEMPERATURE", "0.1")),

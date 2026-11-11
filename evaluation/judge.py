@@ -20,12 +20,13 @@ request also carries a zero max price, as the hosted app's client does.
 
 import json
 import re
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import httpx
 
 # The hosted client's error mapping, so a 429 means BUSY or DAILY_LIMIT here exactly as in the app.
 from divrag.llm import MISCONFIGURED, TOO_LONG, UNAVAILABLE, Completion, LLMError, _status_error, _upstream_error
+from divrag.spend import MONTHLY_LIMIT, SpendLedger, estimated_usage, usage_tokens
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1"
 FREE_SUFFIX = ":free"
@@ -37,6 +38,11 @@ TIMEOUT_SECONDS = 300.0
 
 def is_openrouter(base_url: str) -> bool:
     return "openrouter.ai" in base_url
+
+
+def is_openai(base_url: str) -> bool:
+    """OpenAI's own API: the project key Dr. Namian's $50 a month covers (DAR-715)."""
+    return "api.openai.com" in base_url
 
 
 class JudgeError(Exception):
@@ -53,9 +59,17 @@ class ChatClient:
 
     def __init__(self, base_url: str, api_key: str, models: Sequence[str], temperature: float = 0.0,
                  max_tokens: int = 1200, json_mode: bool = False, reasoning: Optional[str] = None,
-                 transport: Optional[httpx.AsyncBaseTransport] = None):
+                 transport: Optional[httpx.AsyncBaseTransport] = None, ledger: Optional[SpendLedger] = None,
+                 prices: Optional[Dict[str, Tuple[float, float]]] = None):
         if not models:
             raise ValueError("at least one model is required")
+        # With a ledger every call counts against the hosted app's monthly OpenAI total and stops
+        # at its limit (DAR-715), so evaluation runs and visitors share the one budget.
+        unpriced = [m for m in models if ledger is not None and m not in (prices or {})]
+        if unpriced:
+            raise ValueError(f"no price for {unpriced}: their OpenAI spend could not be counted")
+        self.ledger = ledger
+        self.prices = dict(prices or {})
         self.base_url = base_url.rstrip("/")
         self.models = list(models)
         if is_openrouter(self.base_url):
@@ -107,6 +121,9 @@ class ChatClient:
     async def _complete(self, messages: List[Dict[str, str]], model: str, models: Sequence[str]) -> Completion:
         client = httpx.AsyncClient(timeout=TIMEOUT_SECONDS, transport=self._transport) if self._transport \
             else httpx.AsyncClient(timeout=TIMEOUT_SECONDS)
+        if self.ledger is not None and await self.ledger.over_limit():
+            await client.aclose()
+            raise LLMError(MONTHLY_LIMIT, detail=f"OpenAI monthly limit ${self.ledger.limit_usd:.2f} reached")
         try:
             async with client:
                 response = await client.post(f"{self.base_url}/chat/completions", json=self._body(messages, model, models),
@@ -125,6 +142,11 @@ class ChatClient:
                 text = choice["message"].get("content") or ""
         except (ValueError, KeyError, IndexError, TypeError, AttributeError) as exc:
             raise LLMError(UNAVAILABLE, detail=f"unexpected response: {response.text[:300]}") from exc
+        if self.ledger is not None and not error:
+            counted = usage_tokens(data.get("usage"))
+            cut_off = self.max_tokens if choice.get("finish_reason") == "length" else None
+            tokens = counted or estimated_usage(messages, text, cut_off)
+            await self.ledger.charge(model, self.prices[model], tokens, estimated=counted is None)
         if error:
             # Upstream errors, the daily cap among them, can arrive with HTTP 200.
             raise _upstream_error(error)

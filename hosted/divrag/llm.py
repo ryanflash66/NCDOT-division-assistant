@@ -6,7 +6,9 @@ is down or rate-limited; the response names the model that answered.
 OpenAIClient asks OpenAI's API with OPENAI_API_KEY (DAR-679), and
 FallbackClient puts it in front of the OpenRouter client, so a missing,
 rejected or out-of-budget OpenAI key costs the visitor nothing but the better
-model. client_from_settings() picks between them.
+model. client_from_settings() picks between them. With a SpendLedger
+(spend.py, DAR-715) OpenAIClient adds each call's estimated cost to the month's
+total and stops calling OpenAI once that reaches the monthly limit.
 
 complete() waits for the whole answer; complete_stream() hands it over as it is
 written (server-sent events), so the page can show the text while the model is
@@ -20,6 +22,8 @@ from dataclasses import dataclass
 from typing import Any, AsyncIterator, Dict, List, Optional, Sequence, Tuple
 
 import httpx
+
+from .spend import MONTHLY_LIMIT, SpendLedger, estimated_usage, usage_tokens
 
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 OPENAI_URL = "https://api.openai.com/v1/chat/completions"
@@ -156,8 +160,18 @@ class OpenRouterClient:
             return httpx.AsyncClient(timeout=TIMEOUT_SECONDS, transport=self._transport)
         return httpx.AsyncClient(timeout=TIMEOUT_SECONDS, verify=tls_context())
 
+    async def _before_call(self) -> None:
+        """Raise an LLMError if this call must not be made (OpenAIClient: the month's limit is reached)."""
+
+    async def _after_call(self, messages: List[Dict[str, str]], usage: Any, written: str, cut_off: bool) -> None:
+        """A call the service accepted (HTTP 200) has ended; `usage` is its reply's usage object, if any."""
+
+    def _after_call_soon(self, messages: List[Dict[str, str]], usage: Any, written: str, cut_off: bool) -> None:
+        """_after_call for a stream that was abandoned mid-answer, where nothing can wait for it."""
+
     async def complete(self, messages: List[Dict[str, str]], models: Optional[Sequence[str]] = None) -> Completion:
         """Ask the service; `models` replaces the configured fallback list for this call."""
+        await self._before_call()
         try:
             async with self._http() as client:
                 response = await client.post(self.url, json=self._body(messages, models, stream=False),
@@ -182,6 +196,8 @@ class OpenRouterClient:
             text = choice["message"].get("content") or ""
         except (KeyError, IndexError, TypeError) as exc:
             raise LLMError(UNAVAILABLE, detail=str(data)[:300]) from exc
+        # Counted before the checks below: an answer cut off or empty was still paid for.
+        await self._after_call(messages, data.get("usage"), text, choice.get("finish_reason") == "length")
         if choice.get("finish_reason") == "length":
             raise LLMError(TOO_LONG, detail="answer cut off at max_tokens")
         if not text.strip():
@@ -213,34 +229,46 @@ class CompletionStream:
         self._models = models
         self.model = (list(models) if models else client.models)[0]
         self.text = ""
+        self.usage: Any = None  # the closing usage event's counts, when the service sends them
         self._finished = False  # a finish reason ("stop", ...) arrived
+        self._cut_off = False  # the answer ran into max tokens
 
     def __aiter__(self) -> AsyncIterator[str]:
         return self._pieces()
 
     async def _pieces(self) -> AsyncIterator[str]:
         client = self._client
+        await client._before_call()
         written: List[str] = []
         ended = False
+        accepted = False  # the service answered 200: from here on the call costs money
         try:
-            async with client._http() as http:
-                body = client._body(self._messages, self._models, stream=True)
-                async with http.stream("POST", client.url, json=body, headers=client._headers()) as response:
-                    if response.status_code != 200:
-                        # Errors before the first token come back as an ordinary JSON reply.
-                        await response.aread()
-                        raise client._status_error(response.status_code, response.text) or LLMError(UNAVAILABLE)
-                    async for data in _sse_data(response.aiter_lines()):
-                        if data == "[DONE]":
-                            ended = True
-                            break
-                        piece = self._read(data)
-                        if piece:
-                            written.append(piece)
-                            yield piece
-        except httpx.HTTPError as exc:
-            log.warning("%s stream failed: %s", client.service, exc.__class__.__name__)
-            raise LLMError(UNAVAILABLE, detail=str(exc)) from exc
+            try:
+                async with client._http() as http:
+                    body = client._body(self._messages, self._models, stream=True)
+                    async with http.stream("POST", client.url, json=body, headers=client._headers()) as response:
+                        if response.status_code != 200:
+                            # Errors before the first token come back as an ordinary JSON reply.
+                            await response.aread()
+                            raise client._status_error(response.status_code, response.text) or LLMError(UNAVAILABLE)
+                        accepted = True
+                        async for data in _sse_data(response.aiter_lines()):
+                            if data == "[DONE]":
+                                ended = True
+                                break
+                            piece = self._read(data)
+                            if piece:
+                                written.append(piece)
+                                yield piece
+            except httpx.HTTPError as exc:
+                log.warning("%s stream failed: %s", client.service, exc.__class__.__name__)
+                raise LLMError(UNAVAILABLE, detail=str(exc)) from exc
+        except BaseException:
+            # A broken-off answer (an error, a timeout, the visitor leaving) was still paid for so far.
+            if accepted:
+                client._after_call_soon(self._messages, self.usage, "".join(written), self._cut_off)
+            raise
+        await client._after_call(self._messages, self.usage, "".join(written), self._cut_off)
         # A connection closed cleanly mid-answer (by OpenRouter or a proxy) would otherwise
         # pass for a finished answer: only [DONE] or a finish reason says the model was done.
         if not (ended or self._finished):
@@ -261,6 +289,8 @@ class CompletionStream:
             raise _upstream_error(event["error"], self._client.service)
         if event.get("model"):
             self.model = self._client._answered_by(event["model"], self._models)
+        if event.get("usage"):
+            self.usage = event["usage"]
         choices = event.get("choices") or []  # the closing usage event has none
         if not isinstance(choices, list) or (choices and not isinstance(choices[0], dict)):
             raise LLMError(UNAVAILABLE, detail=f"unexpected event: {data[:300]}")
@@ -268,6 +298,7 @@ class CompletionStream:
             return ""
         choice = choices[0]
         if choice.get("finish_reason") == "length":
+            self._cut_off = True
             raise LLMError(TOO_LONG, detail="answer cut off at max_tokens")
         if choice.get("finish_reason") == "error":
             raise LLMError(UNAVAILABLE, detail=f"stream ended with an error: {data[:300]}")
@@ -295,6 +326,37 @@ class OpenAIClient(OpenRouterClient):
     service = "OpenAI"
     url = OPENAI_URL
 
+    def __init__(self, api_key: str, models: Sequence[str], temperature: float = 0.1, reasoning: str = "off",
+                 transport: "httpx.AsyncBaseTransport | None" = None, ledger: Optional[SpendLedger] = None,
+                 prices: Optional[Tuple[float, float]] = None):
+        super().__init__(api_key, models, temperature, reasoning, transport)
+        if ledger is not None and prices is None:
+            raise ValueError("a spend ledger needs the model's prices")
+        self.ledger = ledger
+        self.prices = prices
+
+    async def _before_call(self) -> None:
+        if self.ledger is not None and await self.ledger.over_limit():
+            raise LLMError(MONTHLY_LIMIT, detail=f"OpenAI monthly limit ${self.ledger.limit_usd:.2f} reached")
+
+    def _tokens(self, messages: List[Dict[str, str]], usage: Any, written: str,
+                cut_off: bool) -> Tuple[Tuple[int, int], bool]:
+        """The call's (input, output) tokens and whether they are a guess (no usage in the reply)."""
+        counted = usage_tokens(usage)
+        if counted is not None:
+            return counted, False
+        cap = MAX_TOKENS + (REASONING_TOKENS if self.reasoning != "off" else 0)
+        return estimated_usage(messages, written, cap if cut_off else None), True
+
+    async def _after_call(self, messages: List[Dict[str, str]], usage: Any, written: str, cut_off: bool) -> None:
+        if self.ledger is not None:
+            tokens, guessed = self._tokens(messages, usage, written, cut_off)
+            await self.ledger.charge(self.models[0], self.prices, tokens, estimated=guessed)
+
+    def _after_call_soon(self, messages: List[Dict[str, str]], usage: Any, written: str, cut_off: bool) -> None:
+        if self.ledger is not None:
+            self.ledger.charge_soon(self.models[0], self.prices, self._tokens(messages, usage, written, cut_off)[0])
+
     def _body(self, messages: List[Dict[str, str]], models: Optional[Sequence[str]], stream: bool) -> Dict:
         thinking = self.reasoning != "off"
         body: Dict[str, Any] = {
@@ -310,6 +372,8 @@ class OpenAIClient(OpenRouterClient):
             body["temperature"] = self.temperature
         if stream:
             body["stream"] = True
+            # A last event with the call's token counts, for the monthly spend (DAR-715).
+            body["stream_options"] = {"include_usage": True}
         return body
 
     def _headers(self) -> Dict[str, str]:
@@ -419,13 +483,15 @@ class FallbackStream:
             yield piece
 
 
-def client_from_settings(settings: Any, transport: "httpx.AsyncBaseTransport | None" = None):
+def client_from_settings(settings: Any, transport: "httpx.AsyncBaseTransport | None" = None,
+                         ledger: Optional[SpendLedger] = None):
     """The answering client for the settings (config.Settings), or None when no usable key is set.
 
     LLM_PROVIDER=openai with OPENAI_API_KEY: OpenAI, with the free OpenRouter
     models behind it when OPENROUTER_API_KEY is set too. Otherwise OpenRouter
     alone, which is also what a deployment that selects OpenAI but has lost
-    its key falls back to.
+    its key falls back to. `ledger` holds OpenAI under the monthly limit
+    (DAR-715); the app always passes one (index.py).
     """
     openrouter = None
     if settings.openrouter_api_key:
@@ -434,7 +500,7 @@ def client_from_settings(settings: Any, transport: "httpx.AsyncBaseTransport | N
     if settings.llm_provider != "openai" or not settings.openai_api_key:
         return openrouter
     openai = OpenAIClient(settings.openai_api_key, [settings.openai_model], settings.temperature,
-                          settings.reasoning, transport=transport)
+                          settings.reasoning, transport=transport, ledger=ledger, prices=settings.openai_prices)
     return FallbackClient(openai, openrouter) if openrouter else openai
 
 

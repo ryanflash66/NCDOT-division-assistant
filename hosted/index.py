@@ -8,7 +8,7 @@
                              searched {documents, passages}
     POST /api/ask/stream  the same question; the steps, the answer's text as it is
                           written, then the same answer, as server-sent events
-    GET  /api/health      index and model settings (no secrets)
+    GET  /api/health      index and model settings, and the month's estimated OpenAI spend (no secrets)
 
 Vercel loads `app` from this file (a FastAPI entrypoint at the project root,
 with hosted/ as the Root Directory). Locally:
@@ -26,6 +26,7 @@ despite a warm-up.
 import asyncio
 import json
 import logging
+import os
 import threading
 import time
 from collections import defaultdict, deque
@@ -44,6 +45,7 @@ from divrag.embedder import Embedder, cpu_info, model_cache_dir, reranker_from_s
 from divrag.index_file import IndexFile
 from divrag.llm import MISCONFIGURED, TOO_SLOW, LLMError, OpenRouterClient, client_from_settings, tls_context
 from divrag.retrieval import Retriever
+from divrag.spend import SpendLedger, store_from_env
 from divrag.timing import StepTimer
 
 PUBLIC_DIR = Path(__file__).resolve().parent / "public"
@@ -65,6 +67,11 @@ log = logging.getLogger("hosted")
 settings: Settings = load_settings()
 if settings.llm_provider == "openai" and not settings.openai_api_key:
     log.warning("LLM_PROVIDER=openai but OPENAI_API_KEY is not set: answering with the free OpenRouter models")
+# The month's estimated OpenAI spend, held under OPENAI_MONTHLY_BUDGET_USD minus the margin (DAR-715, spend.py).
+spend = SpendLedger(settings.openai_monthly_budget_usd, settings.openai_budget_margin_usd, store_from_env(os.environ))
+if settings.answers_with_openai and not spend.store.shared:
+    log.warning("no shared store for the OpenAI spend (KV_REST_API_URL/KV_REST_API_TOKEN): each instance counts "
+                "only its own calls toward the $%.2f monthly limit", spend.limit_usd)
 app = FastAPI(title="NCDOT cross-division Q&A demo", docs_url=None, redoc_url=None, openapi_url=None)
 
 if settings.allowed_origins:
@@ -211,7 +218,7 @@ def _check(body: AskRequest, request: Request) -> Union[Question, JSONResponse]:
 
 def _make_llm() -> OpenRouterClient:
     """OpenAI in front of the free OpenRouter models, or those alone (llm.client_from_settings); _check saw a key."""
-    return client_from_settings(settings)
+    return client_from_settings(settings, ledger=spend)
 
 
 def _searched(target: Division, documents: Optional[List[str]]) -> Dict[str, int]:
@@ -270,7 +277,7 @@ def warm():
 
 
 @app.get("/api/health")
-def health() -> Dict:
+async def health() -> Dict:
     counts: Dict[str, int] = defaultdict(int)
     for chunk in runtime.index.chunks:
         counts[chunk.get("division") or ""] += 1
@@ -305,6 +312,9 @@ def health() -> Dict:
         "llm_provider": "openai" if settings.answers_with_openai else "openrouter",
         "llm_models": list(settings.answer_models),
         "llm_configured": settings.llm_configured,
+        # The calendar month's (UTC) estimated OpenAI spend and the limit that switches answers to the free
+        # models; "shared": false means this instance's own count only (no KV store). None without OpenAI.
+        "openai_spend": await spend.status() if settings.answers_with_openai else None,
         "cpus": cpu_info(),
     }
 
