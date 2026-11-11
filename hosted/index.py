@@ -42,7 +42,7 @@ from divrag.config import Settings, load_settings
 from divrag.divisions import BY_ID, DIVISIONS, Division
 from divrag.embedder import Embedder, cpu_info, model_cache_dir, reranker_from_settings
 from divrag.index_file import IndexFile
-from divrag.llm import MISCONFIGURED, TOO_SLOW, LLMError, OpenRouterClient, tls_context
+from divrag.llm import MISCONFIGURED, TOO_SLOW, LLMError, OpenRouterClient, client_from_settings, tls_context
 from divrag.retrieval import Retriever
 from divrag.timing import StepTimer
 
@@ -63,6 +63,8 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(messag
 log = logging.getLogger("hosted")
 
 settings: Settings = load_settings()
+if settings.llm_provider == "openai" and not settings.openai_api_key:
+    log.warning("LLM_PROVIDER=openai but OPENAI_API_KEY is not set: answering with the free OpenRouter models")
 app = FastAPI(title="NCDOT cross-division Q&A demo", docs_url=None, redoc_url=None, openapi_url=None)
 
 if settings.allowed_origins:
@@ -199,8 +201,8 @@ def _check(body: AskRequest, request: Request) -> Union[Question, JSONResponse]:
             return _error(400, "Pick at least one document to search.")
     if not limiter.allow(_client_ip(request)):
         return _error(429, "Too many questions in a short time. Please wait a minute and try again.")
-    if not settings.openrouter_api_key:
-        log.error("OPENROUTER_API_KEY is not set")
+    if not settings.llm_configured:
+        log.error("no model key is set: OPENROUTER_API_KEY, or OPENAI_API_KEY with LLM_PROVIDER=openai")
         return _error(503, MISCONFIGURED)
     # Unknown ids are dropped: they could only ever skip a division that doesn't exist.
     refused_by = tuple(d for d in dict.fromkeys(body.refused_by) if d in BY_ID)
@@ -208,7 +210,8 @@ def _check(body: AskRequest, request: Request) -> Union[Question, JSONResponse]:
 
 
 def _make_llm() -> OpenRouterClient:
-    return OpenRouterClient(settings.openrouter_api_key or "", settings.models, settings.temperature, settings.reasoning)
+    """OpenAI in front of the free OpenRouter models, or those alone (llm.client_from_settings); _check saw a key."""
+    return client_from_settings(settings)
 
 
 def _searched(target: Division, documents: Optional[List[str]]) -> Dict[str, int]:
@@ -298,8 +301,10 @@ def health() -> Dict:
         "bm25_k1": settings.bm25_k1,
         "bm25_b": settings.bm25_b,
         "index_bm25": _index_bm25(runtime.index),
-        "llm_models": list(settings.models),
-        "llm_configured": bool(settings.openrouter_api_key),
+        # "openai" only when it was selected and its key is set; the models are listed in the order they are tried.
+        "llm_provider": "openai" if settings.answers_with_openai else "openrouter",
+        "llm_models": list(settings.answer_models),
+        "llm_configured": settings.llm_configured,
         "cpus": cpu_info(),
     }
 

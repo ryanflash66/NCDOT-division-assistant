@@ -1,8 +1,13 @@
 """Settings for the hosted demo, read once from environment variables.
 
-Only OPENROUTER_API_KEY is required. Everything else has a default suitable
-for the public demo.
+One key is required: OPENROUTER_API_KEY, or OPENAI_API_KEY with
+LLM_PROVIDER=openai. Everything else has a default suitable for the public demo.
 
+    LLM_PROVIDER                "openrouter" (default) or "openai": which service writes the answers.
+                                "openai" needs OPENAI_API_KEY; the free OpenRouter models stay behind it
+                                (when OPENROUTER_API_KEY is set) and answer whenever OpenAI can't.
+    OPENAI_API_KEY              secret; only used with LLM_PROVIDER=openai
+    OPENAI_MODEL                the OpenAI model (default gpt-6.1-terra; see DEFAULT_OPENAI_MODEL)
     OPENROUTER_API_KEY          secret; never sent to the browser
     OPENROUTER_MODEL            primary model (must end in ":free")
     OPENROUTER_FALLBACK_MODELS  comma-separated backups, tried in order by OpenRouter (":free" only)
@@ -69,9 +74,22 @@ DEFAULT_MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free"
 DEFAULT_FALLBACK_MODELS = ("nvidia/nemotron-3.5-super-vl:free", "google/gemma-4-31b-it:free")
 FREE_SUFFIX = ":free"
 
+# The paid path (DAR-679), used only with LLM_PROVIDER=openai. Picked from OpenAI's model and
+# pricing pages on 2026-11-11: gpt-6.1-terra is the mid-priced model ($1 per million input
+# tokens, $5 per million output; gpt-6.1-sol is twice that, gpt-6-luna a tenth) and it accepts
+# reasoning effort "none", which LLM_REASONING=off sends: no reasoning tokens to pay or wait
+# for, and temperature stays settable (gpt-6.1-sol starts at "low"). A question sends about
+# 5,000 tokens of passages and gets about 300 back, so one model call is about 0.7 cents and
+# a question with every recheck (up to 3 calls) about 2 cents.
+DEFAULT_OPENAI_MODEL = "gpt-6.1-terra"
+PROVIDERS = ("openrouter", "openai")
+
 
 @dataclass(frozen=True)
 class Settings:
+    llm_provider: str
+    openai_api_key: Optional[str]
+    openai_model: str
     openrouter_api_key: Optional[str]
     models: Tuple[str, ...]
     temperature: float
@@ -103,6 +121,21 @@ class Settings:
     retry_min_seconds: float
     allowed_origins: Tuple[str, ...]
 
+    @property
+    def answers_with_openai(self) -> bool:
+        """OpenAI was selected and has its key; without the key the free OpenRouter models answer."""
+        return self.llm_provider == "openai" and bool(self.openai_api_key)
+
+    @property
+    def answer_models(self) -> Tuple[str, ...]:
+        """The models a question can be answered by, in the order they are tried."""
+        if not self.answers_with_openai:
+            return self.models
+        return (self.openai_model,) + (self.models if self.openrouter_api_key else ())
+
+    @property
+    def llm_configured(self) -> bool:
+        return self.answers_with_openai or bool(self.openrouter_api_key)
 
     def retriever_options(self) -> Dict[str, object]:
         """Retriever's keyword arguments for these settings (index.py's _Runtime builds its Retriever with them)."""
@@ -187,6 +220,14 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     paid = [m for m in models if not m.endswith(FREE_SUFFIX)]
     if paid:
         raise ValueError(f"Only free OpenRouter models (ending in {FREE_SUFFIX!r}) are allowed; got {paid}")
+    # A paid model is reachable only by choosing the OpenAI provider on purpose: OPENAI_API_KEY or
+    # OPENAI_MODEL alone change nothing. "ollama" counts as unset: it is the Chainlit app's value
+    # for this same variable, and the local run reads the repo's one .env (--env-file .env).
+    provider = env.get("LLM_PROVIDER", "").strip().lower() or "openrouter"
+    if provider == "ollama":
+        provider = "openrouter"
+    if provider not in PROVIDERS:
+        raise ValueError(f"LLM_PROVIDER must be openrouter or openai, got {provider!r}")
     rerank = env.get("RERANK", "on").strip().lower()
     if rerank not in ("on", "off", "1", "0", "true", "false"):
         raise ValueError(f"RERANK must be on or off, got {rerank!r}")
@@ -244,6 +285,9 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         raise ValueError(f"ONNX_THREADS must be a whole number of 1 or more, got {threads!r}")
     index_dir = Path(env.get("INDEX_DIR", "").strip() or HOSTED_DIR / "index")
     return Settings(
+        llm_provider=provider,
+        openai_api_key=env.get("OPENAI_API_KEY", "").strip() or None,
+        openai_model=env.get("OPENAI_MODEL", "").strip() or DEFAULT_OPENAI_MODEL,
         openrouter_api_key=env.get("OPENROUTER_API_KEY", "").strip() or None,
         models=models,
         temperature=float(env.get("LLM_TEMPERATURE", "0.1")),

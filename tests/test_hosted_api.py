@@ -724,3 +724,24 @@ def test_stream_events_reach_the_client_before_the_model_has_finished(api):
     assert any(c.startswith("event: delta") for c in before)
     assert not any(c.startswith("event: done") for c in before)
     assert seen[-1].startswith("event: done")
+
+
+def test_openai_provider_answers_and_health_names_it_without_the_key(api, monkeypatch):
+    # DAR-679: with LLM_PROVIDER=openai and its key, no OpenRouter key is needed, and health lists OpenAI's model first.
+    client, _, _ = api
+    openai = dataclasses.replace(hosted.settings, llm_provider="openai", openai_api_key="sk-openai-secret",
+                                 openrouter_api_key=None)
+    monkeypatch.setattr(hosted, "settings", openai)
+    assert _ask(client).status_code == 200
+    health = client.get("/api/health").json()
+    assert health["llm_provider"] == "openai" and health["llm_configured"] is True
+    assert health["llm_models"] == [openai.openai_model]
+    assert "sk-openai-secret" not in str(health)
+
+    # The key removed: OpenRouter answers when it has a key, and with neither the question is refused up front.
+    monkeypatch.setattr(hosted, "settings", dataclasses.replace(openai, openai_api_key=None, openrouter_api_key=SECRET))
+    health = client.get("/api/health").json()
+    assert health["llm_provider"] == "openrouter" and all(m.endswith(":free") for m in health["llm_models"])
+    assert _ask(client).status_code == 200
+    monkeypatch.setattr(hosted, "settings", dataclasses.replace(openai, openai_api_key=None))
+    assert _ask(client).status_code == 503
