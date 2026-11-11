@@ -3,8 +3,9 @@
 The number check (verify.py, DAR-659) flags a number the cited passages don't
 contain. It cannot flag a number read from the wrong cell of the right table:
 on the locked split 8 of 232 answers were confident and wrong, and in all 8 the
-wrong number was printed on the cited page (Detail 3-2A's N width read as 6 ft
-instead of 5 ft is the kind of misread). A second model reading the same
+wrong number was printed on the cited page (the model read the wrong row or
+column; with 8 passages, a first answer on the tuning split read the wrong row
+of Detail 3-2A, docs/redo-decision-log.md D15). A second model reading the same
 passages for the same question seldom misreads the same cell, so when the two
 answers state different numbers, the first answer's numbers that the second
 doesn't state are returned to be flagged as unverified.

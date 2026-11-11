@@ -59,6 +59,11 @@ export type AnswerPayload = {
   uncited: boolean;
   /** Numbers the answer states that its cited passages don't contain (DAR-659); absent in answers saved before it. */
   unverified?: string[];
+  /**
+   * The number agreement check (NUMBER_AGREEMENT, DAR-663), when a second model answered with numbers:
+   * `disagreed` are the answer's numbers it contradicts (also in `unverified`), `numbers` the ones it gave.
+   */
+  second_opinion?: { model: string; agreed: boolean; numbers: string[]; disagreed: string[] } | null;
   sources: Source[];
   model: string | null;
   first_model: string | null;
