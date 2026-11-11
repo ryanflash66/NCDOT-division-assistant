@@ -45,6 +45,7 @@ from .llm import Completion, LLMError, OpenRouterClient
 from .pages_static import image_url
 from .retrieval import Retriever
 from .timing import StepTimer, timed
+from .rowcheck import misread_numbers
 from .verify import unverified_numbers
 
 # emit(event, data): one server-sent event of a streamed answer ("step", "delta", "replace").
@@ -537,6 +538,15 @@ def _unverified(raw: str, text: str, hits: List[Hit], asked: str) -> List[str]:
                               labels=[_locator(hit) for hit in shown])
 
 
+def _misread(raw: str, text: str, hits: List[Hit], asked: str) -> List[str]:
+    """The numbers of a graded answer read from a table row the question's labels don't point to (rowcheck.py).
+
+    Only the passages `raw` cites are read: an answer citing nothing has no table to compare.
+    """
+    cited = cited_numbers(_EMPTY_CITATION.sub("", raw.replace(NOT_FOUND, "")), len(hits))
+    return misread_numbers(text, [passage_text(hits[n - 1].chunk) for n in cited], asked)
+
+
 def number_source(text: str, hits: List[Hit], asked: str) -> Optional[int]:
     """The passage (1-based) that alone holds every number of an uncited answer, or None.
 
@@ -724,7 +734,9 @@ def _time_left(deadline: Optional[float], needed: float) -> bool:
 
 class Answerer:
     def __init__(self, retriever: Retriever, llm: OpenRouterClient, top_k: int = 5,
-                 retry_min_score: Optional[float] = RETRY_MIN_SCORE, retry_min_seconds: float = RETRY_MIN_SECONDS):
+                 retry_min_score: Optional[float] = RETRY_MIN_SCORE, retry_min_seconds: float = RETRY_MIN_SECONDS,
+                 row_guard: bool = False):
+        self.row_guard = row_guard  # flag a number read from a table row the question's labels don't point to (rowcheck.py)
         self.retriever = retriever
         self.llm = llm
         self.top_k = top_k
@@ -963,6 +975,9 @@ class Answerer:
             # and one unsupported number swapped for another is no correction.
             if again and again[2] and len(again[3]) < len(unverified):
                 completion, text, sources, unverified = again
+        if text and sources and not unverified and self.row_guard:
+            # After the recheck, which asks the model about numbers "not in the passages": a row mix-up is not that.
+            unverified = _misread(completion.text, text, hits, asked)
         if not text:
             with timed(timer, "suggest"):
                 # The same text the question was searched with, so a refused follow-up is matched on its topic.
