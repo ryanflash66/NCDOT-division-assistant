@@ -15,7 +15,11 @@ Per item (score_item):
                            document (a page..page_end range counts when it overlaps)
     cited_page_ok_printed  the same against the gold printed pages; None when the API or
                            the item has no printed pages
-    value_ok               normalize.value_matches on the answer text
+    value_ok               normalize.value_matches on the answer text; with expected.all_of, every
+                           part must be in the answer (a list that runs over a page break)
+    clarify_ok             behaviour "clarify" only (the question leaves out a variable): the answer
+                           shows every branch of expected.all_of, or names none of them and asks.
+                           These items have no value_ok or strict_ok: there is no single right value
     strict_ok              value_ok and cited_page_ok_pdf and not refused ("strict attributed
                            accuracy": right answer from the right page)
     refused, uncited       the answer's flags
@@ -26,7 +30,8 @@ Per item (score_item):
     false_flag             flagged although its value is right (the guardrail's false alarms,
                            over the cited answers with the right value)
     critical               a confident wrong answer: cited (not refused, not uncited) with the
-                           wrong value, or a cited answer to an unanswerable question
+                           wrong value, or a cited answer to an unanswerable question, or a cited
+                           answer that picks some branches of a clarify item and not the others
     seconds, model, error  the answer call
 
 Aggregates (aggregate): for every stratum (all; per split, division, type,
@@ -45,7 +50,7 @@ TOP = 5
 Z_95 = 1.959963984540054
 # Metrics reported per stratum, in table order; each is a per-item True/False/None field.
 METRICS = ("right_document", "hit1", "hit5", "cited_page_ok_pdf", "cited_page_ok_printed", "value_ok", "strict_ok",
-           "critical", "over_refusal", "false_answer", "flagged", "false_flag")
+           "critical", "over_refusal", "false_answer", "flagged", "false_flag", "clarify_ok")
 
 
 def wilson(k: int, n: int, z: float = Z_95) -> Tuple[float, float]:
@@ -152,6 +157,30 @@ def _cited_ok_printed(cited: Optional[Sequence[Dict[str, Any]]], source: str,
     return all(c["file"] == source and printed_range(c["page"], c["page_end"]) & gold for c in cited)
 
 
+def _parts_found(all_of: Sequence[Any], answer: str) -> List[bool]:
+    """For each required part (a wording, or a list of wordings of the same thing): is it in the answer?"""
+    return [value_matches(None, [part] if isinstance(part, str) else list(part), answer) for part in all_of]
+
+
+# A reply that asks for the missing variable instead of answering: a question, or "which"/"depends on".
+_ASKS = re.compile(r"\?|\bwhich\b|\bdepends? on\b|\bspecify\b|\bclarify\b", re.IGNORECASE)
+
+
+def clarify_score(all_of: Sequence[Any], answer: str) -> Tuple[bool, bool]:
+    """(clarify_ok, picked a branch) for a question that leaves out a variable.
+
+    Right: every branch is shown, or none is and the reply asks for the
+    variable. Showing some branches and not the others is the failure the case
+    is about (a default picked silently): with a citation it is critical.
+    """
+    found = _parts_found(all_of, answer)
+    if all(found):
+        return True, False
+    if not any(found):
+        return bool(_ASKS.search(answer)), False
+    return False, True
+
+
 def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]], payload: Optional[Dict[str, Any]],
                seconds: Optional[float] = None, error: Optional[str] = None) -> Dict[str, Any]:
     """One row of scores for an item.
@@ -171,7 +200,7 @@ def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]],
         "answered": payload is not None, "refused": None, "uncited": None, "unverified": None,
         "cited_pages_pdf": None, "cited_pages_printed": None, "cited_page_ok_pdf": None, "cited_page_ok_printed": None,
         "value_ok": None, "strict_ok": None, "critical": None, "over_refusal": None, "false_answer": None,
-        "flagged": None, "false_flag": None, "answer": None, "seconds": seconds, "model": None, "error": error,
+        "flagged": None, "false_flag": None, "clarify_ok": None, "behaviour": item.get("behaviour"), "answer": None, "seconds": seconds, "model": None, "error": error,
     }
     if ranked is not None:
         row["top"] = [f"{h.get('source')} p.{h.get('page')}" for h in ranked[:TOP]]
@@ -188,12 +217,21 @@ def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]],
                unverified=list(payload["unverified"]) if payload.get("unverified") is not None else None)
     if answerable:
         row["over_refusal"] = refused
+        clarify = item.get("behaviour") == "clarify"
+        text = payload.get("answer") or ""
         if refused:
-            row.update(value_ok=False, strict_ok=False, critical=False)
+            row.update(critical=False, **({"clarify_ok": False} if clarify else {"value_ok": False, "strict_ok": False}))
             return row
         row["cited_page_ok_pdf"] = _cited_ok_pdf(pdf, expected["source"], expected["pdf_pages"])
         row["cited_page_ok_printed"] = _cited_ok_printed(printed, expected["source"], expected.get("printed_pages"))
-        row["value_ok"] = value_matches(expected.get("value"), expected.get("accept"), payload.get("answer") or "")
+        if clarify:
+            row["clarify_ok"], picked = clarify_score(expected.get("all_of") or [], text)
+            row["critical"] = picked and not uncited
+            return row
+        if expected.get("all_of"):
+            row["value_ok"] = all(_parts_found(expected["all_of"], text))
+        else:
+            row["value_ok"] = value_matches(expected.get("value"), expected.get("accept"), text)
         row["strict_ok"] = bool(row["value_ok"] and row["cited_page_ok_pdf"])
         # The wrong number with a citation beside it is what a visitor would act on;
         # an uncited answer is shown with "No source cited" and is counted separately.
