@@ -271,7 +271,10 @@ PR #42 (citation fix) was measured on the tuning split only: see D15.
 ## D14. Answers that cite nothing (PR #42)
 
 - **Question:** Why was the cited page right only 120/190 times on the locked split?
-- **Evidence:** reading the final run's misses, 72 of the 82 citation misses (both splits) cited nothing at all. The free model replied with the bare value ("5 feet"), and the value was right 69 times. When the model did cite, the page was right 147 of 157 times.
+- **Evidence:** reading the final run's misses:
+  - **Locked split:** 61 of the 70 citation misses, 61/70 (77–93%), cited nothing at all. When the model did cite, the page was right 120/129 (87–96%).
+  - **Both splits:** 72/82 (79–93%) and 147/157 (89–97%). These are the figures the earlier ticket comments quoted.
+  - The free model replied with the bare value ("5 feet"). Over both splits the value was right in 69 of the 72 uncited answers.
 - **Options:**
   1. Cite the best-ranked passage that contains the answer's numbers. Replayed on the cached answers: 43 right pages, 19 wrong.
   2. The same, but only when exactly one passage contains them: 33 right, 1 wrong, 38 left uncited.
@@ -311,6 +314,18 @@ wztc-088 expected "2 submissions", and the scorer failed the answer "2". "2" was
   - Report #42 on the tuning split only.
   - Write a fresh held-out set before claiming an after-number (DAR-661).
 - **Related:** DAR-651's 15-question image/table set (15/15 after the redo) is only a regression check: it was the set DAR-651 was tuned on. It is not a result.
+
+## D18. The methods document and one report per ticket (DAR-660)
+
+- **Question:** Can a reader with no context follow how the redo was done, without reading every ticket?
+- **Chose:**
+  - `docs/redo-methods.md`: the plain summary first, then the pipeline, the test-set protocol, the corpus audit, the edge-case matrix (what the test set covers), limits, and sources marked independent or vendor. The same text is published as a Claude Doc tab.
+  - `docs/redo-reports/`: one short report per sub-ticket, with before and after on the same questions, the raw results files, and the command and commit.
+- **Evidence it needed:** the edge-case matrix was counted from `final.json`, merging the labels the division files spell differently. 20 of the 32 edge cases in the research note have 8 or more locked questions, 3 have 1 to 7, and 9 have none (degraded scans, ranges, superseded editions, multi-column order, symbols, duplicate sections across divisions, lists over a page break, missing variables, revision marks).
+- **Surprised us:**
+  - **Footnote questions moved the wrong way:** value right went from 10/13 (50–92%) to 8/13 (36–82%) on the locked split, and 2 of the 8 confident wrong answers are footnote questions (0 before). That is inside the intervals, but it is the one type that got worse.
+  - **Not every question is cross-division:** 17 of the 280 are asked from the target division itself.
+- **Not done:** nothing was rerun for this entry; every number comes from the runs already logged in `docs/locked-set/RUNS.md`.
 
 ## Corrected claims from the research notes
 
