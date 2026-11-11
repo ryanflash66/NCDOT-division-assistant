@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">How one question is answered</title>
+  <desc id="desc">Five stops along a road. 1 Ask: a Work Zone user asks Utilities. 2 Search: Utilities passages only, the top 40 by meaning and the top 40 by keywords. 3 Rerank: a cross-encoder keeps the best 5. 4 Answer: a free model writes from those 5 passages only. 5 Check: every citation and number is checked against its page. The road then exits to either a cited answer that links to the PDF page, or a refusal with no sources.</desc>
+
+  <rect width="1200" height="430" rx="24" fill="#15191c"/>
+
+  <g font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif">
+    <!-- Stops: green guide-sign plaques above the road. -->
+    <g id="stops">
+      <g transform="translate(48 40)">
+        <rect width="204" height="132" rx="12" fill="#0e6b3e"/>
+        <rect x="5" y="5" width="194" height="122" rx="8" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+        <text x="20" y="44" font-size="26" font-weight="700" fill="#ffffff">1  Ask</text>
+        <text x="20" y="78" font-size="19" fill="#e3efe8">Work Zone asks</text>
+        <text x="20" y="104" font-size="19" fill="#e3efe8">Utilities</text>
+      </g>
+      <g transform="translate(272 40)">
+        <rect width="204" height="132" rx="12" fill="#0e6b3e"/>
+        <rect x="5" y="5" width="194" height="122" rx="8" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+        <text x="20" y="44" font-size="26" font-weight="700" fill="#ffffff">2  Search</text>
+        <text x="20" y="78" font-size="19" fill="#e3efe8">Utilities only:</text>
+        <text x="20" y="104" font-size="19" fill="#e3efe8">meaning + keyword</text>
+      </g>
+      <g transform="translate(496 40)">
+        <rect width="204" height="132" rx="12" fill="#0e6b3e"/>
+        <rect x="5" y="5" width="194" height="122" rx="8" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+        <text x="20" y="44" font-size="26" font-weight="700" fill="#ffffff">3  Rerank</text>
+        <text x="20" y="78" font-size="19" fill="#e3efe8">cross-encoder</text>
+        <text x="20" y="104" font-size="19" fill="#e3efe8">keeps the best 5</text>
+      </g>
+      <g transform="translate(720 40)">
+        <rect width="204" height="132" rx="12" fill="#0e6b3e"/>
+        <rect x="5" y="5" width="194" height="122" rx="8" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+        <text x="20" y="44" font-size="26" font-weight="700" fill="#ffffff">4  Answer</text>
+        <text x="20" y="78" font-size="19" fill="#e3efe8">free model writes</text>
+        <text x="20" y="104" font-size="19" fill="#e3efe8">from those 5 only</text>
+      </g>
+      <g transform="translate(944 40)">
+        <rect width="204" height="132" rx="12" fill="#0e6b3e"/>
+        <rect x="5" y="5" width="194" height="122" rx="8" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+        <text x="20" y="44" font-size="26" font-weight="700" fill="#ffffff">5  Check</text>
+        <text x="20" y="78" font-size="19" fill="#e3efe8">[n] and numbers</text>
+        <text x="20" y="104" font-size="19" fill="#e3efe8">vs. the cited page</text>
+      </g>
+      <!-- Posts down to the road. -->
+      <g fill="#4f595f">
+        <rect x="146" y="172" width="8" height="34"/><rect x="370" y="172" width="8" height="34"/>
+        <rect x="594" y="172" width="8" height="34"/><rect x="818" y="172" width="8" height="34"/>
+        <rect x="1042" y="172" width="8" height="34"/>
+      </g>
+    </g>
+
+    <!-- The road: one lane, a dashed lane line, then an exit to two outcomes. -->
+    <g id="road">
+      <rect x="40" y="206" width="1120" height="58" rx="6" fill="#262c30"/>
+      <line x1="56" y1="235" x2="1144" y2="235" stroke="#e9ecee" stroke-width="4" stroke-opacity="0.6" stroke-dasharray="26 20"/>
+      <path d="M560 264 C560 300 560 300 560 318" stroke="#262c30" stroke-width="40" fill="none"/>
+      <path d="M1040 264 C1040 300 1040 300 1040 318" stroke="#262c30" stroke-width="40" fill="none"/>
+    </g>
+
+    <!-- Outcomes. -->
+    <g id="outcomes">
+      <g transform="translate(330 318)">
+        <rect width="460" height="84" rx="12" fill="#0e6b3e"/>
+        <rect x="5" y="5" width="450" height="74" rx="8" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+        <text x="22" y="38" font-size="23" font-weight="700" fill="#ffffff">Cited answer</text>
+        <text x="22" y="66" font-size="19" fill="#e3efe8">[1] opens the source PDF at that page</text>
+      </g>
+      <g transform="translate(810 318)">
+        <rect width="350" height="84" rx="12" fill="#f2811d"/>
+        <rect x="5" y="5" width="340" height="74" rx="8" fill="none" stroke="#111111" stroke-width="2.5"/>
+        <text x="22" y="38" font-size="23" font-weight="700" fill="#111111">Not in these documents</text>
+        <text x="22" y="66" font-size="19" fill="#1d1d1d">says so, shows no sources</text>
+      </g>
+      <text x="48" y="352" font-size="19" fill="#8c979d">Another division's</text>
+      <text x="48" y="378" font-size="19" fill="#8c979d">passages never enter</text>
+      <text x="48" y="404" font-size="19" fill="#8c979d">the search.</text>
+    </g>
+  </g>
+</svg>

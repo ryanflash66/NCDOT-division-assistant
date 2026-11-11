@@ -356,7 +356,7 @@ def markdown_sections(text: str) -> List[Tuple[Optional[str], str]]:
     """Split Markdown into (heading path, text) pairs, one per heading.
 
     The heading path joins the enclosing headings with " > ", e.g.
-    "Ransomware Playbook > Containment". Text before the first heading has no
+    "Work Zone Manual > Setup". Text before the first heading has no
     path. Headings inside fenced code blocks are ignored; text is kept verbatim.
     """
     sections: List[Tuple[Optional[str], str]] = []

@@ -1,5 +1,5 @@
 """
-Chat History Management for RAG Chatbot
+Chat History Management for the local Chainlit chat (app.py)
 Handles saving, loading, and managing chat sessions
 """
 import json
