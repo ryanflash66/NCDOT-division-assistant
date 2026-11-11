@@ -30,3 +30,8 @@ def test_a_preview_is_skipped():
 
 def test_a_preview_builds_when_the_commit_asks_for_one():
     assert _exit_code("preview", "Try the new reranker [preview]") == 1
+
+
+def test_the_tag_counts_only_in_the_first_line():
+    # A body that describes the tag (as the commit adding this script did) is not a request for a preview.
+    assert _exit_code("preview", "Build previews on request\n\nBuilds only when the message contains [preview].") == 0

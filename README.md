@@ -121,9 +121,9 @@ The page was rewritten in React with assistant-ui (DAR-630 to DAR-634) and repla
 
 ### Deploying on Vercel
 
-Live demo: https://ncdot-division-assistant.vercel.app (Vercel project `ncdot-division-assistant`, connected to this GitHub repo; pushes to `main` deploy to production; other branches build a preview deployment, behind Vercel login, only when the commit message contains `[preview]`).
+Live demo: https://ncdot-division-assistant.vercel.app (Vercel project `ncdot-division-assistant`, connected to this GitHub repo; pushes to `main` deploy to production; other branches build a preview deployment, behind Vercel login, only when the first line of the commit message contains `[preview]`).
 
-- **Previews are opt-in:** `hosted/vercel.json`'s `ignoreCommand` runs `scripts/ignore_build.sh`, which skips every non-production build unless the commit message contains `[preview]`. Each deployment keeps its own copy of the function bundle, so a preview for every push to a PR branch was most of the project's function storage. Old deployments are removed by the project's Deployment Retention setting (Vercel dashboard), not by this repo.
+- **Previews are opt-in:** `hosted/vercel.json`'s `ignoreCommand` runs `scripts/ignore_build.sh`, which skips every non-production build unless the first line of the commit message contains `[preview]`. Each deployment keeps its own copy of the function bundle, so a preview for every push to a PR branch was most of the project's function storage. Old deployments are removed by the project's Deployment Retention setting (Vercel dashboard), not by this repo.
 
 - **Root Directory** `hosted`, framework preset FastAPI (`index.py` exports `app`; `public/` is served from the CDN).
 - **Environment variables:** `OPENROUTER_API_KEY` (secret, Production and Preview). To answer with OpenAI, also `LLM_PROVIDER=openai` and `OPENAI_API_KEY` (secret); see [Answering with OpenAI](#answering-with-openai). The other settings (under **All settings** below) are optional.
