@@ -15,7 +15,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "hosted"))
 from divrag import answer as answer_module  # noqa: E402
 from divrag import llm as llm_module  # noqa: E402
 from divrag.answer import (  # noqa: E402
-    CITE_RULE, HISTORY_ANSWER_CHARS, HISTORY_QUESTION_CHARS, HISTORY_TURNS, NOT_FOUND, SUGGEST_CANDIDATES, Answerer,
+    CITE_RULE, HISTORY_ANSWER_CHARS, HISTORY_QUESTION_CHARS, HISTORY_TURNS, NOT_FOUND, RETRY_MIN_SCORE, SECOND_LOOK_PASSAGES,
+    SUGGEST_CANDIDATES, Answerer,
     LiveSteps, _VisibleText, attach_sources, build_messages, cited_numbers, live_step_labels, number_source,
     refusal_text, with_marker,
 )
@@ -613,7 +614,7 @@ def test_refusal_times_the_search_of_the_other_division_as_suggest():
             return super().retrieve(question, division, k, timer, candidates, sources)
 
     timer = StepTimer()
-    retriever = _SlowRetriever({"wztc": -9.0, "utilities": 0.5})
+    retriever = _SlowRetriever({"wztc": -9.0, "utilities": -3.0})
     answerer = Answerer(retriever, _FakeLLM(NOT_FOUND))
     hits = retriever.retrieve("q", "utilities")
 
@@ -626,7 +627,7 @@ def test_refusal_times_the_search_of_the_other_division_as_suggest():
 
 
 def test_no_retry_when_retrieval_is_weak():
-    result, llm = _ask_with_retry([NOT_FOUND, "Three feet [1]."], score=0.5, seconds_left=40)
+    result, llm = _ask_with_retry([NOT_FOUND, "Three feet [1]."], score=-3.0, seconds_left=40)
 
     assert result.refused and not result.retried
     assert len(llm.calls) == 1
@@ -689,7 +690,7 @@ def test_no_retry_when_less_than_the_retry_margin_is_left():
 
 def test_retry_settings_have_defaults_and_can_be_changed():
     default = load_settings({})
-    assert (default.retry_on_refusal, default.retry_min_score, default.retry_min_seconds) == (True, 1.0, 15.0)
+    assert (default.retry_on_refusal, default.retry_min_score, default.retry_min_seconds) == (True, -2.0, 15.0)
     custom = load_settings({"RETRY_ON_REFUSAL": "off", "RETRY_MIN_SCORE": "2.5", "RETRY_MIN_SECONDS": "20"})
     assert (custom.retry_on_refusal, custom.retry_min_score, custom.retry_min_seconds) == (False, 2.5, 20.0)
     with pytest.raises(ValueError):
@@ -1085,3 +1086,103 @@ def test_a_streamed_uncited_answer_asked_again_clears_the_text_and_streams_the_c
     assert "".join(data["text"] for _, data in events[:replace]) == "The rate is three feet."
     assert "".join(data["text"] for _, data in events[replace + 1:]) == "Three feet."
     assert result.answer == "Three feet [1]." and result.citation_fix == "asked_again" and len(llm.calls) == 2
+
+
+class _RankedRetriever(_FakeRetriever):
+    """Returns the first k hits of a fixed Utilities ranking (other divisions score low, as in _FakeRetriever)."""
+
+    def __init__(self, ranked):
+        super().__init__({"wztc": -9.0})
+        self.ranked = ranked
+        self.ks = []
+
+    def retrieve(self, question, division, k=5, timer=None, candidates=None, sources=None):
+        if division != "utilities":
+            return super().retrieve(question, division, k, timer, candidates, sources)
+        self.ks.append(k)
+        return self.ranked[:k]
+
+
+def _ranked(n=15, top=3.5):
+    """n Utilities hits on pages 1..n, best first; page 7 holds the bond rule."""
+    texts = {7: "A performance bond may be released 1 year after the work is complete."}
+    return [_hit(page, texts.get(page, f"Page {page} text."), score=top - page / 10) for page in range(1, n + 1)]
+
+
+def _ask_ranked(replies, ranked, seconds_left=40, **options):
+    retriever = _RankedRetriever(ranked)
+    llm = _FakeLLM(replies)
+    answerer = Answerer(retriever, llm, **options)
+    hits = answerer.retrieve("When is the bond released?", BY_ID["utilities"])
+    result = asyncio.run(answerer.answer("When is the bond released?", BY_ID["wztc"], BY_ID["utilities"], hits,
+                                         time.monotonic() + seconds_left))
+    return result, llm, retriever, hits
+
+
+def test_retrieve_keeps_the_hits_ranked_after_the_top_k_for_the_retry():
+    retriever = _RankedRetriever(_ranked())
+    hits = Answerer(retriever, _FakeLLM(NOT_FOUND)).retrieve("q", BY_ID["utilities"])
+
+    assert SECOND_LOOK_PASSAGES == 15 and retriever.ks == [40]  # one search, down the reranker's 40 candidates
+    assert [h.chunk["page"] for h in hits] == [1, 2, 3, 4, 5]  # the first answer reads the top 5, as before
+    assert [h.chunk["page"] for h in hits.more] == list(range(6, 16))
+
+
+def test_a_refusal_is_retried_with_the_passages_ranked_after_the_first_ones():
+    # DAR-662: 10 of the 16 answerable questions refused in the final run had the answer 6th to 15th.
+    result, llm, _, _ = _ask_ranked([NOT_FOUND, "It may be released 1 year after the work is complete [7]."],
+                                    _ranked())
+
+    assert not result.refused and result.retried and result.model == "test/second:free"
+    assert result.answer == "It may be released 1 year after the work is complete [1]."
+    assert [s.page for s in result.sources] == [7]
+    assert result.unverified == []  # the number check read passage 7, which only the retry was shown
+    assert len(llm.calls) == 2 and llm.models_used[1] == ["test/second:free"]
+    retry = llm.calls[1]
+    assert retry[:2] == llm.calls[0]  # the first prompt, then the refusal and the new passages
+    assert retry[2] == {"role": "assistant", "content": NOT_FOUND}
+    assert "[6] (" in retry[3]["content"] and "[15] (" in retry[3]["content"] and "[5] (" not in retry[3]["content"]
+    assert "[1] to [15]" in retry[3]["content"] and "Page 15 text." in retry[3]["content"]
+
+
+def test_a_second_look_that_refuses_too_is_a_refusal():
+    result, llm, _, _ = _ask_ranked([NOT_FOUND, NOT_FOUND], _ranked())
+    assert result.refused and result.retried and result.sources == [] and len(llm.calls) == 2
+
+
+def test_the_second_look_leaves_out_chunks_the_first_passages_already_show():
+    ranked = _ranked(8)
+    # Passage 1 is pages 1 and 6 merged (page 6 came in as a following chunk): only 7 and 8 are new.
+    merged = Hit(3.4, dict(ranked[0].chunk, parts=[ranked[0].chunk, ranked[5].chunk]))
+    hits = answer_module.Passages([merged, *ranked[1:5]], more=ranked[5:])
+
+    extra = Answerer(_RankedRetriever(ranked), _FakeLLM(NOT_FOUND))._second_look(hits)
+
+    assert [h.chunk["page"] for h in extra] == [7, 8]
+    assert Answerer(_RankedRetriever(ranked), _FakeLLM(NOT_FOUND))._second_look(list(ranked[:5])) == []
+
+
+def test_without_a_second_look_the_retry_asks_the_same_prompt_again():
+    result, llm, retriever, hits = _ask_ranked([NOT_FOUND, "Page 2 says so [2]."], _ranked(), second_look=0)
+    assert retriever.ks == [5] and hits.more == []
+    assert not result.refused and llm.calls[0] == llm.calls[1]
+
+
+def test_a_refusal_below_the_old_bar_of_1_is_now_retried():
+    # utilities-028 (top score -1.61) and wztc-037 (0.48) were refused without a retry under the old 1.0.
+    assert RETRY_MIN_SCORE == -2.0
+    result, llm = _ask_with_retry([NOT_FOUND, "Three feet [1]."], score=-1.6, seconds_left=40)
+    assert result.retried and not result.refused and len(llm.calls) == 2
+
+
+def test_the_second_look_takes_at_most_two_table_chunks_of_a_page():
+    # "What are the NC-PCB dimensions?": 12 labelled-row chunks of one Standard Specifications table
+    # ranked 1 to 12, and the TMP manual's sentence with the barrier's size 34th.
+    rows = [Hit(2.25, {"text": f"row {n}", "kind": "table", "source": UAM, "page": 518, "division": "utilities"})
+            for n in range(12)]
+    answer_hit = _hit(32, "It is 10 ft. long, 24 in. wide at the base, and 32 in. high.", score=0.02)
+    hits = answer_module.Passages(rows[:5], more=[*rows[5:], _hit(36, score=1.0), answer_hit])
+
+    extra = Answerer(_RankedRetriever(rows), _FakeLLM(NOT_FOUND), second_look=2)._second_look(hits)
+
+    assert [h.chunk["page"] for h in extra] == [36, 32]  # page 518 gave its two (five, in fact) already
