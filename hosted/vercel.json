@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "bash scripts/build.sh",
+  "ignoreCommand": "bash scripts/ignore_build.sh",
   "redirects": [
     { "source": "/new", "destination": "/", "permanent": false },
     { "source": "/new/(.*)", "destination": "/", "permanent": false }
@@ -9,7 +10,7 @@
     "index.py": {
       "maxDuration": 60,
       "includeFiles": "public/**",
-      "excludeFiles": "{public/pages/**,documents/**}"
+      "excludeFiles": "{public/pages/**,documents/**,web/**,scripts/**,**/__pycache__/**,RESULTS-local.md}"
     }
   },
   "headers": [
