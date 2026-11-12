@@ -395,3 +395,33 @@ Also open, without a ticket yet:
 - **Table crowding:** labelled rows crowd the top 5 (D4).
 - **Unfixed pages:** the 5 text-loss and 6 image-only pages (D11).
 - **Paid vision model:** the decision is with Dr. Namian (D7).
+
+## DAR-663. Can a second model catch a number read from the wrong cell?
+
+- **Question:** 8 of 232 locked-split answers were confident and wrong with the wrong number printed on the cited page, so the number check (D12) passes them. If a second free model answers the same question from the same passages, does a disagreement on the numbers catch those, and at what cost?
+- **Chose:**
+  - `NUMBER_AGREEMENT` (default `off`). When on and the final answer states numbers, the next free model in `OPENROUTER_MODELS` after the one that answered (never that model, never one that refused before a retry, never OpenAI) is asked the same messages. Code: `hosted/divrag/agreement.py`, hooked at the end of `Answerer._answer`.
+  - Compared: the numbers that answer the question. Left out: citation markers, page references, identifiers ("Table 6-1", "Detail 3-2A"), and numbers the question gave. Normalization is `numbers.py`'s, with inches and feet compared as lengths.
+  - A first-answer number is flagged when the second answer leaves it out **and** states a number of the same kind the first doesn't. Only leaving a number out is not a disagreement.
+  - Flagged numbers go into `unverified`, so the scorer's `flagged` and `false_flag` count them. The payload's `second_opinion` (`model`, `agreed`, `numbers`, `disagreed`, `instead`) lets the page say "A second model reading the same pages gave … instead" instead of "the cited pages don't contain this".
+  - Runs **after** the answer is final, not alongside the first call. Only numeric answers need it, a refusal needs none, and the numbers compared are the final answer's (after retry, recite, recheck). Alongside, every question would spend a second call of the shared daily free quota. It needs 15 s of the budget left (as the retry does), gets at most 20 s, uses a plain (non-streamed) call so the second answer never replaces the text on the page, and shows a live step, "Asking a second model to check the numbers…". A failed, late, refused or number-free second answer leaves the answer as it is.
+- **Evidence** (tuning split; `docs/locked-set/dar-663-off.md`, `dar-663-on.md`). "Off" covers 47 of the 48 items: one call failed to connect. "On" covers the first 24 items (`--limit 24`, all TMSD and 8 Utilities items), because the 120-call cap allowed no more.
+
+| | off (n=47) | on (first 24) |
+|---|---|---|
+| value right | 38/40 (83–99%) | 22/22 (85–100%) |
+| confident wrong answer (critical) | 0/47 (0–8%) | 0/24 (0–14%) |
+| cited answers flagged | 0/38 (0–9%) | 1/22 (1–22%) |
+| right-value answers wrongly flagged (false_flag) | 0/38 (0–9%) | 1/22 (1–22%) |
+| answer time, median / p90 | 6.0 s / 16.6 s | 15.1 s / 18.8 s |
+
+  - **Catches:** none were possible. Neither run had a cited answer with a wrong value, so the catch rate is 0 of 0 and the tuning split can't measure it. Even the locked split's 8 cases would give an interval about 60 points wide. The held-out set has to say whether the check catches anything.
+  - **The one flag was a false alarm.** utilities-042, a phone number: the first model gave (919) 733-4420, which is right, and Nemotron 3.5 Super gave 733-4440.
+  - **The second model was mostly unavailable.** The check ran on 20 numeric answers, and the second model answered only 5/20 (11–47%): 4 agreed, 1 disagreed. The other 15/20 (53–89%) failed after about 13 s each. Nemotron 3.5 Super returned 504 ("operation was aborted"), and the fallback, Gemma 4 31B, was "temporarily rate-limited upstream". The refusal retries in the "off" run failed the same way.
+  - **Added time.** The `agree` step took a median of 13.0 s (p90 14.2 s) over the 20 numeric answers. When the second model answered, it took 0.6–1.3 s. Paired by item, total time on minus off had a median of +4.5 s and p90 +12.9 s (n=23). The paired figure is noisy because the first call's time varies between runs.
+  - End to end on port 8063 with the setting on, the numeric question tmsd-029 took 14.7 s on `/api/ask` (second model agreed after 10.7 s) and 16.1 s on `/api/ask/stream` (second model failed; skipped silently). The stream ended with `done`, and its payload had the same keys as `/api/ask`.
+- **Surprised us:** the code review found that "each states a number the other doesn't" would flag context numbers of other kinds ("45 mph" against "12 %") and "18 in" against "1.5 ft". Pairing by unit and comparing lengths fixed both before the run was scored. The 5 opinions the run got come out the same under the fixed rules.
+- **Not done:**
+  - The default stays `off`. That changes only after the coordinator's held-out measurement, and only once a second free model answers reliably. As of Nov 11 it doesn't, so the check mostly adds about 13 s and catches nothing.
+  - No paid second model was tried (free models only).
+  - The held-out catch and false-flag rates are the coordinator's to run.
