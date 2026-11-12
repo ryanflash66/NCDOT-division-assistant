@@ -51,6 +51,9 @@ LLM_PROVIDER=openai. Everything else has a default suitable for the public demo.
                                 model refuses (see answer.SECOND_LOOK_PASSAGES)
     RETRY_MIN_SCORE             retry only when the top reranker score is at least this (default -2.0; see answer.RETRY_MIN_SCORE)
     RETRY_MIN_SECONDS           retry only if at least this much of the request budget is left (default 15)
+    NUMBER_AGREEMENT            "off" (default) or "on": a second free model answers the same question from the same
+                                passages, and the answer's numbers it contradicts are flagged unverified (DAR-663;
+                                see agreement.py). Off until the held-out measurement says otherwise.
     ALLOWED_ORIGINS             comma-separated origins allowed to call the API from another site
                                 (default none: only the page served by this app can call it)
 """
@@ -131,6 +134,7 @@ class Settings:
     retry_min_score: float
     retry_min_seconds: float
     allowed_origins: Tuple[str, ...]
+    number_agreement: bool = False
 
     @property
     def answers_with_openai(self) -> bool:
@@ -295,6 +299,13 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     retry_min_seconds = float(env.get("RETRY_MIN_SECONDS", "15"))
     if retry_min_seconds < 0:
         raise ValueError(f"RETRY_MIN_SECONDS must be 0 or more, got {retry_min_seconds}")
+    # Off by default: it doubles the model calls of every numeric answer, the tuning split had no
+    # wrong-cell answer to catch, and on Nov 11 the second free model gave an opinion on only 5 of 20
+    # numeric answers (Nemotron 3.5 Super timed out with 504s, Gemma 4 was rate-limited upstream),
+    # adding a median 13 s per numeric answer (DAR-663, docs/redo-decision-log.md).
+    agreement = _setting(env, "NUMBER_AGREEMENT", "off").lower()
+    if agreement not in ("on", "off", "1", "0", "true", "false"):
+        raise ValueError(f"NUMBER_AGREEMENT must be on or off, got {agreement!r}")
     # Read by embedder.onnx_threads() when the models load; checked here so a bad value stops startup.
     threads = env.get("ONNX_THREADS", "").strip()
     if threads and not (threads.isdigit() and int(threads) >= 1):
@@ -345,4 +356,5 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         retry_min_score=float(env.get("RETRY_MIN_SCORE", "-2.0")),  # answer.RETRY_MIN_SCORE (DAR-662)
         retry_min_seconds=retry_min_seconds,
         allowed_origins=_csv(env.get("ALLOWED_ORIGINS", "")),
+        number_agreement=agreement in ("on", "1", "true"),
     )

@@ -90,7 +90,7 @@ class Runtime:
 
         s = self.settings
         return Answerer(self.retriever, llm, top_k=s.top_k, retry_min_score=s.retry_min_score if s.retry_on_refusal else None,
-                        retry_min_seconds=s.retry_min_seconds)
+                        retry_min_seconds=s.retry_min_seconds, number_agreement=s.number_agreement)
 
     def retrieval(self, item: Dict[str, Any]) -> Dict[str, Any]:
         """The top-k ranking the answer is built from (Answerer.retrieve's first step, before the following chunks)."""
@@ -263,7 +263,8 @@ def _settings_record(settings) -> Dict[str, Any]:
             "rerank": settings.rerank, "keyword_search": settings.keyword_search,
             "rerank_candidates": settings.rerank_candidates, "top_k": settings.top_k,
             "request_budget_seconds": settings.request_budget_seconds, "retry_on_refusal": settings.retry_on_refusal,
-            "retry_min_score": settings.retry_min_score, "retry_min_seconds": settings.retry_min_seconds}
+            "retry_min_score": settings.retry_min_score, "retry_min_seconds": settings.retry_min_seconds,
+            "number_agreement": settings.number_agreement}
 
 
 def _load_env(env_file: Optional[str]) -> None:

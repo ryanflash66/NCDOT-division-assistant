@@ -38,4 +38,25 @@ export function unverifiedText(numbers: string[] | null | undefined): string | n
   return `Unverified number${numbers.length === 1 ? "" : "s"}: ${numbers.join(", ")}.`;
 }
 
+/**
+ * The unverified numbers split by why they are flagged: `missing` ones aren't in the cited pages
+ * (DAR-659), `disputed` ones a second model reading the same pages contradicted (DAR-663). The
+ * payload doesn't say whether a contradicted number was also missing, so it is listed as disputed.
+ */
+export function unverifiedReasons(
+  numbers: string[] | null | undefined,
+  disagreed: string[] | null | undefined,
+): { missing: string[]; disputed: string[] } {
+  const all = numbers ?? [];
+  const contradicted = new Set(disagreed ?? []);
+  return { missing: all.filter((n) => !contradicted.has(n)), disputed: all.filter((n) => contradicted.has(n)) };
+}
+
+/** "A second model reading the same pages gave 27.42 ft instead"; the footer adds the rest of the sentence. */
+export function disputedText(numbers: string[] | null | undefined): string {
+  return numbers?.length
+    ? `A second model reading the same pages gave ${numbers.join(", ")} instead`
+    : "A second model reading the same pages gave a different number";
+}
+
 export const CITE_PREFIX = "#cite-";

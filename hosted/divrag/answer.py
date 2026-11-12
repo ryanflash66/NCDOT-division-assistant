@@ -22,6 +22,12 @@ Every number the answer states is checked against the passages it cites
 stricter rule, time allowing, and the numbers still missing from the final
 answer are returned as `unverified` for the page to flag.
 
+With NUMBER_AGREEMENT on (agreement.py, DAR-663), an answer that states
+numbers is also given to a second free model's answer on the same passages,
+time allowing: a number read from the wrong cell is on the cited page, so the
+check above passes it, but the two models seldom misread the same cell. The
+first answer's numbers the second contradicts are added to `unverified`.
+
 answer() waits for the model's whole reply; answer_stream() passes the text on
 as it is written. Both grade, retry and refuse the same way.
 
@@ -41,6 +47,7 @@ import time
 from dataclasses import dataclass, field
 from typing import Any, Awaitable, Callable, Dict, List, Optional, Sequence, Tuple
 
+from .agreement import SecondOpinion, answer_numbers, second_opinion, second_opinion_models
 from .divisions import BY_ID, DIVISIONS, Division, document_for
 from .index_file import Hit
 from .llm import Completion, LLMError, OpenRouterClient
@@ -101,6 +108,12 @@ RETRY_MARGIN_SECONDS = 1.0
 # NUMBERS_RULE when at least this much of the request is left: the second call
 # is a whole answer, like the retry, and the retry's 15 s held for free models.
 RECHECK_MIN_SECONDS = RETRY_MIN_SECONDS
+# The second model's answer for the number agreement check (NUMBER_AGREEMENT, DAR-663) is a
+# whole answer too, so it needs the same time left; with less it is skipped, not cut off.
+AGREEMENT_MIN_SECONDS = RETRY_MIN_SECONDS
+# ... and is given at most this long: the answer's sources and flags wait for it (they come with
+# the checked answer), and the free models answered the tuning split's questions in 2-17 s.
+AGREEMENT_MAX_SECONDS = 20.0
 EXCERPT_CHARS = 700
 # The best hits also bring the next chunk of their document (see Retriever.with_following).
 FOLLOWING_FOR_TOP = 2
@@ -223,6 +236,9 @@ class Answer:
     # How an answer the model first gave without citations got its sources: "asked_again"
     # (CITE_RULE) or "number_match" (number_source); None when the model cited on its own.
     citation_fix: Optional[str] = None
+    # The number agreement check (agreement.py, DAR-663), when it ran and the second model answered
+    # with numbers; its `disagreed` numbers are also in `unverified`.
+    second_opinion: Optional[SecondOpinion] = None
 
     def as_dict(self) -> Dict:
         return {
@@ -235,6 +251,7 @@ class Answer:
             "first_model": self.first_model,
             "retried": self.retried,
             "citation_fix": self.citation_fix,
+            "second_opinion": self.second_opinion.as_dict() if self.second_opinion else None,
             "suggest": [{"id": d, "name": BY_ID[d].name} for d in self.suggest],
         }
 
@@ -685,13 +702,15 @@ LIVE_STEPS: Tuple[Tuple[str, Tuple[str, ...]], ...] = (
     ("retry", ("retry",)),
     ("recite", ("recite",)),
     ("recheck", ("recheck",)),
+    ("agree", ("agree",)),
     ("suggest", ("suggest",)),
 )
 
-# Steps that only run after a refusal, so the page isn't told about them in
-# advance: most answers never retry or suggest, and a step left "not started"
-# at the end would read as if the answer stopped short (DAR-636).
-OCCASIONAL_STEPS = ("retry", "recite", "recheck", "suggest")
+# Steps that run only for some answers (after a refusal, an uncited answer, an
+# unverified number, or, for "agree", an answer with numbers while
+# NUMBER_AGREEMENT is on), so the page isn't told about them in advance: a step
+# left "not started" at the end would read as if the answer stopped short (DAR-636).
+OCCASIONAL_STEPS = ("retry", "recite", "recheck", "agree", "suggest")
 
 
 def live_step_labels(target: Division, passages: int, top_k: int) -> Dict[str, str]:
@@ -705,6 +724,7 @@ def live_step_labels(target: Division, passages: int, top_k: int) -> Dict[str, s
         "retry": "Double-checking the source…",
         "recite": "Finding the source for the answer…",
         "recheck": "Checking the numbers against the source…",
+        "agree": "Asking a second model to check the numbers…",
         "suggest": "Checking whether another division covers it",
     }
 
@@ -773,13 +793,14 @@ def _time_left(deadline: Optional[float], needed: float) -> bool:
 class Answerer:
     def __init__(self, retriever: Retriever, llm: OpenRouterClient, top_k: int = 5,
                  retry_min_score: Optional[float] = RETRY_MIN_SCORE, retry_min_seconds: float = RETRY_MIN_SECONDS,
-                 second_look: int = SECOND_LOOK_PASSAGES):
+                 second_look: int = SECOND_LOOK_PASSAGES, number_agreement: bool = False):
         self.retriever = retriever
         self.llm = llm
         self.top_k = top_k
         self.retry_min_score = retry_min_score  # None: never retry
         self.retry_min_seconds = retry_min_seconds
         self.second_look = second_look  # ranked chunks after the top k for the retry; 0: it re-reads the same passages
+        self.number_agreement = number_agreement  # NUMBER_AGREEMENT: a second model checks the numbers (DAR-663)
 
     def search_query(self, question: str, history: Sequence[Dict[str, str]] = ()) -> str:
         """The text to search with: the previous question plus this one when there is history.
@@ -980,6 +1001,36 @@ class Answerer:
                  "cited answer" if sources else "uncited answer" if text else "refused")
         return second, text, sources
 
+    async def _second_opinion(self, messages: List[Dict[str, str]], first: Completion, text: str, hits: List[Hit],
+                              asked: str, deadline: Optional[float], timer: Optional[StepTimer],
+                              avoid: Sequence[str] = ()) -> Optional[SecondOpinion]:
+        """The number agreement check (agreement.py), when it is on and worth a call; None otherwise.
+
+        It runs after the answer is final (retry, recite and recheck done), not
+        alongside the first call: only an answer that states numbers needs it,
+        a refusal needs none, and the numbers to compare are the final answer's.
+        Run alongside, every question would spend a second call of the free
+        models' shared daily quota. The cost is the second call's time on
+        numeric answers only (at most AGREEMENT_MAX_SECONDS): the streamed text
+        is already on the page, but its citations, sources and flags come with
+        the checked answer, after it. `avoid` are models that refused this
+        question before a retry answered it.
+        """
+        if not self.number_agreement:
+            return None
+        first_numbers = answer_numbers(text, asked)
+        models = second_opinion_models(self.llm, first.model, avoid) if first_numbers else []
+        if not models or not _time_left(deadline, AGREEMENT_MIN_SECONDS):
+            return None
+        timeout = AGREEMENT_MAX_SECONDS
+        if deadline is not None:
+            timeout = min(timeout, deadline - time.monotonic() - RETRY_MARGIN_SECONDS)
+        with timed(timer, "agree"):
+            # The same messages as the first call, not a conversation with the first answer:
+            # a second model shown that answer tends to repeat it instead of reading the table.
+            return await second_opinion(self.llm.complete, messages, models, first_numbers, asked,
+                                        lambda raw: _grade(raw, hits)[0], timeout)
+
     async def answer(self, question: str, asker: Division, target: Division, hits: List[Hit],
                      deadline: Optional[float] = None, timer: Optional[StepTimer] = None,
                      history: Sequence[Dict[str, str]] = (), refused_by: Sequence[str] = ()) -> Answer:
@@ -1083,6 +1134,11 @@ class Answerer:
             # and one unsupported number swapped for another is no correction.
             if again and again[2] and len(again[3]) < len(unverified):
                 completion, text, sources, unverified = again
+        refused_first = [first_model] if retried and first_model != completion.model else []
+        opinion = (await self._second_opinion(messages, completion, text, hits, asked, deadline, timer, refused_first)
+                   if text else None)
+        if opinion:
+            unverified = list(dict.fromkeys([*unverified, *opinion.disagreed]))
         if not text:
             with timed(timer, "suggest"):
                 # The same text the question was searched with, so a refused follow-up is matched on its topic.
@@ -1091,4 +1147,5 @@ class Answerer:
             return Answer(refusal_text(target, suggest), refused=True, model=completion.model, suggest=suggest,
                           retried=retried, first_model=first_model)
         return Answer(text, refused=False, sources=sources, model=completion.model, retried=retried,
-                      first_model=first_model, uncited=not sources, unverified=unverified, citation_fix=citation_fix)
+                      first_model=first_model, uncited=not sources, unverified=unverified, citation_fix=citation_fix,
+                      second_opinion=opinion)

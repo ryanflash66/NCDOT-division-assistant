@@ -11,6 +11,9 @@ The steps, in pipeline order:
     llm         the first model call
     citations   checking and renumbering the answer's citations
     retry       the second model call (and its citation check) after a refusal
+    recite      asking again for citations after an answer that cites nothing
+    recheck     asking again after an answer with numbers its cited passages lack
+    agree       a second model's answer for the number agreement check (NUMBER_AGREEMENT)
     suggest     searching the other divisions for a "try asking X" suggestion
 
 A step that runs more than once in a question adds up; a step that didn't run
@@ -21,7 +24,8 @@ import time
 from contextlib import contextmanager
 from typing import Callable, Dict, Iterator, Optional
 
-STEPS = ("model_load", "embed", "search", "rerank", "llm", "citations", "retry", "recite", "recheck", "suggest")
+STEPS = ("model_load", "embed", "search", "rerank", "llm", "citations", "retry", "recite", "recheck", "agree",
+         "suggest")
 
 # listener(step, "start" | "done", ms): ms is 0 at the start, and this run's time when it is done.
 Listener = Callable[[str, str, int], None]

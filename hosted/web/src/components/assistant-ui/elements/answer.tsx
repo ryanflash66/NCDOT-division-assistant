@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { carryForSuggestion, messageText, refusedBySoFar, type QuestionMetadata } from "@/runtime/history";
 import { useApp } from "@/state";
 import type { AnswerMetadata, AnswerPayload } from "@/types";
-import { CITE_PREFIX, linkCitations, searchedText, unverifiedText } from "./format";
+import { CITE_PREFIX, disputedText, linkCitations, searchedText, unverifiedReasons, unverifiedText } from "./format";
 
 // An answer's text with clickable [n] citations, a refusal with its "Ask … instead"
 // buttons, and the lines under each answer. Everything comes from the message's
@@ -109,7 +109,9 @@ export function AnswerFooter() {
   if (!payload) return null;
   const searched = payload.searched;
   const shown = searched && typeof searched.passages === "number" && typeof searched.documents === "number";
-  const unverified = payload.refused ? null : unverifiedText(payload.unverified);
+  const reasons = unverifiedReasons(payload.refused ? [] : payload.unverified, payload.second_opinion?.disagreed);
+  const unverified = unverifiedText(reasons.missing);
+  const disputed = unverifiedText(reasons.disputed);
   const total = divisions.find((d) => d.id === payload.target?.id)?.documents.length ?? searched?.documents ?? 0;
   return (
     <>
@@ -127,6 +129,15 @@ export function AnswerFooter() {
           <strong>{unverified}</strong>{" "}
           {payload.uncited ? "The passages searched don't contain this" : "The cited pages don't contain this"}, so check
           the number in the document before relying on it.
+        </p>
+      )}
+      {disputed && (
+        <p
+          role="alert"
+          className="aui-disputed mt-2 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-2 text-sm dark:border-amber-800 dark:bg-amber-950/40"
+        >
+          <strong>{disputed}</strong> {disputedText(payload.second_opinion?.instead)}, so check the number in the
+          document before relying on it.
         </p>
       )}
       {shown && <p className="aui-searched text-muted-foreground mt-2 text-xs">{searchedText(searched, total)}</p>}

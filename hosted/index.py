@@ -117,7 +117,7 @@ class _Runtime:
     def answerer(self, llm: OpenRouterClient) -> Answerer:
         s = self.settings
         return Answerer(self.retriever(), llm, top_k=s.top_k, retry_min_score=s.retry_min_score if s.retry_on_refusal else None,
-                        retry_min_seconds=s.retry_min_seconds)
+                        retry_min_seconds=s.retry_min_seconds, number_agreement=s.number_agreement)
 
 
 runtime = _Runtime(settings)
@@ -312,6 +312,7 @@ async def health() -> Dict:
         "llm_provider": "openai" if settings.answers_with_openai else "openrouter",
         "llm_models": list(settings.answer_models),
         "llm_configured": settings.llm_configured,
+        "number_agreement": settings.number_agreement,
         # The calendar month's (UTC) estimated OpenAI spend and the limit that switches answers to the free
         # models; "shared": false means this instance's own count only (no KV store). None without OpenAI.
         "openai_spend": await spend.status() if settings.answers_with_openai else None,
@@ -411,9 +412,10 @@ def _payload(checked: Question, result: Answer, timer: StepTimer, steps: LiveSte
     timing = dict(timer.as_ms(), retrieval=round((retrieved - started) * 1000), total=_ms_since(started))
     log.info(
         "ask asker=%s target=%s chars=%d refused=%s uncited=%s retried=%s sources=%d model=%s first_model=%s "
-        "stream=%s ms %s",
+        "unverified=%d agreed=%s stream=%s ms %s",
         asker.id, target.id, len(checked.text), result.refused, result.uncited, result.retried, len(result.sources),
-        result.model, result.first_model, streamed, _ms_text(timing),
+        result.model, result.first_model, len(result.unverified),
+        None if result.second_opinion is None else result.second_opinion.agreed, streamed, _ms_text(timing),
     )
     payload = result.as_dict()
     payload["asker"] = {"id": asker.id, "name": asker.name}
