@@ -1,0 +1,3218 @@
+{
+ "division": "wztc",
+ "items": [
+  {
+   "id": "wztc-h001",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "My crew will leave a 1.5-inch edge drop-off inside the travel lanes on a road posted at exactly 45 mph. How often do the UNEVEN LANES signs have to be repeated through the drop-off area?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "conditional",
+    "printed_vs_pdf",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     13
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "every mile",
+    "accept": [
+     "once every mile"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Part 2 Ch. 2, 2.4 A) drop-offs <= 1.5 in: W8-11 every half mile where posted speed < 45 mph, every mile where >= 45 mph. 45 mph exactly is the boundary and falls on the 'every mile' side.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h002",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "A drop-off deeper than 3 inches is within 8 feet of an open travel lane. The work is short-term stationary, the crew is working in the drop-off area and it will not stay overnight. What is the maximum length that can be protected with just drums or cones?",
+   "type": "text",
+   "edge_cases": [
+    "conditional"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     14
+    ],
+    "printed_pages": [
+     "3"
+    ],
+    "value": "200 feet",
+    "accept": [
+     "200 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Part 2 Ch. 2, 2.4 C) first bullet: drums or cones allowed only for short duration/short-term stationary work, short lengths (200 feet maximum), work in the drop-off area and not overnight.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h003",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "We have a shoulder drop-off of exactly 3 inches located within 10 feet of the travelway. How often do the LOW SHOULDER signs have to be repeated along it?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     15
+    ],
+    "printed_pages": [
+     "4"
+    ],
+    "value": "every half mile",
+    "accept": [
+     "once every half mile",
+     "half mile",
+     "1/2 mile"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Part 2 Ch. 2, 'Drop-offs within 10 Feet of the Travelway' B) > 2 in and <= 3 in: drums or cones, W8-9 500 ft in advance and once every half mile. Exactly 3 in is the top of branch B (C starts above 3 in).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h004",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "During periods when construction is inactive, how deep can a localized excavation (drop inlet, bore and jack pit) within 10 feet of the travelway get before it has to be shielded with traffic barrier?",
+   "type": "text",
+   "edge_cases": [
+    "units",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     18
+    ],
+    "printed_pages": [
+     "7"
+    ],
+    "value": "36 inches",
+    "accept": [
+     "36 in",
+     "3 feet",
+     "3 ft"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Part 2 Ch. 2, 2.4 F) Localized excavations: those which exceed 36\" during inactivity get traffic barrier.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h005",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "A pavement drop-off exactly 30 inches deep sits 20 feet from the travelway. What protection does the TMP Design Manual call for?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     18
+    ],
+    "printed_pages": [
+     "7"
+    ],
+    "value": "drums or cones",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Part 2 Ch. 2, 'Drop-offs 10 to 30 Feet from the Travelway' B) > 2 in and <= 30 in: drums or cones; C) > 30 in: barrier or 6:1 wedge. 30 in exactly is in B.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h006",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "There is a fill slope of exactly 3:1 about 15 feet from the travelway. Does it need traffic barrier, or what treatment applies?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     19
+    ],
+    "printed_pages": [
+     "8"
+    ],
+    "value": "drums or cones",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Part 2 Ch. 2 Terrain hazards >= 10 ft: non-recoverable slopes (3:1 and 4:1) get drums or cones; only critical slopes steeper than 3:1 need traffic barrier. 3:1 exactly is non-recoverable.",
+   "split": "tuning"
+  },
+  {
+   "id": "wztc-h007",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "How far behind the curb face should concrete barrier be placed next to a curb?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     20
+    ],
+    "printed_pages": [
+     "9"
+    ],
+    "value": "9 inches",
+    "accept": [
+     "9 in"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "9 inches",
+      "9 in"
+     ],
+     [
+      "13 feet",
+      "13 ft"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "clarify",
+   "verified_by": "page_text_match",
+   "note": "Missing variable: where the work is. TMP Part 2 Ch. 2 D) Curbs: maximum of 9 inches behind curb face if work is in the travelway; minimum of 13 feet behind curb face if work is behind the curb. (Ch. 5 p45, an excluded page, has a different 12 ft rule for vaulting; not used.)",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h008",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "When an entrance ramp stays open in a work zone, how long should a temporary acceleration lane be to count as sufficient length?",
+   "type": "text",
+   "edge_cases": [
+    "symbols",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     73
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "400 feet",
+    "accept": [
+     "400 ft",
+     "400'"
+    ],
+    "unit": "ft",
+    "all_of": [
+     [
+      "400 feet",
+      "400 ft",
+      "400'"
+     ],
+     [
+      "75%",
+      "75 percent"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Part 2 Ch. 7, 7.3: temporary acceleration lanes of sufficient length (400'+/- - 75% of existing acceleration lane or whichever is greater) or matching existing length. The +/- is part of the value.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h009",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "NCDOT's Work Zone Speed Limit Reduction guideline (not the $250 fine guideline) covers freeways whose existing speed limit is at least what?",
+   "type": "text",
+   "edge_cases": [
+    "near_identical",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     76
+    ],
+    "printed_pages": [
+     "3"
+    ],
+    "value": "65 mph",
+    "accept": [
+     "65 MPH"
+    ],
+    "unit": "mph"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP 8.3.2 Standard Practice for Work Zone Speed Limit Guidelines: freeways with existing speed limits of 65 MPH and above. Near-identical to 8.3.4 ($250 fine, 60 MPH and above, p86).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h010",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "The NCDOT standard practice for $250 work zone speeding fines applies to roadways with existing speed limits of what and above?",
+   "type": "text",
+   "edge_cases": [
+    "near_identical"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     86
+    ],
+    "printed_pages": [
+     "13"
+    ],
+    "value": "60 mph",
+    "accept": [
+     "60 MPH"
+    ],
+    "unit": "mph"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP 8.3.4 Guidelines for $250 Speeding Fine Ordinances: existing speed limits of 60 MPH and above. Near-identical to 8.3.2 (speed limit reduction, 65 MPH, p76).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h011",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "A work zone meets every Section I warrant for the $250 speeding fine ordinance but none of the Section II warrants. How many Section III warrants must it meet to qualify?",
+   "type": "text",
+   "edge_cases": [
+    "conditional"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     87
+    ],
+    "printed_pages": [
+     "14"
+    ],
+    "value": "2",
+    "accept": [
+     "two",
+     "at least 2",
+     "at least two"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP 8.3.4: all of Section I and at least 1 of Section II; if Section II is not met, at least 2 warrants in Section III; if Section I is not met, it does not qualify.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h012",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "Our work zone on a 65 mph interstate is exactly 1 mile long and will last four months. Does it meet the length warrant in Section I of the $250 fine ordinance criteria?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "conditional"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     87
+    ],
+    "printed_pages": [
+     "14"
+    ],
+    "value": "greater than 1 mile",
+    "accept": [
+     "more than 1 mile",
+     "more than one mile",
+     "greater than one mile",
+     "longer than 1 mile",
+     "longer than one mile",
+     "exceed 1 mile",
+     "exceeds 1 mile"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Section I warrant 2: the work zone is greater than 1 mile in length. Exactly 1 mile does not meet it (right answer: no, it must be greater than 1 mile).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h013",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "Under the state law behind the $250 work zone speeding penalty, where do the penalty signs have to be posted for the extra penalty to apply?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     88
+    ],
+    "printed_pages": [
+     "15"
+    ],
+    "value": "beginning and end",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP 8.3.4 Section IV quotes G.S. 20-141(j2): signs posted at the beginning and end of any segment of the highway work zone. Same statute text in tmsd L18_TSLG_Guide.pdf p285.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h014",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In the TMP Design Manual's positive protection chapter, where does the clear zone start?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     25
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "edge of the traveled way",
+    "accept": [
+     "edge of traveled way"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Part 2 Ch. 5, 5.2 Clear Zone definition. Near-identical definition in utilities if03014.pdf p91 and tmsd C34 - Manual 2012.pdf p101.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h015",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What truck weight and impact angle does the NCHRP 350 Test Level 4 crash test use, as defined in the TMP manual?",
+   "type": "text",
+   "edge_cases": [
+    "units",
+    "precision"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     26
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "17,650",
+    "accept": [
+     "17650"
+    ],
+    "unit": "lb",
+    "all_of": [
+     [
+      "17,650",
+      "17650"
+     ],
+     [
+      "15 degrees",
+      "15 deg"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Part 2 Ch. 5, 5.2 definitions: TL-4 = 17,650 lb truck at 15 degrees, 50 mph.",
+   "split": "tuning"
+  },
+  {
+   "id": "wztc-h016",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Under 23 CFR 630 Subpart J, the old rule required an annual process review of selected projects. How often do agencies have to do process reviews under the updated rule?",
+   "type": "text",
+   "edge_cases": [
+    "superseded"
+   ],
+   "expected": {
+    "source": "rule_guide.pdf",
+    "pdf_pages": [
+     22
+    ],
+    "printed_pages": [
+     "2-4"
+    ],
+    "value": "bi-annual",
+    "accept": [
+     "biannual",
+     "every two years",
+     "every 2 years",
+     "biennial"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "rule_guide 2.2.2 Process Reviews: former Rule annual; updated Rule changed to bi-annual reviews (the guide's word; the rule itself says at least every two years).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h017",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Under the former work zone rule the State designated a 'qualified person' to oversee the traffic control plan. Under the updated rule, who has to designate the project-level responsible person, and what must that person be?",
+   "type": "text",
+   "edge_cases": [
+    "superseded"
+   ],
+   "expected": {
+    "source": "rule_guide.pdf",
+    "pdf_pages": [
+     23
+    ],
+    "printed_pages": [
+     "2-5"
+    ],
+    "value": "trained person",
+    "accept": [
+     "trained"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "trained"
+     ],
+     [
+      "contractor"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "rule_guide 2.2.3 Responsible Person: former Rule = State designates a qualified person; updated Rule = the agency and the contractor both designate a trained person.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h018",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "The former work zone rule only had crash data analyzed to fix deficiencies on projects. What other kind of data does the updated rule add to work zone data?",
+   "type": "text",
+   "edge_cases": [
+    "superseded",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "rule_guide.pdf",
+    "pdf_pages": [
+     21
+    ],
+    "printed_pages": [
+     "2-3"
+    ],
+    "value": "mobility/operational data",
+    "accept": [
+     "mobility",
+     "operational"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "rule_guide 2.2.2 Work Zone Data: updated Rule expands work zone data to include mobility/operational data in addition to safety/crash data.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h019",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "NCHRP 350 used to be the crash testing standard for NCDOT work zone devices. Which crash testing requirements has NCDOT started implementing in its place?",
+   "type": "text",
+   "edge_cases": [
+    "superseded"
+   ],
+   "expected": {
+    "source": "2023 WZ Safety & Mobility Process Review.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     "4"
+    ],
+    "value": "MASH",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "2023 Process Review, New Practices: starting to implement the new MASH crash testing requirements which replaced the NCHRP 350 requirements. (The TMP manual, 2019, still defines NCHRP 350 test levels.)",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h020",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What passing grade is required on the written test of an NCDOT-approved Flagger course?",
+   "type": "text",
+   "edge_cases": [
+    "near_identical"
+   ],
+   "expected": {
+    "source": "NCDOTFinalRuleImplementation.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "70",
+    "accept": [
+     "70 or better"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "NCDOT Final Rule Implementation, Qualified Work Zone Flagger: passing grade of 70 or better (the Installer paragraph on the same page also says 70; the near-identical Designer paragraph, p5, says 80). No printed folio.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h021",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "What passing grade does the written test for the NCDOT Work Zone Designer course require?",
+   "type": "text",
+   "edge_cases": [
+    "near_identical"
+   ],
+   "expected": {
+    "source": "NCDOTFinalRuleImplementation.pdf",
+    "pdf_pages": [
+     5
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "80",
+    "accept": [
+     "80 or better"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "NCDOT Final Rule Implementation, Qualified Work Zone Designer (New - Proposed): passing grade of 80 or better. Near-identical to the Flagger/Installer paragraphs (70). No printed folio.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h022",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "A town of 30,000 people has state roads with speed limits under 55 mph. What level of work zone training must at least one of its employees have?",
+   "type": "text",
+   "edge_cases": [
+    "conditional"
+   ],
+   "expected": {
+    "source": "NCDOTFinalRuleImplementation.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "basic level",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "NCDOT Final Rule Implementation, local governments: cities/towns under 50,000 population and state roads with speed limit < 55 mph need at least one employee trained to the basic level of ITRE's program.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h023",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "When does NCDOT's Qualified Work Zone Designer training requirement take effect?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "NCDOTFinalRuleImplementation p5 gives 'Proposed implementation date: 20??' (no date). Checked: no wztc document gives an implementation date for the Work Zone Designer qualification.",
+   "split": "tuning"
+  },
+  {
+   "id": "wztc-h024",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "When an existing fire hydrant has to be removed for a project, within what distance of the main does the hydrant valve have to be for you to close it, plug its outlet side and pull the valve box?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "2024 Standard Specifications for Roads and Structures.pdf",
+    "pdf_pages": [
+     743
+    ],
+    "printed_pages": [
+     "15-17"
+    ],
+    "value": "4 feet",
+    "accept": [
+     "4 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Standard Specifications 1530-3(D) Remove Fire Hydrant. Same rule in utilities UAM (20220713 NCDOT UAM Ver 2-0.pdf p142). Printed page 15-17.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h025",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "Per MUTCD Part 6, the LOW SHOULDER (W8-9) sign is for a shoulder elevation difference up to what?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "part6.pdf",
+    "pdf_pages": [
+     44
+    ],
+    "printed_pages": [
+     "808"
+    ],
+    "value": "3 inches",
+    "accept": [
+     "3 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "MUTCD 6H.26: LOW SHOULDER for an elevation difference of 3 inches or less. Same text in tmsd Chapter2c.pdf p29 (MUTCD Part 2, 2C.29).",
+   "split": "tuning"
+  },
+  {
+   "id": "wztc-h026",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "In a temporary traffic control zone, if a transverse rumble strip across a travel lane is not the pavement color, what colors may it be?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section"
+   ],
+   "expected": {
+    "source": "part6.pdf",
+    "pdf_pages": [
+     75
+    ],
+    "printed_pages": [
+     "839"
+    ],
+    "value": "white, black, or orange",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     "white",
+     "black",
+     "orange"
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "MUTCD 6M.06 P04: white, black, or orange. The near-identical Part 3 rule (tmsd part3.pdf p106) allows only black or white; the TTC rule adds orange.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h027",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In FHWA's work zone road user cost guide glossary, what is a faster-moving line of vehicles called?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "fhwahop12005.pdf",
+    "pdf_pages": [
+     200
+    ],
+    "printed_pages": [
+     "188"
+    ],
+    "value": "moving queue",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "fhwahop12005 glossary 'Queue' (printed 188). Near-identical definition in tmsd fhwa_hop_08_024.pdf p21.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h028",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "For the MUTCG channelizing device taper notes, which formula gives the minimum taper length when the posted speed is exactly 40 mph?",
+   "type": "scan",
+   "edge_cases": [
+    "scan",
+    "symbols",
+    "range_threshold"
+   ],
+   "expected": {
+    "source": "Chapter_2.pdf",
+    "pdf_pages": [
+     16
+    ],
+    "printed_pages": [
+     "22"
+    ],
+    "value": "60",
+    "accept": [
+     "W x S2 / 60"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "ocr_text_match",
+   "note": "MUTCG Ch. 2, 2.3 Notes for 'L' Distance (image-only page): 40 MPH or Less L = W x S^2 / 60; 45 MPH or Greater L = W x S. 40 mph is in the first branch; the divisor 60 marks it. Value read from OCR; page has no text layer.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h029",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "List all the exposure control measures that 23 CFR 630.1108(b) gives as examples for avoiding or minimizing worker exposure to traffic.",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "multi_column",
+    "two_pages"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part630.pdf",
+    "pdf_pages": [
+     13,
+     14
+    ],
+    "printed_pages": [
+     "257",
+     "258"
+    ],
+    "value": "full road closures",
+    "accept": [
+     "road closures"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "road closures"
+     ],
+     [
+      "ramp closures"
+     ],
+     [
+      "median crossovers"
+     ],
+     [
+      "detours"
+     ],
+     [
+      "rolling road"
+     ],
+     [
+      "night",
+      "off-peak"
+     ],
+     [
+      "accelerated construction"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 630.1108(b) Exposure Control Measures, 7 items in a two-column page: (1)-(4) on PDF p13 (printed 257), (5) rolling road blocks, (6) night/off-peak work, (7) accelerated construction techniques on p14 (printed 258).",
+   "split": "tuning"
+  },
+  {
+   "id": "wztc-h030",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "When designing a temporary pedestrian pathway through a work zone, what are all the considerations MUTCD Part 6 (Section 6C.02) says should be addressed?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "part6.pdf",
+    "pdf_pages": [
+     14,
+     15
+    ],
+    "printed_pages": [
+     "778",
+     "779"
+    ],
+    "value": "continuity of accessible paths",
+    "accept": [
+     "continuity"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "continuity"
+     ],
+     [
+      "transit stops"
+     ],
+     [
+      "smooth, continuous hard surface",
+      "hard surface"
+     ],
+     [
+      "width of the existing pedestrian facility",
+      "60 inches",
+      "60 x 60"
+     ],
+     [
+      "vision disabilities",
+      "audible"
+     ],
+     [
+      "detectable edging"
+     ],
+     [
+      "4 inches",
+      "7 feet"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "MUTCD 6C.02 P11 list A-G: A continuity of accessible paths and B access to transit stops on PDF p14 (printed 778); C hard surface, D width / 60 in with passing space, E information for pedestrians with vision disabilities, F detectable edging, G signs below 7 ft not projecting more than 4 in on p15 (printed 779).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h031",
+   "division": "wztc",
+   "asker": "wztc",
+   "question": "What are the steps of FHWA's process for requesting an exception for a significant Interstate project under the work zone rule?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "rule_guide.pdf",
+    "pdf_pages": [
+     60,
+     61
+    ],
+    "printed_pages": [
+     "5-8",
+     "5-9"
+    ],
+    "value": "assess the work zone impacts",
+    "accept": [
+     "assess"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "assess"
+     ],
+     [
+      "compare"
+     ],
+     [
+      "submit it to the FHWA Division Office",
+      "exception request"
+     ],
+     [
+      "FHWA reviews"
+     ],
+     [
+      "take appropriate action",
+      "appropriate action"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "rule_guide 5.4.1 Process for Requesting Exceptions: steps 1-3 (assess impacts; compare with policy; prepare and submit the request) on printed 5-8, steps 4-5 (FHWA reviews; take appropriate action) on printed 5-9.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h032",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In the Woodrow Wilson Bridge case study of FHWA's work zone impacts assessment guide, what information did the project web site contain? List everything.",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "appendix_page"
+   ],
+   "expected": {
+    "source": "wzi_guide.pdf",
+    "pdf_pages": [
+     164,
+     165
+    ],
+    "printed_pages": [
+     "A-10",
+     "A-11"
+    ],
+    "value": "Bridge Bucks",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "overall WWB project"
+     ],
+     [
+      "Bridge Bucks"
+     ],
+     [
+      "Mission Possible"
+     ],
+     [
+      "Construction program"
+     ],
+     [
+      "Project news"
+     ],
+     [
+      "Neighborhood news"
+     ],
+     [
+      "Environmental aspects"
+     ],
+     [
+      "Civil rights",
+      "DBE"
+     ],
+     [
+      "scrapbook"
+     ],
+     [
+      "Project videos"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "wzi_guide Appendix A (printed A-10 / A-11): WWB project web site contents, 10 bullets: overall project, Bridge Bucks, Mission Possible (with sub-bullets) on p164; construction program, project news, neighborhood news, environmental aspects, civil rights/DBE, scrapbook, videos on p165.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h033",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "FHWA's work zone impacts assessment guide gives examples of overall policy issues an agency's work zone guidance can address. List them all.",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "wzi_guide.pdf",
+    "pdf_pages": [
+     45,
+     46
+    ],
+    "printed_pages": [
+     "3-13",
+     "3-14"
+    ],
+    "value": "multi-disciplinary team",
+    "accept": [
+     "multi-disciplinary"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "multi-disciplinary"
+     ],
+     [
+      "organizational strategies"
+     ],
+     [
+      "impacts assessment guidance"
+     ],
+     [
+      "memoranda of understanding",
+      "MOU"
+     ],
+     [
+      "performance levels"
+     ],
+     [
+      "significant projects"
+     ],
+     [
+      "Exception criteria"
+     ],
+     [
+      "training"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "wzi_guide 3.x 'Examples of Overall Policy Issues', 8 dash items: standing multi-disciplinary team, agency organizational strategies, guidance on using the assessment guidance, MOUs with utility operators, performance levels on printed 3-13; significant-project criteria, exception criteria, training on printed 3-14.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h034",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Under 23 CFR 630, if right-of-way acquisition or construction for a road hasn't started after its federally funded preliminary engineering, by when must it start before the State DOT has to pay the Federal funds back?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part630.pdf",
+    "pdf_pages": [
+     5
+    ],
+    "printed_pages": [
+     "249"
+    ],
+    "value": "close of the tenth fiscal year",
+    "accept": [
+     "tenth fiscal year",
+     "10-year",
+     "10 years",
+     "ten years"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 630.112(c)(2), two-column page: not started by the close of the tenth fiscal year following the fiscal year in which the project is authorized -> repayment (extension possible). Same page as 'Subpart C [Reserved]'.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h035",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "According to 23 CFR 630.1012, besides MUTCD Part 6, which document's work zone hardware recommendations must a TTC plan be consistent with?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column",
+    "cross_reference"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part630.pdf",
+    "pdf_pages": [
+     10
+    ],
+    "printed_pages": [
+     "254"
+    ],
+    "value": "AASHTO Roadside Design Guide",
+    "accept": [
+     "Roadside Design Guide"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "Roadside Design Guide"
+     ],
+     [
+      "Chapter 9"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 630.1012(b)(1), two-column page: consistent with MUTCD Part 6 and with the work zone hardware recommendations in Chapter 9 of the AASHTO Roadside Design Guide (2002).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h036",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "If the PS&E uses method-based specifications, how can the TMP be paid for under 23 CFR 630.1012?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part630.pdf",
+    "pdf_pages": [
+     11
+    ],
+    "printed_pages": [
+     "255"
+    ],
+    "value": "lump sum",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "individual pay items"
+     ],
+     [
+      "lump sum"
+     ],
+     [
+      "combination"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 630.1012(d)(1), two-column page: individual pay items, lump sum payment, or a combination thereof.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h037",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "How does 23 CFR 630 Subpart K define Exposure Control Measures?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part630.pdf",
+    "pdf_pages": [
+     12
+    ],
+    "printed_pages": [
+     "256"
+    ],
+    "value": "eliminating or reducing traffic through the work zone",
+    "accept": [
+     "reducing traffic",
+     "diverting traffic"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 630.1104 definitions, two-column page: traffic management strategies to avoid work zone crashes involving workers and motorized traffic by eliminating or reducing traffic through the work zone, or diverting traffic away from the work space.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h038",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "How many responses did FHWA get to the docket for the supplemental proposed work zone safety and mobility rule, and how many of them were State DOTs?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column"
+   ],
+   "expected": {
+    "source": "04-20340.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     "54563"
+    ],
+    "value": "33",
+    "accept": [
+     "33 responses"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "33"
+     ],
+     [
+      "27"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Federal Register 69 FR 54562 (Sept. 9, 2004), three-column page 54563, Profile of Respondents: 33 responses, 27 State DOTs, 4 trade associations, 2 private individuals.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h039",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What does Subpart C of 23 CFR part 630 require?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 630 (2024 edition) p5 (printed 249) shows 'Subpart C [Reserved]': no content. Checked: no 'Subpart C' heading with a title in any wztc document.",
+   "split": "locked",
+   "accept_reply": [
+    "reserved"
+   ]
+  },
+  {
+   "id": "wztc-h040",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "What are the rules in Subparts E and F of 23 CFR 630?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 630 p6 (printed 250) shows 'Subparts E–F [Reserved]'. Checked: no titled Subpart E or F of part 630 in any wztc document.",
+   "split": "locked",
+   "accept_reply": [
+    "reserved"
+   ]
+  },
+  {
+   "id": "wztc-h041",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What does section 630.707 of 23 CFR say about advance construction projects?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 630 p7 (printed 251) shows '§ 630.707 [Reserved]' between 630.705 and 630.709. Checked: '630.707' occurs only followed by [Reserved].",
+   "split": "locked",
+   "accept_reply": [
+    "reserved"
+   ]
+  },
+  {
+   "id": "wztc-h042",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What does 23 CFR 630 Subpart I cover?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 630 p7 (printed 251) shows 'Subpart I [Reserved]'. Checked: no titled Subpart I of part 630 in any wztc document.",
+   "split": "locked",
+   "accept_reply": [
+    "reserved"
+   ]
+  },
+  {
+   "id": "wztc-h043",
+   "division": "wztc",
+   "asker": "wztc",
+   "question": "What assessment requirements do NCDOT's Work Zone Safety and Mobility Guidelines set during and after construction?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "WZSafetyAndMobilityGuidelines p23: 'ASSESSMENT REQUIREMENTS DURING/AFTER CONSTRUCTION - To Be Developed' (placeholder, no content). Checked: the heading occurs nowhere else with content.",
+   "split": "locked",
+   "accept_reply": [
+    "to be developed"
+   ]
+  },
+  {
+   "id": "wztc-h044",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Under 23 CFR 630 Subpart G, when does FHWA start reimbursing a State for an advance construction project?",
+   "type": "text",
+   "edge_cases": [
+    "revision_marks",
+    "multi_column"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part630.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     "250"
+    ],
+    "value": "until the project is converted",
+    "accept": [
+     "converted to a regular Federal-aid project",
+     "is converted",
+     "conversion"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 630.705(a)(2): FHWA shall not reimburse the State until the project is converted under 630.709. Live text on the page whose Subparts E-F are [Reserved]; 630.707 [Reserved] follows on p7. (The 'AC' project-number prefix in (b) was not used: a two-letter value would match almost any answer as a substring.)",
+   "split": "tuning"
+  },
+  {
+   "id": "wztc-h045",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Per NCDOT Roadway Standard Drawing 1101.11 (advance warning sign spacing chart), how far apart should the advance warning signs in a series be on a road posted at exactly 35 mph?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "range_threshold",
+    "symbols",
+    "table_id"
+   ],
+   "expected": {
+    "source": "Division 11 Combined.pdf",
+    "pdf_pages": [
+     40
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "200 feet",
+    "accept": [
+     "200 ft",
+     "200'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Division 11 Combined p40 (page rotated 270), RSD 1101.11 sheet 4 of 4, Advance Warning Sign Spacing Chart: row '<= 35' mph -> A, B and C all 200 ft. 35 is the top of the <= 35 row (40-50 gives 350). Drawings carry a drawing number, not a page folio.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h046",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "On controlled access roads, what spacing does NCDOT's advance warning sign spacing chart (RSD 1101.11) give for distance C, between the 2nd and 3rd signs?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "merged_header",
+    "not_first_row_col",
+    "table_id"
+   ],
+   "expected": {
+    "source": "Division 11 Combined.pdf",
+    "pdf_pages": [
+     40
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "2700 feet",
+    "accept": [
+     "2700 ft",
+     "2,700 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "RSD 1101.11 sheet 4, chart header 'Recommended distance between signs (feet)+-' spans columns A, B, C; last row 'Controlled access roads (>= 55)': A 1000, B 1500, C 2700. Column C is also the distance to the 4th sign.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h047",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What is the minimum legibility distance for a Type B arrow board in MUTCD Figure 6L-3?",
+   "type": "figure",
+   "edge_cases": [
+    "table_id",
+    "not_first_row_col",
+    "precision",
+    "figure"
+   ],
+   "expected": {
+    "source": "part6.pdf",
+    "pdf_pages": [
+     70
+    ],
+    "printed_pages": [
+     "834"
+    ],
+    "value": "3/4 mile",
+    "accept": [
+     "three-quarter mile",
+     "0.75 mile",
+     "three quarters of a mile"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "MUTCD Figure 6L-3 Advance Warning Arrow Board Display Specifications: Type B 60 x 30 in, 3/4 mile, 13 elements.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h048",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "For a Type D arrow board in MUTCD Figure 6L-3, which has no minimum board size, how long must the arrow be?",
+   "type": "footnote",
+   "edge_cases": [
+    "footnote",
+    "table_id",
+    "units"
+   ],
+   "expected": {
+    "source": "part6.pdf",
+    "pdf_pages": [
+     70
+    ],
+    "printed_pages": [
+     "834"
+    ],
+    "value": "48 inches",
+    "accept": [
+     "48 in",
+     "48\""
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Figure 6L-3 row D: minimum size 'None*'; footnote *: length of arrow equals 48 inches, width of arrowhead equals 24 inches. The answer is only in the footnote.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h049",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "How long should a shoulder taper be, as a fraction of the taper length L, under MUTCD Part 6?",
+   "type": "text",
+   "edge_cases": [
+    "symbols",
+    "precision"
+   ],
+   "expected": {
+    "source": "part6.pdf",
+    "pdf_pages": [
+     12
+    ],
+    "printed_pages": [
+     "776"
+    ],
+    "value": "1/3 L",
+    "accept": [
+     "¹⁄3 L",
+     "one-third",
+     "one third",
+     "0.33 L"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "MUTCD 6B.08 P13 (PDF p12, printed 776): shoulder tapers approximately 1/3 L, printed with a superscript fraction glyph. Table 6B-3 on p11 (printed 775) gives 'at least 0.33 L' but p11 is an excluded page.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h050",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Under the MUTCD 11th Edition, what is the time limit for work to count as short duration?",
+   "type": "text",
+   "edge_cases": [
+    "conflicting_documents"
+   ],
+   "expected": {
+    "source": "part6.pdf",
+    "pdf_pages": [
+     77
+    ],
+    "printed_pages": [
+     "841"
+    ],
+    "value": "up to 1 hour",
+    "accept": [
+     "1 hour",
+     "one hour",
+     "60 minutes"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "MUTCD 6N.02 P02 D: short duration is work that occupies a location up to 1 hour. NCDOT's MUTCG Chapter 5 (5.2.4, image page) defines short duration as up to 30 minutes; the question names the MUTCD.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h051",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "How does NCDOT's MUTCG (Chapter 5, utility and maintenance operations) define short duration work?",
+   "type": "scan",
+   "edge_cases": [
+    "conflicting_documents",
+    "scan"
+   ],
+   "expected": {
+    "source": "Chapter_5.pdf",
+    "pdf_pages": [
+     11
+    ],
+    "printed_pages": [
+     "76"
+    ],
+    "value": "30 minutes",
+    "accept": [
+     "thirty minutes",
+     "half an hour",
+     "half hour"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "ocr_text_match",
+   "note": "MUTCG Ch. 5, 5.2.4 D - Short Duration (image-only page, folio 76): work that occupies a location up to 30 minutes. Conflicts with MUTCD 6N.02 (up to 1 hour); the question names the MUTCG.",
+   "split": "tuning"
+  },
+  {
+   "id": "wztc-h052",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "What minimum cone height does MUTCD Part 6 require on freeways and other high-speed highways?",
+   "type": "text",
+   "edge_cases": [
+    "conflicting_documents",
+    "units"
+   ],
+   "expected": {
+    "source": "part6.pdf",
+    "pdf_pages": [
+     54
+    ],
+    "printed_pages": [
+     "818"
+    ],
+    "value": "28 inches",
+    "accept": [
+     "28 in",
+     "28\""
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "MUTCD 6K.02 P01: cones on freeways/high-speed highways or at night: minimum 28 inches; daytime low-speed 18 in. NCDOT Roadway Standard Drawing 1135.01 (Division 11 p47) requires a 36 inch cone on freeways and interstates.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h053",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Which cone size do NCDOT's Division 11 roadway standard drawings require on freeways and interstates?",
+   "type": "figure",
+   "edge_cases": [
+    "conflicting_documents",
+    "figure",
+    "units"
+   ],
+   "expected": {
+    "source": "Division 11 Combined.pdf",
+    "pdf_pages": [
+     47
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "36 inch",
+    "accept": [
+     "36 in",
+     "36\"",
+     "36-inch"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Division 11 Combined p47 (rotated drawing, cone details): '36 INCH CONE (REQUIRED FOR FREEWAYS AND INTERSTATES)'; the 28 inch cone is the minimum for all other roads. MUTCD 6K.02 allows 28 in minimum on freeways.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h054",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "In NCDOT's MUTCG notes for flashing arrow boards, what minimum mounting height applies to a vehicle-mounted arrow board?",
+   "type": "scan",
+   "edge_cases": [
+    "conflicting_documents",
+    "scan",
+    "units"
+   ],
+   "expected": {
+    "source": "Chapter_2.pdf",
+    "pdf_pages": [
+     34
+    ],
+    "printed_pages": [
+     "40"
+    ],
+    "value": "7 feet",
+    "accept": [
+     "7 ft",
+     "7'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "ocr_text_match",
+   "note": "MUTCG Ch. 2, E. Notes for Flashing Arrow Boards (image page, folio 40) note 2: minimum mounting height of 7 feet for all arrow boards (trailer or vehicle mounted). MUTCD 6L.06 says vehicle-mounted boards should be as high as practicable instead; the question names the MUTCG.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h055",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Under MUTCD Part 6, how high should a vehicle-mounted arrow board be mounted?",
+   "type": "text",
+   "edge_cases": [
+    "conflicting_documents"
+   ],
+   "expected": {
+    "source": "part6.pdf",
+    "pdf_pages": [
+     69
+    ],
+    "printed_pages": [
+     "833"
+    ],
+    "value": "as high as practicable",
+    "accept": [
+     "high as practicable"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "MUTCD 6L.06 P09: minimum mounting height 7 ft, except vehicle-mounted arrow boards, which should be as high as practicable. NCDOT MUTCG Ch. 2 note 2 requires 7 ft for vehicle-mounted boards too.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h056",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "When the 2004 work zone rule was finalized, what wording replaced 'pre-existing roadside safety features' in the TTC plan provision of 630.1012(b)(1)?",
+   "type": "text",
+   "edge_cases": [
+    "superseded",
+    "multi_column"
+   ],
+   "expected": {
+    "source": "04-20340.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     "54567"
+    ],
+    "value": "roadside safety hardware",
+    "accept": [
+     "safety hardware"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "69 FR 54567 (three-column page), FHWA response on 630.1012(b)(1): the proposed term 'pre-existing roadside safety features' changed to 'pre-existing roadside safety hardware' (current CFR 630.1012(b)(1), p10, also says hardware).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h057",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In the Time Table for Evaluating Activity Significance, when do Raleigh Let Division Activities get evaluated?",
+   "type": "table",
+   "edge_cases": [
+    "toc_decoy",
+    "table_id",
+    "not_first_row_col"
+   ],
+   "expected": {
+    "source": "WZSafetyAndMobilityGuidelines.pdf",
+    "pdf_pages": [
+     17
+    ],
+    "printed_pages": [
+     "17"
+    ],
+    "value": "six (6) months before Let",
+    "accept": [
+     "6 months before let",
+     "six months before let",
+     "six months prior"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "NCDOT WZ Safety & Mobility Guidelines Table 2 (title listed in the contents on p2): the only check in the Raleigh Let Division Activities column is 'Six (6) months before Let'. Gold is the table page, not the contents.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h058",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Responsible Charge for Exception Requests: for a state funded Division activity, who requests the exception and who approves it?",
+   "type": "table",
+   "edge_cases": [
+    "toc_decoy",
+    "table_id",
+    "not_first_row_col"
+   ],
+   "expected": {
+    "source": "WZSafetyAndMobilityGuidelines.pdf",
+    "pdf_pages": [
+     22
+    ],
+    "printed_pages": [
+     "22"
+    ],
+    "value": "Project Manager",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "Project Manager"
+     ],
+     [
+      "Division Engineer"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Guidelines Table 4 Responsible Charge for Exception Requests, row State Funded Division Activities: requested by the Project Manager to the Division Engineer for review and approval.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h059",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "TMP Implementation Costs: why does FHWA's TMP guide say these costs should be in the overall project cost?",
+   "type": "text",
+   "edge_cases": [
+    "toc_decoy",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "trans_mgmt_plans.pdf",
+    "pdf_pages": [
+     40
+    ],
+    "printed_pages": [
+     "3-10"
+    ],
+    "value": "additional funding",
+    "accept": [
+     "difficult to obtain additional funding",
+     "under-allocation"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "trans_mgmt_plans 3.10 TMP Implementation Costs (heading listed in the contents, p9): critical because it may be difficult to obtain additional funding at a later time; avoids under-allocation of funds.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h060",
+   "division": "wztc",
+   "asker": "wztc",
+   "question": "TMP Design Manual 4.1 CADD: what size are full size traffic control plan sheets?",
+   "type": "text",
+   "edge_cases": [
+    "toc_decoy",
+    "units",
+    "precision"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     118
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "22\" x 34\"",
+    "accept": [
+     "22 x 34",
+     "22 in x 34 in",
+     "22 inches by 34 inches"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Part 3 Ch. 4, 4.1 CADD, Scales: full size plan sheets 22\" x 34\" with a 3\" border on the left; half size 11\" x 17\". Heading listed in the manual's contents.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h061",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Meeting Responsibility: how soon after a project meeting must the TMP plan developer submit draft minutes?",
+   "type": "text",
+   "edge_cases": [
+    "toc_decoy"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     126
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "3 business days",
+    "accept": [
+     "three business days"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Part 3 Ch. 7, 7.1 Meeting Responsibility: draft minutes for approval within 3 business days following the meeting. Heading listed in the manual's contents.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h062",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "The Standard Specifications let us cover excavated areas with metal plates where the speed is 45 mph or less, so we can plate a trench on a 45 mph road overnight, right?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise",
+    "range_threshold"
+   ],
+   "expected": {
+    "source": "2024 Standard Specifications for Roads and Structures.pdf",
+    "pdf_pages": [
+     660
+    ],
+    "printed_pages": [
+     "11-2"
+    ],
+    "value": "35 mph",
+    "accept": [
+     "35 mph or less"
+    ],
+    "unit": "mph"
+   },
+   "refuse": false,
+   "behaviour": "correct",
+   "verified_by": "page_text_match",
+   "note": "Standard Specifications 1101-6: metal plates may be used in low speed areas (35 mph or less). The premise (45 mph) is wrong; a 45 mph road does not qualify.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h063",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "Under the Standard Specifications, once we're notified of a traffic control safety issue that isn't an imminent danger we have 72 hours to fix it. Is that right?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": {
+    "source": "2024 Standard Specifications for Roads and Structures.pdf",
+    "pdf_pages": [
+     664
+    ],
+    "printed_pages": [
+     "11-6"
+    ],
+    "value": "48 hours",
+    "accept": [
+     "within 48 hours"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "correct",
+   "verified_by": "page_text_match",
+   "note": "Standard Specifications 1101-11: remedial action immediately for imminent danger, within 48 hours after notification for a non-imminent safety issue. (The 2023 process review's 72 hours is a smart work zone device repair clause in one contract, not this rule.)",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h064",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "NCDOT requires high visibility devices on interstate and freeway projects that last 12 months or more. What do those devices include?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": {
+    "source": "2023 WZ Safety & Mobility Process Review.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     "7"
+    ],
+    "value": "24 months",
+    "accept": [
+     "24 months or more"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "24 months"
+     ],
+     [
+      "drums"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "correct",
+   "verified_by": "page_text_match",
+   "note": "2023 Process Review: high visibility devices (all new drums and stationary/portable signs with fluorescent post reflector strips) are required on interstate/freeway projects with durations of 24 months or more, not 12. The answer must correct the duration.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h065",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "The MUTCG says flaggers have to be rotated every hour. What does it say about alternating traffic under heavy volumes?",
+   "type": "scan",
+   "edge_cases": [
+    "false_premise",
+    "scan"
+   ],
+   "expected": {
+    "source": "Chapter_2.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     "9"
+    ],
+    "value": "2 to 3 hours",
+    "accept": [
+     "every 2 to 3 hours",
+     "2-3 hours"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "2 to 3 hours",
+      "2-3 hours"
+     ],
+     [
+      "2 to 3 minutes",
+      "2-3 minutes"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "correct",
+   "verified_by": "ocr_text_match",
+   "note": "MUTCG Ch. 2 flagging notes (image page, folio 9): rotate flaggers every 2 to 3 hours (not every hour); alternate traffic flow every 2 to 3 minutes under heavy traffic.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h066",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "The League of Municipalities work zone card that NCDOT accepts for small-town employees is only good for 2 years before renewal, correct?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": {
+    "source": "NCDOTFinalRuleImplementation.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "4 years",
+    "accept": [
+     "four years"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "correct",
+   "verified_by": "page_text_match",
+   "note": "NCDOT Final Rule Implementation, local governments: the League of Municipalities certification is in effect for 4 years, then the employee must renew the card.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h067",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "What's the minimum height for traffic cones in a work zone under MUTCD Part 6?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable"
+   ],
+   "expected": {
+    "source": "part6.pdf",
+    "pdf_pages": [
+     54
+    ],
+    "printed_pages": [
+     "818"
+    ],
+    "value": "18 inches",
+    "accept": [
+     "18 in"
+    ],
+    "unit": "in",
+    "all_of": [
+     [
+      "18 inches",
+      "18 in"
+     ],
+     [
+      "28 inches",
+      "28 in"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "clarify",
+   "verified_by": "page_text_match",
+   "note": "Missing variable: road speed / time of day. MUTCD 6K.02: daytime and low-speed roads 18 in minimum; freeways, other high-speed highways and at night 28 in minimum.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h068",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "How often do the UNEVEN LANES signs have to be repeated where we leave a drop-off of an inch and a half or less in the travel lanes?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     13
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "every half mile",
+    "accept": [
+     "half mile",
+     "1/2 mile"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "half mile",
+      "1/2 mile"
+     ],
+     [
+      "every mile",
+      "once every mile"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "clarify",
+   "verified_by": "page_text_match",
+   "note": "Missing variable: posted speed. TMP 2.4 A): W8-11 every half mile where posted speed < 45 mph, every mile where >= 45 mph.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h069",
+   "division": "wztc",
+   "asker": "wztc",
+   "question": "What score do you need on the written test to pass an NCDOT-approved work zone qualification course?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable"
+   ],
+   "expected": {
+    "source": "NCDOTFinalRuleImplementation.pdf",
+    "pdf_pages": [
+     3,
+     5
+    ],
+    "printed_pages": [
+     "",
+     ""
+    ],
+    "value": "70",
+    "accept": [
+     "70 or better"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "70"
+     ],
+     [
+      "80"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "clarify",
+   "verified_by": "page_text_match",
+   "note": "Missing variable: which course. NCDOT Final Rule Implementation: Flagger and Installer courses 70 or better (p3); Work Zone Designer course 80 or better (p5); the Supervisor course gives no grade.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h070",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "What cone size do NCDOT's roadway standard drawings call for in a work zone?",
+   "type": "figure",
+   "edge_cases": [
+    "missing_variable",
+    "rotated",
+    "figure"
+   ],
+   "expected": {
+    "source": "Division 11 Combined.pdf",
+    "pdf_pages": [
+     47
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "36 inch",
+    "accept": [
+     "36 in",
+     "36-inch"
+    ],
+    "unit": "in",
+    "all_of": [
+     [
+      "36 inch",
+      "36 in"
+     ],
+     [
+      "28 inch",
+      "28 in"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "clarify",
+   "verified_by": "page_text_match",
+   "note": "Missing variable: road class. Division 11 p47 (rotated drawing): 36 inch cone required for freeways and interstates; 28 inch cone is the minimum for all other roads.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h071",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What minimum legibility distance does MUTCD Figure 6L-3 give for a Type E arrow board?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "Figure 6L-3 (part6 p70) lists arrow board types A to D only; a cell beyond the table's range. Checked: no 'Type E' arrow board in any wztc document.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h072",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "How many work zone records did NCDOT's WZ-EVA database hold by the end of 2025?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "The 2023 process review gives just over 30,000 records as of 11/30/23 only. Checked: no WZ-EVA count for 2024 or 2025 in any wztc document.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h073",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What dollar amount of liquidated damages did NCDOT put in the I-3306 contract for smart work zone devices not repaired within 72 hours?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "2023 process review p6 says liquidated damages were added for devices not repaired within 72 hours but gives no amount. Checked: no dollar figure near 'I-3306' in any wztc document.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h074",
+   "division": "wztc",
+   "asker": "wztc",
+   "question": "What passing grade does the written test for NCDOT's Qualified Work Zone Supervisor course require?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "NCDOT Final Rule Implementation p4 requires passing a written test plus two years of OJT but gives no grade (the Flagger/Installer 70 and Designer 80 grades do not apply). Checked: no 'passing grade' near 'Supervisor'.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h075",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What does Hawaii DOT require for flagger certification?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "Another state's rule. Checked: no Hawaii flagger provisions in any wztc document (Hawaii appears only in a payload table of the road user cost guide).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h076",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "How many hours of vacation leave do NCDOT employees earn each month?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "Another topic entirely (HR). Checked: no vacation leave text in any wztc document.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h077",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "How do I renew a North Carolina commercial driver's license?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "Another topic entirely (DMV licensing). Checked: no 'commercial driver's license' or 'CDL' in any wztc document.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h078",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "In FHWA's TMP strategy matrix (Table B.1), what are the triggers for considering lighting devices?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "appendix_page",
+    "table_id"
+   ],
+   "expected": {
+    "source": "trans_mgmt_plans.pdf",
+    "pdf_pages": [
+     90
+    ],
+    "printed_pages": [
+     "B-8"
+    ],
+    "value": "night work",
+    "accept": [
+     "night work is being conducted"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "night work"
+     ],
+     [
+      "Long project duration"
+     ],
+     [
+      "High traffic volume"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "trans_mgmt_plans Table B.1 TMP Strategy Matrix (continued), Appendix B-8, row IB8 Lighting devices: triggers when night work is being conducted, long project duration, high traffic volume. The table runs over several appendix pages; this row is on a continuation page.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h079",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In Table B.1 of FHWA's TMP guide, when should pedestrian/bicycle access improvements be considered?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "appendix_page"
+   ],
+   "expected": {
+    "source": "trans_mgmt_plans.pdf",
+    "pdf_pages": [
+     88
+    ],
+    "printed_pages": [
+     "B-6"
+    ],
+    "value": "school route",
+    "accept": [
+     "school route traverses"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "Long project duration"
+     ],
+     [
+      "pedestrian/bicyclist activities",
+      "bicyclist"
+     ],
+     [
+      "sidewalks"
+     ],
+     [
+      "school route"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Table B.1 (continued), Appendix B-6, row IA12: long project duration; significant pedestrian/bicyclist activities; existing sidewalks traverse the work zone; a school route traverses the work zone.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h080",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Per the footnote to the traffic control devices part of FHWA's TMP strategy matrix, which category are temporary traffic barriers and crash cushions put in?",
+   "type": "footnote",
+   "edge_cases": [
+    "footnote",
+    "appendix_page"
+   ],
+   "expected": {
+    "source": "trans_mgmt_plans.pdf",
+    "pdf_pages": [
+     88
+    ],
+    "printed_pages": [
+     "B-6"
+    ],
+    "value": "Work Zone Safety Management Strategies",
+    "accept": [
+     "safety management strategies"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Table B.1, Appendix B-6, footnote 3 on 'B. Traffic Control Devices': other safety devices from MUTCD Part 6 such as temporary traffic barriers and crash cushions are included in the Work Zone Safety Management Strategies category.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h081",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In FHWA's TMP guide Table 5.1 (resources for examples and best practices), what date is listed for Wisconsin DOT's Facilities Development Manual?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "table_id",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "trans_mgmt_plans.pdf",
+    "pdf_pages": [
+     78
+    ],
+    "printed_pages": [
+     "5-14"
+    ],
+    "value": "February 2003",
+    "accept": [
+     "Feb. 2003",
+     "Feb 2003"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Table 5.1 Resources for Examples and Best Practices (continued), printed 5-14: Wisconsin Department of Transportation, Facilities Development Manual, February 2003. The table runs from 5-10 to 5-14.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h082",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Who are the authors listed on the technical report documentation page of FHWA's Developing and Implementing TMPs for Work Zones guide?",
+   "type": "text",
+   "edge_cases": [
+    "form"
+   ],
+   "expected": {
+    "source": "trans_mgmt_plans.pdf",
+    "pdf_pages": [
+     129
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "Krista Jeannotte",
+    "accept": [
+     "Jeannotte"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "Jeannotte"
+     ],
+     [
+      "Chandra"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "trans_mgmt_plans Form DOT F 1700.7 (technical report documentation page), field 7 Author(s): Krista Jeannotte and Andre Chandra - Cambridge Systematics. No printed folio.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h083",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "What report date is on the technical report documentation form of FHWA's Work Zone ITS Implementation Guide?",
+   "type": "text",
+   "edge_cases": [
+    "form"
+   ],
+   "expected": {
+    "source": "fhwahop14008.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "January 2014",
+    "accept": [
+     "Jan. 2014",
+     "Jan 2014"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "fhwahop14008 technical report documentation page, field 5 Report Date: January 2014. No printed folio.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h084",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What period does the technical report documentation page of the Work Zone Operations Best Practices Guidebook (third edition) give as covered?",
+   "type": "text",
+   "edge_cases": [
+    "form"
+   ],
+   "expected": {
+    "source": "bpguidebook.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "1/23/2008 to 10/30/2013",
+    "accept": [
+     "1/23/2008",
+     "January 23, 2008"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "bpguidebook Form DOT F 1700.7, field 13 Type of Report and Period Covered: 1/23/2008 to 10/30/2013. No printed folio (PDF label 'C').",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h085",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "Under 23 CFR 630.1012(e), the State's and the contractor's responsible persons must be trained as specified in which section?",
+   "type": "text",
+   "edge_cases": [
+    "cross_reference",
+    "multi_column"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part630.pdf",
+    "pdf_pages": [
+     11
+    ],
+    "printed_pages": [
+     "255"
+    ],
+    "value": "630.1008(d)",
+    "accept": [
+     "1008(d)"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 630.1012(e) Responsible persons: designate a trained person, as specified in 630.1008(d).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h086",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "For TIP projects and Raleigh Let Division Activities, what do NCDOT's work zone guidelines say to use to determine the level of significance?",
+   "type": "text",
+   "edge_cases": [
+    "cross_reference"
+   ],
+   "expected": {
+    "source": "WZSafetyAndMobilityGuidelines.pdf",
+    "pdf_pages": [
+     17
+    ],
+    "printed_pages": [
+     "17"
+    ],
+    "value": "Table 3",
+    "accept": [
+     "Criteria chart"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "Table 3"
+     ],
+     [
+      "page 19",
+      "criteria chart"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Guidelines p17: use the Criteria chart shown in Table 3 (See page 19); other division activities and encroachments use the procedures on pages 20-21.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h087",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In Table 37 of FHWA's work zone road user cost guide, is highway advisory radio listed as a public awareness or a motorist information strategy?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "table_id"
+   ],
+   "expected": {
+    "source": "fhwahop12005.pdf",
+    "pdf_pages": [
+     71
+    ],
+    "printed_pages": [
+     "59"
+    ],
+    "value": "motorist information",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "fhwahop12005 Table 37 Work zone management strategies by category - public information (page rotated, printed 59): Highway advisory radio is in the Motorist Information column.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h088",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Can thermoplastic pavement markings be applied when the ambient air and pavement temperatures are both exactly 50 degrees F?",
+   "type": "text",
+   "edge_cases": [
+    "symbols",
+    "near_identical",
+    "range_threshold"
+   ],
+   "expected": {
+    "source": "2024 Standard Specifications for Roads and Structures.pdf",
+    "pdf_pages": [
+     686
+    ],
+    "printed_pages": [
+     "12-6"
+    ],
+    "value": "50°F",
+    "accept": [
+     "50 °F",
+     "50 degrees",
+     "50 deg"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Standard Specifications 1205-4(B) Thermoplastic weather limitations: ambient air and pavement temperature 50°F or higher (so 50°F exactly is allowed). Near-identical to the polyurea rule on 12-8 (40°F).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h089",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "What minimum ambient air and pavement temperature do the Standard Specifications set for applying polyurea pavement markings?",
+   "type": "text",
+   "edge_cases": [
+    "symbols",
+    "near_identical"
+   ],
+   "expected": {
+    "source": "2024 Standard Specifications for Roads and Structures.pdf",
+    "pdf_pages": [
+     688
+    ],
+    "printed_pages": [
+     "12-8"
+    ],
+    "value": "40°F",
+    "accept": [
+     "40 °F",
+     "40 degrees",
+     "40 deg"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Standard Specifications 1205-5(A) Polyurea weather limitations: 40°F or higher. Near-identical to the thermoplastic rule (50°F, 12-6).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h090",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Our haul trucks will be entering and leaving an open travel lane on a multi-lane, controlled access road. How much below the posted speed limit are they allowed to be when they enter the lane?",
+   "type": "text",
+   "edge_cases": [
+    "conditional"
+   ],
+   "expected": {
+    "source": "2024 Standard Specifications for Roads and Structures.pdf",
+    "pdf_pages": [
+     660
+    ],
+    "printed_pages": [
+     "11-2"
+    ],
+    "value": "10 mph below the posted speed limit",
+    "accept": [
+     "10 mph below",
+     "within 10 mph"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Standard Specifications 1101-7 Hauling Operations: on multi-lane, controlled access roadways haul vehicles shall not enter/exit an open travel lane at speeds more than 10 mph below the posted speed limit; acceleration to within 10 mph only on paved surfaces. Both conditions (multi-lane and controlled access) apply.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h091",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "For a permanent pothole patching operation on an interstate with limited shoulder and guardrail, what minimum mounting height from the roadway to a ground-mounted sign does the MUTCG call for?",
+   "type": "scan",
+   "edge_cases": [
+    "conditional",
+    "scan"
+   ],
+   "expected": {
+    "source": "Chapter_5.pdf",
+    "pdf_pages": [
+     45
+    ],
+    "printed_pages": [
+     "110"
+    ],
+    "value": "five feet",
+    "accept": [
+     "5 feet",
+     "5 ft",
+     "5'"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "ocr_text_match",
+   "note": "MUTCG Ch. 5 Notes on Permanent Pothole Patching on Interstate and Multilane Divided Facilities with Limited Shoulder and Guardrail (image page, folio 110), note 4: minimum five feet for interstates and other high volume roadways, minimum one foot for all other roadways (signs on vehicles: one foot, note 3).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h092",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "When an AFAD operation is idle for 30 minutes, how far from the edge line must the AFAD units be moved, per the MUTCG?",
+   "type": "scan",
+   "edge_cases": [
+    "range_threshold",
+    "scan"
+   ],
+   "expected": {
+    "source": "Chapter_2.pdf",
+    "pdf_pages": [
+     36
+    ],
+    "printed_pages": [
+     "42"
+    ],
+    "value": "2 feet",
+    "accept": [
+     "2 ft",
+     "2'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "ocr_text_match",
+   "note": "MUTCG Ch. 2, F. Notes for AFAD (image page, folio 42) note 7: when work is not pursued for 30 minutes or longer, all parts of the AFAD unit removed from the travel lane a minimum of 2' from the edge line. 30 minutes exactly triggers it.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h093",
+   "division": "wztc",
+   "asker": "wztc",
+   "question": "According to FHWA's Work Zone ITS Implementation Guide, by how much can speed monitoring displays reduce speeds?",
+   "type": "text",
+   "edge_cases": [
+    "units",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "fhwahop14008.pdf",
+    "pdf_pages": [
+     68
+    ],
+    "printed_pages": [
+     "60"
+    ],
+    "value": "4-6 mph",
+    "accept": [
+     "4 to 6 mph"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "fhwahop14008 6.5.2 (printed 60): speed monitoring displays could reduce speeds by 4-6 mph; one study found a 20 to 40 percent reduction in vehicles going 10+ mph over the limit.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h094",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "In FHWA's work zone road user cost guide example, what hourly employment cost (December 2010) is used for the value of business travel time?",
+   "type": "text",
+   "edge_cases": [
+    "precision"
+   ],
+   "expected": {
+    "source": "fhwahop12005.pdf",
+    "pdf_pages": [
+     27
+    ],
+    "printed_pages": [
+     "15"
+    ],
+    "value": "$29.75",
+    "accept": [
+     "29.75"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "fhwahop12005 Example (printed 15), Step 3: hourly employment cost = $29.75 (December, 2010); value of a person's business travel time = 100% of median hourly wages plus benefits.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h095",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Under FHWA's Work Zone Self Assessment categories, which project type covers recurring mobile work like pothole patching, striping and mowing?",
+   "type": "text",
+   "edge_cases": [
+    "rephrased"
+   ],
+   "expected": {
+    "source": "rule_guide.pdf",
+    "pdf_pages": [
+     58
+    ],
+    "printed_pages": [
+     "5-6"
+    ],
+    "value": "Type IV",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "rule_guide 5.x (printed 5-6), WZSA categories: Type IV - small impact, low public interest, short to moderate duration, usually mobile and recurring (striping, guardrail repair, pothole patching, mowing).",
+   "split": "tuning"
+  },
+  {
+   "id": "wztc-h096",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In the Work Zone Operations Best Practices Guidebook index by roadway characteristics, which practices are listed for toll roads?",
+   "type": "table",
+   "edge_cases": [
+    "printed_vs_pdf",
+    "table_id"
+   ],
+   "expected": {
+    "source": "bpguidebook.pdf",
+    "pdf_pages": [
+     20
+    ],
+    "printed_pages": [
+     "6"
+    ],
+    "value": "G4-4",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "C1-1"
+     ],
+     [
+      "G4-4"
+     ],
+     [
+      "G4-5"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "bpguidebook Best Practices by Roadway Characteristics (PDF p20, printed page 6): Toll Roads - C1-1, G4-4, G4-5.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h097",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What are the objectives of work zone impacts assessment during construction, according to FHWA's work zone impacts assessment guide?",
+   "type": "text",
+   "edge_cases": [
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "wzi_guide.pdf",
+    "pdf_pages": [
+     114
+    ],
+    "printed_pages": [
+     "7-2"
+    ],
+    "value": "Implement the TMP",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "pre-construction coordination"
+     ],
+     [
+      "proposed changes"
+     ],
+     [
+      "Implement the TMP"
+     ],
+     [
+      "monitor and manage"
+     ],
+     [
+      "Revise the TMP"
+     ],
+     [
+      "lessons"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "wzi_guide 7.2 (printed 7-2): six objectives - resolve pre-construction coordination issues; assess proposed changes before work starts; implement the TMP; actively monitor and manage impacts; revise the TMP; document findings or lessons.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h098",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "Per Standard Specifications Table 1205-5, what minimum reflectivity must yellow Type 3 wet reflective high performance tape meet when measured wet?",
+   "type": "table",
+   "edge_cases": [
+    "merged_header",
+    "not_first_row_col",
+    "table_id"
+   ],
+   "expected": {
+    "source": "2024 Standard Specifications for Roads and Structures.pdf",
+    "pdf_pages": [
+     689
+    ],
+    "printed_pages": [
+     "12-9"
+    ],
+    "value": "200 mcd/lux/m",
+    "accept": [
+     "200 mcd"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Table 1205-5 Reflectometer Requirements for Cold Applied Plastic Tape: each Type label is a merged cell over a White and a Yellow row; Type 3 (Wet): white 250, yellow 200 mcd/lux/m2 (Type 3 Dry: 500/300).",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h099",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In Table 21 of FHWA's work zone road user cost guide, which price index is used to update depreciation costs for truck trailers?",
+   "type": "table",
+   "edge_cases": [
+    "merged_header",
+    "table_id"
+   ],
+   "expected": {
+    "source": "fhwahop12005.pdf",
+    "pdf_pages": [
+     47
+    ],
+    "printed_pages": [
+     "35"
+    ],
+    "value": "Producer Price Index",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "Producer Price Index"
+     ],
+     [
+      "1406"
+     ]
+    ]
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "fhwahop12005 Table 21 Price adjustments for VOC components (printed 35): the index name is a merged cell spanning all vehicle columns; Depreciation -> Producer Price Index - Commodity Data Transportation Equipment (14); truck trailers item code 1406.",
+   "split": "locked"
+  },
+  {
+   "id": "wztc-h100",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In the RealCost delay table of Example 2.2 in FHWA's road user cost guide, the queuing delay for 08-09 is 23.81. In what units?",
+   "type": "footnote",
+   "edge_cases": [
+    "footnote",
+    "units",
+    "not_first_row_col"
+   ],
+   "expected": {
+    "source": "fhwahop12005.pdf",
+    "pdf_pages": [
+     21
+    ],
+    "printed_pages": [
+     "9"
+    ],
+    "value": "minutes",
+    "accept": [
+     "per vehicle in minutes",
+     "minutes per vehicle"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "fhwahop12005 Example 2.2 table (printed 9), footnote (**): delay times reported as average delay time per vehicle in minutes. The table itself has no unit.",
+   "split": "tuning"
+  }
+ ]
+}
