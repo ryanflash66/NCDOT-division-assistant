@@ -34,10 +34,10 @@ def _cell(rows: Sequence[Dict[str, Any]], metric: str) -> str:
 
 def _refused(rows: Sequence[Dict[str, Any]]) -> str:
     """Must-refuse items of the row that were refused, as count/n with its interval."""
-    ran = [r for r in rows if not r["answerable"] and r.get("refused") is not None]
+    ran = [r for r in rows if not r["answerable"] and r.get("false_answer") is not None]
     if not ran:
         return ""
-    k, n = sum(1 for r in ran if r["refused"]), len(ran)
+    k, n = sum(1 for r in ran if not r["false_answer"]), len(ran)
     low, high = wilson(k, n)
     return f"refused {k}/{n} ({low * 100:.0f}–{high * 100:.0f}%)"
 

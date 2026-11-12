@@ -140,3 +140,20 @@ def test_the_committed_set_is_valid_and_matches_its_hash():
     frozen = read_frozen(Path(HASH_FILE))
     assert frozen is not None, "run `py -m evaluation.heldout.run freeze`"
     assert locked_digest(items) == frozen
+
+
+def test_citation_markers_are_not_read_as_the_value():
+    item = _item(expected={"source": TMP, "pdf_pages": [23], "printed_pages": ["4"], "value": "2"})
+    assert score_item(item, None, _payload("Three copies are required [2]."))["value_ok"] is False
+    assert score_item(item, None, _payload("Submit 2 copies [1]."))["value_ok"] is True
+
+
+def test_saying_a_section_is_reserved_counts_as_declining():
+    reserved = _item(type="unanswerable", refuse=True, expected=None, behaviour="refuse", split="locked",
+                     question="What does Subpart C of 23 CFR part 630 require?", accept_reply=["reserved"])
+    assert validate_items([reserved], DIVISIONS) == []
+    said = score_item(reserved, None, _payload("Subpart C is marked [Reserved]; it has no requirements [1]."))
+    assert said["false_answer"] is False and said["critical"] is False
+    made_up = score_item(reserved, None, _payload("Subpart C requires a traffic control plan [1]."))
+    assert made_up["false_answer"] is True and made_up["critical"] is True
+    assert "accept_reply" in validate_items([_item(accept_reply=["reserved"])], DIVISIONS)[0]

@@ -157,6 +157,16 @@ def _cited_ok_printed(cited: Optional[Sequence[Dict[str, Any]]], source: str,
     return all(c["file"] == source and printed_range(c["page"], c["page_end"]) & gold for c in cited)
 
 
+# Citation markers as the app writes them. Dropped before a value is looked for: a gold value of "2"
+# (utilities-h010) must not be found in the "[2]" beside some other number.
+_MARKER = re.compile(r"[\[【［]\s*\d+(?:\s*[,;\-–]\s*\d+)*\s*[\]】］]")
+
+
+def answer_text(payload: Dict[str, Any]) -> str:
+    """The answer's wording without its citation markers."""
+    return _MARKER.sub(" ", payload.get("answer") or "")
+
+
 def _parts_found(all_of: Sequence[Any], answer: str) -> List[bool]:
     """For each required part (a wording, or a list of wordings of the same thing): is it in the answer?"""
     return [value_matches(None, [part] if isinstance(part, str) else list(part), answer) for part in all_of]
@@ -218,7 +228,7 @@ def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]],
     if answerable:
         row["over_refusal"] = refused
         clarify = item.get("behaviour") == "clarify"
-        text = payload.get("answer") or ""
+        text = answer_text(payload)
         if refused:
             row.update(critical=False, **({"clarify_ok": False} if clarify else {"value_ok": False, "strict_ok": False}))
             return row
@@ -241,9 +251,12 @@ def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]],
             if row["value_ok"]:
                 row["false_flag"] = row["flagged"]
     else:
-        row["false_answer"] = not refused
-        row["critical"] = not refused and not uncited
-        if not refused and not uncited and row["unverified"] is not None:
+        # "That section is reserved" is the right reply to a question about a section the document
+        # prints as "[Reserved]" (23 CFR 630 Subpart C), whether or not the model calls it a refusal.
+        declined = refused or value_matches(None, item.get("accept_reply"), answer_text(payload))
+        row["false_answer"] = not declined
+        row["critical"] = not declined and not uncited
+        if not declined and not uncited and row["unverified"] is not None:
             row["flagged"] = bool(row["unverified"])
     return row
 

@@ -105,6 +105,10 @@ def validate_items(items: Iterable[Dict[str, Any]], divisions: Optional[Dict[str
             errors.append(f"{where}: behaviour {behaviour!r} is not one of {', '.join(BEHAVIOURS)}")
         elif behaviour is not None and (behaviour == "refuse") != item["refuse"]:
             errors.append(f"{where}: behaviour {behaviour!r} does not fit refuse {str(item['refuse']).lower()}")
+        replies = item.get("accept_reply")
+        if replies is not None and not (item["refuse"] and isinstance(replies, list) and replies
+                                        and all(isinstance(r, str) and r.strip() for r in replies)):
+            errors.append(f"{where}: accept_reply must be a non-empty list of phrases, on a must-refuse item only")
         if item["type"] == "unanswerable" and not item["refuse"]:
             errors.append(f"{where}: type unanswerable needs refuse true")
         if not item["refuse"]:

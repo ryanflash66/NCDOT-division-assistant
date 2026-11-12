@@ -30,7 +30,7 @@ TYPES = ("table", "figure", "scan", "rotated", "multipage_table", "text", "unans
          "units", "footnote", "duplicate_pages", "cross_ref")
 SPLITS = ("tuning", "locked")
 ITEM_KEYS = ("id", "division", "asker", "question", "type", "expected", "refuse", "split")
-OPTIONAL_KEYS = ("edge_cases", "verified_by", "note", "behaviour")
+OPTIONAL_KEYS = ("edge_cases", "verified_by", "note", "behaviour", "accept_reply")
 # What the right reply does (DAR-718). Without the key: "refuse" when refuse is true, else "answer".
 #   answer   state the gold value from the gold page
 #   refuse   say the documents don't cover it
