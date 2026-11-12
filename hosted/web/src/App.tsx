@@ -3,6 +3,7 @@ import { AssistantRuntimeProvider, useLocalRuntime } from "@assistant-ui/react";
 import { BookOpenIcon, FileTextIcon } from "lucide-react";
 import { fetchDivisions } from "@/api";
 import { Thread } from "@/components/assistant-ui/elements/thread.aui";
+import { NewChatButton } from "@/components/assistant-ui/elements/new-chat-button";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { DocsPanel } from "@/panels/DocsPanel";
@@ -70,18 +71,19 @@ export default function App() {
   return (
     <AssistantRuntimeProvider runtime={runtime}>
       <div className="flex h-dvh flex-col bg-background text-foreground">
-        <header className="flex h-14 shrink-0 items-center gap-3 border-b px-4">
+        <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4 sm:gap-3">
           {!wide && (
             <Button variant="outline" size="sm" onClick={() => setDrawer("docs")} aria-label="Open documents">
               <FileTextIcon /> Documents
             </Button>
           )}
           <div className="flex min-w-0 flex-1 items-center gap-2">
-            <span className="rounded border px-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            <span className="rounded border px-1.5 text-xs max-sm:hidden font-semibold uppercase tracking-wide text-muted-foreground">
               Prototype
             </span>
             <h1 className="truncate text-base font-semibold">Ask another division's manuals</h1>
           </div>
+          <NewChatButton />
           {!wide && (
             <Button variant="outline" size="sm" onClick={() => setDrawer("sources")} aria-label="Open sources">
               <BookOpenIcon /> Sources
