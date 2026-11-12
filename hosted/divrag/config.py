@@ -51,6 +51,8 @@ LLM_PROVIDER=openai. Everything else has a default suitable for the public demo.
                                 model refuses (see answer.SECOND_LOOK_PASSAGES)
     RETRY_MIN_SCORE             retry only when the top reranker score is at least this (default -2.0; see answer.RETRY_MIN_SCORE)
     RETRY_MIN_SECONDS           retry only if at least this much of the request budget is left (default 15)
+    ROW_GUARD                   "off" (default) or "on": flag an answer whose number sits in a table row that lacks a label
+                                the question names while another row of that table has it (DAR-664, rowcheck.py)
     ALLOWED_ORIGINS             comma-separated origins allowed to call the API from another site
                                 (default none: only the page served by this app can call it)
 """
@@ -131,6 +133,7 @@ class Settings:
     retry_min_score: float
     retry_min_seconds: float
     allowed_origins: Tuple[str, ...]
+    row_guard: bool = False
 
     @property
     def answers_with_openai(self) -> bool:
@@ -292,6 +295,9 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     retry = env.get("RETRY_ON_REFUSAL", "on").strip().lower()
     if retry not in ("on", "off", "1", "0", "true", "false"):
         raise ValueError(f"RETRY_ON_REFUSAL must be on or off, got {retry!r}")
+    row_guard = env.get("ROW_GUARD", "off").strip().lower()
+    if row_guard not in ("on", "off", "1", "0", "true", "false"):
+        raise ValueError(f"ROW_GUARD must be on or off, got {row_guard!r}")
     retry_min_seconds = float(env.get("RETRY_MIN_SECONDS", "15"))
     if retry_min_seconds < 0:
         raise ValueError(f"RETRY_MIN_SECONDS must be 0 or more, got {retry_min_seconds}")
@@ -345,4 +351,5 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         retry_min_score=float(env.get("RETRY_MIN_SCORE", "-2.0")),  # answer.RETRY_MIN_SCORE (DAR-662)
         retry_min_seconds=retry_min_seconds,
         allowed_origins=_csv(env.get("ALLOWED_ORIGINS", "")),
+        row_guard=row_guard in ("on", "1", "true"),
     )
