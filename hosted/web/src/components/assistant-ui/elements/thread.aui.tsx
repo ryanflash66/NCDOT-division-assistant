@@ -53,7 +53,7 @@ const EMPTY_COMPONENTS: ThreadComponents = {};
 
 const ThreadComponentsContext = createContext<ThreadComponents>(EMPTY_COMPONENTS);
 
-const isNewChatView = (s: AssistantState) => s.thread.messages.length === 0;
+export const isNewChatView = (s: AssistantState) => s.thread.messages.length === 0;
 
 export const Thread: FC<ThreadProps> = ({ components = EMPTY_COMPONENTS, autoFocus = true }) => {
   const isEmpty = useAuiState(isNewChatView);
@@ -192,38 +192,20 @@ const Examples: FC = () => {
 
 /**
  * Under the composer: when a question will be read as a follow-up (its search then
- * includes the previous question), New chat to start over, and the notice the old
- * page's footer gave.
+ * includes the previous question) and the notice the old page's footer gave. New chat
+ * lives in the page header (new-chat-button.tsx).
  */
 const ComposerFooter: FC = () => {
-  const aui = useAui();
   const messages = useAuiState((s) => s.thread.messages);
-  const running = useAuiState((s) => s.thread.isRunning);
   const target = useApp((s) => s.divisions.find((d) => d.id === s.target));
   // The turns the next typed question would be sent with (what turnsFor gives it once sent).
   const followUp = !!target && buildHistory(messages, target.id).length > 0;
-  const newChat = () => {
-    if (aui.thread().getState().isRunning) return;
-    aui.thread().reset();
-    useApp.getState().showAnswer(null);
-    // The New chat button goes away with the messages; the focus goes to the composer, not the page.
-    document.querySelector<HTMLTextAreaElement>(".aui-composer-input")?.focus();
-  };
   return (
     <div className="flex flex-col gap-2 px-1 text-xs">
-      {(followUp || messages.length > 0) && (
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-          {followUp && (
-            <p id="followup-hint" className="text-muted-foreground m-0 min-w-0 flex-1">
-              Read as a follow-up to your last {target.name} question. For a new topic, start a new chat.
-            </p>
-          )}
-          {messages.length > 0 && (
-            <Button type="button" variant="outline" size="sm" className="ms-auto" disabled={running} onClick={newChat}>
-              New chat
-            </Button>
-          )}
-        </div>
+      {followUp && (
+        <p id="followup-hint" className="text-muted-foreground m-0">
+          Read as a follow-up to your last {target.name} question. For a new topic, start a new chat with the New chat (+) button at the top.
+        </p>
       )}
       <p className="text-muted-foreground m-0">
         Answers are written by a free AI model from the cited pages only. Check the linked page before relying on an

@@ -39,6 +39,7 @@ models' daily cap is shared, so this is one LLM call per question (more on a ret
 
 import argparse
 import json
+import re
 import sys
 import time
 import urllib.error
@@ -69,8 +70,41 @@ MANY_DRAWINGS = 20
 
 PageKey = Tuple[str, int]  # (source, page)
 
-def load_cases() -> List[Dict]:
-    return json.loads(CASES.read_text(encoding="utf-8"))["cases"]
+def load_cases(path: Path = CASES) -> List[Dict]:
+    return json.loads(Path(path).read_text(encoding="utf-8"))["cases"]
+
+
+def grade_answer(case: Dict, answer: str, refused: bool, cited: List[Dict]) -> List[str]:
+    """What is wrong with an answer to `case`, as short messages; an empty list means it passes (DAR-669).
+
+    `must_contain` values have to be in the answer text and `must_not_contain` ones
+    not: the TMP manual's asphalt and concrete deflection tables are twins, and a
+    "27.42" for the concrete question is a wrong answer that looks right. A case
+    with neither field is only checked for the cited page. The cited page is the
+    PDF page of the case's `pages` in the expected document; a case with
+    `printed_pages` also needs the printed page the source shows.
+    """
+    def has(value: str) -> bool:  # a whole number: "19.42" is not in "119.42" or "19.425"
+        return re.search(rf"(?<![\d.]){re.escape(value)}(?!\d)", answer) is not None
+
+    problems = []
+    if refused:
+        problems.append("refused")
+    for value in case.get("must_contain", []):
+        if not has(value):
+            problems.append(f"missing {value}")
+    for value in case.get("must_not_contain", []):
+        if has(value):
+            problems.append(f"has the twin's {value}")
+    own = [c for c in cited if c["file"] == case["source"] and _covers(c, case["pages"])]
+    if not own:
+        problems.append("own page not cited")
+    elif case.get("printed_pages"):
+        # A merged passage shows the printed page of its first and of its last PDF page.
+        shown = {str(p) for c in own for p in (c.get("printed_page"), c.get("printed_page_end")) if p}
+        if not shown & set(case["printed_pages"]):
+            problems.append("printed page differs")
+    return problems
 
 
 def _indexed_chars(index: IndexFile) -> Counter:
@@ -195,7 +229,12 @@ def check(retriever: Retriever, cases: List[Dict]) -> List[Dict]:
         in_document = [h for h in hits if h.chunk["source"] == case["source"]]
         rank = next((i for i, h in enumerate(hits, 1)
                      if h.chunk["source"] == case["source"] and _covers(h.chunk, case["pages"])), None)
+        # The twin's page (DAR-669): where it ranks tells whether the retriever tells the two tables apart.
+        twin = case.get("twin_pages")
+        twin_rank = next((i for i, h in enumerate(hits, 1)
+                          if h.chunk["source"] == case["source"] and _covers(h.chunk, twin)), None) if twin else None
         rows.append({"id": case["id"], "right_document": bool(in_document), "page_rank": rank,
+                     "has_twin": bool(twin), "twin_rank": twin_rank,
                      "top": [f"{h.chunk['source']} p.{h.chunk['page']}" for h in hits], "ms": ms})
     return rows
 
@@ -209,7 +248,7 @@ def search(args: argparse.Namespace) -> int:
     cache = model_cache_dir()
     embedder = Embedder(index.model, cache_dir=cache)
     reranker = Reranker(cache_dir=cache)
-    cases = load_cases()
+    cases = load_cases(args.cases)
     save = dict(_pairs(args.save_index))
     indexes = [("current", index)]
     for name, path in _pairs(args.option):
@@ -240,7 +279,12 @@ def search(args: argparse.Namespace) -> int:
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(json.dumps(results, indent=1), encoding="utf-8")
-    return 0
+    # A case with a twin page fails when its own page is out of the top 5 or the twin's page ranks above it.
+    failed = [(n, r["id"]) for n in names for r in results[n]
+              if r["has_twin"] and (not r["page_rank"] or (r["twin_rank"] is not None and r["twin_rank"] < r["page_rank"]))]
+    for n, case_id in failed:
+        print(f"TWIN ORDER FAILED ({n}): {case_id}")
+    return 1 if failed else 0
 
 
 def measure(args: argparse.Namespace) -> int:
@@ -296,7 +340,7 @@ def measure(args: argparse.Namespace) -> int:
 
 def answers(args: argparse.Namespace) -> int:
     rows = []
-    for case in load_cases():
+    for case in load_cases(args.cases):
         body = json.dumps({"question": case["question"], "asker": case.get("asker", case["division"]),
                            "target": case["division"], "history": []}).encode()
         request = urllib.request.Request(args.base_url.rstrip("/") + "/api/ask", data=body,
@@ -310,7 +354,8 @@ def answers(args: argparse.Namespace) -> int:
         except (urllib.error.URLError, OSError, ValueError) as exc:
             status, payload = None, {"error": f"{type(exc).__name__}: {exc}"}
         wall = time.perf_counter() - started
-        cited = [{"file": _source_file(s["url"]), "page": s.get("page"), "page_end": s.get("page_end")}
+        cited = [{"file": _source_file(s["url"]), "page": s.get("page"), "page_end": s.get("page_end"),
+                  "printed_page": s.get("printed_page"), "printed_page_end": s.get("printed_page_end")}
                  for s in payload.get("sources", [])]
         right_document = any(c["file"] == case["source"] for c in cited)
         right_page = any(c["file"] == case["source"] and _covers(c, case["pages"]) for c in cited)
@@ -318,15 +363,25 @@ def answers(args: argparse.Namespace) -> int:
                      "uncited": payload.get("uncited"), "model": payload.get("model"), "error": payload.get("error"),
                      "cited": cited, "right_document": right_document, "right_page": right_page,
                      "answer": payload.get("answer") or "", "expected": case["answer"]})
+        # Only cases with value fields (the twin tables, DAR-669) are graded; the rest keep the old page-only report.
+        if any(case.get(k) for k in ("must_contain", "must_not_contain", "printed_pages")):
+            problems = grade_answer(case, rows[-1]["answer"], bool(payload.get("refused")), cited)
+            if status != 200 or payload.get("error"):  # no answer at all, not a wrong one
+                problems.insert(0, f"no answer (status {status}: {payload.get('error')})")
+            rows[-1]["problems"] = problems
         print(f"  {case['id']}: {status} {wall:.1f}s refused={payload.get('refused')} "
-              f"doc={right_document} page={right_page}", flush=True)
+              f"doc={right_document} page={right_page}"
+              + (f" problems={rows[-1]['problems'] or 'none'}" if "problems" in rows[-1] else ""), flush=True)
     out = args.out or Path(f"answers-{args.label}.json")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(rows, indent=1), encoding="utf-8")
     print(f"{args.label}: right document {sum(r['right_document'] for r in rows)}/{len(rows)}, "
           f"right page {sum(r['right_page'] for r in rows)}/{len(rows)}, "
           f"refused {sum(1 for r in rows if r['refused'])} -> {out}")
-    return 0
+    graded = [r for r in rows if "problems" in r]
+    if graded:
+        print(f"graded (value and page): {sum(1 for r in graded if not r['problems'])}/{len(graded)} pass")
+    return 1 if any(r.get("problems") for r in graded) else 0
 
 
 def main(argv: List[str]) -> int:
@@ -340,12 +395,14 @@ def main(argv: List[str]) -> int:
     s.add_argument("--option", action="append", help="NAME=ocr_extract.py output")
     s.add_argument("--save-index", action="append", help="NAME=DIR: save that option's patched index")
     s.add_argument("--out", type=Path)
+    s.add_argument("--cases", type=Path, default=CASES, help="a cases file (eval/twin_table_questions.json for DAR-669)")
     m = sub.add_parser("measure")
     m.add_argument("--index", action="append", required=True, help="NAME=DIR: an index to measure")
     m.add_argument("--out", type=Path)
     a = sub.add_parser("answers")
     a.add_argument("--base-url", default="http://127.0.0.1:8000")
     a.add_argument("--label", required=True)
+    a.add_argument("--cases", type=Path, default=CASES)
     a.add_argument("--out", type=Path)
     args = parser.parse_args(argv)
     return {"pages": pages, "search": search, "measure": measure, "answers": answers}[args.command](args)

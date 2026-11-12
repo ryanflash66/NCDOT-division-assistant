@@ -12,6 +12,8 @@ describe("PageImage", () => {
     expect(img.getAttribute("src")).toBe("/pages/utilities/uam/11.jpg");
     expect(img.getAttribute("alt")).toBe("Page 11 of Utilities Accommodation Manual");
     expect(img.getAttribute("loading")).toBe("lazy");
+    // No height cap: a capped page image is too small to read a table in.
+    expect(img.className).not.toMatch(/max-h-/);
     const link = screen.getByRole("link");
     expect(link.getAttribute("href")).toBe("https://example.org/uam.pdf#page=11");
     expect(link.getAttribute("target")).toBe("_blank");

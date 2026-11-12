@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
-from . import ITEM_KEYS, LOCKED_DIR, OPTIONAL_KEYS, SPLITS, TYPES, load_items, split_of
+from . import BEHAVIOURS, ITEM_KEYS, LOCKED_DIR, OPTIONAL_KEYS, SPLITS, TYPES, load_items, split_of
 
 
 def _divisions() -> Dict[str, set]:
@@ -42,6 +42,21 @@ def _check_expected(item: Dict[str, Any], files: set, errors: List[str]) -> None
         errors.append(f"{where}: expected.accept must be a list of strings")
     if "unit" in expected and expected["unit"] is not None and not isinstance(expected["unit"], str):
         errors.append(f"{where}: expected.unit must be a string or null")
+    all_of = expected.get("all_of")
+    if all_of is not None and not _is_all_of(all_of):
+        errors.append(f"{where}: expected.all_of must be a non-empty list whose entries are a string or a list of "
+                      f"strings (the wordings of one required part)")
+    if item.get("behaviour") == "clarify" and not (_is_all_of(all_of) and len(all_of) >= 2):
+        errors.append(f"{where}: behaviour clarify needs expected.all_of with the value of each branch (two or more)")
+
+
+def _is_all_of(value: Any) -> bool:
+    def part(entry: Any) -> bool:
+        if isinstance(entry, str):
+            return bool(entry.strip())
+        return isinstance(entry, list) and bool(entry) and all(isinstance(e, str) and e.strip() for e in entry)
+
+    return isinstance(value, list) and bool(value) and all(part(entry) for entry in value)
 
 
 def validate_items(items: Iterable[Dict[str, Any]], divisions: Optional[Dict[str, set]] = None) -> List[str]:
@@ -85,6 +100,15 @@ def validate_items(items: Iterable[Dict[str, Any]], divisions: Optional[Dict[str
         if item["refuse"] != (item["expected"] is None):
             errors.append(f"{where}: refuse must be true exactly when expected is null")
             continue
+        behaviour = item.get("behaviour")
+        if behaviour is not None and behaviour not in BEHAVIOURS:
+            errors.append(f"{where}: behaviour {behaviour!r} is not one of {', '.join(BEHAVIOURS)}")
+        elif behaviour is not None and (behaviour == "refuse") != item["refuse"]:
+            errors.append(f"{where}: behaviour {behaviour!r} does not fit refuse {str(item['refuse']).lower()}")
+        replies = item.get("accept_reply")
+        if replies is not None and not (item["refuse"] and isinstance(replies, list) and replies
+                                        and all(isinstance(r, str) and r.strip() for r in replies)):
+            errors.append(f"{where}: accept_reply must be a non-empty list of phrases, on a must-refuse item only")
         if item["type"] == "unanswerable" and not item["refuse"]:
             errors.append(f"{where}: type unanswerable needs refuse true")
         if not item["refuse"]:

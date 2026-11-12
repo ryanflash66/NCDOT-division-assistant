@@ -1,0 +1,3192 @@
+{
+ "division": "utilities",
+ "items": [
+  {
+   "id": "utilities-h001",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "A utility cabinet pad on DOT right of way will stick up exactly 4 inches above the existing ground. Does the Utilities Accommodation Manual count that as an aboveground utility object?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "chapter_page",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     84
+    ],
+    "printed_pages": [
+     "3-11"
+    ],
+    "value": "4 inches",
+    "accept": [
+     "4 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.3.2: anything extending above existing ground by 4 inches or more is an aboveground utility object, so exactly 4 inches counts (yes)."
+  },
+  {
+   "id": "utilities-h002",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "A new aboveground utility box 24 inches wide would block part of the line of sight at a commercial driveway. Would NCDOT permit it under the UAM?",
+   "type": "text",
+   "edge_cases": [
+    "conditional",
+    "range_threshold",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     85
+    ],
+    "printed_pages": [
+     "3-12"
+    ],
+    "value": "18 inches",
+    "accept": [
+     "18 in",
+     "not be permitted",
+     "not permitted"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.3.3.1 item 10: a new or replacement aboveground installation that obstructs part of the line of sight of a highway or commercial driveway AND is more than 18 inches wide shall not be permitted -> no."
+  },
+  {
+   "id": "utilities-h003",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "For an overhead utility crossing, how wide does a highway median have to be before poles or other aboveground facilities may be placed in it?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "rephrased",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     85
+    ],
+    "printed_pages": [
+     "3-12"
+    ],
+    "value": "80 feet",
+    "accept": [
+     "80 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.3.3.1 item 13: on crossings, aboveground facilities shall not be located in a median less than 80 feet wide."
+  },
+  {
+   "id": "utilities-h004",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "How tall is the stub pole the UAM allows for mounting a small cell meter or power disconnect, typically?",
+   "type": "text",
+   "edge_cases": [
+    "units",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     91
+    ],
+    "printed_pages": [
+     "3-18"
+    ],
+    "value": "5 feet",
+    "accept": [
+     "5 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.3.6.3: a stub pole is typically 5 feet in height or less above ground and considered non-breakaway."
+  },
+  {
+   "id": "utilities-h005",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What's the highest BUG uplight rating a luminaire can have in a roadway lighting design on NCDOT right of way?",
+   "type": "text",
+   "edge_cases": [
+    "rephrased",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     95
+    ],
+    "printed_pages": [
+     "3-22"
+    ],
+    "value": "1",
+    "accept": [
+     "U1",
+     "uplight rating of 1"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.3.7.6: in no case shall luminaires with an uplight rating greater than 1 be used."
+  },
+  {
+   "id": "utilities-h006",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "How far from the edge of travel do light poles on a controlled access L-line have to be installed?",
+   "type": "text",
+   "edge_cases": [
+    "units",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     97
+    ],
+    "printed_pages": [
+     "3-24"
+    ],
+    "value": "15 feet",
+    "accept": [
+     "15 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.3.7.13 Lighting within Controlled Access Right of Way: minimum of 15 feet from the edge of travel."
+  },
+  {
+   "id": "utilities-h007",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "For an encased water main crossing a non-controlled-access road, how far does the UAM say the encasement has to extend?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     103
+    ],
+    "printed_pages": [
+     "3-30"
+    ],
+    "value": "ditch line to ditch line",
+    "accept": [],
+    "all_of": [
+     [
+      "ditch line to ditch line"
+     ],
+     [
+      "5 feet beyond the toe of slope",
+      "5 feet",
+      "5 ft"
+     ],
+     [
+      "3 feet beyond the curb",
+      "3 feet",
+      "3 ft"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "behaviour": "clarify",
+   "verified_by": "page_text_match",
+   "note": "Missing variable: the roadway section type. UAM 3.4.3 minimum encasement extents: cut sections ditch line to ditch line; fill sections 5 feet beyond the toe of slope; curb and gutter sections 3 feet beyond the curb (and in every case beyond the 1:1 slope from the edge of pavement). Gas/fuel, controlled access and private-use liquid branches are excluded by the question."
+  },
+  {
+   "id": "utilities-h008",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "A gas line casing under a state road will be exactly 150 feet long. Where do the vents go per the UAM?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     103
+    ],
+    "printed_pages": [
+     "3-30"
+    ],
+    "value": "high end",
+    "accept": [
+     "high end of the encasement"
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.4.3 vents: encasements 150 feet long and less get a vent on the high end; greater than 150 feet get vents on both ends. At exactly 150 ft: high end only."
+  },
+  {
+   "id": "utilities-h009",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What factor of safety does the UAM require for a restrained joint system that balances thrust forces at pipeline bends, tees and reducers?",
+   "type": "text",
+   "edge_cases": [
+    "precision",
+    "near_identical",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     105
+    ],
+    "printed_pages": [
+     "3-32"
+    ],
+    "value": "1.25",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.4.5.1 Joint Restraint at Bends, Tees, and Reducers: restrained joint system factor of safety 1.25 for the test pressure. Near-identical to the joint restraints (fittings) bullet on p. 106 (safety factor 2): this item asks about the restrained joint system design."
+  },
+  {
+   "id": "utilities-h010",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "If joint restraints are used on water main fittings, what safety factor does the UAM's acceptable pipe materials list require for them (not the restrained joint system design)?",
+   "type": "text",
+   "edge_cases": [
+    "near_identical",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     106
+    ],
+    "printed_pages": [
+     "3-33"
+    ],
+    "value": "2",
+    "accept": [
+     "safety factor of 2",
+     "factor of 2"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM p. 3-33 fittings: joint restraints (if used) minimum working pressure rating of 200 psi with a safety factor of 2. Near-identical to the restrained joint system factor 1.25 on p. 105."
+  },
+  {
+   "id": "utilities-h011",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Under 'Unsuitable Pipe Materials' in the UAM, which PVC pipe is barred from NCDOT right of way for pressure uses like water lines and force mains?",
+   "type": "text",
+   "edge_cases": [
+    "toc_decoy",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     107
+    ],
+    "printed_pages": [
+     "3-34"
+    ],
+    "value": "SDR 26",
+    "accept": [
+     "SDR-26"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Heading wording from the contents (3.4.6 Unsuitable Pipe Materials ... 3-34, p. 4); answer on the content page: PVC SDR 26 pipe will not be allowed for pressure applications."
+  },
+  {
+   "id": "utilities-h012",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What is the maximum operating pressure for HDPE plastic natural gas pipe in the UAM's acceptable materials?",
+   "type": "text",
+   "edge_cases": [
+    "units",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     107
+    ],
+    "printed_pages": [
+     "3-34"
+    ],
+    "value": "60",
+    "accept": [
+     "60 psig",
+     "60 pounds per square inch"
+    ],
+    "unit": "psig"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.4.5.3 Natural Gas: HDPE SDR 11.5, PE3408 and PE2406, maximum operating pressure 60 pounds per square inch gauge."
+  },
+  {
+   "id": "utilities-h013",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "A brick utility manhole will be exactly 12 feet deep. What minimum wall thickness does the UAM call for?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "units",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     110
+    ],
+    "printed_pages": [
+     "3-37"
+    ],
+    "value": "8 inches",
+    "accept": [
+     "8 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.4.8.2: for depths up to, but not exceeding, 12 feet: 8 inches for brick (6 for block); greater than 12 feet: 12 inches. Exactly 12 ft -> 8 inches."
+  },
+  {
+   "id": "utilities-h014",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What's the minimum wall thickness for a concrete block utility manhole under the UAM?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     110
+    ],
+    "printed_pages": [
+     "3-37"
+    ],
+    "value": "6 inches",
+    "accept": [],
+    "unit": "in",
+    "all_of": [
+     [
+      "6 inches",
+      "6 in"
+     ],
+     [
+      "12 inches",
+      "12 in"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "clarify",
+   "verified_by": "page_text_match",
+   "note": "Missing variable: manhole depth. UAM 3.4.8.2: depths up to and including 12 feet -> 6 inches for concrete block; deeper than 12 feet -> 12 inches."
+  },
+  {
+   "id": "utilities-h015",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "When does a tunnel liner plan have to show the shortest distance between the proposed tunnel and an existing highway structure? Within what distance?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     112
+    ],
+    "printed_pages": [
+     "3-39"
+    ],
+    "value": "200 feet",
+    "accept": [
+     "200 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.4.10.2 plan view: required if any portion of the proposed tunnel is 200 feet or closer to any portion of an existing highway structure."
+  },
+  {
+   "id": "utilities-h016",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "How far horizontally does an underground utility have to stay from the nearest part of a bridge per the UAM?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     123
+    ],
+    "printed_pages": [
+     "3-50"
+    ],
+    "value": "5 feet",
+    "accept": [],
+    "unit": "ft",
+    "all_of": [
+     [
+      "5 feet",
+      "5 ft"
+     ],
+     [
+      "10 feet",
+      "10 ft"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "clarify",
+   "verified_by": "page_text_match",
+   "note": "Missing variable: installation method. UAM 3.5.2.2 Bridges and Retaining Walls: open cut -> minimum 5 feet horizontally; HDD -> minimum 10 feet horizontally."
+  },
+  {
+   "id": "utilities-h017",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "If a utility is bored and jacked under the bottom slab of a box culvert, how deep below the slab does the top of the encasement have to be?",
+   "type": "text",
+   "edge_cases": [
+    "conditional",
+    "units",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     124
+    ],
+    "printed_pages": [
+     "3-51"
+    ],
+    "value": "1 foot",
+    "accept": [
+     "1 ft",
+     "one foot"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.5.2.2 Reinforced Concrete and Structural Plate Culverts: if the boring and jacking method is used, the top of the encasement is at a minimum depth of 1 foot below the bottom slab (and extends 10 feet beyond)."
+  },
+  {
+   "id": "utilities-h018",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "When a utility is buried in the fill over a concrete culvert, how close can it get to the inside face of the headwall?",
+   "type": "text",
+   "edge_cases": [
+    "units",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     124
+    ],
+    "printed_pages": [
+     "3-51"
+    ],
+    "value": "18 inches",
+    "accept": [
+     "18 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.5.2.2: at least 18 inches from the inside face of the headwall."
+  },
+  {
+   "id": "utilities-h019",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What grout mix ratio does the UAM call for to fill voids found outside a bored-and-jacked encasement pipe?",
+   "type": "text",
+   "edge_cases": [
+    "symbols",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     128
+    ],
+    "printed_pages": [
+     "3-55"
+    ],
+    "value": "1:3",
+    "accept": [
+     "1 to 3",
+     "1 part cement to 3"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.6.8.1: voids filled with 1:3 portland cement grout through grout holes at 10-foot centers."
+  },
+  {
+   "id": "utilities-h020",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Who has to investigate and approve vegetation cutting or trimming tied to a utility encroachment before the agreement gets final approval?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     140
+    ],
+    "printed_pages": [
+     "3-67"
+    ],
+    "value": "Area Roadside Environmental Engineer",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.6.14.2. The same sentences appear in the TSLG guide (tmsd, L18_TSLG_Guide.pdf p. 552), checked with shared.py; gold is the utilities page."
+  },
+  {
+   "id": "utilities-h021",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Roughly how wide is a microtrench cut for fiber, per the UAM's shallow trenching section?",
+   "type": "text",
+   "edge_cases": [
+    "precision",
+    "near_identical",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     143
+    ],
+    "printed_pages": [
+     "3-70"
+    ],
+    "value": "1.25 inches",
+    "accept": [
+     "1.25 in",
+     "1-1/4 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "tuning",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.7.1: macrotrenching 12-36 in deep, up to 3 in across; microtrenching 6-12 in deep, usually 1.25 inches across; nanotrenching about 2 in deep, under 1 in wide. Near-identical list; the question names microtrenching."
+  },
+  {
+   "id": "utilities-h022",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Under the UAM's 'Failure to Comply' provisions, if a utility won't pay NCDOT's invoice for removing its facilities, who does NCDOT refer the matter to?",
+   "type": "text",
+   "edge_cases": [
+    "toc_decoy",
+    "duplicate_section",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     147
+    ],
+    "printed_pages": [
+     "4-4"
+    ],
+    "value": "Attorney General",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Contents entry 4.1.7 Failure to Comply ... 4-4 (p. 5); content page p. 147: refer to the Office of the Attorney General. Same passage in the TSLG guide (tmsd, L18_TSLG_Guide.pdf p. 554)."
+  },
+  {
+   "id": "utilities-h023",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Under 'Utilities on Subdivision Roads', how many lots does a subdivided tract need for its road to count as a subdivision road?",
+   "type": "text",
+   "edge_cases": [
+    "toc_decoy",
+    "duplicate_section",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     51
+    ],
+    "printed_pages": [
+     "2-27"
+    ],
+    "value": "two or more",
+    "accept": [
+     "2 or more"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 2.4.15 (contents p. 3 lists it at 2-27): subdivided into two or more lots. The same definition is in the TSLG guide p. 570 and the Policy on Access Manual p. 14 (tmsd)."
+  },
+  {
+   "id": "utilities-h024",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "How does the UAM glossary define fully controlled access? What does it prohibit?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section",
+    "near_identical",
+    "appendix_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     187
+    ],
+    "printed_pages": [
+     "A-3"
+    ],
+    "value": "crossings at grade",
+    "accept": [
+     "at-grade crossings",
+     "crossings at-grade"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Glossary A-3: fully controlled access prohibits crossings at grade or direct private driveway connections; the next entry (partial) allows some. Same sentence in C34 - Manual 2012.pdf p. 107 (tmsd)."
+  },
+  {
+   "id": "utilities-h025",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Per the UAM glossary, above what phase-to-ground voltage does electric power count as primary service?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "appendix_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     187
+    ],
+    "printed_pages": [
+     "A-3"
+    ],
+    "value": "7200",
+    "accept": [
+     "7,200"
+    ],
+    "unit": "V"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Glossary: primary service above 7200-volt phase to ground; secondary below."
+  },
+  {
+   "id": "utilities-h026",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "A small water system serves exactly 15 customers. Is it a public utility under the UAM?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     15
+    ],
+    "printed_pages": [
+     "1-6"
+    ],
+    "value": "at least 15",
+    "accept": [
+     "15 customers"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 1.3.3.2: public utilities serve at least 15 customers (G.S. 62-3(23)a.2.) -> yes."
+  },
+  {
+   "id": "utilities-h027",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Which access control type in the UAM allows private driveway connections but typically still has a controlled access fence?",
+   "type": "text",
+   "edge_cases": [
+    "near_identical",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     13
+    ],
+    "printed_pages": [
+     "1-4"
+    ],
+    "value": "Partially controlled",
+    "accept": [
+     "partial control",
+     "partially-controlled"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 1.2.2: limited controlled access allows no private driveways; partially controlled access allows private driveways with fence typically present; non-controlled has no fence."
+  },
+  {
+   "id": "utilities-h028",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "The UAM has a section on utility facilities not permitted in NCDOT right of way. Which sections does it point to for the complete list?",
+   "type": "cross_ref",
+   "edge_cases": [
+    "toc_decoy",
+    "cross_reference",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     20
+    ],
+    "printed_pages": [
+     "1-11"
+    ],
+    "value": "3.1.2.7",
+    "accept": [],
+    "all_of": [
+     "3.1.2.7",
+     "3.1.2.8"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Contents entry 1.10 (p. 2); content page 1-11: see Sections 3.1.2.7 and 3.1.2.8."
+  },
+  {
+   "id": "utilities-h029",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "List all the NCDOT publications the UAM names as relevant to utilities accommodation.",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     22,
+     23
+    ],
+    "printed_pages": [
+     "1-13",
+     "1-14"
+    ],
+    "value": "Standard Specifications for Roads and Structures",
+    "accept": [],
+    "all_of": [
+     "Standard Specifications",
+     "Utility Traffic Control Guidelines",
+     "Roadway Design Manual",
+     "Roadway Standard Drawings",
+     "Right of Way Manual",
+     "Subdivision Roads Minimum Construction Standards",
+     "Subsurface Utility Engineering Guidelines",
+     "Best Management Practices"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 1.15.5: five items on p. 1-13, three more on p. 1-14."
+  },
+  {
+   "id": "utilities-h030",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Under the DENR-DOT memorandum of agreement on encroachments for UST remediation effluent (UAM appendix), how much written notice must either agency give before withdrawing?",
+   "type": "scan",
+   "edge_cases": [
+    "degraded_scan",
+    "scan"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     249
+    ],
+    "printed_pages": [
+     "4"
+    ],
+    "value": "90 days",
+    "accept": [
+     "ninety",
+     "90"
+    ],
+    "unit": "days"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "ocr_text_match",
+   "note": "Scanned memo, no text layer, signatures over the text. Item (12): ninety (90) days prior to withdrawal."
+  },
+  {
+   "id": "utilities-h031",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Which North Carolina General Statute does NCDOT's gateway sign standard practice cite for its authority to control all signs in state highway right of way?",
+   "type": "scan",
+   "edge_cases": [
+    "degraded_scan",
+    "scan"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     254
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "136-30",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "ocr_text_match",
+   "note": "Standard Practice G-6 (modified 4/23/12), page 2 of 3, scanned with no text layer: G.S. 136-30 (a), (b), (d)."
+  },
+  {
+   "id": "utilities-h032",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What date is on the Chief Engineer's memo about communication enclosures with power in the UAM memos?",
+   "type": "scan",
+   "edge_cases": [
+    "degraded_scan",
+    "scan"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     259
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "May 7, 2009",
+    "accept": [
+     "5/7/2009",
+     "7 May 2009"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "ocr_text_match",
+   "note": "Scanned memo with a RECEIVED stamp (MAY 11 2009) and a signature: the memo date is May 7, 2009, not the stamp date."
+  },
+  {
+   "id": "utilities-h033",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Under the 2009 guidance on communication enclosures with electrical power, which General Statute lets an applicant claim exemption from the PE-sealed safe location determination?",
+   "type": "scan",
+   "edge_cases": [
+    "degraded_scan",
+    "scan"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     260
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "89C-25",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "ocr_text_match",
+   "note": "Scanned e-mail (June 8, 2009) with blurred lines: registered professional civil engineer unless exempt per General Statute 89C-25."
+  },
+  {
+   "id": "utilities-h034",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In the frac-out contingency plan included with the UAM's HDD requirements, within how many minutes must the vacuum truck be able to reach any point along the drill shot?",
+   "type": "scan",
+   "edge_cases": [
+    "scan"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     302
+    ],
+    "printed_pages": [
+     "6"
+    ],
+    "value": "10 minutes",
+    "accept": [
+     "10 min"
+    ],
+    "unit": "min"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "ocr_text_match",
+   "note": "Scanned plan (no text layer), section 6.1 Vac-Truck: within 10 minutes of a frac-out."
+  },
+  {
+   "id": "utilities-h035",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What's the maximum spacing between right of way markers in the Roadway Design Manual's right of way chapter?",
+   "type": "text",
+   "edge_cases": [
+    "units"
+   ],
+   "expected": {
+    "source": "09. Right of Way.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "1,500 feet",
+    "accept": [
+     "1500 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "RDM Part II ch. 9, section 9-2 item 2 (section numbers, not page folios; the page prints no page number)."
+  },
+  {
+   "id": "utilities-h036",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "On a rural job, the area needed past a large drainage pipe for channel maintenance reaches exactly 75 feet from the parallel right of way line. Should it be bought as right of way or as a permanent drainage easement?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "conditional"
+   ],
+   "expected": {
+    "source": "09. Right of Way.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "regular right of way",
+    "accept": [
+     "purchased as right of way"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "RDM 9-4: on rural projects this area should normally be purchased as regular right of way if it does not extend beyond 75 feet; beyond 75 feet consult the Right of Way Branch. Exactly 75 ft -> regular right of way."
+  },
+  {
+   "id": "utilities-h037",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "A parcel totals 3.2 acres and one part of it is 0.06 acre. How should that part's area be shown on the right of way area data?",
+   "type": "text",
+   "edge_cases": [
+    "conditional"
+   ],
+   "expected": {
+    "source": "09. Right of Way.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "square feet",
+    "accept": [
+     "sq ft",
+     "sq. ft"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "RDM 9-5A rule (2): parcel over one acre -> parts of 0.10 acre or more in acres, parts under 0.10 acre in square feet."
+  },
+  {
+   "id": "utilities-h038",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What parcel number series is used for advanced acquisitions in the Roadway Design Manual?",
+   "type": "text",
+   "edge_cases": [],
+   "expected": {
+    "source": "09. Right of Way.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "900",
+    "accept": [
+     "901"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "RDM 9-6: the Right of Way Branch assigns the parcel number using the 900 numerical series (901, 902, ...)."
+  },
+  {
+   "id": "utilities-h039",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "On the Roadway Design Manual's right of way Estimate Request Form, what has to be filled in for each alternate or section when the estimate is requested by alternates?",
+   "type": "text",
+   "edge_cases": [
+    "form"
+   ],
+   "expected": {
+    "source": "09. Right of Way.pdf",
+    "pdf_pages": [
+     9
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "alternate name or number",
+    "accept": [],
+    "all_of": [
+     "name or number",
+     "description",
+     "type of access control",
+     [
+      "proposed R/W dimensions",
+      "proposed right of way dimensions"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Estimate Request Form 9-9 F-1: alternate name or number, description, type of access control, proposed R/W dimensions."
+  },
+  {
+   "id": "utilities-h040",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Who assigns the right of way project number for a highway project?",
+   "type": "text",
+   "edge_cases": [],
+   "expected": {
+    "source": "09. Right of Way.pdf",
+    "pdf_pages": [
+     10
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "Project Management Unit",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "RDM 9-10: the Project Management Unit assigns it when funds are authorized."
+  },
+  {
+   "id": "utilities-h041",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "On partial control of access projects, what opening width is normally used when setting access point stations?",
+   "type": "text",
+   "edge_cases": [
+    "units"
+   ],
+   "expected": {
+    "source": "09. Right of Way.pdf",
+    "pdf_pages": [
+     5
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "60 feet",
+    "accept": [
+     "60 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "RDM 9-3: a width of 60 feet is normally used (not shown as a dimension on plans)."
+  },
+  {
+   "id": "utilities-h042",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Under the 2026 cost reimbursement guidance flow chart, how long must a utility have held land by adverse possession to claim a compensable interest?",
+   "type": "figure",
+   "edge_cases": [
+    "missing_variable",
+    "figure"
+   ],
+   "expected": {
+    "source": "NCDOT Utility Cost Reimbursement Guidance_8-20-2026.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "7 years",
+    "accept": [],
+    "unit": "years",
+    "all_of": [
+     [
+      "7 years",
+      "seven years"
+     ],
+     [
+      "20 years",
+      "twenty years"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "clarify",
+   "verified_by": "page_image_read",
+   "note": "Flow chart (a picture; checked against OCR of the page). Missing variable: color of title. Adverse possession: 7 years under color of title, 20 years without color of title."
+  },
+  {
+   "id": "utilities-h043",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "A utility's pole sits outside the existing DOT right of way and the utility holds a recorded easement. Under the 2026 cost reimbursement guidance, what will it be reimbursed for if NCDOT asks it to relocate?",
+   "type": "figure",
+   "edge_cases": [
+    "conditional",
+    "figure"
+   ],
+   "expected": {
+    "source": "NCDOT Utility Cost Reimbursement Guidance_8-20-2026.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "non-betterment costs",
+    "accept": [
+     "reimbursed for its non-betterment",
+     "non-betterment"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Flow chart: outside existing ROW -> compensable interest -> recorded easement -> utility will be reimbursed for its non-betterment costs."
+  },
+  {
+   "id": "utilities-h044",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "The UAM cites CI/ASCE 38-02 for subsurface utility data. Which edition of the ASCE standard guideline for investigating and documenting existing utilities does FHWA's EDC-8 SUE fact sheet cite?",
+   "type": "text",
+   "edge_cases": [
+    "superseded",
+    "conflicting_documents"
+   ],
+   "expected": {
+    "source": "EDC-8_Factsheet_SUE.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "38-22",
+    "accept": [
+     "ASCE/UESI/CI 38-22"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Older edition 38-02 (2002) is cited in UAM p. 23 and hif22002.pdf p. 5; the EDC-8 fact sheet (2023) cites ASCE/UESI/CI 38-22, the current edition."
+  },
+  {
+   "id": "utilities-h045",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In FHWA's Delaware SUE tech brief, what size water line under a bridge slated for replacement was SUE expected to locate?",
+   "type": "text",
+   "edge_cases": [
+    "units"
+   ],
+   "expected": {
+    "source": "hif22002.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     "4"
+    ],
+    "value": "16 inches",
+    "accept": [
+     "16-inch",
+     "16 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "hif22002.pdf p. 4 Project Example: a 16-inch diameter water line beneath the bridge."
+  },
+  {
+   "id": "utilities-h046",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Per Table 4-8 of the FHWA Highway/Utility Guide (minimum clearance requirements under maximum sag conditions), what clearance may a service drop wire have over a residential driveway?",
+   "type": "table",
+   "edge_cases": [
+    "table_id",
+    "footnote",
+    "not_first_row_col",
+    "precision",
+    "toc_decoy",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     103
+    ],
+    "printed_pages": [
+     "87"
+    ],
+    "value": "11.5 ft",
+    "accept": [
+     "11.5 feet",
+     "11.5'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Table 4-8, row Residential driveways: clearance 15.5 ft, Remarks column: service drop wires may be 11.5 ft. Heading wording as in the list of tables (p. 15, \"... 87\"). Scanned page with an OCR text layer."
+  },
+  {
+   "id": "utilities-h047",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In the Highway/Utility Guide's sag clearance table, what minimum clearance applies to a line running along a rural light-traffic road where it is not back of an obstruction?",
+   "type": "table",
+   "edge_cases": [
+    "merged_header",
+    "not_first_row_col",
+    "precision",
+    "table_id",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     103
+    ],
+    "printed_pages": [
+     "87"
+    ],
+    "value": "13.0 ft",
+    "accept": [
+     "13 ft",
+     "13 feet"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Table 4-8, group \"Running along:\", sub-row Rural (light traffic) roads: back of obstruction 9.5, not back of obstruction 13.0, public alleys 15.5 ft. Read off the image (text layer order is scrambled)."
+  },
+  {
+   "id": "utilities-h048",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In the Highway/Utility Guide's minimum cover table for buried cable, how deep must fiber optic cable be under ditches?",
+   "type": "table",
+   "edge_cases": [
+    "merged_header",
+    "not_first_row_col",
+    "units",
+    "table_id",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     105
+    ],
+    "printed_pages": [
+     "89"
+    ],
+    "value": "42 inches",
+    "accept": [
+     "42 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Table 4-9 Minimum cover for buried cable (Depth of Cover in inches): fiber optic cable normal 36, under ditches 42."
+  },
+  {
+   "id": "utilities-h049",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "If buried telephone cable has to be bonded, how close to the end of the cable route must a bond be placed according to the Highway/Utility Guide?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column",
+    "units",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     105
+    ],
+    "printed_pages": [
+     "89"
+    ],
+    "value": "500 ft",
+    "accept": [
+     "150 m",
+     "500 feet"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Two-column text below Table 4-9, list item (2): within 150 m (500 ft) of the end of the cable route."
+  },
+  {
+   "id": "utilities-h050",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In Table 4-5 of the Highway/Utility Guide, what is the longest available Class 2 pole if it is a jack pine (JP) pole?",
+   "type": "table",
+   "edge_cases": [
+    "footnote",
+    "table_id",
+    "not_first_row_col",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     99
+    ],
+    "printed_pages": [
+     "83"
+    ],
+    "value": "60 feet",
+    "accept": [
+     "60 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Table 4-5 Characteristics of Poles: Class 2 longest available pole 125* ft; note *: the longest JP, LP, or NP pole is 60 feet. The note changes the value."
+  },
+  {
+   "id": "utilities-h051",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In the 1993 Highway/Utility Guide's table of authorization for accommodation of utilities by state, what does North Carolina's entry allow on other Federal-aid highways?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "table_id",
+    "not_first_row_col",
+    "footnote",
+    "merged_header",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     171
+    ],
+    "printed_pages": [
+     "155"
+    ],
+    "value": "Crossings only",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "tuning",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Table 8-1 (Continued), p. 155: NC row codes 1, 1, 1, X; legend 1 = Crossings only. The table starts on p. 154 (pdf 170); the NC row is on the continuation page."
+  },
+  {
+   "id": "utilities-h052",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "How many utility pole fatalities did North Carolina have from 1980 to 1989 according to Table 9-2 of the Highway/Utility Guide?",
+   "type": "table",
+   "edge_cases": [
+    "table_id",
+    "not_first_row_col",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     186
+    ],
+    "printed_pages": [
+     "170"
+    ],
+    "value": "393",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Table 9-2 Utility Pole Fatalities by State for 1980-1989, three side-by-side state blocks; North Carolina: 80-89 = 393, max year 53."
+  },
+  {
+   "id": "utilities-h053",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "For a rural collector with a design speed of exactly 40 mph, what horizontal clearance does the Highway/Utility Guide's table of 1990 Green Book clearances give?",
+   "type": "table",
+   "edge_cases": [
+    "range_threshold",
+    "table_id",
+    "not_first_row_col",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     192
+    ],
+    "printed_pages": [
+     "176"
+    ],
+    "value": "10 ft",
+    "accept": [
+     "10 feet",
+     "10'"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Table 9-3, row 5 Rural collector with design speed: At or below 40 mph -> Min 10'; at or above 50 mph -> use Roadside Design Guide; between 40 and 50 -> desirable 50 mph widths."
+  },
+  {
+   "id": "utilities-h054",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In Table 12-1 of the Highway/Utility Guide, which categories of highway does Virginia's statute cover for reimbursing utility relocation?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "table_id",
+    "not_first_row_col",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     262
+    ],
+    "printed_pages": [
+     "246"
+    ],
+    "value": "Interstate Urban Only",
+    "accept": [],
+    "all_of": [
+     [
+      "Interstate Urban Only",
+      "urban interstate"
+     ],
+     [
+      "State Highways",
+      "state highway"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Table 12-1 Statutory Authority Relating to Reimbursement of Public Utility Relocation Expense, last continuation page (printed 243-246, pdf 259-262); scanned with no text layer. Virginia (Code of Va. 33.1-44; 55; 56): X under Interstate Urban Only and State Highways."
+  },
+  {
+   "id": "utilities-h055",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Under the Indiana cut road permit special provisions reproduced in the Highway/Utility Guide, how thick must the bituminous base mixture in an asphalt pavement replacement be at least?",
+   "type": "scan",
+   "edge_cases": [
+    "degraded_scan",
+    "scan",
+    "form"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     278
+    ],
+    "printed_pages": [
+     "262"
+    ],
+    "value": "12 inches",
+    "accept": [
+     "12 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "ocr_text_match",
+   "note": "Appendix C sample permit form, scanned with no text layer, hand-drawn marks across paragraph (a) and sideways margin labels: pavement replacement not less than 12 inches of bituminous base mixture."
+  },
+  {
+   "id": "utilities-h056",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In that Indiana cut road permit, what is the maximum variation from vertical allowed on the edge of a removed concrete pavement area?",
+   "type": "scan",
+   "edge_cases": [
+    "symbols",
+    "precision",
+    "degraded_scan",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     278
+    ],
+    "printed_pages": [
+     "262"
+    ],
+    "value": "1 1/2 inches",
+    "accept": [
+     "1.5 inches",
+     "1.5 in",
+     "1-1/2"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Paragraph (B): maximum variation from the vertical will not exceed 1 1/2 inches (printed with a half glyph; OCR reads it as \"1/½2\", so read off the image)."
+  },
+  {
+   "id": "utilities-h057",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In Figure 10-6 (channelizing devices) of the Highway/Utility Guide, how tall must a Type III barricade be at minimum?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "table_id",
+    "units",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     231
+    ],
+    "printed_pages": [
+     "215"
+    ],
+    "value": "60 inches",
+    "accept": [
+     "60 in",
+     "60\""
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Figure 10-6 Channelizing Devices (source MUTCD Part VI), scanned with no text layer: Type III barricade 60\" minimum (Types I and II 36\")."
+  },
+  {
+   "id": "utilities-h058",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Under 23 CFR 645.207, where does the clear zone start?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section",
+    "multi_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part645.pdf",
+    "pdf_pages": [
+     12
+    ],
+    "printed_pages": [
+     "338"
+    ],
+    "value": "edge of the traveled way",
+    "accept": [
+     "edge of the travelled way"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Two-column CFR page. Clear zone: total roadside border area starting at the edge of the traveled way. Same definition in the TMP Design Manual p. 25 (wztc) and in the 2003 reprint in if03014.pdf p. 91."
+  },
+  {
+   "id": "utilities-h059",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Which Executive Order makes private lines that drain adjacent wetlands onto Federal-aid highway right of way prohibited under 23 CFR 645?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part645.pdf",
+    "pdf_pages": [
+     16
+    ],
+    "printed_pages": [
+     "342"
+    ],
+    "value": "11990",
+    "accept": [
+     "Executive Order 11990",
+     "E.O. 11990"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "645.209(l) Wetlands, in the left column of a two-column page: inconsistent with Executive Order 11990, Protection of Wetlands (May 24, 1977), and prohibited."
+  },
+  {
+   "id": "utilities-h060",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "How long are a utility's relocation cost records open to audit after it gets final payment, under 23 CFR 645 subpart A?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part645.pdf",
+    "pdf_pages": [
+     10
+    ],
+    "printed_pages": [
+     "336"
+    ],
+    "value": "3 years",
+    "accept": [
+     "three years"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "645.119: subject to audit for a period of 3 years from the date final payment has been received by the utility. (23 CFR 710.201 has a separate 3-year retention rule for ROW records.)"
+  },
+  {
+   "id": "utilities-h061",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Under 23 CFR 645.113, when can FHWA approve a lump-sum payment agreement for utility relocation without a later audit of actual costs?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column",
+    "conditional",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part645.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     "332"
+    ],
+    "value": "accurately estimated",
+    "accept": [
+     "clearly defined"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "645.113(f): when the work for a specific utility can be clearly defined and the cost can be accurately estimated (both conditions)."
+  },
+  {
+   "id": "utilities-h062",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "How often must a State DOT's chief administrative officer certify to FHWA that its right-of-way manual is up to date, under 23 CFR 710?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part710.pdf",
+    "pdf_pages": [
+     5
+    ],
+    "printed_pages": [
+     "495"
+    ],
+    "value": "every 5 years",
+    "accept": [
+     "5 years",
+     "five years"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "710.201(c)(2)(ii): every 5 years after the August 23, 2018 manual."
+  },
+  {
+   "id": "utilities-h063",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "When FHWA gets a court order for possession in a direct Federal acquisition, 23 CFR 710 lets the applicant give owners 30 days' notice to vacate occupied properties. Is that right?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise",
+    "multi_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part710.pdf",
+    "pdf_pages": [
+     20
+    ],
+    "printed_pages": [
+     "510"
+    ],
+    "value": "90 days",
+    "accept": [
+     "ninety days"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "correct",
+   "verified_by": "page_text_match",
+   "note": "710.603(d)(2): the right to give 90 days notice to owners to vacate occupied properties. The premise (30 days) is wrong."
+  },
+  {
+   "id": "utilities-h064",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "On a Federal-aid project, when can authorization to advertise for bids be given, according to FHWA's companion guide on utility coordination and certification?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column"
+   ],
+   "expected": {
+    "source": "09utilcoordcert.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "PS&E is approved",
+    "accept": [
+     "after the project PS&E",
+     "PS&E approval"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Two-column page; the sentence breaks from the bottom of the left column to the top of the right column: authorization to advertise ... can only be given after the project PS&E is approved."
+  },
+  {
+   "id": "utilities-h065",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What are the three statements a Federal-aid project's utility certification can make, per FHWA's companion guide?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column",
+    "form"
+   ],
+   "expected": {
+    "source": "09utilcoordcert.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "No utility facilities will be affected",
+    "accept": [],
+    "all_of": [
+     [
+      "No utility facilities will be affected",
+      "no utility facilities"
+     ],
+     [
+      "completed prior to the start of construction",
+      "completed before construction"
+     ],
+     [
+      "undertaken during construction",
+      "during construction"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Right column box \"One of Three Circumstances Must Be Addressed\"."
+  },
+  {
+   "id": "utilities-h066",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "A utility certification isn't needed on a Federal-aid project that doesn't affect any utilities, correct?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise",
+    "multi_column"
+   ],
+   "expected": {
+    "source": "09utilcoordcert.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "all projects",
+    "accept": [
+     "required for all projects",
+     "including those that don't affect"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "correct",
+   "verified_by": "page_text_match",
+   "note": "Companion guide p. 1: the utility certification is required for all projects, including those that do not affect any utilities."
+  },
+  {
+   "id": "utilities-h067",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "UDOT's fiber trade agreements run 50 years with automatic 30-year renewals, don't they?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": {
+    "source": "hif22040.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "30 years with automatic 50-year renewals",
+    "accept": [
+     "30 years",
+     "30-year"
+    ],
+    "all_of": [
+     [
+      "30 years",
+      "30-year"
+     ],
+     [
+      "50-year",
+      "50 years"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "correct",
+   "verified_by": "page_text_match",
+   "note": "hif22040.pdf p. 3 How Trades Work: trade agreements are for 30 years with automatic 50-year renewals (the question swaps the two numbers)."
+  },
+  {
+   "id": "utilities-h068",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "How many miles of fiber did UDOT install along I-84 in Box Elder County in its CARES Act broadband project?",
+   "type": "text",
+   "edge_cases": [
+    "units"
+   ],
+   "expected": {
+    "source": "hif22040.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "42 miles",
+    "accept": [],
+    "unit": "mi"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "hif22040.pdf p. 4: 117 miles along I-70 in Millard and Sevier Counties; 42 miles along I-84 in Box Elder County (167 total)."
+  },
+  {
+   "id": "utilities-h069",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "As of 2022, what share of Utah's fiber optic network was UDOT-owned per FHWA's UDOT broadband case study?",
+   "type": "text",
+   "edge_cases": [
+    "precision"
+   ],
+   "expected": {
+    "source": "hif22040.pdf",
+    "pdf_pages": [
+     5
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "37.4 percent",
+    "accept": [
+     "37.4%"
+    ],
+    "unit": "%"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "hif22040.pdf p. 5 Looking Ahead: 37.4 percent UDOT-owned, 62.7 percent resource-shared, of more than 3,252 miles."
+  },
+  {
+   "id": "utilities-h070",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In FHWA's 2018 slides on utility accommodation in Federal-aid right of way, what share of project delays does the pie chart put on utilities and third parties?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "precision"
+   ],
+   "expected": {
+    "source": "utility_row.pdf",
+    "pdf_pages": [
+     9
+    ],
+    "printed_pages": [
+     "9"
+    ],
+    "value": "14.93%",
+    "accept": [
+     "14.93 percent"
+    ],
+    "unit": "%"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Slide 9 \"3rd Leading Cause of Project Delays\": the Utilities/3rd parties slice (red) is 14.93%. The text layer lists the percentages without their labels; matched by the legend colours on the image."
+  },
+  {
+   "id": "utilities-h071",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "How many ways are there to get into the Permits site per the Encroachment Submissions User Guide, and what are they?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "rephrased",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "DOT Encroachment Submissions User Manual - July 2023.pdf",
+    "pdf_pages": [
+     6,
+     7
+    ],
+    "printed_pages": [
+     "5",
+     "6"
+    ],
+    "value": "three",
+    "accept": [
+     "3 methods",
+     "three methods"
+    ],
+    "all_of": [
+     [
+      "connect.ncdot.gov",
+      "NCDOT Connect site",
+      "Sign In"
+     ],
+     [
+      "Utilities Encroachments page",
+      "Encroachment-Agreements",
+      "Login button"
+     ],
+     [
+      "any Connect NCDOT page",
+      "search bar on any"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "\"There are three (3) methods\": Method 1 (Connect site, Sign In, search Permits) at the bottom of p. 5; Method 2 (Utilities Encroachments page, Login button) and Method 3 (search bar on any Connect NCDOT page) on p. 6. The value \"three\" is short, so all_of carries the check."
+  },
+  {
+   "id": "utilities-h072",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "List everything the FHWA utility relocation Program Guide says the plans or drawings supporting a utility agreement should show.",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "if03014.pdf",
+    "pdf_pages": [
+     16,
+     17
+    ],
+    "printed_pages": [
+     "B-16",
+     "B-17"
+    ],
+    "value": "limits of right-of-way",
+    "accept": [],
+    "all_of": [
+     [
+      "location, length, size",
+      "operating conditions",
+      "design features"
+     ],
+     [
+      "project number",
+      "plan scale"
+     ],
+     [
+      "limits of right-of-way",
+      "right-of-way to be acquired"
+     ],
+     [
+      "sole expense of the utility",
+      "at the sole expense"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Section Agreements and Authorizations, \"Plans and Drawings\": four dash items, three on B-16 and the last (portion of the work at the sole expense of the utility) on B-17."
+  },
+  {
+   "id": "utilities-h073",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Which investment-related costs does FHWA's utility relocation Program Guide say are generally not allowed in a utility's overhead?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "if03014.pdf",
+    "pdf_pages": [
+     22,
+     23
+    ],
+    "printed_pages": [
+     "B-22",
+     "B-23"
+    ],
+    "value": "Return on Investment",
+    "accept": [
+     "Return on Net Investment"
+    ],
+    "all_of": [
+     [
+      "Return on Investment",
+      "Return on Net Investment",
+      "financing capital"
+     ],
+     [
+      "Float"
+     ],
+     [
+      "Federal income tax"
+     ],
+     [
+      "Capital Stock Tax",
+      "financing operations"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "\"Investment Related Costs\" list: Return on Investment (B-22, not allowed), then on B-23 Float (not allowed), Income Tax (State/local allowed, Federal not), Property Tax (allowed), Depreciation (allowed), Capital Stock Tax (not allowed)."
+  },
+  {
+   "id": "utilities-h074",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What impacts on transportation projects do FHWA's 2018 slides on utility accommodation list?",
+   "type": "figure",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages"
+   ],
+   "expected": {
+    "source": "utility_row.pdf",
+    "pdf_pages": [
+     10,
+     11
+    ],
+    "printed_pages": [
+     "10",
+     "11"
+    ],
+    "value": "change orders",
+    "accept": [],
+    "all_of": [
+     [
+      "increase bids",
+      "increased risks"
+     ],
+     [
+      "delayed",
+      "delays"
+     ],
+     [
+      "change orders"
+     ],
+     [
+      "safety is jeopardized",
+      "contractor and public safety"
+     ],
+     [
+      "next season"
+     ],
+     [
+      "strained"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Slides 10 and 11 both titled \"Impacts on Transportation Projects\", three bullets each."
+  },
+  {
+   "id": "utilities-h075",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In the Highway/Utility Guide's Figure 3-7 sample typical section for a local street, what minimum vertical clearance does it set for overhead service cable crossing the roadway?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "figure",
+    "footnote",
+    "table_id",
+    "scan",
+    "units"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     49
+    ],
+    "printed_pages": [
+     "33"
+    ],
+    "value": "18 feet",
+    "accept": [
+     "18 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Page printed sideways (folio \"Planning and Coordination 33\" runs up the left edge). General note (B)1: main cable 20 feet, service cable 18 feet."
+  },
+  {
+   "id": "utilities-h076",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Per Table 4-2 (typical subsurface facilities) of the Highway/Utility Guide, what's the typical cover over sewer mains?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "table_id",
+    "not_first_row_col",
+    "units",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     77
+    ],
+    "printed_pages": [
+     "61"
+    ],
+    "value": "20 ft",
+    "accept": [
+     "6.1 m",
+     "20 feet"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Landscape table, folio \"Design 61\" sideways. Row Sewer Mains, column Typical Cover: 6.1 m (to 20 ft)."
+  },
+  {
+   "id": "utilities-h077",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Using the gas mapping symbols in Figure 4-11 of the Highway/Utility Guide, what does a map label of 2\" MP DI MAIN 1948 describe?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "figure",
+    "table_id",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     112
+    ],
+    "printed_pages": [
+     "96"
+    ],
+    "value": "ductile iron",
+    "accept": [],
+    "all_of": [
+     [
+      "ductile iron"
+     ],
+     [
+      "medium pressure"
+     ],
+     [
+      "1948"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Figure 4-11 Typical Mapping Symbols Used in Gas Distribution, sideways page \"96 Design\": MP = Medium pressure, DI = Ductile Iron, MAIN = gas main, 1932/1948 = year of installation; read as a 2-inch medium pressure ductile iron main installed in 1948 (pattern of the figure's own example)."
+  },
+  {
+   "id": "utilities-h078",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "The custom soil resource report in the UAM's HDD appendix: at what scale were the soil surveys for the area of interest mapped?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "appendix_page",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     286
+    ],
+    "printed_pages": [
+     "10"
+    ],
+    "value": "1:24,000",
+    "accept": [
+     "1:24000",
+     "1 : 24,000"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Appendix F (HDD), USDA Custom Soil Resource Report, Map Legend / Map Information page rotated 90 degrees; printed page 10 of the soil report. Survey area Columbus County, NC."
+  },
+  {
+   "id": "utilities-h079",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "In the UAM's four-step gas loss calculation for relocating natural gas lines, what constant multiplies P2/1000 in the super-compressibility factor FPV?",
+   "type": "text",
+   "edge_cases": [
+    "symbols",
+    "precision",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     172
+    ],
+    "printed_pages": [
+     "4-29"
+    ],
+    "value": "0.847",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Section 4.5.3 Other Costs, Product Loss: (1) FPV = 1 + P2/1000 * 0.847; (2) V2 adds 14.65 to P2; (4) Gas Loss = R1/2000."
+  },
+  {
+   "id": "utilities-h080",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "According to the UAM's credit formula for accrued depreciation of a replaced utility facility, what is the original cost multiplied by?",
+   "type": "text",
+   "edge_cases": [
+    "symbols",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     176
+    ],
+    "printed_pages": [
+     "4-33"
+    ],
+    "value": "Actual Service Length",
+    "accept": [],
+    "all_of": [
+     [
+      "Actual Service Length"
+     ],
+     [
+      "Total Life Expectancy"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Stacked fraction: (Actual Service Length / Total Life Expectancy) x Original Cost = Accrued (the page prints \"Appreciation\"). The formula is drawn with a fraction bar, so text order is \"Actual Service Length Total Life Expectancy Credit x Original Cost\"."
+  },
+  {
+   "id": "utilities-h081",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Which UAM section governs enforcement when utility owners don't relocate according to the authorized plans?",
+   "type": "cross_ref",
+   "edge_cases": [
+    "cross_reference",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     176
+    ],
+    "printed_pages": [
+     "4-33"
+    ],
+    "value": "Section 1.14",
+    "accept": [
+     "1.14"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "4.6.1: \"Enforcement will be according to Section 1.14.\""
+  },
+  {
+   "id": "utilities-h082",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "FHWA concurrence is needed for a utility installation within a freeway weave area shorter than what length, per FHWA's utility relocation Program Guide?",
+   "type": "text",
+   "edge_cases": [
+    "symbols",
+    "precision",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "if03014.pdf",
+    "pdf_pages": [
+     69
+    ],
+    "printed_pages": [
+     "B-69"
+    ],
+    "value": "3/4 mile",
+    "accept": [
+     "0.75 mile",
+     "three-quarter mile",
+     "three quarters of a mile"
+    ],
+    "unit": "mi"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Printed as the fraction 3/4: \"within any freeway weave area less than 3/4 mile in length\"."
+  },
+  {
+   "id": "utilities-h083",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "How many miles per day can a crew trench underground fiber optic cable, per the Rural Interstate Corridor Communications Study's Table 6-1?",
+   "type": "table",
+   "edge_cases": [
+    "missing_variable",
+    "symbols",
+    "table_id",
+    "precision"
+   ],
+   "expected": {
+    "source": "fhwahop09021.pdf",
+    "pdf_pages": [
+     81
+    ],
+    "printed_pages": [
+     "81"
+    ],
+    "value": "1/2 mile",
+    "accept": [
+     "0.5 mile",
+     "half a mile",
+     "½ mile"
+    ],
+    "all_of": [
+     [
+      "1/2 mile",
+      "0.5 mile",
+      "half a mile",
+      "½ mile"
+     ],
+     [
+      "3 miles",
+      "3 mile"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "clarify",
+   "verified_by": "page_text_match",
+   "note": "Missing variable: urban or rural. Table 6-1 Typical Rate of Work: trench, urban = ½ mile per day (a one-half glyph); trench, rural = 3 miles per day. The text above the table calls it Table 4.1. PDF page label 81; the page also prints 6-2."
+  },
+  {
+   "id": "utilities-h084",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In Table 12-1 of the Highway/Utility Guide, which highways does Missouri's statute on reimbursing utility relocation cover?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "table_id",
+    "not_first_row_col",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     260
+    ],
+    "printed_pages": [
+     "244"
+    ],
+    "value": "State Highways",
+    "accept": [
+     "state highway"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Table 12-1 (Continued), scan with no text layer: MISSOURI, 227.240 RSMo 1986, X only under State Highways. The table starts several pages earlier."
+  },
+  {
+   "id": "utilities-h085",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "Under the current Standard Utility Encroachment Plan Requirements, what load rating has to be noted for utility structures under pavement?",
+   "type": "text",
+   "edge_cases": [
+    "superseded",
+    "conflicting_documents"
+   ],
+   "expected": {
+    "source": "Utility-Encroachment-Plan-Requirements.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "HS-20",
+    "accept": [
+     "AASHTO HS-20",
+     "HS20"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "July 2023 sheet: ANSI tier rating outside pavement or AASHTO HS-20 load compliance under pavement; not Tier 22 / HS-20 -> details to the Utilities Unit. The April 2021 sheet in UAM Appendix C (pdf p. 201) only asks for the NCDOT Approved Products List number. Current value is the 2023 one."
+  },
+  {
+   "id": "utilities-h086",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "When Governor Stein signed House Bill 1094 on June 30, 2026, amending G.S. 136-18(10), what did it change about utility relocation cost reimbursement?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": {
+    "source": "NCDOT Utility Cost Reimbursement Guidance_8-20-2026.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "July 7, 2026",
+    "accept": [
+     "July 7 2026",
+     "7/7/2026"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "correct",
+   "verified_by": "page_text_match",
+   "note": "Cost reimbursement guidance memo (Aug. 20, 2026) p. 1: HB 1094 was signed on July 7, 2026; it memorializes the relocation cost reimbursement expectations in G.S. 136-18(10). The premise date is wrong."
+  },
+  {
+   "id": "utilities-h087",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Since the UAM lets utilities hang conduit on cored slab bridges as long as the hangers are insulated, what else is needed for that attachment?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     118
+    ],
+    "printed_pages": [
+     "3-45"
+    ],
+    "value": "prohibited",
+    "accept": [
+     "not allowed",
+     "not permitted"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "correct",
+   "verified_by": "page_text_match",
+   "note": "Section 3 structure attachments, 2.a: utility attachment to bridges of a box beam or cored slab design is prohibited (insulated hangers are rule 1 for metallic attachments to any structure)."
+  },
+  {
+   "id": "utilities-h088",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "23 CFR 645.209(c)(2) lists item (iv) as reserved. What does the item right after it require?",
+   "type": "text",
+   "edge_cases": [
+    "revision_marks",
+    "multi_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part645.pdf",
+    "pdf_pages": [
+     14
+    ],
+    "printed_pages": [
+     "340"
+    ],
+    "value": "utility strip",
+    "accept": [
+     "utility access control line"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Live text next to \"(iv) [Reserved]\": (v) a utility strip along the outer edge of the right-of-way, set by a utility access control line between the installation and the through roadway and ramps."
+  },
+  {
+   "id": "utilities-h089",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "Where in the Encroachment Submissions User Guide are the steps for creating a Business NCID account?",
+   "type": "cross_ref",
+   "edge_cases": [
+    "cross_reference",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "DOT Encroachment Submissions User Manual - July 2023.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     "5"
+    ],
+    "value": "Appendix A",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "\"Create your Business NCID account here: ... (see Appendix A)\"."
+  },
+  {
+   "id": "utilities-h090",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What daily per diem dollar amount can a utility charge for its crews' meals and lodging on a remote relocation job under the UAM?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "UAM 4.5.3 (pdf p. 172) allows meals and lodging in remote areas but caps them by the utility's own published policy or State policy for State workers; no dollar amount is given in any utilities document. The only \"$ per day\" figure is the $1,500 to $2,000 per day minimum in the bond amounts memo (UAM pdf p. 257), which is not a crew expense allowance."
+  },
+  {
+   "id": "utilities-h091",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What minimum cover does the UAM require for a hydrogen pipeline crossing a state highway?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "tuning",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "No document covers hydrogen pipelines; the only \"hydrogen\" in the division is the label \"Hydrogen Film\" in a corrosion drawing in the Highway/Utility Guide (pdf p. 108)."
+  },
+  {
+   "id": "utilities-h092",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "How far from the travel lane does the UAM say an electric vehicle charging station in the right of way has to be set back?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "EV charging stations are not mentioned in any utilities document."
+  },
+  {
+   "id": "utilities-h093",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What daily liquidated damages does NCDOT assess a utility owner that misses its relocation schedule?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "No liquidated damages amount (or the phrase) appears in any utilities document."
+  },
+  {
+   "id": "utilities-h094",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "How many utility pole fatalities did North Carolina have in 1995 according to the Highway/Utility Guide?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "Table 9-2 (pdf p. 186) covers 1980-1989 only; the guide is from 1993. No fatality figure for 1995 anywhere."
+  },
+  {
+   "id": "utilities-h095",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "How much notice does the UK's New Roads and Street Works Act require before a utility opens up a road?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "Another country's law; no utilities document mentions it."
+  },
+  {
+   "id": "utilities-h096",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What's the fine in North Carolina for passing a stopped school bus?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "Traffic law, not utility accommodation; not in any utilities document."
+  },
+  {
+   "id": "utilities-h097",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "How long is a North Carolina driver's license valid before renewal?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "Another topic entirely; not in any utilities document."
+  },
+  {
+   "id": "utilities-h098",
+   "division": "utilities",
+   "asker": "utilities",
+   "question": "What does 23 CFR 710.407 require for real property management?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 710.407 is \"[Reserved]\" (part 710 table of contents p. 1 and the section itself on pdf p. 12); the running head \"§ 710.407\" on p. 12 only marks the page.",
+   "accept_reply": [
+    "reserved"
+   ]
+  },
+  {
+   "id": "utilities-h099",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What condition does item (iv) of 23 CFR 645.209(c)(2) set for longitudinal utility installations on freeways?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "(iv) is \"[Reserved]\" both in the 2024 CFR (pdf p. 14) and in the 2003 reprint in the Program Guide (if03014.pdf p. 93).",
+   "accept_reply": [
+    "reserved"
+   ]
+  },
+  {
+   "id": "utilities-h100",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What does 23 CFR 646.202 say about railroad-highway projects?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "The part 645 file ends with the table of contents of part 646, where 646.202 is \"[Reserved]\" (pdf p. 19); no text of part 646 is in the division.",
+   "accept_reply": [
+    "reserved"
+   ]
+  },
+  {
+   "id": "utilities-h101",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What rules are in Subpart C of 23 CFR Part 750 on highway beautification?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "tuning",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "The part 710 file ends with the part 750 table of contents, where Subpart C is \"[Reserved]\" (pdf p. 23).",
+   "accept_reply": [
+    "reserved"
+   ]
+  },
+  {
+   "id": "utilities-h102",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In the 2003 reprint of 23 CFR 645 in FHWA's Program Guide, item (iv) of 645.209(c)(2) is reserved. Under the item after it, who keeps control of the utility strip right-of-way?",
+   "type": "text",
+   "edge_cases": [
+    "revision_marks",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "if03014.pdf",
+    "pdf_pages": [
+     93
+    ],
+    "printed_pages": [
+     "B-93"
+    ],
+    "value": "State or political subdivision",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Live text next to \"(iv) [Reserved]\" in Appendix B of if03014.pdf: (v) the State or political subdivision is to retain control of the utility strip right-of-way. (The 2024 CFR has the same item on its p. 14.)"
+  },
+  {
+   "id": "utilities-h103",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Which edition of ASCE's subsurface utility data guidelines does FHWA's Delaware SUE case study list in its resources?",
+   "type": "text",
+   "edge_cases": [
+    "conflicting_documents"
+   ],
+   "expected": {
+    "source": "hif22002.pdf",
+    "pdf_pages": [
+     5
+    ],
+    "printed_pages": [
+     "5"
+    ],
+    "value": "38-02",
+    "accept": [
+     "CI/ASCE-38-02",
+     "ASCE 38-02"
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "hif22002.pdf p. 5 Contacts and Resources: ASCE Standard Guidelines ... (38-02), 2002. The EDC-8 fact sheet in the same division cites the newer ASCE 38-22; the question names the document."
+  },
+  {
+   "id": "utilities-h104",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "Per Roadway Design Manual chapter 18, when a project's utility impacts are rated high or medium, who should the Roadway Design Unit send the preliminary plans to?",
+   "type": "text",
+   "edge_cases": [
+    "conditional"
+   ],
+   "expected": {
+    "source": "18. Utility Plans.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "Utility Agent",
+    "accept": []
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "18-1 Coordination During Preliminary Design: plans go to the Utility Agent at the same time as to the Hydraulics Unit, then the Utility Conflicts Committee reviews them. \"18-1\" is a section number, not a page folio, so printed_pages is empty."
+  },
+  {
+   "id": "utilities-h105",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "According to the utilities coordination and encroachments presentation notes, which two things decide which utility agreement a project needs?",
+   "type": "text",
+   "edge_cases": [],
+   "expected": {
+    "source": "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+    "pdf_pages": [
+     10
+    ],
+    "printed_pages": [
+     "10"
+    ],
+    "value": "whose cost",
+    "accept": [],
+    "all_of": [
+     [
+      "whose cost"
+     ],
+     [
+      "constructing"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "tuning",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Speaker notes for slides 9-10: \"Explanation of the Various Agreements\" (cont. next slide) ... \"It depends on two things, whose cost and who's constructing.\" The answer sentence is on p. 10 only."
+  }
+ ]
+}

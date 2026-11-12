@@ -1,0 +1,47 @@
+{
+  "description": "DAR-669: twin table questions. The TMP Design Manual's NC-PCB impact design tables for asphalt (PDF p.37, printed p.13, Figure 4) and concrete (PDF p.38, printed p.14, Figure 5) share one layout, the same offsets, speeds and impact angles. Only the numbers and a caption below the table differ, so a model or a retriever that mixes them up gives a plausible wrong number. Each case must return its own value (`must_contain`), must not return the twin's (`must_not_contain`) and must cite its own PDF page (`pages`). Run: py -m prototype.image_table_check search --cases eval/twin_table_questions.json (retrieval only; the case's own page must be in the top 5 and the twin's page must not outrank it) and py -m prototype.image_table_check answers --label twins --cases eval/twin_table_questions.json --base-url ... (model calls; exits 1 when a case fails). Kept apart from eval/image_table_questions.json so that file's 15-question figures keep their meaning.",
+  "cases": [
+    {
+      "id": "wztc-pcb-deflection-asphalt-14ft-40mph",
+      "division": "wztc",
+      "asker": "utilities",
+      "kind": "table",
+      "source": "TMP Design Manual (Combined, No Links).pdf",
+      "pages": [37],
+      "twin_pages": [38],
+      "printed_pages": ["13"],
+      "question": "what is the maximum deflection for the NC-PCB impact design table on asphalt pavement at an offset of 14 ft and a design speed of 40 mph?",
+      "answer": "27.42 in, Figure 4 (printed Page 13, PDF p.37)",
+      "must_contain": ["27.42"],
+      "must_not_contain": ["19.42"]
+    },
+    {
+      "id": "wztc-pcb-deflection-concrete-14ft-40mph",
+      "division": "wztc",
+      "asker": "utilities",
+      "kind": "table",
+      "source": "TMP Design Manual (Combined, No Links).pdf",
+      "pages": [38],
+      "twin_pages": [37],
+      "printed_pages": ["14"],
+      "question": "what is the maximum deflection for the NC-PCB impact design table on concrete pavement at an offset of 14 ft and a design speed of 40 mph?",
+      "answer": "19.42 in, Figure 5 (printed Page 14, PDF p.38)",
+      "must_contain": ["19.42"],
+      "must_not_contain": ["27.42"]
+    },
+    {
+      "id": "wztc-pcb-deflection-concrete-figure-name",
+      "division": "wztc",
+      "asker": "utilities",
+      "kind": "table",
+      "source": "TMP Design Manual (Combined, No Links).pdf",
+      "pages": [38],
+      "twin_pages": [37],
+      "printed_pages": ["14"],
+      "question": "Figure 5 NC-PCB impact design table for CONCRETE pavement: what is the maximum deflection at an offset of 14 ft and a design speed of 40 mph?",
+      "answer": "19.42 in, Figure 5 (printed Page 14, PDF p.38)",
+      "must_contain": ["19.42"],
+      "must_not_contain": ["27.42"]
+    }
+  ]
+}
