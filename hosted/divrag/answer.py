@@ -45,7 +45,7 @@ from .divisions import BY_ID, DIVISIONS, Division, document_for
 from .index_file import Hit
 from .llm import Completion, LLMError, OpenRouterClient
 from .pages_static import image_url
-from .retrieval import DEFAULT_CANDIDATES, DEFAULT_MAX_CHUNKS_PER_PAGE, Retriever, is_table
+from .retrieval import DEFAULT_CANDIDATES, DEFAULT_MAX_CHUNKS_PER_PAGE, Retriever, _page_key, is_table
 from .timing import StepTimer, timed
 from .verify import unverified_numbers
 
@@ -90,8 +90,9 @@ RETRY_MIN_SCORE = -2.0
 # candidates already. The first answer still reads only the top k (TOP_K).
 SECOND_LOOK_PASSAGES = 15
 SECOND_LOOK_TABLE_CHUNKS_PER_PAGE = DEFAULT_MAX_CHUNKS_PER_PAGE
-# How far down the ranking the retrieval keeps hits for the second look: the reranker's
-# default candidate pool (retrieval.DEFAULT_CANDIDATES), so nothing more is searched.
+# How far down the ranking the retrieval keeps hits for the second look: at most the
+# reranker's default candidate pool (retrieval.DEFAULT_CANDIDATES), and never more than the
+# retriever's own pool (RERANK_CANDIDATES), so nothing more is searched or reranked.
 SECOND_LOOK_RANKED = DEFAULT_CANDIDATES
 RETRY_MIN_SECONDS = 15.0
 # The retry stops this long before the request's deadline so the refusal can still be returned.
@@ -159,9 +160,9 @@ Answer the question again from the passages. Put the number of the passage that 
 
 # Asked after a refusal, with the passages ranked after the first ones (DAR-662). The
 # model sees its own refusal, so it reads the new passages and looks again at the first
-# ones instead of answering a new question. Of the refusals with the answer in the top 5,
-# one was a table cell (wztc-029: the lead unit "WZTCU" in a cell of a wide table) and one
-# a sentence in the middle of a passage about something else (the NC-PCB's dimensions).
+# ones instead of answering a new question. The one refusal with the answer readable in
+# the top 5 was a table cell (wztc-029: the lead unit "WZTCU" in a cell of a wide table),
+# so the rule names table cells, figure text and notes.
 SECOND_LOOK_RULE = """More passages from the {target_name} division's documents, numbered after the first ones:
 
 {context}
@@ -248,11 +249,6 @@ class Passages(list):
     def __init__(self, hits: Sequence[Hit] = (), more: Sequence[Hit] = ()):
         super().__init__(hits)
         self.more = list(more)
-
-
-def _page(chunk: Dict) -> Tuple:
-    """The page a chunk is on, as retrieval groups pages: (source, page, page_end)."""
-    return chunk.get("source"), chunk.get("page"), chunk.get("page_end")
 
 
 def _locator(hit: Hit) -> str:
@@ -804,21 +800,37 @@ class Answerer:
                  documents: Optional[Sequence[str]] = None, history: Sequence[Dict[str, str]] = ()) -> Passages:
         """The passages for the question from `target`'s documents (only `documents` when given).
 
-        The hits ranked after the top k (down to SECOND_LOOK_RANKED) come along as
-        the result's `more`, for the retry after a refusal. They are fetched in the
-        same search: the first top k of a longer ranking are the same chunks
+        The rest of the reranked pool (_ranked_depth) comes along as the result's
+        `more`, for the retry after a refusal. It is fetched in the same search: the
+        first top k of a longer ranking of the same pool are the same chunks
         (aggregate_pages only cuts its order to k), so the first answer reads what
         it read before.
         """
-        k = max(self.top_k, SECOND_LOOK_RANKED) if self.second_look else self.top_k
-        ranked = self.retriever.retrieve(self.search_query(question, history), division=target.id, k=k,
-                                         timer=timer, sources=documents)
+        ranked = self.retriever.retrieve(self.search_query(question, history), division=target.id,
+                                         k=self._ranked_depth(), timer=timer, sources=documents)
         first = ranked[:self.top_k]
         return Passages(self.retriever.as_passages(self.retriever.with_following(first, top=FOLLOWING_FOR_TOP)),
                         more=ranked[self.top_k:])
 
+    def _ranked_depth(self) -> int:
+        """How many ranked hits retrieve() asks for: the top k, plus the rest of the reranked pool for a retry.
+
+        Only the reranked pool: a deeper k would widen the pool itself (Retriever.retrieve
+        searches max(k, candidates)), and without a reranker it would widen the fused
+        searches, changing the first answer's top k. Nothing deeper is fetched when
+        no retry can run (no reranker, RETRY_ON_REFUSAL=off, or second_look 0).
+        """
+        pool = getattr(self.retriever, "candidates", None)
+        if (not self.second_look or self.retry_min_score is None or self.retriever.reranker is None
+                or not isinstance(pool, int)):
+            return self.top_k
+        return max(self.top_k, min(pool, SECOND_LOOK_RANKED))
+
     def _second_look(self, hits: List[Hit]) -> List[Hit]:
-        """Up to `second_look` of the hits ranked after `hits` (their `more`), in rank order, as passages.
+        """Up to `second_look` of the hits ranked after `hits` (their `more`), picked in rank order, as passages.
+
+        as_passages puts them in reading order and merges neighbours, as it does the
+        first passages.
 
         A chunk the first passages already hold, as a following chunk or a merged
         part, is not shown twice under another number. A page gives at most
@@ -831,7 +843,7 @@ class Answerer:
         for hit in hits:
             for part in hit.chunk.get("parts", [hit.chunk]):
                 if is_table(part):
-                    tables[_page(part)] = tables.get(_page(part), 0) + 1
+                    tables[_page_key(part)] = tables.get(_page_key(part), 0) + 1
         picked: List[Hit] = []
         for hit in getattr(hits, "more", []):
             if len(picked) >= self.second_look:
@@ -839,9 +851,9 @@ class Answerer:
             if id(hit.chunk) in shown:
                 continue
             if is_table(hit.chunk):
-                if tables.get(_page(hit.chunk), 0) >= SECOND_LOOK_TABLE_CHUNKS_PER_PAGE:
+                if tables.get(_page_key(hit.chunk), 0) >= SECOND_LOOK_TABLE_CHUNKS_PER_PAGE:
                     continue
-                tables[_page(hit.chunk)] = tables.get(_page(hit.chunk), 0) + 1
+                tables[_page_key(hit.chunk)] = tables.get(_page_key(hit.chunk), 0) + 1
             picked.append(hit)
         return self.retriever.as_passages(picked) if picked else []
 
@@ -878,7 +890,7 @@ class Answerer:
         return suggest
 
     def _worth_retrying(self, hits: List[Hit], deadline: Optional[float]) -> bool:
-        """Retrieval was strong (reranker scores only) and enough of the request's time is left."""
+        """The top reranker score is at least retry_min_score and enough of the request's time is left."""
         if self.retry_min_score is None or self.retriever.reranker is None:
             return False
         if max(hit.score for hit in hits) < self.retry_min_score:

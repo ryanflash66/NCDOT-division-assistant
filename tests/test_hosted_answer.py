@@ -1091,14 +1091,15 @@ def test_a_streamed_uncited_answer_asked_again_clears_the_text_and_streams_the_c
 class _RankedRetriever(_FakeRetriever):
     """Returns the first k hits of a fixed Utilities ranking (other divisions score low, as in _FakeRetriever)."""
 
-    def __init__(self, ranked):
-        super().__init__({"wztc": -9.0})
+    def __init__(self, ranked, pool=40, reranker=True):
+        super().__init__({"wztc": -9.0}, reranker=reranker)
         self.ranked = ranked
+        self.candidates = pool  # the reranked pool, as Retriever.candidates
         self.ks = []
 
     def retrieve(self, question, division, k=5, timer=None, candidates=None, sources=None):
         if division != "utilities":
-            return super().retrieve(question, division, k, timer, candidates, sources)
+            return [_hit(10, source=TMP, division=division, score=-9.0)]
         self.ks.append(k)
         return self.ranked[:k]
 
@@ -1186,3 +1187,17 @@ def test_the_second_look_takes_at_most_two_table_chunks_of_a_page():
     extra = Answerer(_RankedRetriever(rows), _FakeLLM(NOT_FOUND), second_look=2)._second_look(hits)
 
     assert [h.chunk["page"] for h in extra] == [36, 32]  # page 518 gave its two (five, in fact) already
+
+
+def test_nothing_deeper_is_fetched_when_no_retry_can_use_it_or_beyond_the_reranked_pool():
+    # A deeper k would widen the reranked pool itself, or without a reranker the fused searches.
+    def depth(**options):
+        retriever = _RankedRetriever(_ranked(), pool=options.pop("pool", 40), reranker=options.pop("reranker", True))
+        Answerer(retriever, _FakeLLM(NOT_FOUND), **options).retrieve("q", BY_ID["utilities"])
+        return retriever.ks[0]
+
+    assert depth() == 40
+    assert depth(pool=20) == 20
+    assert depth(reranker=False) == 5
+    assert depth(retry_min_score=None) == 5  # RETRY_ON_REFUSAL=off
+    assert depth(second_look=0) == 5
