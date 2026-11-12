@@ -38,6 +38,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 from llama_index.core import Document
 
+from rag.table_notes import trailing_notes
 from rag.tables import _MAX_CAPTION_CHARS as MAX_CAPTION_CHARS
 from rag.tables import _header_row_count, cells, clean_markdown_tables, is_separator, is_table_line
 
@@ -297,12 +298,15 @@ def _decide(tail_doc: Document, tail_meta: Dict, head_doc: Document, running: fr
     moved = [r for r in head_rows if not is_separator(r)][repeated:]
     moved = [_pad(r, tail_columns) if missing else r for r in moved]
     table = clean_markdown_tables("\n".join(tail_rows + moved)).split("\n")
-    new_tail = tail_lines[:tail[0]] + table + tail_lines[tail[1]:]
+    # The notes under the continued part belong to the whole table (DAR-717): they move with its
+    # rows, so the splitter finds them right under the joined table.
+    notes, after_notes = trailing_notes(head_lines, head[1], "\n".join(table))
+    new_tail = tail_lines[:tail[0]] + table + ([""] + notes if notes else []) + tail_lines[tail[1]:]
     # Lines above the continuation that are not page furniture or the table's
     # caption again (a short heading, say) stay with the rest of page N+1.
     kept = [line for line in head_lines[:head[0]]
             if not (_is_footer_line(line, running) or _is_continued_caption(line) or _same_caption(line, tail_caption))]
-    remainder = kept + head_lines[head[1]:]
+    remainder = kept + head_lines[after_notes if notes else head[1]:]
     return (new_tail, remainder, " + ".join(reasons)), MergeDecision(source, page, next_page, True, " + ".join(reasons), signals)
 
 
