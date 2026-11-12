@@ -14,6 +14,7 @@ One short report per sub-ticket (DAR-660, step 2). Each gives what changed, befo
 | DAR-658 | [dar-658-no-text-pages.md](dar-658-no-text-pages.md) | OCR orientation retry, figure chunks, pages with no text |
 | DAR-659 | [dar-659-number-check.md](dar-659-number-check.md) | checking numbers against the cited page |
 | PR #42 | [pr-42-citation-fix.md](pr-42-citation-fix.md) | asking uncited answers for their source |
+| DAR-662 | [dar-662-refusals.md](dar-662-refusals.md) | why answerable questions were refused; the retry's second look |
 
 **Runs and commits** (all in [`../locked-set/RUNS.md`](../locked-set/RUNS.md)):
 
