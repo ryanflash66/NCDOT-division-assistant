@@ -396,6 +396,28 @@ Also open, without a ticket yet:
 - **Unfixed pages:** the 5 text-loss and 6 image-only pages (D11).
 - **Paid vision model:** the decision is with Dr. Namian (D7).
 
+## DAR-662. Why does the assistant refuse questions its documents answer, and what should the retry do?
+
+- **Question:** 16 of 245 answerable questions were refused in the final run (14/204 on the locked split). Is that the model, the search, the retry rule, or the pages?
+- **Evidence** (`docs/redo-reports/dar-662-refusals.md`, retrieval only on the cached final run):
+  - In 14 of the 16, the chunk holding the answer was not among the passages the model read: 13 ranked 6th or lower (6th to 25th, two not in the 40), and 2 pages have no useful text (tmsd-022, tmsd-026).
+  - Only wztc-029 was a plain model miss: the answer cell was in the passages and both models refused.
+  - The old retry re-read the same 5 passages with the next model. 12 of the 16 got it; all 12 refused again.
+  - 4 of the 16 never got a retry: their top reranker score (-1.61 to 0.48) was under the 1.0 bar. On the tuning split the 7 must-refuse questions scored -1.51 to 3.96, so the score no longer separates the two.
+  - The user-reported "What are the NC-PCB dimensions?" was refused because 12 labelled-row chunks of one Standard Specifications table (bolt washer dimensions) took ranks 1 to 12; the TMP manual's sentence was 34th.
+- **Chose:**
+  - A refused question's retry also shows up to 15 more chunks from the reranked 40 (`SECOND_LOOK_PASSAGES`), in rank order, at most 2 table chunks per page, numbered after the first five, with a rule to look again at table cells, figure text and table notes.
+  - Retry down to a top score of -2.0 (`RETRY_MIN_SCORE`, was 1.0).
+  - `TOP_K` stays 5: the first answer reads exactly what it read before.
+- **Results** (tuning split, `dar-662-before` against `dar-662-after`): answerable refused 2/41 (1–16%) → 1/41 (0–13%); unanswerable answered 0/7 (0–35%) → 0/7 (0–35%); value right 39/41 (84–99%) → 40/41 (87–100%); critical 0/48 (0–7%) both. The NC-PCB question answered 10 ft long, 24 in wide at the base, 32 in high, cited to PDF p.32 (printed p.8), 3 of 3 runs.
+- **Surprised us:**
+  - Capping every chunk of a page, not only tables, would have dropped wztc-053's table note: its page had already given two table chunks.
+  - The remaining tuning refusal (wztc-037) did get the second look; the free provider timed out on it.
+- **Not done:**
+  - No table cap on the first top 5 (it changes every answer; with DAR-664).
+  - The no-text pages (tmsd-022, tmsd-026) need an index rebuild or a vision model.
+  - The held-out after-number (DAR-661 set) is for the coordinator.
+
 ## DAR-717. Why are footnote questions answered from the table instead of its note?
 
 - **Question:** Footnote questions were the one type that got worse in the redo (D18): value right 10/13 (50–92%) → 8/13 (36–82%) on the locked split. Was the note missing from what the model saw, or did the model read past it?
