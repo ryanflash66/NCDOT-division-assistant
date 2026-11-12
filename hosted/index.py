@@ -412,9 +412,10 @@ def _payload(checked: Question, result: Answer, timer: StepTimer, steps: LiveSte
     timing = dict(timer.as_ms(), retrieval=round((retrieved - started) * 1000), total=_ms_since(started))
     log.info(
         "ask asker=%s target=%s chars=%d refused=%s uncited=%s retried=%s sources=%d model=%s first_model=%s "
-        "stream=%s ms %s",
+        "unverified=%d agreed=%s stream=%s ms %s",
         asker.id, target.id, len(checked.text), result.refused, result.uncited, result.retried, len(result.sources),
-        result.model, result.first_model, streamed, _ms_text(timing),
+        result.model, result.first_model, len(result.unverified),
+        None if result.second_opinion is None else result.second_opinion.agreed, streamed, _ms_text(timing),
     )
     payload = result.as_dict()
     payload["asker"] = {"id": asker.id, "name": asker.name}

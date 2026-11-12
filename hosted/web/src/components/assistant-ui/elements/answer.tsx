@@ -136,7 +136,7 @@ export function AnswerFooter() {
           role="alert"
           className="aui-disputed mt-2 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-2 text-sm dark:border-amber-800 dark:bg-amber-950/40"
         >
-          <strong>{disputed}</strong> {disputedText(payload.second_opinion?.numbers)}, so check the number in the
+          <strong>{disputed}</strong> {disputedText(payload.second_opinion?.instead)}, so check the number in the
           document before relying on it.
         </p>
       )}

@@ -90,6 +90,9 @@ RECHECK_MIN_SECONDS = RETRY_MIN_SECONDS
 # The second model's answer for the number agreement check (NUMBER_AGREEMENT, DAR-663) is a
 # whole answer too, so it needs the same time left; with less it is skipped, not cut off.
 AGREEMENT_MIN_SECONDS = RETRY_MIN_SECONDS
+# ... and is given at most this long: the answer's sources and flags wait for it (they come with
+# the checked answer), and the free models answered the tuning split's questions in 2-17 s.
+AGREEMENT_MAX_SECONDS = 20.0
 EXCERPT_CHARS = 700
 # The best hits also bring the next chunk of their document (see Retriever.with_following).
 FOLLOWING_FOR_TOP = 2
@@ -655,9 +658,10 @@ LIVE_STEPS: Tuple[Tuple[str, Tuple[str, ...]], ...] = (
     ("suggest", ("suggest",)),
 )
 
-# Steps that only run after a refusal, so the page isn't told about them in
-# advance: most answers never retry or suggest, and a step left "not started"
-# at the end would read as if the answer stopped short (DAR-636).
+# Steps that run only for some answers (after a refusal, an uncited answer, an
+# unverified number, or, for "agree", an answer with numbers while
+# NUMBER_AGREEMENT is on), so the page isn't told about them in advance: a step
+# left "not started" at the end would read as if the answer stopped short (DAR-636).
 OCCASIONAL_STEPS = ("retry", "recite", "recheck", "agree", "suggest")
 
 
@@ -880,8 +884,8 @@ class Answerer:
         return second, text, sources
 
     async def _second_opinion(self, messages: List[Dict[str, str]], first: Completion, text: str, hits: List[Hit],
-                              asked: str, deadline: Optional[float],
-                              timer: Optional[StepTimer]) -> Optional[SecondOpinion]:
+                              asked: str, deadline: Optional[float], timer: Optional[StepTimer],
+                              avoid: Sequence[str] = ()) -> Optional[SecondOpinion]:
         """The number agreement check (agreement.py), when it is on and worth a call; None otherwise.
 
         It runs after the answer is final (retry, recite and recheck done), not
@@ -889,15 +893,20 @@ class Answerer:
         a refusal needs none, and the numbers to compare are the final answer's.
         Run alongside, every question would spend a second call of the free
         models' shared daily quota. The cost is the second call's time on
-        numeric answers only, while the visitor already reads the streamed answer.
+        numeric answers only (at most AGREEMENT_MAX_SECONDS): the streamed text
+        is already on the page, but its citations, sources and flags come with
+        the checked answer, after it. `avoid` are models that refused this
+        question before a retry answered it.
         """
         if not self.number_agreement:
             return None
         first_numbers = answer_numbers(text, asked)
-        models = second_opinion_models(self.llm, first.model) if first_numbers else []
+        models = second_opinion_models(self.llm, first.model, avoid) if first_numbers else []
         if not models or not _time_left(deadline, AGREEMENT_MIN_SECONDS):
             return None
-        timeout = None if deadline is None else deadline - time.monotonic() - RETRY_MARGIN_SECONDS
+        timeout = AGREEMENT_MAX_SECONDS
+        if deadline is not None:
+            timeout = min(timeout, deadline - time.monotonic() - RETRY_MARGIN_SECONDS)
         with timed(timer, "agree"):
             # The same messages as the first call, not a conversation with the first answer:
             # a second model shown that answer tends to repeat it instead of reading the table.
@@ -1006,7 +1015,9 @@ class Answerer:
             # and one unsupported number swapped for another is no correction.
             if again and again[2] and len(again[3]) < len(unverified):
                 completion, text, sources, unverified = again
-        opinion = await self._second_opinion(messages, completion, text, hits, asked, deadline, timer) if text else None
+        refused_first = [first_model] if retried and first_model != completion.model else []
+        opinion = (await self._second_opinion(messages, completion, text, hits, asked, deadline, timer, refused_first)
+                   if text else None)
         if opinion:
             unverified = list(dict.fromkeys([*unverified, *opinion.disagreed]))
         if not text:

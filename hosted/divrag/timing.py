@@ -14,7 +14,7 @@ The steps, in pipeline order:
     recite      asking again for citations after an answer that cites nothing
     recheck     asking again after an answer with numbers its cited passages lack
     agree       a second model's answer for the number agreement check (NUMBER_AGREEMENT)
-    suggest    searching the other divisions for a "try asking X" suggestion
+    suggest     searching the other divisions for a "try asking X" suggestion
 
 A step that runs more than once in a question adds up; a step that didn't run
 reports 0, so every answer has the same keys.

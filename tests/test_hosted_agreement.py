@@ -50,27 +50,39 @@ def test_the_same_number_is_listed_once():
     assert _numbers("27.42 ft, that is 27.42 feet [1].") == ["27.42 ft"]
 
 
+def test_everyday_words_before_a_value_are_not_identifiers():
+    assert _numbers("In both cases 500 ft; for all types 36 in [1].", "") == ["500 ft", "36 in"]
+    assert _numbers("Use a Type 3 barricade, Case 2 [1].", "") == []
+
+
+def _compare(first, second, asked=""):
+    return disagreeing(answer_numbers(first, asked), answer_numbers(second, asked))
+
+
 def test_a_wrong_cell_disagrees_and_the_first_answers_number_is_flagged():
-    assert disagreeing(answer_numbers(WRONG_CELL, QUESTION), answer_numbers(RIGHT, QUESTION)) == ["31.07 ft"]
+    assert _compare(WRONG_CELL, RIGHT, QUESTION) == (["31.07 ft"], ["27.42 ft"])
 
 
-def test_the_same_value_in_another_spelling_agrees():
-    assert disagreeing(answer_numbers("It is 12-foot wide [1].", ""), answer_numbers("12 ft [2].", "")) == []
+def test_the_same_value_in_another_spelling_or_unit_agrees():
+    assert _compare("It is 12-foot wide [1].", "12 ft [2].") == ([], [])
     # A table cell's bare value matches the same value with its column's unit.
-    assert disagreeing(answer_numbers("27.42 ft [1]", ""), answer_numbers("Max deflection: 27.42 [1]", "")) == []
-    assert disagreeing(answer_numbers("5 ft [1]", ""), answer_numbers("5 in [1]", "")) == ["5 ft"]
+    assert _compare("27.42 ft [1]", "Max deflection: 27.42 [1]") == ([], [])
+    assert _compare("A 1.5 ft cover [1].", "An 18 in cover [1].") == ([], [])
+    assert _compare("5 ft [1]", "5 in [1]") == (["5 ft"], ["5 in"])
 
 
 def test_leaving_a_number_out_is_not_a_disagreement():
-    lane_and_shoulder = answer_numbers("Lanes are 12 ft with a 2 ft shoulder [1].", "")
-    lane = answer_numbers("Lanes are 12 ft [1].", "")
-    assert disagreeing(lane_and_shoulder, lane) == [] and disagreeing(lane, lane_and_shoulder) == []
+    assert _compare("Lanes are 12 ft with a 2 ft shoulder [1].", "Lanes are 12 ft [1].") == ([], [])
+    assert _compare("Lanes are 12 ft [1].", "Lanes are 12 ft with a 2 ft shoulder [1].") == ([], [])
+
+
+def test_a_number_of_another_kind_is_no_contradiction():
+    assert _compare("The taper is 500 ft, at 45 mph [1].", "The taper is 500 ft with 12 % grade [1].") == ([], [])
 
 
 def test_one_wrong_number_of_two_is_flagged_alone():
-    first = answer_numbers("The N width is 6 ft and the runout length 330 ft [1].", "")
-    second = answer_numbers("N width 5 ft; runout length 330 ft [1].", "")
-    assert disagreeing(first, second) == ["6 ft"]
+    assert _compare("The N width is 6 ft and the runout length 330 ft [1].",
+                    "N width 5 ft; runout length 330 ft [1].") == (["6 ft"], ["5 ft"])
 
 
 # Which model gives the second opinion
@@ -79,8 +91,12 @@ def test_the_second_opinion_comes_from_the_next_free_model_never_the_one_that_an
     client = OpenRouterClient("k", [FIRST, SECOND, THIRD])
     assert second_opinion_models(client, FIRST) == [SECOND, THIRD]
     assert second_opinion_models(client, THIRD) == [FIRST, SECOND]  # the last model is checked by the first
-    assert second_opinion_models(client, "unknown:free") == [SECOND, THIRD, FIRST]
+    assert second_opinion_models(client, FIRST.removesuffix(":free")) == [SECOND, THIRD]
+    # Unknown author: it might be any of them, and it must not check itself.
+    assert second_opinion_models(client, "unknown:free") == []
     assert second_opinion_models(OpenRouterClient("k", [FIRST]), FIRST) == []  # one model: no second opinion
+    # After a retry, the model that refused is not asked: it would refuse again.
+    assert second_opinion_models(client, SECOND, avoid=[FIRST]) == [THIRD]
 
 
 def test_an_openai_answer_is_checked_by_the_first_free_model_and_openai_never_twice():
@@ -171,7 +187,7 @@ def test_a_wrong_cell_the_second_model_reads_differently_is_flagged_unverified()
     payload = result.as_dict()
     assert payload["unverified"] == ["31.07 ft"]
     assert payload["second_opinion"] == {"model": SECOND, "agreed": False, "numbers": ["27.42 ft"],
-                                         "disagreed": ["31.07 ft"]}
+                                         "disagreed": ["31.07 ft"], "instead": ["27.42 ft"]}
     assert "agree" in STEPS and timer.as_ms()["agree"] >= 0
 
 
@@ -180,6 +196,14 @@ def test_agreement_leaves_the_answer_as_it_is():
     result, _ = _ask(llm)
     assert len(llm.calls) == 2 and result.unverified == [] and result.answer == RIGHT
     assert result.as_dict()["second_opinion"]["agreed"] is True
+
+
+def test_after_a_retry_the_model_that_refused_is_not_the_second_opinion():
+    llm = _LLM(NOT_FOUND, WRONG_CELL, RIGHT)
+    result, _ = _ask(llm)
+    assert result.retried and result.model == SECOND
+    assert llm.asked_models == [None, [SECOND], [THIRD]]
+    assert result.unverified == ["31.07 ft"]
 
 
 def test_an_answer_with_no_numbers_needs_no_second_call():

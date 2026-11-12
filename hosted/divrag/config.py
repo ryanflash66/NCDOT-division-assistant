@@ -298,8 +298,10 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     retry_min_seconds = float(env.get("RETRY_MIN_SECONDS", "15"))
     if retry_min_seconds < 0:
         raise ValueError(f"RETRY_MIN_SECONDS must be 0 or more, got {retry_min_seconds}")
-    # Off by default: it doubles the model calls of every numeric answer, and on the tuning split
-    # it had too few wrong-cell answers to show what it catches (DAR-663, docs/redo-decision-log.md).
+    # Off by default: it doubles the model calls of every numeric answer, the tuning split had no
+    # wrong-cell answer to catch, and on Nov 11 the second free model gave an opinion on only 5 of 20
+    # numeric answers (Nemotron 3.5 Super timed out with 504s, Gemma 4 was rate-limited upstream),
+    # adding a median 13 s per numeric answer (DAR-663, docs/redo-decision-log.md).
     agreement = _setting(env, "NUMBER_AGREEMENT", "off").lower()
     if agreement not in ("on", "off", "1", "0", "true", "false"):
         raise ValueError(f"NUMBER_AGREEMENT must be on or off, got {agreement!r}")

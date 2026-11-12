@@ -61,9 +61,16 @@ export type AnswerPayload = {
   unverified?: string[];
   /**
    * The number agreement check (NUMBER_AGREEMENT, DAR-663), when a second model answered with numbers:
-   * `disagreed` are the answer's numbers it contradicts (also in `unverified`), `numbers` the ones it gave.
+   * `disagreed` are the answer's numbers it contradicts (also in `unverified`), `instead` its own numbers
+   * that contradict them, `numbers` every number it gave.
    */
-  second_opinion?: { model: string; agreed: boolean; numbers: string[]; disagreed: string[] } | null;
+  second_opinion?: {
+    model: string;
+    agreed: boolean;
+    numbers: string[];
+    disagreed: string[];
+    instead?: string[];
+  } | null;
   sources: Source[];
   model: string | null;
   first_model: string | null;
