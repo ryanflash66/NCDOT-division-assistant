@@ -9,9 +9,11 @@ The flow for one question:
    (and the number printed on the page, when it differs), section and a link
    to the public PDF at that page.
 
-When the model says the passages don't answer the question, the reply is a
-refusal that names the division's documents and shows no sources; if another
-division's documents look relevant, it suggests asking that division instead.
+When the model says the passages don't answer the question, the next model is
+asked once more with the passages ranked after them added (DAR-662). If it
+finds nothing either, the reply is a refusal that names the division's
+documents and shows no sources; if another division's documents look
+relevant, it suggests asking that division instead.
 An answer that cites none of the passages is kept and marked `uncited`, so the
 page can flag it ("No source cited") instead of hiding it (DAR-629).
 
@@ -43,7 +45,7 @@ from .divisions import BY_ID, DIVISIONS, Division, document_for
 from .index_file import Hit
 from .llm import Completion, LLMError, OpenRouterClient
 from .pages_static import image_url
-from .retrieval import Retriever
+from .retrieval import DEFAULT_CANDIDATES, DEFAULT_MAX_CHUNKS_PER_PAGE, Retriever, _page_key, is_table
 from .timing import StepTimer, timed
 from .verify import unverified_numbers
 
@@ -67,12 +69,31 @@ SUGGEST_CANDIDATES = 10
 # RETRY_MARGIN_SECONDS before the deadline, so later checks are skipped rather
 # than letting the refusal run past it.
 SUGGEST_MIN_SECONDS = 3.0
-# A refusal is retried once when the best passage's reranker score is at least
-# this. Scores of questions the documents answer were 0.9-7.8 (bore-and-jack
-# cover, which the free model sometimes refused: 3.5); questions they don't
-# answer scored -9.4 to -3.5, and the HAWKS question, whose topic the manual
-# mentions without the criteria, 0.5. 1.0 keeps all of those refusals fast.
-RETRY_MIN_SCORE = 1.0
+# A refusal is retried once, with the next ranked passages added (SECOND_LOOK_PASSAGES),
+# when the best passage's reranker score is at least this. It was 1.0 while the retry
+# only re-read the same passages: then questions the documents don't answer scored
+# -9.4 to -3.5. On the locked set the score no longer separates the two (DAR-662): the
+# tuning split's 7 questions that must be refused scored -1.51 to 3.96, and answerable
+# questions refused without a retry scored -1.61 (utilities-028, a footnote 9th in the
+# ranking), -0.97, -0.62 and 0.48 (wztc-037, a scanned page 12th). The bar now only keeps
+# the refusal of a question nothing in the division is close to fast.
+RETRY_MIN_SCORE = -2.0
+# Chunks ranked after the top k that the retry after a refusal reads too, taken in rank
+# order from all the reranked candidates, skipping table chunks of a page that already
+# gave SECOND_LOOK_TABLE_CHUNKS_PER_PAGE. Of the 16 answerable questions the final DAR-652
+# run refused, only 2 had the answer in the top 5; 11 more have it among the chunks this
+# picks (wztc-034 7th, wztc-019's row on the next page 8th, wztc-037's scanned page 12th;
+# docs/redo-reports/dar-662-refusals.md). Without the table cap the next 15 ranks miss
+# "What are the NC-PCB dimensions?": 12 labelled-row chunks of one Standard Specifications
+# table ("WASHER DIMENSIONS") rank 1 to 12, and the TMP manual's sentence giving the
+# barrier's size is 34th. They cost nothing to fetch: the reranker has scored all the
+# candidates already. The first answer still reads only the top k (TOP_K).
+SECOND_LOOK_PASSAGES = 15
+SECOND_LOOK_TABLE_CHUNKS_PER_PAGE = DEFAULT_MAX_CHUNKS_PER_PAGE
+# How far down the ranking the retrieval keeps hits for the second look: at most the
+# reranker's default candidate pool (retrieval.DEFAULT_CANDIDATES), and never more than the
+# retriever's own pool (RERANK_CANDIDATES), so nothing more is searched or reranked.
+SECOND_LOOK_RANKED = DEFAULT_CANDIDATES
 RETRY_MIN_SECONDS = 15.0
 # The retry stops this long before the request's deadline so the refusal can still be returned.
 RETRY_MARGIN_SECONDS = 1.0
@@ -136,6 +157,17 @@ Answer the question again from the passages. For every number, quote the row lab
 # replied with the bare value ("5 feet"), right 69 times, with no [n] to show where it came from.
 CITE_RULE = """Your answer has no citation, so the reader cannot check it.
 Answer the question again from the passages. Put the number of the passage that supports each sentence right after it, even when the answer is a single value, for example: "The minimum is 5 ft [2]." If the passages do not answer the question, reply with exactly {not_found} and nothing else."""
+
+# Asked after a refusal, with the passages ranked after the first ones (DAR-662). The
+# model sees its own refusal, so it reads the new passages and looks again at the first
+# ones instead of answering a new question. The one refusal with the answer readable in
+# the top 5 was a table cell (wztc-029: the lead unit "WZTCU" in a cell of a wide table),
+# so the rule names table cells, figure text and notes.
+SECOND_LOOK_RULE = """More passages from the {target_name} division's documents, numbered after the first ones:
+
+{context}
+
+Look again for the answer in all the passages, [1] to [{last}]. Read table rows and cells, text taken from figures and drawings, and notes under tables too: their text can have broken spacing or columns out of order. If a passage states the answer, answer the question from it with citations, following the rules above. If none does, reply with exactly {not_found} and nothing else."""
 
 HISTORY_PROMPT = """Earlier conversation, oldest first (only to understand what the question refers to; not a source):
 
@@ -205,6 +237,18 @@ class Answer:
             "citation_fix": self.citation_fix,
             "suggest": [{"id": d, "name": BY_ID[d].name} for d in self.suggest],
         }
+
+
+class Passages(list):
+    """The passages the model reads (a list of Hit), with the ranked hits after them as `more`.
+
+    Only the retry after a refusal reads `more` (SECOND_LOOK_PASSAGES). A plain
+    list of hits has none, and its retry re-reads the same passages.
+    """
+
+    def __init__(self, hits: Sequence[Hit] = (), more: Sequence[Hit] = ()):
+        super().__init__(hits)
+        self.more = list(more)
 
 
 def _locator(hit: Hit) -> str:
@@ -339,9 +383,13 @@ def build_messages(question: str, asker: Division, target: Division, hits: List[
     if earlier:
         extra.append(HISTORY_RULE.format(not_found=NOT_FOUND))
     system += "".join(f"\n{n}. {rule}" for n, rule in enumerate(extra, 8))
-    context = "\n\n---\n\n".join(f"[{n}] ({_locator(hit)})\n{passage_text(hit.chunk)}" for n, hit in enumerate(hits, 1))
-    user = USER_PROMPT.format(history=earlier, target_name=target.name, context=context, question=question)
+    user = USER_PROMPT.format(history=earlier, target_name=target.name, context=_numbered(hits), question=question)
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
+
+
+def _numbered(hits: Sequence[Hit], start: int = 1) -> str:
+    """The passages as the prompt shows them, numbered from `start`: "[n] (locator)" and the text."""
+    return "\n\n---\n\n".join(f"[{n}] ({_locator(hit)})\n{passage_text(hit.chunk)}" for n, hit in enumerate(hits, start))
 
 
 def _marker_numbers(marker: "re.Match[str]", n_hits: int) -> List[int]:
@@ -724,12 +772,14 @@ def _time_left(deadline: Optional[float], needed: float) -> bool:
 
 class Answerer:
     def __init__(self, retriever: Retriever, llm: OpenRouterClient, top_k: int = 5,
-                 retry_min_score: Optional[float] = RETRY_MIN_SCORE, retry_min_seconds: float = RETRY_MIN_SECONDS):
+                 retry_min_score: Optional[float] = RETRY_MIN_SCORE, retry_min_seconds: float = RETRY_MIN_SECONDS,
+                 second_look: int = SECOND_LOOK_PASSAGES):
         self.retriever = retriever
         self.llm = llm
         self.top_k = top_k
         self.retry_min_score = retry_min_score  # None: never retry
         self.retry_min_seconds = retry_min_seconds
+        self.second_look = second_look  # ranked chunks after the top k for the retry; 0: it re-reads the same passages
 
     def search_query(self, question: str, history: Sequence[Dict[str, str]] = ()) -> str:
         """The text to search with: the previous question plus this one when there is history.
@@ -747,11 +797,65 @@ class Answerer:
         return f"{previous} {question}" if previous else question
 
     def retrieve(self, question: str, target: Division, timer: Optional[StepTimer] = None,
-                 documents: Optional[Sequence[str]] = None, history: Sequence[Dict[str, str]] = ()) -> List[Hit]:
-        """The passages for the question from `target`'s documents (only `documents` when given)."""
-        hits = self.retriever.retrieve(self.search_query(question, history), division=target.id, k=self.top_k,
-                                       timer=timer, sources=documents)
-        return self.retriever.as_passages(self.retriever.with_following(hits, top=FOLLOWING_FOR_TOP))
+                 documents: Optional[Sequence[str]] = None, history: Sequence[Dict[str, str]] = ()) -> Passages:
+        """The passages for the question from `target`'s documents (only `documents` when given).
+
+        The rest of the reranked pool (_ranked_depth) comes along as the result's
+        `more`, for the retry after a refusal. It is fetched in the same search: the
+        first top k of a longer ranking of the same pool are the same chunks
+        (aggregate_pages only cuts its order to k), so the first answer reads what
+        it read before.
+        """
+        ranked = self.retriever.retrieve(self.search_query(question, history), division=target.id,
+                                         k=self._ranked_depth(), timer=timer, sources=documents)
+        first = ranked[:self.top_k]
+        return Passages(self.retriever.as_passages(self.retriever.with_following(first, top=FOLLOWING_FOR_TOP)),
+                        more=ranked[self.top_k:])
+
+    def _ranked_depth(self) -> int:
+        """How many ranked hits retrieve() asks for: the top k, plus the rest of the reranked pool for a retry.
+
+        Only the reranked pool: a deeper k would widen the pool itself (Retriever.retrieve
+        searches max(k, candidates)), and without a reranker it would widen the fused
+        searches, changing the first answer's top k. Nothing deeper is fetched when
+        no retry can run (no reranker, RETRY_ON_REFUSAL=off, or second_look 0).
+        """
+        pool = getattr(self.retriever, "candidates", None)
+        if (not self.second_look or self.retry_min_score is None or self.retriever.reranker is None
+                or not isinstance(pool, int)):
+            return self.top_k
+        return max(self.top_k, min(pool, SECOND_LOOK_RANKED))
+
+    def _second_look(self, hits: List[Hit]) -> List[Hit]:
+        """Up to `second_look` of the hits ranked after `hits` (their `more`), picked in rank order, as passages.
+
+        as_passages puts them in reading order and merges neighbours, as it does the
+        first passages.
+
+        A chunk the first passages already hold, as a following chunk or a merged
+        part, is not shown twice under another number. A page gives at most
+        SECOND_LOOK_TABLE_CHUNKS_PER_PAGE table chunks, its first ones counted
+        too: a table's labelled rows are split into many chunks that score alike,
+        and they would otherwise fill the second look with one table.
+        """
+        shown = {id(part) for hit in hits for part in hit.chunk.get("parts", [hit.chunk])}
+        tables: Dict[Tuple, int] = {}
+        for hit in hits:
+            for part in hit.chunk.get("parts", [hit.chunk]):
+                if is_table(part):
+                    tables[_page_key(part)] = tables.get(_page_key(part), 0) + 1
+        picked: List[Hit] = []
+        for hit in getattr(hits, "more", []):
+            if len(picked) >= self.second_look:
+                break
+            if id(hit.chunk) in shown:
+                continue
+            if is_table(hit.chunk):
+                if tables.get(_page_key(hit.chunk), 0) >= SECOND_LOOK_TABLE_CHUNKS_PER_PAGE:
+                    continue
+                tables[_page_key(hit.chunk)] = tables.get(_page_key(hit.chunk), 0) + 1
+            picked.append(hit)
+        return self.retriever.as_passages(picked) if picked else []
 
     def suggest_divisions(self, question: str, target: Division, deadline: Optional[float] = None,
                           refused_by: Sequence[str] = ()) -> List[str]:
@@ -786,16 +890,22 @@ class Answerer:
         return suggest
 
     def _worth_retrying(self, hits: List[Hit], deadline: Optional[float]) -> bool:
-        """Retrieval was strong (reranker scores only) and enough of the request's time is left."""
+        """The top reranker score is at least retry_min_score and enough of the request's time is left."""
         if self.retry_min_score is None or self.retriever.reranker is None:
             return False
         if max(hit.score for hit in hits) < self.retry_min_score:
             return False
         return _time_left(deadline, self.retry_min_seconds)
 
-    async def _retry(self, messages: List[Dict[str, str]], first: Completion, hits: List[Hit],
-                     deadline: Optional[float], call: _Call) -> Optional[Tuple[Completion, str, List[Source]]]:
-        """Ask once more with the next model: its reply and that reply graded, or None if the call failed.
+    async def _retry(self, messages: List[Dict[str, str]], first: Completion, hits: List[Hit], target: Division,
+                     deadline: Optional[float], call: _Call) -> Optional[Tuple[Completion, str, List[Source],
+                                                                             List[Dict[str, str]], List[Hit]]]:
+        """Ask once more with the next model, showing it the passages ranked after `hits` too.
+
+        Returns the reply, that reply graded, and the messages and passages it was
+        given (the first passages, then the new ones numbered after them), or None
+        if the call failed. Without passages ranked after `hits` (SECOND_LOOK_PASSAGES
+        0, or none left), the same prompt is asked again.
 
         Only a cited answer replaces the refusal (see _answer). An uncited answer
         is kept when it is the first reply, but not in place of a refusal: one
@@ -803,19 +913,28 @@ class Answerer:
         without pointing to a passage is the case most likely to come from
         outside the documents.
         """
+        extra = self._second_look(hits)
+        wider = list(hits) + extra
+        if extra:
+            messages = messages + [
+                {"role": "assistant", "content": first.text},
+                {"role": "user", "content": SECOND_LOOK_RULE.format(
+                    target_name=target.name, context=_numbered(extra, len(hits) + 1), last=len(wider),
+                    not_found=NOT_FOUND)},
+            ]
         models = self.llm.retry_models(first.model)
-        log.info("refusal despite strong retrieval (top score %.2f): retrying %s with %s",
-                 max(hit.score for hit in hits), first.model, models[0])
+        log.info("refusal (top score %.2f): retrying %s with %s and %d more passages",
+                 max(hit.score for hit in hits), first.model, models[0], len(extra))
         timeout = None if deadline is None else deadline - time.monotonic() - RETRY_MARGIN_SECONDS
         try:
             second = await asyncio.wait_for(call(messages, models=models), timeout=timeout)
         except (LLMError, asyncio.TimeoutError) as exc:
             log.warning("retry failed (%s); keeping the refusal", exc.__class__.__name__)
             return None
-        text, sources = _grade(second.text, hits)
+        text, sources = _grade(second.text, wider)
         log.info("retry by %s: %s", second.model,
                  "cited answer" if sources else "uncited answer, keeping the refusal" if text else "refused again")
-        return second, text, sources
+        return second, text, sources, messages, wider
 
     async def _recheck(self, messages: List[Dict[str, str]], first: Completion, unverified: List[str],
                        hits: List[Hit], asked: str, deadline: Optional[float],
@@ -926,9 +1045,10 @@ class Answerer:
         if not text and self._worth_retrying(hits, deadline):
             retried = True
             with timed(timer, "retry"):
-                second = await self._retry(messages, completion, hits, deadline, call)
+                second = await self._retry(messages, completion, hits, target, deadline, call)
             if second and second[2]:
-                completion, text, sources = second
+                # The checks below read the passages and the conversation the retry answered from.
+                completion, text, sources, messages, hits = second
             elif second:
                 # Still a refusal, now from the retry's model: name that one, so the
                 # page shows which two models refused instead of the first one twice.
