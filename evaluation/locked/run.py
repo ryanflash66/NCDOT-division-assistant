@@ -186,7 +186,7 @@ def _pct(stat: Dict[str, Any]) -> str:
 
 _COLUMNS = (("right_document", "right doc"), ("hit1", "hit@1"), ("hit5", "hit@5"), ("cited_page_ok_pdf", "cited PDF page"),
             ("cited_page_ok_printed", "cited printed page"), ("value_ok", "value"), ("strict_ok", "strict"),
-            ("critical", "critical"))
+            ("critical", "critical"), ("clarify_ok", "clarify"))
 
 
 def _stratum_table(title: str, blocks: Dict[str, Dict[str, Any]]) -> List[str]:
@@ -259,7 +259,7 @@ def count_locked_run(runs_file: Path, label: str, commit: Optional[str], stage: 
 
 
 def _settings_record(settings) -> Dict[str, Any]:
-    return {"models": list(settings.models), "temperature": settings.temperature, "reasoning": settings.reasoning,
+    return {"models": list(getattr(settings, "answer_models", settings.models)), "temperature": settings.temperature, "reasoning": settings.reasoning,
             "rerank": settings.rerank, "keyword_search": settings.keyword_search,
             "rerank_candidates": settings.rerank_candidates, "top_k": settings.top_k,
             "request_budget_seconds": settings.request_budget_seconds, "retry_on_refusal": settings.retry_on_refusal,
@@ -297,7 +297,10 @@ async def run_command(args) -> int:
     runtime = Runtime(settings)
     index = index_info(settings.index_dir, len(runtime.index.chunks))
     retrievals = {item["id"]: runtime.retrieval(item) for item in items}
-    answer_config = f"{config_label(OPENROUTER_URL, settings.models)}@{index['sha256_12']}"
+    # With LLM_PROVIDER=openai and its key the run answers as the site does (DAR-679): OpenAI first, the free
+    # models behind it. The key then names both, so OpenAI answers are never served from a free-model run.
+    base = "https://api.openai.com/v1" if settings.answers_with_openai else OPENROUTER_URL
+    answer_config = f"{config_label(base, settings.answer_models)}@{index['sha256_12']}"
     # The default top-k and no tag keep the key the earlier runs were cached under.
     if settings.top_k != 5:
         answer_config += f"#k{settings.top_k}"
@@ -307,12 +310,21 @@ async def run_command(args) -> int:
     records: Dict[str, Optional[Dict[str, Any]]] = {}
     if args.stage in ("answer", "all"):
         cache = Cache(Path(args.cache))
-        if not settings.openrouter_api_key:
-            stopped = "no OPENROUTER_API_KEY: answers skipped"
-        else:
-            from divrag.llm import OpenRouterClient
+        from divrag.llm import client_from_settings
+        from divrag.spend import SpendLedger, store_from_env
 
-            llm = OpenRouterClient(settings.openrouter_api_key, settings.models, settings.temperature, settings.reasoning)
+        # OpenAI calls count against the site's monthly limit (DAR-715); past it the ledger stops them.
+        ledger = SpendLedger(settings.openai_monthly_budget_usd, settings.openai_budget_margin_usd,
+                             store_from_env(os.environ))
+        llm = client_from_settings(settings, ledger=ledger)
+        if llm is None:
+            stopped = "no OPENROUTER_API_KEY or OpenAI key: answers skipped"
+        else:
+            if settings.answers_with_openai:
+                todo = sum(1 for i in items if cached_answer(cache, i, answer_config) is None)
+                spent = await ledger.total_usd()
+                print(f"OpenAI ({settings.openai_model}): {todo} questions to ask; {ledger.month()} so far "
+                      f"${spent:.2f} of the ${ledger.limit_usd:.2f} limit", flush=True)
             _, stopped = await answer_stage(runtime, llm, answer_config, items, cache, settings.request_budget_seconds,
                                             args.pause, args.max_requests)
         records = {item["id"]: cached_answer(cache, item, answer_config) for item in items}
@@ -322,7 +334,9 @@ async def run_command(args) -> int:
             "questions": str(questions), "answer_config": answer_config, "only": args.only, "limit": args.limit}
     report = build_report(args.label, items, rows, meta, stopped)
     json_path, md_path = write_outputs(report, Path(args.out))
-    if args.split in ("locked", "all") and questions == LOCKED_DIR.resolve() and any(r["split"] == "locked" for r in rows):
+    # Counted for the locked set itself, and for any other set that names its own run log (the held-out set).
+    counted = questions == LOCKED_DIR.resolve() or Path(args.runs_file).resolve() != RUNS_FILE.resolve()
+    if args.split in ("locked", "all") and counted and any(r["split"] == "locked" for r in rows):
         count_locked_run(Path(args.runs_file), args.label, meta["git_commit"], args.stage, len(items))
     print_summary(report)
     if stopped:

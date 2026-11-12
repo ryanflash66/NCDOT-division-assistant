@@ -1,0 +1,3315 @@
+{
+ "division": "tmsd",
+ "items": [
+  {
+   "id": "tmsd-h001",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What's the cap on TODS panels at a single intersection approach?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     "4"
+    ],
+    "value": "six",
+    "accept": [
+     "6"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "six",
+      "6"
+     ],
+     [
+      "three",
+      "3"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "clarify",
+   "note": "Survey Procedures V.A (Pre-Interview): no more than six panels per intersection approach (G.S. 136-140.19(5)); if there is only room for one TODS assembly on the whole approach, the approach is limited to three panels. Missing variable: whether more than one assembly fits on the approach."
+  },
+  {
+   "id": "tmsd-h002",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Since NCDOT gives an attraction 60 days to change its operation so it qualifies for TODS, by when does its written notice have to reach the Department?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     8
+    ],
+    "printed_pages": [
+     "5"
+    ],
+    "value": "30 days",
+    "accept": [
+     "thirty days"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "correct",
+   "note": "False premise: the manual allows 30 days (from the date of the interview), not 60."
+  },
+  {
+   "id": "tmsd-h003",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How much is the annual maintenance fee on a TODS contract, and on what date is it renewed?",
+   "type": "text",
+   "edge_cases": [
+    "rephrased"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     9
+    ],
+    "printed_pages": [
+     "6"
+    ],
+    "value": "$200",
+    "accept": [
+     "200 dollars"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "$200",
+      "200 dollars"
+     ],
+     [
+      "July 1",
+      "July 1st"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "tuning",
+   "behaviour": "answer",
+   "note": "Item 6 of the facts list: annual maintenance fee of $200 for each contract, renewed each July 1."
+  },
+  {
+   "id": "tmsd-h004",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "On the TOD-1 application, how many characters per line should the attraction name on the TODS panel be limited to?",
+   "type": "text",
+   "edge_cases": [
+    "form"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     17
+    ],
+    "printed_pages": [
+     "14"
+    ],
+    "value": "15",
+    "accept": [
+     "fifteen"
+    ],
+    "unit": "characters"
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Form TOD-1, page 2: \"SHOULD BE LIMITED TO 15 CHARACTERS PER LINE\"."
+  },
+  {
+   "id": "tmsd-h005",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What size is a mini-TODS sign according to the TOD-3 sign requirements form?",
+   "type": "text",
+   "edge_cases": [
+    "form",
+    "units"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     20
+    ],
+    "printed_pages": [
+     "17"
+    ],
+    "value": "36\" x 12\"",
+    "accept": [
+     "36 x 12",
+     "36 by 12",
+     "36 inches by 12 inches",
+     "36 in x 12 in"
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Form TOD-3 quantity lines: Mainline 72\" x 16\", Mini-TODS 36\" x 12\"."
+  },
+  {
+   "id": "tmsd-h006",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What is the Division 13 TODS work order number on the TOD-4 fiscal breakdown form?",
+   "type": "table",
+   "edge_cases": [
+    "form",
+    "not_first_row_col",
+    "precision"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     21
+    ],
+    "printed_pages": [
+     ""
+    ],
+    "value": "5.0017062",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Form TOD-4, \"Division TODS Work Order Numbers\" list (three columns; Division 13 is in the third column). The page prints no page number."
+  },
+  {
+   "id": "tmsd-h007",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What's the 8-digit route code for I-40 Business in the TODS database?",
+   "type": "table",
+   "edge_cases": [
+    "not_first_row_col"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     31
+    ],
+    "printed_pages": [
+     "28"
+    ],
+    "value": "19000040",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Route Identification: 8-digit code examples, \"19000040 - I 40 Business\" (1 Interstate, 9 Business, 0 not a couplet, 00040)."
+  },
+  {
+   "id": "tmsd-h008",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Route Identification in the TODS manual: how many digits make up a route code?",
+   "type": "text",
+   "edge_cases": [
+    "toc_decoy"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     31
+    ],
+    "printed_pages": [
+     "28"
+    ],
+    "value": "eight",
+    "accept": [
+     "8 digits",
+     "8-digit",
+     "eight digits"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Worded like the contents entry \"ROUTE IDENTIFICATION ... 28\" (TOC on PDF p3); the answer is on the content page (PDF p31): \"This code is eight digits\"."
+  },
+  {
+   "id": "tmsd-h009",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In the TODS manual's sample assemblies (Figure 2K-1), what distance is shown on the Dick and Harry's Fishing Pond panel?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "symbols",
+    "table_id"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     39
+    ],
+    "printed_pages": [
+     "36"
+    ],
+    "value": "2 1/2",
+    "accept": [
+     "2.5",
+     "2 ½",
+     "two and a half"
+    ],
+    "unit": "mi"
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Appendix F sample, Figure 2K-1 combined intersection approach sign assembly: the panel shows \"2 ½\" with a left arrow. The drawing is an image (no text layer); read off the rendered page."
+  },
+  {
+   "id": "tmsd-h010",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "If a TODS business breaches its agreement, how long does it get after written notice to fix the breach before the signs come down?",
+   "type": "text",
+   "edge_cases": [
+    "rephrased"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     19
+    ],
+    "printed_pages": [
+     "16"
+    ],
+    "value": "thirty days",
+    "accept": [
+     "30 days"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Form TOD-2 item 6: removal upon thirty days written notice; the business may cure within thirty days of the notification."
+  },
+  {
+   "id": "tmsd-h011",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How many digits long can the intersection ID in a TODS agreement number be?",
+   "type": "text",
+   "edge_cases": [],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     23
+    ],
+    "printed_pages": [
+     "20"
+    ],
+    "value": "seven",
+    "accept": [
+     "7",
+     "up to seven"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "tuning",
+   "behaviour": "answer",
+   "note": "Form TOD-6: business ID up to six digits, intersection ID up to seven digits."
+  },
+  {
+   "id": "tmsd-h012",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "How many years of a location's crash history does NCDOT's fatal crash investigation program review?",
+   "type": "text",
+   "edge_cases": [
+    "rephrased"
+   ],
+   "expected": {
+    "source": "Fatal Investigation Guidelines.pdf",
+    "pdf_pages": [
+     1
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "five years",
+    "accept": [
+     "5 years",
+     "five",
+     "5-year",
+     "five-year"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "\"Review of most current five years of historical safety performance of location (crash data)\"."
+  },
+  {
+   "id": "tmsd-h013",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Fatal investigations have been run through the Fatal Workflow Tracker since January 2016, correct?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise"
+   ],
+   "expected": {
+    "source": "Fatal Investigation Guidelines.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "July 2018",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "correct",
+   "note": "False premise: \"As of July 2018, all Fatal Investigations are processed through the Fatal Workflow Tracker.\""
+  },
+  {
+   "id": "tmsd-h014",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How wide can a fire station driveway be per bay under the driveway access policy?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable",
+    "units"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     52
+    ],
+    "printed_pages": [
+     "42"
+    ],
+    "value": "15 feet",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "15 feet",
+      "15 ft"
+     ],
+     [
+      "12 feet-6 inches",
+      "12 ft 6 in",
+      "12'-6\"",
+      "12.5 feet"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "clarify",
+   "note": "Chapter 7 C: station buildings within 100 ft of the edge of pavement get up to 15 ft per bay (max 75 ft total); buildings more than 100 ft away get up to 12 ft-6 in per bay (max 50 ft). Missing variable: building distance from the pavement edge."
+  },
+  {
+   "id": "tmsd-h015",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Beyond the shoulder, what is the steepest grade allowed for a commercial driveway inside the right-of-way?",
+   "type": "text",
+   "edge_cases": [
+    "symbols"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     52
+    ],
+    "printed_pages": [
+     "42"
+    ],
+    "value": "ten percent",
+    "accept": [
+     "10%",
+     "+/- 10%",
+     "±10%",
+     "10 percent"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Chapter 7 D (Driveway Profile): \"should not exceed +/- ten percent\" (plus-minus)."
+  },
+  {
+   "id": "tmsd-h016",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Can a two-way driveway meet the pavement edge at a 70-degree angle under the access policy?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "units"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     61
+    ],
+    "printed_pages": [
+     "51"
+    ],
+    "value": "75 degrees",
+    "accept": [
+     "75°",
+     "75 deg"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Control Dimensions, Driveway Angle (Y): two-way driveways not less than 75 degrees nor more than 90 degrees, so 70 degrees is just below the allowed range (45-90 is only for one-way or right-in/right-out, case by case)."
+  },
+  {
+   "id": "tmsd-h017",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Could a new driveway sit 40 feet from the point of tangency of the corner radius at an intersection?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     62
+    ],
+    "printed_pages": [
+     "52"
+    ],
+    "value": "50 feet",
+    "accept": [
+     "50 ft",
+     "50'"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Control Dimensions, Corner Clearance (C): should be at least 100 ft; \"At no time shall the corner clearance be less than 50 feet\", so 40 ft is below the floor."
+  },
+  {
+   "id": "tmsd-h018",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What is the minimum asphalt base course thickness for a turn lane or auxiliary lane built under a driveway permit?",
+   "type": "text",
+   "edge_cases": [
+    "units"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     55
+    ],
+    "printed_pages": [
+     "45"
+    ],
+    "value": "five inches",
+    "accept": [
+     "5 inches",
+     "5 in",
+     "5\""
+    ],
+    "unit": "in"
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Chapter 7 F, Turn Lanes and Auxiliary Lanes: minimum five inches Asphalt Base Course, three inches Intermediate, two inches Surface."
+  },
+  {
+   "id": "tmsd-h019",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In the street and driveway access policy, the \"Recommended Treatment for Turn Lanes\" exhibit: what desirable deceleration length goes with a 50 mph design speed?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "scan",
+    "not_first_row_col",
+    "merged_header",
+    "near_identical"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     88
+    ],
+    "printed_pages": [
+     "78"
+    ],
+    "value": "300'",
+    "accept": [
+     "300 feet",
+     "300 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Exhibit (scanned, printed sideways): row design speed 50 / posted 45 mph; columns minimum deceleration 150', desirable deceleration 300', bay taper 100'. Read off the rendered page; the page has no text layer beyond the running header."
+  },
+  {
+   "id": "tmsd-h020",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "On the warrant chart for left and right turn lanes in the access policy, what opposing volume are the right-turn storage lengths based on?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "scan",
+    "figure"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     90
+    ],
+    "printed_pages": [
+     "80"
+    ],
+    "value": "100 VPH",
+    "accept": [
+     "100 vph",
+     "100 vehicles per hour"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Exhibit \"Warrant for Left and Right-Turn Lanes\" (scanned, sideways): \"Right Turn Storage Lengths are based on opposing volume of 100 VPH (MINIMUM)\"."
+  },
+  {
+   "id": "tmsd-h021",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "On what date did the Board of Transportation adopt the July 2003 street and driveway access policy?",
+   "type": "scan",
+   "edge_cases": [
+    "degraded_scan",
+    "scan",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     9
+    ],
+    "printed_pages": [
+     "vii"
+    ],
+    "value": "10th day of July",
+    "accept": [
+     "July 10, 2003",
+     "July 10th, 2003",
+     "10 July 2003"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "ocr_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Board of Transportation Ordinance (scanned page with signatures written over the text, a handwritten notary date and commission stamp): \"Adopted the 10th day of July, 2003\". Printed page vii, PDF page 9."
+  },
+  {
+   "id": "tmsd-h022",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How much on-site queue storage does a fast-food restaurant with a drive-in window need?",
+   "type": "text",
+   "edge_cases": [
+    "rephrased"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     42
+    ],
+    "printed_pages": [
+     "32"
+    ],
+    "value": "eight vehicles",
+    "accept": [
+     "8 vehicles",
+     "eight",
+     "8 cars"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "tuning",
+   "behaviour": "answer",
+   "note": "Vehicle Storage Space c: a minimum of eight vehicles per service lane, measured from the menu board/ordering station."
+  },
+  {
+   "id": "tmsd-h023",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "List the corridor categories the COST Section uses for signal retiming and how often each one gets assessed.",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     8,
+     9
+    ],
+    "printed_pages": [
+     "1",
+     "2"
+    ],
+    "value": "critical corridors",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "typical"
+     ],
+     [
+      "three year",
+      "three-year",
+      "3-year",
+      "3 year"
+     ],
+     [
+      "critical"
+     ],
+     [
+      "18 months",
+      "eighteen months"
+     ],
+     [
+      "non-critical",
+      "noncritical",
+      "non critical"
+     ],
+     [
+      "5 to 6 years",
+      "five to six years",
+      "5-6 years"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Corridor Selection Process, Corridor Categorization: typical (three-year intervals) and critical (about every 18 months) on PDF p8 (\"Page 1\"), non-critical (possibly 5 to 6 years) on PDF p9 (\"Page 2\")."
+  },
+  {
+   "id": "tmsd-h024",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What Walk time should I program for a pedestrian phase when retiming a signal system?",
+   "type": "table",
+   "edge_cases": [
+    "missing_variable"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     21
+    ],
+    "printed_pages": [
+     "7"
+    ],
+    "value": "7 seconds",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "7 seconds",
+      "seven seconds"
+     ],
+     [
+      "4 seconds",
+      "four seconds"
+     ],
+     [
+      "10 seconds",
+      "ten seconds"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "clarify",
+   "note": "Table 3 Tactics, \"Optimize Ped/Walk Time\": usually 7 s; may be cut to a minimum of 4 s at intersections with low pedestrian volumes; may need 10 s, 15 s or more with high pedestrian volumes, school zones or elderly pedestrians. Missing variable: pedestrian volume/context."
+  },
+  {
+   "id": "tmsd-h025",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Which plan numbers are set aside for incident management signal timing plans?",
+   "type": "text",
+   "edge_cases": [
+    "rephrased"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     31
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "Plan 51 through Plan 59",
+    "accept": [
+     "51 through 59",
+     "51 to 59",
+     "51-59",
+     "the 50's",
+     "the 50s"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Alternative Timing Plans, Incident Management Plans: \"Numbering would be in the 50's (i.e. Plan 51 through Plan 59\"."
+  },
+  {
+   "id": "tmsd-h026",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How many signalized intersections are in the COST Section's coordinated system inventory?",
+   "type": "text",
+   "edge_cases": [
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     42
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "2,360",
+    "accept": [
+     "2360"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Roles and Responsibilities, COST Section: five regions, 326 closed loop and 54 time based systems, 2,360 signalized intersections. The page prints \"Page 1\" (every section restarts at 1); PDF page 42."
+  },
+  {
+   "id": "tmsd-h027",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In the signal retiming cost-benefit example, what dollar value per hour of delay goes into the reduced-delay formula?",
+   "type": "text",
+   "edge_cases": [
+    "symbols",
+    "precision"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     40
+    ],
+    "printed_pages": [
+     "5"
+    ],
+    "value": "$15.91",
+    "accept": [
+     "15.91"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Cost Benefit Analysis example: [8,311 veh * 29 sec/veh * (1 hr/3600 sec)] * $15.91/hr * 250 days/yr = $266,293."
+  },
+  {
+   "id": "tmsd-h028",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In Table 1 (Operational Objectives) of the signal timing philosophy manual, which objective is about keeping left-turn bays from spilling back into the through lanes?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "table_id"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     16
+    ],
+    "printed_pages": [
+     "2"
+    ],
+    "value": "Queue Management",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Table 1 starts on PDF p15 and continues on p16 (no repeated title); \"Queue Management\" is a row on the continuation page."
+  },
+  {
+   "id": "tmsd-h029",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "How far can DSRC transmit according to the signal timing manual?",
+   "type": "text",
+   "edge_cases": [
+    "units"
+   ],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     48
+    ],
+    "printed_pages": [
+     "3"
+    ],
+    "value": "3280 feet",
+    "accept": [
+     "3,280 feet",
+     "3280 ft",
+     "3,280 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Continuous Data Options, DSRC: \"capable of transmissions up to 3280 feet\"."
+  },
+  {
+   "id": "tmsd-h030",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What is the only acceptable data collection method for NCDOT travel time runs?",
+   "type": "text",
+   "edge_cases": [],
+   "expected": {
+    "source": "Signal System Timing Philosophy Manual.pdf",
+    "pdf_pages": [
+     34
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "Tru-Traffic Version 10",
+    "accept": [
+     "Tru-Traffic 10",
+     "Tru Traffic Version 10"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Standard Practice for Performing Travel Time Runs: \"Tru-Traffic Version 10 with a GPS receiver is the only acceptable data collection method\"."
+  },
+  {
+   "id": "tmsd-h031",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How long do States have to adopt changes that FHWA issues to the National MUTCD?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part655.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     "385"
+    ],
+    "value": "two years",
+    "accept": [
+     "2 years",
+     "two-year",
+     "2-year"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "23 CFR 655.603(b)(3), in the right-hand column of a two-column page: within two years from the effective date of the final rule. Printed page 385."
+  },
+  {
+   "id": "tmsd-h032",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Up to what share of the construction cost can Federal-aid highway funds cover for eligible pavement markings and traffic signalization?",
+   "type": "units",
+   "edge_cases": [
+    "multi_column",
+    "units",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part655.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     "386"
+    ],
+    "value": "100 percent",
+    "accept": [
+     "100%"
+    ],
+    "unit": "%"
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "23 CFR 655.607(a)(1), right-hand column. Printed page 386."
+  },
+  {
+   "id": "tmsd-h033",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In Table 6 to the appendix of 23 CFR 655 Subpart F (nighttime color limits for retroreflective pavement marking material), what is the x chromaticity coordinate of corner point 4 for purple?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "table_id",
+    "multipage_table",
+    "merged_header",
+    "not_first_row_col",
+    "precision",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part655.pdf",
+    "pdf_pages": [
+     8
+    ],
+    "printed_pages": [
+     "390"
+    ],
+    "value": "0.635",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Table 6 \"-Continued\": the Purple row is the only row on this page. Header: Chromaticity Coordinates > 1..4 > x, y. Point 4: x 0.635, y 0.221. Read off the rendered page; also in the text layer."
+  },
+  {
+   "id": "tmsd-h034",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "For red colored pavement made of non-retroreflective material, what y chromaticity coordinate does 23 CFR 655 give for point 3 of the daytime color limits?",
+   "type": "table",
+   "edge_cases": [
+    "merged_header",
+    "not_first_row_col",
+    "precision",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part655.pdf",
+    "pdf_pages": [
+     8
+    ],
+    "printed_pages": [
+     "390"
+    ],
+    "value": "0.370",
+    "accept": [
+     "0.37"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Table 7 to the appendix (colored pavements), Red row, point 3: x 0.560, y 0.370 (Green row above it gives 0.367/0.480)."
+  },
+  {
+   "id": "tmsd-h035",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What requirements does Subpart G of 23 CFR Part 655 set out?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "refuse",
+   "note": "Subpart G of Part 655 is printed as \"Subpart G [Reserved]\" (Part 655 file, PDF pages 1 and 8): it has no content, so the right reply says it is reserved / not covered. Script check: the marker is on both pages.",
+   "accept_reply": [
+    "reserved"
+   ]
+  },
+  {
+   "id": "tmsd-h036",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What does 23 CFR Part 652 require of State highway agencies?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "refuse",
+   "note": "The page before Part 655 prints \"PART 652 [RESERVED]\": the part has no content in the documents. Script check: the marker is on PDF p1 of the Part 655 file.",
+   "accept_reply": [
+    "reserved"
+   ]
+  },
+  {
+   "id": "tmsd-h037",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "The Federal share of a highway safety improvement project paid with funds apportioned under 23 U.S.C. 104(b)(3) is 80 percent, right?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise",
+    "multi_column",
+    "units",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part924.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     "608"
+    ],
+    "value": "90 percent",
+    "accept": [
+     "90%"
+    ],
+    "unit": "%"
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "correct",
+   "note": "False premise: 23 CFR 924.11(g) says the Federal share shall be 90 percent (except as provided in 23 U.S.C. 120 and 130)."
+  },
+  {
+   "id": "tmsd-h038",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "By what date must States have access to a complete collection of the MIRE fundamental data elements on all public roads?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part924.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     "608"
+    ],
+    "value": "September 30, 2026",
+    "accept": [
+     "Sept. 30, 2026",
+     "9/30/2026",
+     "30 September 2026"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "23 CFR 924.11(b), left column. The same paragraph has July 1, 2017 (Traffic Records Strategic Plan), which is not the answer."
+  },
+  {
+   "id": "tmsd-h039",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What MIRE number does Table 1 of 23 CFR 924.17 give for Ramp Length?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "table_id",
+    "multipage_table",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part924.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     "610"
+    ],
+    "value": "187",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Table 1 (non-local paved roads) starts on the previous page; \"Ramp Length (187)\" is in the Interchange/Ramp column on the continuation page."
+  },
+  {
+   "id": "tmsd-h040",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What three components must a State HSIP include under 23 CFR 924.7?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part924.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     "606"
+    ],
+    "value": "SHSP",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "SHSP",
+      "Strategic Highway Safety Plan"
+     ],
+     [
+      "Railway-Highway Crossing"
+     ],
+     [
+      "program of highway safety improvement projects",
+      "highway safety improvement projects"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "23 CFR 924.7(a)(1)-(3), right-hand column: a SHSP; a Railway-Highway Crossing Program; a program of highway safety improvement projects."
+  },
+  {
+   "id": "tmsd-h041",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "I was told North Carolina's TODS program officially started in July 2004. Is that the right date?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     "1"
+    ],
+    "value": "July 2002",
+    "accept": [
+     "2002"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "correct",
+   "note": "False premise: the Preface says the program officially commenced in July 2002 (act signed August 26, 2001; rules effective June 1, 2002)."
+  },
+  {
+   "id": "tmsd-h042",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Disposition of Forms TOD-1, TOD-2, and TOD-3: where are the originals sent?",
+   "type": "text",
+   "edge_cases": [
+    "toc_decoy",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     13
+    ],
+    "printed_pages": [
+     "10"
+    ],
+    "value": "Fiscal Section",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Worded like the contents entry \"F. Disposition of Forms TOD-1, TOD-2, and TOD-3 ... 10\" (PDF p2); the answer is on the content page (PDF 13, printed 10)."
+  },
+  {
+   "id": "tmsd-h043",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Appendix B of the TODS Procedures Manual is meant to hold the TODS chapter of the 2023 NC Supplement to the MUTCD. What does that chapter require for TODS panels?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks",
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "tuning",
+   "behaviour": "refuse",
+   "note": "The Appendix B page (PDF 34, printed 31) is a placeholder: \"* NOT YET AVAILABLE AS OF August 2024*\"; the chapter text is not in the manual or any other tmsd document. Script check: the marker is on the page.",
+   "accept_reply": [
+    "not yet available",
+    "placeholder"
+   ]
+  },
+  {
+   "id": "tmsd-h044",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "How far does a TODS sign have to be from the nearest other traffic control device under the Administrative Code?",
+   "type": "units",
+   "edge_cases": [
+    "units"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     "4"
+    ],
+    "value": "200 feet",
+    "accept": [
+     "200-foot",
+     "200 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Printed page 4: \"the 200-foot minimum mandate in the Administrative Code (19A NCAC 02E.1103)\", measured to the nearest device before and after."
+  },
+  {
+   "id": "tmsd-h045",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "If only 250 feet would be left between two guardrail runs, should that gap stay open or should the guardrail be carried through?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     8
+    ],
+    "printed_pages": [
+     "3-2"
+    ],
+    "value": "300'",
+    "accept": [
+     "300 feet",
+     "300 ft"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Section 3-2 note: a space of less than 300' should not be left between guardrail installations; if less remains, extend the guardrail through the area. 250 ft is under the threshold, so the rail is carried through."
+  },
+  {
+   "id": "tmsd-h046",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Over what length is a GRAU-350 end unit flared, and to what offset?",
+   "type": "text",
+   "edge_cases": [
+    "chapter_page",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     16
+    ],
+    "printed_pages": [
+     "3-2E"
+    ],
+    "value": "50 feet",
+    "accept": [
+     "last 50 feet",
+     "50 ft"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "50 feet",
+      "50 ft",
+      "50'"
+     ],
+     [
+      "1-foot",
+      "1 foot",
+      "1 ft",
+      "one foot"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Section 3-2E, Guardrail Anchor Unit Type 350: flared over the last 50 feet to provide a 1-foot offset (no flare greater than 50:1)."
+  },
+  {
+   "id": "tmsd-h047",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Could an AT-1 anchor terminal be used on shop-curved guardrail at an intersection with an 80-foot radius?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     17
+    ],
+    "printed_pages": [
+     "3-2E"
+    ],
+    "value": "20 to 75 feet",
+    "accept": [
+     "20-75 feet",
+     "20 to 75 ft",
+     "75 feet"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Section 3-2E (continued), Anchor Terminal (AT-1): limited to shop curved guardrail at intersections with radii between 20 to 75 feet; 80 ft is outside the range."
+  },
+  {
+   "id": "tmsd-h048",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "When semi-rigid guardrail protects median bridge piers in a 30-36 ft median, how close to the face of the piers can it be placed?",
+   "type": "text",
+   "edge_cases": [
+    "precision",
+    "units",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     21
+    ],
+    "printed_pages": [
+     "3-6"
+    ],
+    "value": "3.6'",
+    "accept": [
+     "3.6 feet",
+     "3.6 ft"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Section 3-6 (cont.), Two Rows of Semi-Rigid Guardrail at Median Piers: a minimum distance of 3.6' from the face of the bridge piers."
+  },
+  {
+   "id": "tmsd-h049",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "On Figure 1 of the guardrail chapter (warrants for fill section embankments), what fill slope does the shaded band mark as the minimum?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "scan",
+    "symbols",
+    "table_id"
+   ],
+   "expected": {
+    "source": "03. Guardrail, Barriers and Attenuators.pdf",
+    "pdf_pages": [
+     3
+    ],
+    "printed_pages": [
+     "3-1"
+    ],
+    "value": "3:1",
+    "accept": [
+     "3 to 1",
+     "3H:1V"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Figure 1 (sheet 3-1 / F-1), a scanned chart: the shaded band runs between \"3:1 MINIMUM\" and \"4:1 DESIRABLE\"; on or below the curve barrier is not warranted. Read off the rendered page (the text layer holds only the running header)."
+  },
+  {
+   "id": "tmsd-h050",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Do the three-centered curve tables in the at-grade intersection chapter cover a 130-degree angle of turn?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     16
+    ],
+    "printed_pages": [
+     "9-2"
+    ],
+    "value": "53 degrees to 128 degrees",
+    "accept": [
+     "53 to 128",
+     "128 degrees"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Section 9-2: normal range 60 to 120 degrees; the tables were extended to 53 to 128 degrees, so 130 degrees is outside them."
+  },
+  {
+   "id": "tmsd-h051",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In Table 3 of the at-grade intersections chapter (edge of traveled way for turns), what simple curve radius with taper is listed for a WB-67 making a 90-degree turn?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "merged_header",
+    "not_first_row_col",
+    "table_id"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     20
+    ],
+    "printed_pages": [
+     "T-3"
+    ],
+    "value": "125",
+    "accept": [
+     "125 feet",
+     "125 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Table 3 (continued), sheet 9-2 / T-3: angle 90, WB-67 row: radius 125 ft, offset 4.5 ft, taper 30:1 (\"Simple Curve Radius with Taper\" spans three columns). Checked on the rendered page that 125 sits on the WB-67 row (WB-62 is 120)."
+  },
+  {
+   "id": "tmsd-h052",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In the Roadway Design Manual's Figure 4 (Recommended Treatment for Turn Lanes, sheet F-4A), what bay taper length goes with a 55 mph design speed?",
+   "type": "rotated",
+   "edge_cases": [
+    "near_identical",
+    "rotated",
+    "figure",
+    "not_first_row_col",
+    "table_id"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     13
+    ],
+    "printed_pages": [
+     "F-4A"
+    ],
+    "value": "150'",
+    "accept": [
+     "150 feet",
+     "150 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "RDM ch. 9 Figure 4, sheet 9-1 / F-4A (drawing printed sideways): design speed 55 / posted 50: min decel 200', desirable decel 500', bay taper 150'. The same table is an exhibit of the Policy on Street and Driveway Access (PDF p88); the question names the RDM figure."
+  },
+  {
+   "id": "tmsd-h053",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "For offset opposing left-turn lanes on divided roadways, roughly how much deceleration length does a 4-degree skew angle give?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "scan",
+    "degraded_scan"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     "F-3A-2"
+    ],
+    "value": "340'",
+    "accept": [
+     "340 feet",
+     "340 ft"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Figure 3A, sheet F-3A-2 (low-resolution 150 dpi scanned drawing, no text layer): note \"A 4 degree skew angle will provide approximately 340' of deceleration lengths for design speeds up to 40 mph\". Read off the rendered page."
+  },
+  {
+   "id": "tmsd-h054",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In Design Guide I (intersection with a two-lane facility using a right-turn taper), what is the desirable width of the channelizing island?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "scan",
+    "degraded_scan"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     2
+    ],
+    "printed_pages": [
+     "F-1"
+    ],
+    "value": "8'",
+    "accept": [
+     "8 feet",
+     "8 ft",
+     "eight feet"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Figure 1, sheet 9-1 / F-1 (low-resolution 150 dpi scanned drawing): notes \"THE DESIRABLE WIDTH OF THE ISLAND IS 8' WITH A MIN. WIDTH OF 4'\"."
+  },
+  {
+   "id": "tmsd-h055",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "On a street with curb and gutter approaches, a bridge is 250 feet long. On how many sides will NCDOT fund and build a sidewalk?",
+   "type": "text",
+   "edge_cases": [
+    "conditional",
+    "range_threshold"
+   ],
+   "expected": {
+    "source": "bikeped_Ped_Policy.pdf",
+    "pdf_pages": [
+     6
+    ],
+    "printed_pages": [
+     "6"
+    ],
+    "value": "one side",
+    "accept": [
+     "one",
+     "1 side",
+     "a sidewalk on one side"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "BRIDGES: curb and gutter approaches + bridge under 200 ft -> sidewalks on both sides; over 200 ft -> one side (both sides only if a cost/benefit study justifies it)."
+  },
+  {
+   "id": "tmsd-h056",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How far from their original path may relocated pedestrian movements be, under the pedestrian policy guidelines?",
+   "type": "units",
+   "edge_cases": [
+    "units"
+   ],
+   "expected": {
+    "source": "bikeped_Ped_Policy.pdf",
+    "pdf_pages": [
+     7
+    ],
+    "printed_pages": [
+     "7"
+    ],
+    "value": "800 meters",
+    "accept": [
+     "0.5 miles",
+     "800 m",
+     "half a mile",
+     "0.5 mi"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "\"no more than 800 meters (0.5 miles) away from the original path\"; a one way distance."
+  },
+  {
+   "id": "tmsd-h057",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What minimum pedestrian count along a corridor shows sustained pedestrian travel for a requested sidewalk?",
+   "type": "text",
+   "edge_cases": [
+    "rephrased"
+   ],
+   "expected": {
+    "source": "bikeped_Ped_Policy.pdf",
+    "pdf_pages": [
+     10
+    ],
+    "printed_pages": [
+     "10"
+    ],
+    "value": "150 pedestrians per 24 hour period",
+    "accept": [
+     "150 pedestrians",
+     "150 per day",
+     "150"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Criterion 7, Existing or Projected Traffic: \"Minimum of 150 pedestrians per 24 hour period along a corridor planned for the project\"."
+  },
+  {
+   "id": "tmsd-h058",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What residential density counts as urban type for the location criterion when NCDOT qualifies a request for pedestrian facilities?",
+   "type": "text",
+   "edge_cases": [
+    "units"
+   ],
+   "expected": {
+    "source": "bikeped_Ped_Policy.pdf",
+    "pdf_pages": [
+     9
+    ],
+    "printed_pages": [
+     "9"
+    ],
+    "value": "1 dwelling unit per acre",
+    "accept": [
+     "one dwelling unit per acre",
+     "1 unit per acre"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Criterion 4, Location: properties developed or projected within 5 years \"at urban type residential densities (a minimum of 1 dwelling unit per acre)\"."
+  },
+  {
+   "id": "tmsd-h059",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "How many sites actually completed deployment in the NCDOT interim design safety pilot project?",
+   "type": "text",
+   "edge_cases": [
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "interim-design-safety-pilot-program.pdf",
+    "pdf_pages": [
+     5
+    ],
+    "printed_pages": [
+     "3"
+    ],
+    "value": "six",
+    "accept": [
+     "6"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Executive summary: over 30 potential sites identified, narrowed to ten, six completed deployment."
+  },
+  {
+   "id": "tmsd-h060",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In the post-deployment interviews of the interim design pilot, what timeline did the City of Durham stress enforcing?",
+   "type": "text",
+   "edge_cases": [
+    "multi_column",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "interim-design-safety-pilot-program.pdf",
+    "pdf_pages": [
+     52
+    ],
+    "printed_pages": [
+     "50"
+    ],
+    "value": "90-day",
+    "accept": [
+     "90 day",
+     "90 days",
+     "ninety-day"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Two-column page; Durham highlighted keeping stakeholders engaged and \"enforcing a 90-day timeline/deadline\"."
+  },
+  {
+   "id": "tmsd-h061",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In the interim design pilot project pairs table, which highway division is the Yadkinville protected-corner site (State Street & Main Street) in?",
+   "type": "table",
+   "edge_cases": [
+    "not_first_row_col"
+   ],
+   "expected": {
+    "source": "interim-design-safety-pilot-program.pdf",
+    "pdf_pages": [
+     22
+    ],
+    "printed_pages": [
+     "20"
+    ],
+    "value": "11",
+    "accept": [
+     "Division 11"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Table of countermeasure/context pairs: Protected Corner, State Street & Main Street, Yadkinville, NC, highway division 11."
+  },
+  {
+   "id": "tmsd-h062",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Conclusions and Future Considerations of the interim design safety pilot: what is the first conclusion drawn?",
+   "type": "text",
+   "edge_cases": [
+    "toc_decoy",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "interim-design-safety-pilot-program.pdf",
+    "pdf_pages": [
+     54
+    ],
+    "printed_pages": [
+     "52"
+    ],
+    "value": "A new approach can be effective",
+    "accept": [
+     "new approach can be effective"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Worded like the contents entry \"Conclusions and Future Considerations 52\" (PDF p2); the answer is on the content page (PDF 54, printed 52)."
+  },
+  {
+   "id": "tmsd-h063",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In the metric conversion factors table of the Pedestrian Facilities Users Guide, what do you multiply square miles by to get square kilometers?",
+   "type": "rotated",
+   "edge_cases": [
+    "degraded_scan",
+    "scan",
+    "rotated",
+    "not_first_row_col",
+    "precision",
+    "printed_vs_pdf",
+    "near_identical"
+   ],
+   "expected": {
+    "source": "01102.pdf",
+    "pdf_pages": [
+     4
+    ],
+    "printed_pages": [
+     "ii"
+    ],
+    "value": "2.59",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "SI (Modern Metric) Conversion Factors table, scanned at about 72 dpi and printed sideways (blurred): Area, square miles x 2.59 = square kilometers. Read off the rendered page; the text layer holds only the folio \"ii\"."
+  },
+  {
+   "id": "tmsd-h064",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "According to the time frames on the TODS application flow chart, within how many days of contract approval should the Division TODS Coordinator receive all fees from the attraction?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "scan",
+    "degraded_scan"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     28
+    ],
+    "printed_pages": [
+     "25"
+    ],
+    "value": "60 days",
+    "accept": [
+     "sixty days"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "TODS Attraction Application Flow Chart (a 1-bit, about 120 dpi scan): time frame 6 \"Division TODS Coordinator should receive all fees from Attraction within 60 days of contract approval\". Read off the rendered page."
+  },
+  {
+   "id": "tmsd-h065",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In Figure 15 of the marked vs unmarked crosswalk study (five lanes, no median), what average daily pedestrian volume are the response curves drawn for?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "figure",
+    "table_id"
+   ],
+   "expected": {
+    "source": "04100.pdf",
+    "pdf_pages": [
+     41
+    ],
+    "printed_pages": [
+     "31"
+    ],
+    "value": "250",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Figure 15 (page rotated 90 degrees): \"Five Lanes with No Median, Average Daily Pedestrian Volume=250\". Printed folio 31 runs sideways."
+  },
+  {
+   "id": "tmsd-h066",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "A designated pedestrian crossing spans a multi-lane road carrying about 14,000 vehicles a day. Per the STEP guide, is a marked crosswalk alone typically enough there, and which more substantial treatments does it name?",
+   "type": "text",
+   "edge_cases": [
+    "conditional"
+   ],
+   "expected": {
+    "source": "STEP-guide-improving-ped-safety.pdf",
+    "pdf_pages": [
+     25
+    ],
+    "printed_pages": [
+     "18"
+    ],
+    "value": "refuge island",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "refuge island"
+     ],
+     [
+      "PHB",
+      "Pedestrian Hybrid Beacon"
+     ],
+     [
+      "RRFB",
+      "Rectangular Rapid"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Multi-lane crossing AND AADT over 10,000: a marked crosswalk alone is typically not sufficient; more substantial treatments such as the refuge island, PHB and RRFB are needed. The same sentence is on the Table 1 page (PDF p23, excluded)."
+  },
+  {
+   "id": "tmsd-h067",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How far back from an established midblock pedestrian crossing should on-street parking be restricted, per the STEP guide?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable",
+    "units"
+   ],
+   "expected": {
+    "source": "STEP-guide-improving-ped-safety.pdf",
+    "pdf_pages": [
+     26
+    ],
+    "printed_pages": [
+     "19"
+    ],
+    "value": "20 feet",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "20 feet",
+      "20 ft"
+     ],
+     [
+      "30 feet",
+      "30 ft"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "clarify",
+   "note": "Missing variable: the speed. Minimum setback 20 feet where speeds are 25 mph or less; 30 feet between 26 and 35 mph."
+  },
+  {
+   "id": "tmsd-h068",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Would an in-street pedestrian crossing sign be an appropriate treatment on a three-lane road posted at 35 mph, according to the STEP guide?",
+   "type": "text",
+   "edge_cases": [
+    "conditional",
+    "range_threshold"
+   ],
+   "expected": {
+    "source": "STEP-guide-improving-ped-safety.pdf",
+    "pdf_pages": [
+     26
+    ],
+    "printed_pages": [
+     "19"
+    ],
+    "value": "30 mph",
+    "accept": [
+     "30 miles per hour"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "In-street signs \"may be appropriate on 2-lane or 3-lane roads with speed limits of 30 mph or less\"; 35 mph is over the limit, so they may be less effective and more robust treatments are needed."
+  },
+  {
+   "id": "tmsd-h069",
+   "division": "tmsd",
+   "asker": "tmsd",
+   "question": "An undivided four-lane road has a 30 mph speed limit but carries about 10,000 vehicles a day. Does the STEP guide say a pedestrian refuge island should be considered at its uncontrolled crossings, and on what condition?",
+   "type": "text",
+   "edge_cases": [
+    "conditional"
+   ],
+   "expected": {
+    "source": "STEP-guide-improving-ped-safety.pdf",
+    "pdf_pages": [
+     27
+    ],
+    "printed_pages": [
+     "20"
+    ],
+    "value": "9,000",
+    "accept": [
+     "9000"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Refuge island: should be considered for undivided crossings of four or more lanes with speed limits of 35 mph or greater and/or AADTs of 9,000 or greater. 30 mph alone would not trigger it; the AADT of 10,000 does."
+  },
+  {
+   "id": "tmsd-h070",
+   "division": "tmsd",
+   "asker": "tmsd",
+   "question": "In Appendix B of the STEP guide (Table 3, CRFs and CMFs by countermeasure), what CMF is listed for a PHB?",
+   "type": "table",
+   "edge_cases": [
+    "appendix_page",
+    "table_id",
+    "not_first_row_col",
+    "precision"
+   ],
+   "expected": {
+    "source": "STEP-guide-improving-ped-safety.pdf",
+    "pdf_pages": [
+     39
+    ],
+    "printed_pages": [
+     "32"
+    ],
+    "value": "0.45",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Table 3, PHB row: CRF 55%, CMF 0.45, pedestrian crashes, Zegeer et al. 2017."
+  },
+  {
+   "id": "tmsd-h071",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What crash reduction factor does the STEP guide's CRF/CMF summary table give for advance STOP/YIELD signs and markings, and which crashes does the table's note say the figure covers?",
+   "type": "footnote",
+   "edge_cases": [
+    "footnote",
+    "appendix_page",
+    "not_first_row_col"
+   ],
+   "expected": {
+    "source": "STEP-guide-improving-ped-safety.pdf",
+    "pdf_pages": [
+     39
+    ],
+    "printed_pages": [
+     "32"
+    ],
+    "value": "25%",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "25%",
+      "25 percent"
+     ],
+     [
+      "street crossing",
+      "crossing crashes"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Row \"Advance STOP/YIELD signs and markings\": CRF 25%, CMF 0.75, basis \"Pedestrian crashes\" with footnote 2: refers to pedestrian street crossing crashes, not walking-along-the-road or unusual crash types."
+  },
+  {
+   "id": "tmsd-h072",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Which MUTCD figure does the STEP guide point to for Pedestrian Hybrid Beacon installation guidelines on roads with speeds of 35 mph or less?",
+   "type": "cross_ref",
+   "edge_cases": [
+    "cross_reference",
+    "table_id"
+   ],
+   "expected": {
+    "source": "STEP-guide-improving-ped-safety.pdf",
+    "pdf_pages": [
+     27
+    ],
+    "printed_pages": [
+     "20"
+    ],
+    "value": "Figure 4F-1",
+    "accept": [
+     "4F-1"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "PHB paragraph: guidelines in MUTCD Section 4F.01 \"(See Figure 4F-1 for speeds of 35 mph or less; Figure 4F-2 for speeds greater than 35 mph)\". The figure itself is not in the tmsd documents; the question asks only which figure the guide cites."
+  },
+  {
+   "id": "tmsd-h073",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What do Subparts A through E of 23 CFR Part 655 (Traffic Operations) require?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "refuse",
+   "note": "Part 655 prints \"Subparts A–E [Reserved]\" (PDF p1 and p2); only Subpart F has content. Right reply: reserved, no content.",
+   "accept_reply": [
+    "reserved"
+   ]
+  },
+  {
+   "id": "tmsd-h074",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Consult Design and Installation Resources: which three parts of the MUTCD does the STEP guide say to focus on when installing countermeasures?",
+   "type": "text",
+   "edge_cases": [
+    "toc_decoy"
+   ],
+   "expected": {
+    "source": "STEP-guide-improving-ped-safety.pdf",
+    "pdf_pages": [
+     30
+    ],
+    "printed_pages": [
+     "23"
+    ],
+    "value": "Signs",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "Signs"
+     ],
+     [
+      "Markings"
+     ],
+     [
+      "Traffic Signals",
+      "Highway Traffic Signals"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Worded like contents entry \"5. Consult Design and Installation Resources ... 23\" (PDF p5); the answer is on the content page (PDF 30, printed 23): Part 2 Signs, Part 3 Markings, Part 4 Highway Traffic Signals."
+  },
+  {
+   "id": "tmsd-h075",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Identify Opportunities and Monitor Outcomes: for how long should usage and crash data be collected after countermeasures go in at priority sites?",
+   "type": "text",
+   "edge_cases": [
+    "toc_decoy"
+   ],
+   "expected": {
+    "source": "STEP-guide-improving-ped-safety.pdf",
+    "pdf_pages": [
+     31
+    ],
+    "printed_pages": [
+     "24"
+    ],
+    "value": "three years",
+    "accept": [
+     "3 years"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Worded like contents entry \"6. Identify Opportunities and Monitor Outcomes ... 24\" (PDF p5); the guiding principles on the content page (PDF 31, printed 24) say collect usage and crash data for at least three years after installation."
+  },
+  {
+   "id": "tmsd-h076",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What maximum walking speed does the Pedestrian Facilities Users Guide say traffic signal clearance intervals should be based on?",
+   "type": "units",
+   "edge_cases": [
+    "conflicting_documents",
+    "units",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "01102.pdf",
+    "pdf_pages": [
+     97
+    ],
+    "printed_pages": [
+     "90"
+    ],
+    "value": "3.5 ft/s",
+    "accept": [
+     "3.5 feet per second",
+     "1.1 m/s"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Countermeasure 37, Traffic Signals: maximum walking speed of 1.1 m/s (3.5 ft/s), lower where many elderly or children. The Signal Timing Manual (p140) and the Signalized Intersections guide (p47) say the MUTCD uses 4.0 ft/s, hence the document is named."
+  },
+  {
+   "id": "tmsd-h077",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "According to the FHWA Signal Timing Manual, what walking speed does the MUTCD recommend for computing pedestrian clearance time?",
+   "type": "units",
+   "edge_cases": [
+    "conflicting_documents",
+    "units",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "fhwa_hop_08_024.pdf",
+    "pdf_pages": [
+     140
+    ],
+    "printed_pages": [
+     "5-15"
+    ],
+    "value": "4.0 ft/s",
+    "accept": [
+     "4.0 feet per second",
+     "4 ft/s",
+     "4 feet per second"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "\"The MUTCD recommends a walking speed value of 4.0 feet per second (ft/s)\"; ADA guidelines 3.0 ft/s; LaPlante and Kaeser 3.5 ft/s."
+  },
+  {
+   "id": "tmsd-h078",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What walk speed does the Signalized Intersections Informational Guide say the MUTCD uses to determine crossing times?",
+   "type": "units",
+   "edge_cases": [
+    "conflicting_documents",
+    "units",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "04091.pdf",
+    "pdf_pages": [
+     47
+    ],
+    "printed_pages": [
+     "29"
+    ],
+    "value": "1.2 m/s",
+    "accept": [
+     "4.0 ft/s",
+     "4 ft/s",
+     "4 feet per second"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Pedestrian Characteristics: the MUTCD uses 1.2 m/s (4.0 ft/s); FHWA pedestrian guidance recommends 1.1 m/s (3.5 ft/s)."
+  },
+  {
+   "id": "tmsd-h079",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Under 19A NCAC 02C .0201, into how many lots or building sites must a tract be divided for its road to be a subdivision road?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section",
+    "rephrased"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     570
+    ],
+    "printed_pages": [
+     "570"
+    ],
+    "value": "two or more",
+    "accept": [
+     "2 or more"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Definition (3): a subdivision road serves a tract subdivided into two or more lots, building sites or other divisions. The same sentence is in the utilities division's UAM (20220713 NCDOT UAM Ver 2-0.pdf p51), checked with pair.py."
+  },
+  {
+   "id": "tmsd-h080",
+   "division": "tmsd",
+   "asker": "tmsd",
+   "question": "In the version of G.S. 136-18(10) now in effect (NCDOT's power to regulate lines and other obstructions on highways), which statute supplies the definition of wireless facilities?",
+   "type": "cross_ref",
+   "edge_cases": [
+    "superseded",
+    "cross_reference"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     372
+    ],
+    "printed_pages": [
+     "372"
+    ],
+    "value": "160D-931",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "The guide prints both versions: \"(Effective until January 1, 2021)\" cites G.S. 160A-400.51 (PDF p371-372) and \"(Effective January 1, 2021)\" cites G.S. 160D-931. The current one is the answer."
+  },
+  {
+   "id": "tmsd-h081",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "The U-drive-it vehicle definition in the motor vehicle statutes was rewritten effective December 31, 2024. Which vehicles did the earlier version cover that the current one no longer mentions?",
+   "type": "text",
+   "edge_cases": [
+    "superseded"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     243
+    ],
+    "printed_pages": [
+     "243"
+    ],
+    "value": "loaned by a franchised motor vehicle dealer",
+    "accept": [
+     "loaned",
+     "loaner"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "(48a) \"(Effective until December 31, 2024)\": vehicles rented ... \"or loaned by a franchised motor vehicle dealer ... to a customer of that dealer who is having a vehicle serviced\"; the (Effective December 31, 2024) version keeps only vehicles rented to a person."
+  },
+  {
+   "id": "tmsd-h082",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What is the minimum speed for passenger vehicles on North Carolina's interstate highways?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     283
+    ],
+    "printed_pages": [
+     "283"
+    ],
+    "value": "40 mph",
+    "accept": [
+     "forty miles per hour",
+     "40 miles per hour"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "40 mph",
+      "forty miles per hour",
+      "40 miles per hour"
+     ],
+     [
+      "45 mph",
+      "forty-five miles per hour",
+      "45 miles per hour"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "clarify",
+   "note": "Missing variable: the speed zone. G.S. 20-141(c): 40 mph in a 55 mph zone; 45 mph in a zone of 60 mph or greater (only when signs post the minimum)."
+  },
+  {
+   "id": "tmsd-h083",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "A city wants to raise the limit on a State highway system street inside its corporate limits (not an interstate or controlled-access road) after an engineering study. What is the highest limit it may set, and what must happen before it takes effect?",
+   "type": "text",
+   "edge_cases": [
+    "conditional"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     284
+    ],
+    "printed_pages": [
+     "284"
+    ],
+    "value": "55 miles per hour",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "55 miles per hour",
+      "55 mph"
+     ],
+     [
+      "concurring ordinance"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "G.S. 20-141(f): local authorities may set a limit up to 55 mph on State-system streets in their limits (except interstate/controlled access); effective when the Department of Transportation has passed a concurring ordinance and signs are erected."
+  },
+  {
+   "id": "tmsd-h084",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Under G.S. 20-141.1, a school zone speed limit can be set as low as 15 mph, correct?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise",
+    "range_threshold"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     286
+    ],
+    "printed_pages": [
+     "286"
+    ],
+    "value": "20 miles per hour",
+    "accept": [
+     "20 mph"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "correct",
+   "note": "False premise: no speed limit below 20 miles per hour may be set under G.S. 20-141.1."
+  },
+  {
+   "id": "tmsd-h085",
+   "division": "tmsd",
+   "asker": "tmsd",
+   "question": "Before moving a crane with a normal operating speed of 5 mph across railroad tracks, what steps must the operator take at the crossing under G.S. 20-142.4?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "units"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     288,
+     289
+    ],
+    "printed_pages": [
+     "288",
+     "289"
+    ],
+    "value": "15 feet",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "15 feet",
+      "15 ft"
+     ],
+     [
+      "50 feet",
+      "50 ft"
+     ],
+     [
+      "listen and look",
+      "look both directions"
+     ],
+     [
+      "crossing can be made safely",
+      "safely"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "(c)(1) stop not less than 15 feet nor more than 50 feet from the nearest rail (p288); (2) listen and look both directions; (3) not proceed until the crossing can be made safely (p289). Notice to the railroad superintendent is (b)."
+  },
+  {
+   "id": "tmsd-h086",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "When a corporation signs a utility encroachment agreement with NCDOT, who must attest it unless a waiver is on file (19A NCAC 02B .0507)?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     551
+    ],
+    "printed_pages": [
+     "551"
+    ],
+    "value": "corporate secretary",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "The agreement shall have the corporate seal and be attested by the corporate secretary (or the empowered city official for a municipality) unless a waiver is on file with the State Utilities Manager. The attestation wording is shared with the utilities form 16-1 (p2)."
+  },
+  {
+   "id": "tmsd-h087",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "On the access policy's street and driveway access permit application, from whom can the applicant get information about the traffic control rules for construction signing?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section",
+    "form",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     80
+    ],
+    "printed_pages": [
+     "70"
+    ],
+    "value": "District Engineer",
+    "accept": [],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Agreement bullet: proper signs, signal lights, flaggers ... per the MUTCD; \"Information as to the above rules and regulations may be obtained from the District Engineer.\" The utilities encroachment form 16-1 has the same sentence ending \"Division Engineer\"."
+  },
+  {
+   "id": "tmsd-h088",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Under MUTCD Section 2C.54, which word message sign may be used in place of the Truck (W11-10) symbol sign?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "Chapter2c.pdf",
+    "pdf_pages": [
+     47
+    ],
+    "printed_pages": [
+     "191"
+    ],
+    "value": "TRUCK CROSSING",
+    "accept": [
+     "W8-6"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Section 2C.54 Option 01: the TRUCK CROSSING (W8-6) word message sign may be used as an alternate. Same wording in MUTCD Part 6 Section 6H.21 (wztc part6.pdf p43)."
+  },
+  {
+   "id": "tmsd-h089",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "How does the DMV-349 crash report instructional manual define full access control?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section"
+   ],
+   "expected": {
+    "source": "C34 - Manual 2012.pdf",
+    "pdf_pages": [
+     107
+    ],
+    "printed_pages": [
+     "107"
+    ],
+    "value": "selected public roads",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "selected public roads"
+     ],
+     [
+      "crossings at grade",
+      "driveway connections"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Glossary: access connections with selected public roads only, prohibiting crossings at grade or direct private driveway connections. Same definition in the utilities UAM (p187)."
+  },
+  {
+   "id": "tmsd-h090",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "In Table 3-6 (arterial level of service) of the Signal Timing Manual, what average travel speed puts a Class III urban street at LOS F?",
+   "type": "table",
+   "edge_cases": [
+    "symbols",
+    "table_id",
+    "not_first_row_col"
+   ],
+   "expected": {
+    "source": "fhwa_hop_08_024.pdf",
+    "pdf_pages": [
+     78
+    ],
+    "printed_pages": [
+     "3-20"
+    ],
+    "value": "10",
+    "accept": [
+     "10 mph",
+     "10 miles per hour"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Table 3-6, row F, column III: \"≤ 10\" mph (the ≤ glyph carries the rule: 10 mph or less)."
+  },
+  {
+   "id": "tmsd-h091",
+   "division": "tmsd",
+   "asker": "tmsd",
+   "question": "In the TODS division distribution checklist, what does the Division send to a business that has not paid by the due date?",
+   "type": "text",
+   "edge_cases": [
+    "appendix_page",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     43
+    ],
+    "printed_pages": [
+     "40"
+    ],
+    "value": "30 day notice letter",
+    "accept": [
+     "30-day notice",
+     "30 day notice"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Appendix H, Fiscal Bill Collection Procedure: DIVISION follows up with businesses (send 30 day notice letter to businesses who have not paid by due date)."
+  },
+  {
+   "id": "tmsd-h092",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "For a near side widening turn lane drawn in the access policy's turn lane exhibits, what desirable deceleration length D applies at a 45 mph design speed?",
+   "type": "rotated",
+   "edge_cases": [
+    "cross_reference",
+    "two_pages",
+    "rotated",
+    "scan"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     88,
+     89
+    ],
+    "printed_pages": [
+     "78",
+     "79"
+    ],
+    "value": "250'",
+    "accept": [
+     "250 feet",
+     "250 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "verified_by": "page_image_read",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "The Pocket Lanes / Near Side Widening sheet (PDF p89, printed 79) says \"All values to be determined using the table on the previous page\"; the table on PDF p88 (printed 78) gives design speed 45: min decel 150', desirable decel 250', bay taper 100'. Both scanned and printed sideways; read off the rendered pages."
+  },
+  {
+   "id": "tmsd-h093",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In the interim design pilot's countermeasure/context pair table, which deployment sites were alternate locations added to the pilot?",
+   "type": "table",
+   "edge_cases": [
+    "footnote",
+    "not_first_row_col"
+   ],
+   "expected": {
+    "source": "interim-design-safety-pilot-program.pdf",
+    "pdf_pages": [
+     25
+    ],
+    "printed_pages": [
+     "23"
+    ],
+    "value": "Capital Boulevard",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "Capital Boulevard",
+      "Calvary Drive"
+     ],
+     [
+      "Davie Street"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Asterisked rows: Capital Boulevard & Calvary Drive* and W Davie Street & S McDowell Street* (both Raleigh); note \"* Indicates alternate location added for pilot project deployment\"."
+  },
+  {
+   "id": "tmsd-h094",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "On the DMV-349, if test result code 2 (alcohol, percent BAC) is used, how must the BAC value be recorded?",
+   "type": "footnote",
+   "edge_cases": [
+    "footnote",
+    "form"
+   ],
+   "expected": {
+    "source": "C34 - Manual 2012.pdf",
+    "pdf_pages": [
+     54
+    ],
+    "printed_pages": [
+     "54"
+    ],
+    "value": "parenthesis",
+    "accept": [
+     "parentheses"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Field 39 Test Results, NOTE: if code 2 is used, the BAC value must be entered in parenthesis."
+  },
+  {
+   "id": "tmsd-h095",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "List everything the access policy's traffic impact study report outline puts under Base Conditions.",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "Policy on Access Manual.pdf",
+    "pdf_pages": [
+     28,
+     29
+    ],
+    "printed_pages": [
+     "18",
+     "19"
+    ],
+    "value": "roadway network",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "roadway network"
+     ],
+     [
+      "alternate modes"
+     ],
+     [
+      "traffic volumes"
+     ],
+     [
+      "signal phasing"
+     ],
+     [
+      "Safety information"
+     ],
+     [
+      "capacity analysis"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "TIS outline item 3, Base Conditions: a. existing roadway network, b. alternate modes, c. existing traffic volumes, d. signal phasing and timing (PDF p28) / e. safety information, f. traffic capacity analysis (PDF p29)."
+  },
+  {
+   "id": "tmsd-h096",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "For crash code 15 (pedalcyclist) in the DMV-349 manual, which devices are included and which cases are excluded?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages"
+   ],
+   "expected": {
+    "source": "C34 - Manual 2012.pdf",
+    "pdf_pages": [
+     76,
+     77
+    ],
+    "printed_pages": [
+     "76",
+     "77"
+    ],
+    "value": "Bicycle",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "Bicycle"
+     ],
+     [
+      "Tricycle"
+     ],
+     [
+      "Unicycle"
+     ],
+     [
+      "sidecars",
+      "trailers"
+     ],
+     [
+      "Hitching"
+     ],
+     [
+      "Unoccupied pedalcycle"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Includes (p76): bicycle, tricycle, unicycle, trailers or sidecars attached. Excludes (p77): pedalcycle towed by motor vehicle, including hitching and unoccupied pedalcycle."
+  },
+  {
+   "id": "tmsd-h097",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Under the pedestrian policy's local government or local sponsor commitment criterion, what questions does NCDOT ask?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages"
+   ],
+   "expected": {
+    "source": "bikeped_Ped_Policy.pdf",
+    "pdf_pages": [
+     8,
+     9
+    ],
+    "printed_pages": [
+     "8",
+     "9"
+    ],
+    "value": "Capital Improvement Program",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "Capital Improvement Program"
+     ],
+     [
+      "currently connect"
+     ],
+     [
+      "subdivisions"
+     ],
+     [
+      "maintain"
+     ]
+    ]
+   },
+   "refuse": false,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "answer",
+   "note": "Criterion 2 bullets: local CIP funds for connecting facilities; how many facilities currently connect; how many subdivisions have provided connecting facilities (p8); has a local agency agreed in writing to maintain the facility (starts p8, ends p9)."
+  },
+  {
+   "id": "tmsd-h098",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What definitions does 19A NCAC 02E .1102 set out for the TODS program?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "tuning",
+   "behaviour": "refuse",
+   "note": "Rule .1102 DEFINITIONS is printed with only its History Note ending \"Expired Eff. October 1, 2016\" (L18 p695); the TODS manual lists it as \"19A 02E .1102 - Expired\" (p46). Right reply: the rule has expired and its text is not in the documents.",
+   "accept_reply": [
+    "expired"
+   ]
+  },
+  {
+   "id": "tmsd-h099",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How many days does a business have to appeal a denied TODS application, and to whom does it appeal?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents",
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "refuse",
+   "note": "The TODS preface says appeal procedures are outlined, but the manual has none; 19A NCAC 02E .1108 APPEAL OF DECISION is printed heading-only with \"Expired Eff. October 1, 2016\" (L18 p696; also the expired-rule index entries on L18 p181/p197).",
+   "accept_reply": [
+    "expired"
+   ]
+  },
+  {
+   "id": "tmsd-h100",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Which MASH test level do guardrail end terminals have to meet under the Roadway Design Manual guardrail chapter?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "refuse",
+   "note": "The guardrail chapter (rev. 2007) refers to NCHRP 350 units (e.g. GRAU-350) and never to MASH; no tmsd document mentions MASH."
+  },
+  {
+   "id": "tmsd-h101",
+   "division": "tmsd",
+   "asker": "tmsd",
+   "question": "What criteria exclude a fatal crash from an NCDOT fatal crash location investigation?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "refuse",
+   "note": "The Fatal Investigation Guidelines (p2) only point to the exclusion criteria in a November 2, 2010 memorandum updated April 7, 2017; the criteria themselves are in no tmsd document."
+  },
+  {
+   "id": "tmsd-h102",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "How much HSIP funding was apportioned to North Carolina for fiscal year 2024?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "refuse",
+   "note": "23 CFR 924 sets HSIP rules (Federal share, reporting) but gives no State apportionment amounts."
+  },
+  {
+   "id": "tmsd-h103",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What are the rules for using automated speed cameras to enforce speed limits in North Carolina school zones?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "tuning",
+   "behaviour": "refuse",
+   "note": "G.S. 20-141.1 (L18 p286) covers school zone limits but no tmsd document covers speed cameras (04100 p70 only mentions \"automated speed-monitoring techniques\" as a research need)."
+  },
+  {
+   "id": "tmsd-h104",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What is the maximum speed limit on rural interstates in South Carolina?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "tuning",
+   "behaviour": "refuse",
+   "note": "Another state's rule; no tmsd document mentions South Carolina."
+  },
+  {
+   "id": "tmsd-h105",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What does a remote pilot need under FAA Part 107 to fly a drone over a highway project?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "locked",
+   "behaviour": "refuse",
+   "note": "Another topic (aviation rules); no tmsd document mentions drones or Part 107."
+  },
+  {
+   "id": "tmsd-h106",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "What minimum 28-day compressive strength is required for bridge deck concrete?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "out_of_scope"
+   ],
+   "expected": null,
+   "refuse": true,
+   "verified_by": "page_text_match",
+   "split": "tuning",
+   "behaviour": "refuse",
+   "note": "Another topic (structures/materials); no tmsd document gives concrete strength."
+  }
+ ]
+}

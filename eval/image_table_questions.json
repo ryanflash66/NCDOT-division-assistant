@@ -12,6 +12,7 @@
       "indexed_chars": 1705,
       "question": "What is the maximum deflection of NC-PCB portable concrete barrier on concrete pavement at a 20 ft offset and a 60 mph design speed?",
       "answer": "25.37 in (impact angle 11.5 degrees), Figure 5, NC-PCB impact design table for concrete pavement",
+      "must_contain": ["25.37"],
       "note": "The page-37 case: page 37 (asphalt, Figure 4) and page 38 (concrete, Figure 5) hold the same table layout with the same impact angles; each page's caption ends up in a chunk of its own, apart from the numbers."
     },
     {
@@ -24,7 +25,8 @@
       ],
       "indexed_chars": 1699,
       "question": "For NC-PCB on asphalt pavement, what maximum deflection does the design table give at a 44 ft offset and 70 mph?",
-      "answer": "44.53 in (impact angle 12.7 degrees), Figure 4, NC-PCB impact design table for asphalt pavement"
+      "answer": "44.53 in (impact angle 12.7 degrees), Figure 4, NC-PCB impact design table for asphalt pavement",
+      "must_contain": ["44.53"]
     },
     {
       "id": "wztc-uneven-lanes",

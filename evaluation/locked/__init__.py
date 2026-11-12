@@ -30,7 +30,14 @@ TYPES = ("table", "figure", "scan", "rotated", "multipage_table", "text", "unans
          "units", "footnote", "duplicate_pages", "cross_ref")
 SPLITS = ("tuning", "locked")
 ITEM_KEYS = ("id", "division", "asker", "question", "type", "expected", "refuse", "split")
-OPTIONAL_KEYS = ("edge_cases", "verified_by", "note")
+OPTIONAL_KEYS = ("edge_cases", "verified_by", "note", "behaviour", "accept_reply")
+# What the right reply does (DAR-718). Without the key: "refuse" when refuse is true, else "answer".
+#   answer   state the gold value from the gold page
+#   refuse   say the documents don't cover it
+#   correct  the question asserts something false; the reply gives the documents' value instead (scored as answer)
+#   clarify  the question leaves out a variable the answer depends on; the reply asks for it or shows every
+#            branch (expected.all_of lists the branch values)
+BEHAVIOURS = ("answer", "refuse", "correct", "clarify")
 # Hex digits of the split hash below this go to tuning: 3 of 16, so about one item in five.
 TUNING_DIGITS = 3
 

@@ -164,3 +164,22 @@ def test_render_document_renders_only_the_wanted_pages(tmp_path):
     assert script.render_document(pdf, out, 30, 50, pages={2}) == []  # already there
     assert script.render_document(pdf, tmp_path / "none", 30, 50, pages=set()) == []
     assert not (tmp_path / "none").exists()
+
+
+def test_an_unreadable_pdf_costs_its_images_not_the_manifest(tmp_path):
+    pymupdf = pytest.importorskip("pymupdf")
+    from divrag.divisions import DIVISIONS
+    division = next(d for d in DIVISIONS if len(d.documents) >= 2)
+    good, bad = division.documents[0], division.documents[1]
+    docs = tmp_path / "documents" / division.id
+    docs.mkdir(parents=True)
+    with pymupdf.open() as doc:
+        doc.new_page().insert_text((72, 72), "Page 1")
+        doc.save(docs / good.file)
+    (docs / bad.file).write_bytes(b"not a pdf at all")
+    out = tmp_path / "public" / "pages"
+    only = {(division.id, good.file): {1}, (division.id, bad.file): {1}}
+    code = _script().run([division], out, 30, 50, only, [good.file, bad.file], tmp_path / "documents", False)
+    assert code == 1  # reported, not raised
+    manifest = json.loads((tmp_path / "public" / "page-images.json").read_text())
+    assert manifest == {f"{division.id}/{slug(good.file)}": [1]}

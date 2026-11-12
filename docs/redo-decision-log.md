@@ -327,6 +327,32 @@ wztc-088 expected "2 submissions", and the scorer failed the answer "2". "2" was
   - **Not every question is cross-division:** 17 of the 280 are asked from the target division itself.
 - **Not done:** nothing was rerun for this entry; every number comes from the runs already logged in `docs/locked-set/RUNS.md`.
 
+## D19. A held-out test set, and the first clean number (DAR-661, DAR-718)
+
+- **Question:** How good is the assistant on questions nobody tuned for?
+- **Chose:**
+  - A new set, `evaluation/heldout/`: 311 questions (286 locked, 25 tuning) on pages no older test set uses, written from the PDF pages by three authors who could not see the old questions, any run report or the index.
+  - The 12 edge cases the old set had no or few questions for go into the same set before the freeze (DAR-718), so there is one clean set, not two.
+  - A `behaviour` field per question: answer, refuse, correct a false premise, or ask for a missing variable. Lists need every item. Missing-variable questions get their own score and stay out of the value rate.
+  - One fixed tag per edge case, enforced, so the coverage matrix is generated and not merged by hand.
+  - Frozen by hash in commit 34eb374 before the one scored run.
+- **Evidence (locked split, one run, free models):**
+  - value right 201/242 (78–87%); cited PDF page right 207/237 (83–91%); both right 180/242 (69–79%).
+  - confident wrong 31/286 (8–15%); answerable refused 19/256 (5–11%); must-refuse answered 4/30 (5–30%).
+  - missing variable handled 9/14 (39–84%); no answer without a citation.
+  - 31 of 32 edge cases have 8 or more locked questions.
+- **Surprised us:**
+  - **Confident wrong answers are much more common than the old set showed** (8/232 there). The new set has more hard cases, so the two are not a before and after, but 25 of the 31 are on ordinary answer questions.
+  - **The citation fix held:** 72 of the old set's 82 citation misses were uncited answers; here none is uncited.
+  - **Lists over a page break:** 6 of 14 came back cut short, with a citation.
+  - **Superseded editions and marked-up revisions are rare in these documents:** 9 real old/new pairs in all, and no strikethrough or revision bars.
+- **Not done:**
+  - The OpenAI path is not scored: the key is only in Vercel.
+  - No person reviewed the questions; 32 gold values were read off page images with no machine check.
+  - The tuning split is small (25), because the authors chose pages that hash to the locked side for the priority cases.
+  - Out of scope has 7 locked questions, one short of the bar.
+- **Report:** `docs/redo-reports/dar-661-heldout-set.md`; run `docs/heldout-set/baseline.md`.
+
 ## Corrected claims from the research notes
 
 Three claims in `.handoff/redo-nov4/` were checked against the original sources and corrected before use:

@@ -23,13 +23,17 @@ export function PageImage({ source: s }: { source: Source }) {
   const href = webUrl(s.url);
   const title = String(s.title || "");
   const alt = s.page ? (title ? `Page ${s.page} of ${title}` : `Page ${s.page}`) : title || "Cited page";
+  // Full panel width, not capped in height: a page is taller than wide, and a height cap shrank
+  // the table text (60 dpi, 510 px wide) below what can be read. The link opens the PDF.
   const img = (
     <img
       src={src}
       alt={alt}
       loading="lazy"
       onError={() => setFailed(true)}
-      className="max-h-72 w-auto max-w-full rounded-sm border bg-white object-contain"
+      width={510}
+      height={660}
+      className="h-auto w-full max-w-[510px] rounded-sm border bg-white"
     />
   );
   if (!href) return <div className="mt-2">{img}</div>;
