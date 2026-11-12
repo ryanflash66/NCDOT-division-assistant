@@ -37,9 +37,9 @@ from divrag.divisions import BY_ID, DIVISIONS, DOCUMENTS_DIR, Division, Document
 from divrag.pages_static import PAGES_DIR, slug, write_manifest  # noqa: E402
 
 # 60 dpi makes a letter page 510 x 660 px: a table's numbers are readable at
-# the panel's width. Measured on 300 random indexed pages: 43 KB a page, about
-# 250 MB for the 5,822 indexed pages; 50 dpi/quality 50 is 27 KB (160 MB), a
-# third smaller, but the smaller table text starts to smear.
+# the panel's width. Measured on all 5,797 indexed pages (DAR-665): 42.7 KB a page,
+# 247.5 MB in total; WebP at the same size saves 15% but renders 3x slower;
+# 50 dpi/quality 50 is 27 KB (160 MB), a third smaller, but the smaller table text starts to smear.
 DEFAULT_DPI = 60
 DEFAULT_QUALITY = 60
 
@@ -117,7 +117,12 @@ def run(divisions: Sequence[Division], out: Path, dpi: int, quality: int,
                 continue
             pages = only.get((division.id, document.file), set()) if only is not None else None
             folder = out / division.id / slug(document.file)
-            sizes = render_document(pdf, folder, dpi, quality, pages, force)
+            try:
+                sizes = render_document(pdf, folder, dpi, quality, pages, force)
+            except Exception as exc:  # an unreadable PDF costs its images, not the manifest of the others
+                print(f"{division.id}: {document.file}: not rendered ({exc.__class__.__name__}: {exc})", file=sys.stderr)
+                missing += 1
+                continue
             count = len(list(folder.glob("*.jpg")))
             print(f"{division.id}: {document.file} -> {folder.relative_to(out)}: "
                   f"{len(sizes)} rendered, {count} pages, {folder_size(folder) / 1e6:.1f} MB")

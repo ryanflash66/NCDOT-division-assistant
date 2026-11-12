@@ -6,7 +6,7 @@ renders each PDF page to a small grayscale JPEG under public/pages/, and the
 panel shows the cited page's image, linked to the PDF at that page.
 
 The images are static files: on Vercel the CDN serves public/, and vercel.json
-keeps public/pages/ out of the function bundle (the 5,822 indexed pages are about 250 MB,
+keeps public/pages/ out of the function bundle (the 5,797 indexed pages are 247.5 MB,
 and the bundle is already about 340 MB of its 500 MB limit). So the function
 can't look for a page on disk: the render script writes a manifest beside the
 folder (public/page-images.json, which the bundle does include) listing the
