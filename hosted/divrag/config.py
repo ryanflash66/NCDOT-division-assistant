@@ -47,8 +47,9 @@ LLM_PROVIDER=openai. Everything else has a default suitable for the public demo.
     MAX_QUESTION_CHARS          default 500
     RATE_LIMIT_PER_MINUTE       questions per client IP per minute, per server instance (default 8)
     REQUEST_BUDGET_SECONDS      total time one question may take, kept under Vercel's 60 s maxDuration (default 55)
-    RETRY_ON_REFUSAL            "on" (default) or "off": ask once more when the model refuses although retrieval was strong
-    RETRY_MIN_SCORE             top reranker score that counts as strong retrieval (default 1.0)
+    RETRY_ON_REFUSAL            "on" (default) or "off": ask once more, with the next ranked passages added, when the
+                                model refuses (see answer.SECOND_LOOK_PASSAGES)
+    RETRY_MIN_SCORE             retry only when the top reranker score is at least this (default -2.0; see answer.RETRY_MIN_SCORE)
     RETRY_MIN_SECONDS           retry only if at least this much of the request budget is left (default 15)
     ROW_GUARD                   "off" (default) or "on": flag an answer whose number sits in a table row that lacks a label
                                 the question names while another row of that table has it (DAR-664, rowcheck.py)
@@ -347,7 +348,7 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         rate_limit_per_minute=int(env.get("RATE_LIMIT_PER_MINUTE", "8")),
         request_budget_seconds=budget,
         retry_on_refusal=retry in ("on", "1", "true"),
-        retry_min_score=float(env.get("RETRY_MIN_SCORE", "1.0")),
+        retry_min_score=float(env.get("RETRY_MIN_SCORE", "-2.0")),  # answer.RETRY_MIN_SCORE (DAR-662)
         retry_min_seconds=retry_min_seconds,
         allowed_origins=_csv(env.get("ALLOWED_ORIGINS", "")),
         row_guard=row_guard in ("on", "1", "true"),
