@@ -395,3 +395,30 @@ Also open, without a ticket yet:
 - **Table crowding:** labelled rows crowd the top 5 (D4).
 - **Unfixed pages:** the 5 text-loss and 6 image-only pages (D11).
 - **Paid vision model:** the decision is with Dr. Namian (D7).
+
+## DAR-717. Why are footnote questions answered from the table instead of its note?
+
+- **Question:** Footnote questions were the one type that got worse in the redo (D18): value right 10/13 (50–92%) → 8/13 (36–82%) on the locked split. Was the note missing from what the model saw, or did the model read past it?
+- **Evidence:** the three locked misses were read for the cause only (D17). In all three the note never reached the model (chunk numbers on main, 5d6f713):
+  - FHWA road user cost report p.50: "Note: Reported for work zones with active work and temporary lane closure." became the caption of Table 25 (#4835, #4836); Table 24's chunk #4834 had no note.
+  - Same report p.41: Table 12's "Source: … Current year CPI: 193.396" began the next prose chunk (#4772), apart from the table chunks #4760–#4771.
+  - Standard Specifications p.580: pymupdf4llm dropped "A. Use a 5% acetic acid solution …" from the sideways table; the page's text layer has it.
+- **Options:**
+  1. A prompt rule only ("answer from the note"). It cannot help when the note is not in the passages, which was all three cases.
+  2. Keep the note lines under a table in the table's chunks, put back a note the reader dropped, and add the prompt rule for questions that name a note.
+  3. Put the notes in a separate chunk tagged with the table number. The passage merge would still have to bring it next to the right rows, and retrieval would have to rank it.
+- **Chose:** 2. Notes go at the end of every piece of the table as a "Notes:" block (left as prose when longer than a third of a chunk); a table joined over a page break takes the notes under its continued part; chunks with notes are tagged `notes` and get "table notes footnotes" in the keyword field; `NOTE_RULE` is added only when the question says note, footnote or superscript, so every other prompt is unchanged.
+- **Went wrong:** the first rebuild took section headings ("A. Control Strategies", trans_mgmt_plans.pdf) and hollow bullets ("o Pickups & vans", FHWA report) as notes. Fix: a lettered line counts only when the table marks a cell with its letter. One false positive is left (trans_mgmt_plans.pdf p.94, a repeated heading).
+- **Index:** 13,240 → 13,272 chunks; 523 chunk texts added and 491 removed on 101 pages; 418 chunks on 100 pages carry notes.
+- **Tuning split** (`docs/locked-set/dar-717-before.md`, `dar-717-after.md`; 14 of 48 items asked again, the 34 with identical model input carried over):
+
+| | before | after |
+|---|---|---|
+| footnote, value right | 1/1 (21–100%) | 1/1 (21–100%) |
+| table and table_id, value and cited page right | 11/11 (74–100%) | 11/11 (74–100%) |
+| all, value right | 38/41 (81–97%) | 38/41 (81–97%) |
+| all, right document in top 5 | 41/41 (91–100%) | 40/41 (87–100%) |
+| confident wrong answer | 1/48 (0–11%) | 1/48 (0–11%) |
+
+- **Surprised us:** two of the three misses were fixed by the index alone; their questions never say "note" (Table 24's conditions, Table 12's CPI), so the prompt rule does not fire for them. On the local app all three now answer right with the right page (3/3, 44–100%), but these are the items the fix was designed from.
+- **Not done:** no held-out after-number yet (the coordinator runs it); the locked split was not rerun; p.581's note is still glued into the table's first header cell; notes printed at the page foot, below other prose, are not moved.

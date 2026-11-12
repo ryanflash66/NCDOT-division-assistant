@@ -17,7 +17,8 @@ captions also gets a `context` line naming the document, page (printed number
 too, when it differs) and captions, embedded with its text. Each figure or
 drawing caption also gets a chunk of its own (`kind: "figure"`: caption, nearby
 lines and the drawing's OCR labels, rag.figures), and a chunk from a page OCR
-read badly or had to turn carries `flags` (rag.ocr).
+read badly or had to turn carries `flags` (rag.ocr). A table chunk that ends
+with the notes printed under its table (rag.table_notes) carries `notes: true`.
 --reuse keeps the vectors of chunks that haven't changed. Building the index needs
 requirements.txt (llama-index, pymupdf4llm) as well as hosted/requirements.txt;
 the hosted app needs only the latter.
@@ -48,6 +49,7 @@ from rag import loader, pages
 from rag.config import AppConfig, load_config
 from rag.table_merge import merge_continued_tables, page_lines, page_span
 from rag.figures import figure_chunks
+from rag.table_notes import has_notes
 from rag.tables import TableAwareSplitter
 from prototype.table_quality import flag_chunks
 
@@ -270,6 +272,10 @@ def build_division(config: AppConfig, division: Division, chunk_size: int, chunk
                                                 printed=identity.printed if identity else None)
             if flags := _flags(node.metadata):
                 chunk["flags"] = flags  # OCR flags; flag_chunks keeps them beside the table flags
+            if has_notes(text):
+                # The chunk carries the notes printed under its table (DAR-717); the keyword field
+                # (index_file.field_text) then answers to "note" and "footnote" for it.
+                chunk["notes"] = True
             document_chunks.append(chunk)
         # Table-quality `flags` on each chunk (DAR-655), read with the page's rotation from the PDF.
         flag_chunks(document_chunks, root / document.file)

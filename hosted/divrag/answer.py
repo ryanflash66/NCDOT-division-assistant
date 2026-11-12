@@ -116,8 +116,21 @@ Rules:
 # Added when a passage's heading shows a printed page (DAR-654): a reader checks
 # the answer against the number printed on the page, so the answer must say it.
 PAGE_RULE = """When you mention a page, write it exactly as the passage's heading does, for example "p.13 (PDF page 37)": the first number is the one printed on the page, the second is the PDF reader's page index."""
+# Added when the question names a note or footnote (DAR-717). With the right page cited, the
+# free model still answered from the table body: "ASTM D1135 & D3256" (the test method row) for
+# the solution the note to Standard Specifications Table 1080-1 names, and "temporary lane
+# closure on freeways" (the caption) for the conditions the note under the FHWA report's Table 24
+# gives. Only such questions get it, so an ordinary table question's prompt is unchanged.
+NOTE_RULE = """The question asks about a note or footnote. Answer from the note itself: the lines after a table's "Notes:" line, or a line under the table that starts "Note", "Source", a letter such as "a" or "A." or a symbol such as "*". Do not take the answer from the table's rows or caption, and quote the note's words."""
+# "note" as a noun only ("the note to Table 1080-1", "the notes for Figure 6P-2", "correction note
+# in"): "does the manual note a minimum cover depth" asks for a table value and must not get the rule.
+_NOTE_QUESTION = re.compile(
+    r"\bfootnotes?\b|\bsuperscripts?\b"
+    r"|\b(?:the|a|its|this|that)\s+notes?\b|\bnotes?\s+(?:to|under|below|beneath|for|of|in|on|at)\b",
+    re.IGNORECASE,
+)
 # Added when the question comes with earlier turns.
-HISTORY_RULE = """The earlier conversation, when shown, is only there to understand what the question refers to (for example "it" or "that barrier"). It is not a source: take every fact from the numbered passages and cite them, never from the earlier answers. If the passages do not answer the question, reply with exactly {not_found}, even if the earlier conversation did."""
+HISTORY_RULE ="""The earlier conversation, when shown, is only there to understand what the question refers to (for example "it" or "that barrier"). It is not a source: take every fact from the numbered passages and cite them, never from the earlier answers. If the passages do not answer the question, reply with exactly {not_found}, even if the earlier conversation did."""
 
 USER_PROMPT = """{history}Passages from the {target_name} division's documents:
 
@@ -336,6 +349,8 @@ def build_messages(question: str, asker: Division, target: Division, hits: List[
         target_name=target.name, target_unit=target.unit, asker_line=asker_line, not_found=NOT_FOUND
     )
     extra = [PAGE_RULE] if any(_shows_printed_page(hit.chunk) for hit in hits) else []
+    if _NOTE_QUESTION.search(question):
+        extra.append(NOTE_RULE)
     if earlier:
         extra.append(HISTORY_RULE.format(not_found=NOT_FOUND))
     system += "".join(f"\n{n}. {rule}" for n, rule in enumerate(extra, 8))

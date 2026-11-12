@@ -34,6 +34,7 @@ from llama_index.core import Document, SimpleDirectoryReader
 from llama_index.core.readers.base import BaseReader
 
 from rag.classify import classify
+from rag.table_notes import insert_after_last_table, missing_notes
 from rag.tables import clean_markdown_tables
 
 log = logging.getLogger(__name__)
@@ -224,6 +225,24 @@ class _RotatedLines:
             log.debug("no text layer for %s p. %s", self._file, page_number, exc_info=True)
             return []
 
+    def text_lines(self, page_number, markdown: str) -> List[str]:
+        """All of the page's text-layer lines, read only for a page with a table ([] otherwise).
+
+        rag.table_notes.missing_notes looks in them for a table note the
+        Markdown dropped (Standard Specifications p.580, DAR-717).
+        """
+        if not page_number or not any(line.lstrip().startswith("|") for line in markdown.split("\n")):
+            return []
+        try:
+            import pymupdf
+
+            if self._doc is None:
+                self._doc = pymupdf.open(str(self._file))
+            return self._doc[int(page_number) - 1].get_text("text").split("\n")
+        except Exception:  # the page is read as before without them
+            log.debug("no text layer for %s p. %s", self._file, page_number, exc_info=True)
+            return []
+
     def close(self) -> None:
         if self._doc is not None:
             self._doc.close()
@@ -289,6 +308,10 @@ class _PdfMarkdownReader(BaseReader):
                     metadata.update(ocr_degrees=result.degrees, ocr_confidence=round(result.confidence, 3))
                     if result.flags:
                         metadata["flags"] = ",".join(result.flags)
+                # A table note the Markdown left out goes back under the page's last table (DAR-717).
+                notes = missing_notes(text, rotated.text_lines(number, page["text"]))
+                if notes:
+                    text = insert_after_last_table(text, notes)
                 documents.append(Document(
                     # `<br>` is kept until the tables are cleaned: it marks rows stacked into
                     # one and the pieces of a rotated label (rag/table_rows.py).
