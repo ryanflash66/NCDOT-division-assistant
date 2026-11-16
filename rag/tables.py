@@ -15,7 +15,7 @@ from llama_index.core.node_parser.interface import TextSplitter
 from llama_index.core.utils import get_tokenizer
 from pydantic import Field, PrivateAttr
 
-from rag import table_rows
+from rag import table_notes, table_rows
 from rag.table_rows import cells, is_separator  # noqa: F401  (part of this module's API)
 
 # A data cell: numbers, ranges and placeholders such as "12 - 14", "1.3", "--", "**".
@@ -29,6 +29,10 @@ _MAX_EXTRA_HEADER_ROWS = 3
 # Prose shorter than this (page headers/footers) is kept with the next table
 # instead of becoming a chunk of its own.
 _MIN_PROSE_TOKENS = 25
+# A table's notes block repeats in every piece of the table, so notes longer than
+# this share of a chunk stay prose after it. UAM Table 3-1's three notes are
+# about 150 of 512 tokens; a third leaves the rows most of each piece.
+_MAX_NOTES_SHARE = 1 / 3
 
 
 def is_table_line(line: str) -> bool:
@@ -236,10 +240,16 @@ def _header_row_count(rows: List[str]) -> int:
     return count
 
 
-def _segments(text: str) -> List[Tuple[str, str]]:
-    """Split text into ("prose", text) and ("table", caption + table) segments."""
+def _segments(text: str) -> List[Tuple[str, str, List[str]]]:
+    """Split text into ("prose", text, []) and ("table", caption + table, notes) segments.
+
+    A table's notes are the note lines right under it (rag.table_notes, DAR-717):
+    taken before the next table's caption is looked for, so a "Note:" between
+    two tables stays with the one above it (FHWA road user cost report p.50,
+    Table 24) instead of becoming the caption of the one below.
+    """
     lines = text.split("\n")
-    segments: List[Tuple[str, str]] = []
+    segments: List[Tuple[str, str, List[str]]] = []
     prose: List[str] = []
     i = 0
     while i < len(lines):
@@ -250,6 +260,7 @@ def _segments(text: str) -> List[Tuple[str, str]]:
         j = i
         while j < len(lines) and is_table_line(lines[j]):
             j += 1
+        notes, after_notes = table_notes.trailing_notes(lines, j, "\n".join(lines[i:j]))
         # Pull the caption (short lines right above the table) out of the prose.
         caption: List[str] = []
         while prose and len(caption) < _MAX_CAPTION_LINES:
@@ -260,12 +271,12 @@ def _segments(text: str) -> List[Tuple[str, str]]:
                 break
             caption.insert(0, prose.pop())
         if "\n".join(prose).strip():
-            segments.append(("prose", "\n".join(prose)))
-        segments.append(("table", "\n".join(caption + lines[i:j])))
+            segments.append(("prose", "\n".join(prose), []))
+        segments.append(("table", "\n".join(caption + lines[i:j]), notes))
         prose = []
-        i = j
+        i = after_notes if notes else j
     if "\n".join(prose).strip():
-        segments.append(("prose", "\n".join(prose)))
+        segments.append(("prose", "\n".join(prose), []))
     return segments
 
 
@@ -305,7 +316,7 @@ def _pack(units: List[List[int]], cost: Callable[[int], int], budget: int) -> Li
     return pieces
 
 
-def _split_table(block: str, chunk_size: int, count: Callable[[str], int]) -> List[str]:
+def _split_table(block: str, chunk_size: int, count: Callable[[str], int], notes: str = "") -> List[str]:
     """The table as one chunk if it fits; otherwise row groups that each repeat caption and header.
 
     When the table has labelled rows (DAR-655, `table_rows.row_labels`), each
@@ -313,6 +324,10 @@ def _split_table(block: str, chunk_size: int, count: Callable[[str], int]) -> Li
     label's rows stay together (TMP p. 37: the Impact Angle and Maximum
     Deflection rows of one offset), so a piece never holds a deflection
     without its offset and design speed.
+
+    `notes` (the table's "Notes:" block, rag.table_notes) ends every piece: a
+    note qualifies the whole table (UAM Table 3-1's footnote b applies to
+    every HDD row), so a piece without it would answer from the rows alone.
     """
     lines = block.split("\n")
     first_row = next(i for i, line in enumerate(lines) if is_table_line(line))
@@ -322,15 +337,17 @@ def _split_table(block: str, chunk_size: int, count: Callable[[str], int]) -> Li
     labels = table_rows.row_labels(header, body)
     heading = table_rows.rows_heading(_caption_title(caption))
     body_lines = rows[n_header:]
+    tail = [notes] if notes else []
     if labels is None or not any(labels):
-        if count(block) <= chunk_size:
-            return [block]
+        if count("\n".join([block] + tail)) <= chunk_size:
+            return ["\n".join([block] + tail)]
         labels, heading = [None] * len(body_lines), ""
-    whole = "\n".join([block, heading] + [line for line in labels if line]) if heading else block
+    whole = "\n".join(([block, heading] + [line for line in labels if line] if heading else [block]) + tail)
     if count(whole) <= chunk_size:
         return [whole]
     preamble = "\n".join(caption + rows[:n_header])
-    budget = max(chunk_size - count(preamble) - (count(heading) + 1 if heading else 0), 1)
+    budget = max(chunk_size - count(preamble) - (count(heading) + 1 if heading else 0)
+                 - (count(notes) + 1 if notes else 0), 1)
 
     def cost(i: int) -> int:
         return count(body_lines[i]) + 1 + (count(labels[i]) + 1 if labels[i] else 0)
@@ -339,7 +356,8 @@ def _split_table(block: str, chunk_size: int, count: Callable[[str], int]) -> Li
     pieces: List[str] = []
     for piece in _pack(units, cost, budget):
         named = [labels[i] for i in piece if labels[i]]
-        pieces.append("\n".join([preamble] + [body_lines[i] for i in piece] + ([heading] + named if named else [])))
+        pieces.append("\n".join([preamble] + [body_lines[i] for i in piece] + ([heading] + named if named else [])
+                                + tail))
     return pieces
 
 
@@ -351,7 +369,15 @@ def split_text(text: str, chunk_size: int, chunk_overlap: int, count: Optional[C
 
     chunks: List[str] = []
     carry = ""  # short prose (page headers) waiting to join the next table
-    for kind, segment in _segments(text):
+    segments: List[Tuple[str, str, str]] = []  # (kind, text, the table's notes block or "")
+    for kind, segment, notes in _segments(text):
+        block = table_notes.notes_block(notes) if notes else ""
+        if block and count(block) > chunk_size * _MAX_NOTES_SHARE:
+            # Too long to repeat in every piece of the table: the notes stay prose after it, as before DAR-717.
+            segments += [(kind, segment, ""), ("prose", "\n".join(notes), "")]
+        else:
+            segments.append((kind, segment, block))
+    for kind, segment, block in segments:
         if kind == "prose":
             if count(segment) < _MIN_PROSE_TOKENS:
                 carry = f"{carry}\n{segment}".strip()
@@ -362,7 +388,7 @@ def split_text(text: str, chunk_size: int, chunk_overlap: int, count: Optional[C
         else:
             if carry:
                 segment, carry = f"{carry}\n{segment}", ""
-            chunks.extend(_split_table(segment, chunk_size, count))
+            chunks.extend(_split_table(segment, chunk_size, count, block))
     if carry:
         if chunks:
             chunks[-1] = f"{chunks[-1]}\n{carry}"
