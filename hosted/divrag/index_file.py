@@ -48,6 +48,8 @@ _MAX_CAPTION_CHARS = 150
 # leading-zero numbers such as "04091", but not the decimals of "0.0200" (a slope, not a code).
 _DOC_CODE = re.compile(r"\b[0-9]{2}-[0-9]{5}\b|(?<![0-9.])0[0-9]{3,5}\b")
 _PAGE_SEGMENT = re.compile(r"^(?:printed\s+)?p\.\s*\S+$")
+# The caption/ID field's words for a chunk tagged `notes` (it carries a table's notes block).
+NOTES_FIELD = "table notes footnotes"
 
 
 def search_text(chunk: Dict[str, Any]) -> str:
@@ -107,6 +109,11 @@ def field_text(chunk: Dict[str, Any]) -> str:
         lines.append(Path(source).stem)
     if chunk.get("section"):
         lines.append(chunk["section"])
+    if chunk.get("notes"):
+        # The chunk ends with the notes printed under its table (DAR-717, prototype.ingest): a question
+        # about "the note to Table 1080-1" or "footnote b of Table 3-1" then ranks the table chunks that
+        # carry the notes above other chunks that only name the same table.
+        lines.append(NOTES_FIELD)
     return "\n".join(list(dict.fromkeys(line for line in lines if line)) + captioned)
 
 
