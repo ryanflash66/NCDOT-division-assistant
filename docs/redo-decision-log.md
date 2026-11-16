@@ -470,3 +470,21 @@ Also open, without a ticket yet:
 
 - **Surprised us:** two of the three misses were fixed by the index alone; their questions never say "note" (Table 24's conditions, Table 12's CPI), so the prompt rule does not fire for them. On the local app all three now answer right with the right page (3/3, 44–100%), but these are the items the fix was designed from.
 - **Not done:** no held-out after-number yet (the coordinator runs it); the locked split was not rerun; p.581's note is still glued into the table's first header cell; notes printed at the page foot, below other prose, are not moved.
+
+## DAR-664. Show 8 passages instead of 5, with a wrong-row guard?
+
+- **Question:** does a row-label check make it safe to give the model 8 passages (D15)?
+- **Chose:**
+  - Built the check (`hosted/divrag/rowcheck.py`, setting `ROW_GUARD`, default off). `TOP_K` stays 5; the held-out run decides.
+  - It flags a number that sits in a table row the question's labels do not point to, when another row of that table carries them; it stays quiet when it cannot tell.
+- **Evidence** (tuning split, 48 items; report `docs/redo-reports/dar-664-top-k-8.md`):
+  - refusals on answerable items: 2/41 (1-16%) at 5 passages, 0/41 (0-9%) at 8;
+  - value right 39/41 (84-99%) and 40/41 (87-100%); value and cited page right 38/41 (81-97%) and 36/41 (74-95%);
+  - confident wrong 0/48 (0-7%) and 1/48 (0-11%), the Detail 3-2A answer again (290 ft, the 50 mph row);
+  - median answer time 6.1 s and 9.3 s; the passages block is 47% longer (median 9,092 and 13,338 characters).
+  - The guard changed no column: flagged 0 and false flag 0 with it on, at both settings (computed on the same answers).
+- **Surprised us:** Detail 3-2A is a scanned drawing; its cited text is OCR with the table's rows jumbled, so there are no rows for a row check to read. Across the 80 cited answers, 23 cite a passage with a parsable table row and 8 have the answer's number in one, so the check applies to few questions.
+- **Not done:**
+  - A live run with `ROW_GUARD=on`; the guard columns are offline on the same answers (call budget).
+  - A check on conditions the answer restates ("50 mph, ADT 600-2000" against the question's 60 mph, 800-2000) would catch Detail 3-2A, but it also flags answers that mention another speed legitimately.
+  - Column labels.

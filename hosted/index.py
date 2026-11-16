@@ -117,7 +117,7 @@ class _Runtime:
     def answerer(self, llm: OpenRouterClient) -> Answerer:
         s = self.settings
         return Answerer(self.retriever(), llm, top_k=s.top_k, retry_min_score=s.retry_min_score if s.retry_on_refusal else None,
-                        retry_min_seconds=s.retry_min_seconds)
+                        retry_min_seconds=s.retry_min_seconds, row_guard=s.row_guard)
 
 
 runtime = _Runtime(settings)
