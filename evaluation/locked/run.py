@@ -33,7 +33,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 from evaluation import ROOT
-from evaluation.run_ragas import (OPENROUTER_URL, Cache, Stop, _with_busy_waits, answer_one, config_label,
+from evaluation.run_ragas import (OPENROUTER_URL, Cache, Stop, _host, _with_busy_waits, answer_one, config_label,
                                   find_env_file)
 
 from . import CACHE_PATH, DOCS_DIR, HASH_FILE, LOCKED_DIR, RUNS_FILE, load_items, locked_digest
@@ -113,9 +113,70 @@ def cached_answer(cache: Cache, item: Dict[str, Any], answer_config: str) -> Opt
     return None
 
 
+class SiteAsker:
+    """Answers from a deployed copy of the app: POST <site>/api/ask, as the page's fallback path does.
+
+    The OpenAI key lives only in the Vercel project (a hidden secret, not in any
+    local .env), so the OpenAI path can only be scored through the site itself.
+    The reply is the same payload Answerer.as_dict() gives in-process, plus
+    timing_ms, so the scorer reads both alike. Errors come back as {"error":
+    user_message} with the app's own messages, mapped to the LLMError the
+    in-process path would raise.
+    """
+
+    # The site's limiter: RATE_LIMIT_PER_MINUTE (8) per client IP per instance.
+    LIMITED_WAITS = (65, 65, 120)
+
+    def __init__(self, site: str, timeout: float = 90.0, transport=None):
+        import httpx
+
+        self.site = site.rstrip("/")
+        self.client = httpx.AsyncClient(timeout=timeout, transport=transport)
+
+    async def health(self) -> Dict[str, Any]:
+        reply = await self.client.get(f"{self.site}/api/health")
+        reply.raise_for_status()
+        return reply.json()
+
+    async def ask(self, asked: Dict[str, Any]) -> Dict[str, Any]:
+        import httpx
+        from divrag.llm import TOO_SLOW, UNAVAILABLE, LLMError
+
+        body = {"question": asked["question"], "asker": asked["asker"], "target": asked["target"]}
+        for wait in (*self.LIMITED_WAITS, None):
+            try:
+                reply = await self.client.post(f"{self.site}/api/ask", json=body)
+            except httpx.TimeoutException as exc:
+                raise LLMError(TOO_SLOW, status=504, detail=f"site timeout: {exc}") from exc
+            except httpx.HTTPError as exc:
+                raise LLMError(UNAVAILABLE, status=502, detail=f"site unreachable: {exc}") from exc
+            try:
+                data = reply.json()
+            except ValueError:
+                data = {}
+            if reply.status_code == 200 and "answer" in data:
+                return {"answer": data, "passages": [], "timing_ms": data.get("timing_ms")}
+            message = data.get("error") if isinstance(data, dict) else None
+            if reply.status_code == 429 and message and message.startswith("Too many questions") and wait is not None:
+                print(f"  site rate limit, waiting {wait}s", flush=True)
+                await asyncio.sleep(wait)
+                continue
+            if message:
+                raise LLMError(message, status=reply.status_code, detail=f"site replied {reply.status_code}")
+            # Vercel's own 504 (past maxDuration) has no JSON body: what a visitor sees is "too slow".
+            if reply.status_code == 504:
+                raise LLMError(TOO_SLOW, status=504, detail="site function timed out")
+            raise LLMError(UNAVAILABLE, status=reply.status_code, detail=f"site replied {reply.status_code}")
+        raise LLMError(UNAVAILABLE, status=429, detail="site rate limit did not clear")
+
+    async def aclose(self) -> None:
+        await self.client.aclose()
+
+
 async def answer_stage(runtime: Runtime, llm, answer_config: str, items: Sequence[Dict[str, Any]], cache: Cache,
-                       budget: float, pause: float, max_requests: Optional[int]) -> Tuple[int, Optional[str]]:
-    """Answer every uncached item; (new answers, why it stopped early or None)."""
+                       budget: float, pause: float, max_requests: Optional[int],
+                       site: Optional[SiteAsker] = None) -> Tuple[int, Optional[str]]:
+    """Answer every uncached item, in-process or from `site`; (new answers, why it stopped early or None)."""
     from divrag.llm import TOO_LONG, TOO_SLOW, LLMError
 
     todo = [i for i in items if cached_answer(cache, i, answer_config) is None]
@@ -128,7 +189,8 @@ async def answer_stage(runtime: Runtime, llm, answer_config: str, items: Sequenc
         record = {"kind": "answer", "id": item["id"], "answer_config": answer_config, "question_sha": question_sha(item),
                   "at": _now()}
         try:
-            record.update(await _with_busy_waits(lambda: answer_one(runtime, llm, asked, budget), item["id"]))
+            call = (lambda: site.ask(asked)) if site else (lambda: answer_one(runtime, llm, asked, budget))
+            record.update(await _with_busy_waits(call, item["id"]))
         except Stop as stop:
             return done, str(stop)
         except LLMError as exc:
@@ -208,7 +270,10 @@ def render_markdown(report: Dict[str, Any]) -> str:
              f"- Index: {index.get('path')} ({index.get('chunks')} chunks, {(index.get('bytes') or 0) / 1e6:.1f} MB, "
              f"sha {index.get('sha256_12')})",
              f"- Split: {run.get('split')}; stage: {run.get('stage')}; questions: {run.get('questions')}",
-             f"- Models: {', '.join(run.get('settings', {}).get('models', []))}; budget {run.get('settings', {}).get('request_budget_seconds')} s",
+             f"- Models: {', '.join(run.get('settings', {}).get('models', []))}"
+             + (f"; answers from {run['site']} /api/ask (top_k {run['settings'].get('top_k')}); retrieval columns "
+                f"from the local index" if run.get("site")
+                else f"; budget {run.get('settings', {}).get('request_budget_seconds')} s"),
              f"- Coverage: {cov['items']} items; retrieval run on {cov['retrieval_run']}; answers for {cov['answer_run']}"
              + (f"; {cov['errors']} model errors" if cov["errors"] else "")
              + (f"; stopped early: {cov['stopped']}" if cov["stopped"] else ""),
@@ -302,14 +367,31 @@ async def run_command(args) -> int:
     # models behind it. The key then names both, so OpenAI answers are never served from a free-model run.
     base = "https://api.openai.com/v1" if settings.answers_with_openai else OPENROUTER_URL
     answer_config = f"{config_label(base, settings.answer_models)}@{index['sha256_12']}"
+    site, site_health = None, None
+    if args.site:
+        # The site's own settings decide its answers; the key names the site and its models instead of local ones.
+        site = SiteAsker(args.site)
+        site_health = await site.health()
+        answer_config = f"site:{_host(args.site)}:{'+'.join(site_health.get('llm_models') or [])}@{index['sha256_12']}"
+        print(f"site {args.site}: {site_health.get('llm_provider')} {site_health.get('llm_models')}, "
+              f"top_k {site_health.get('top_k')}, OpenAI spend {site_health.get('openai_spend')}", flush=True)
     # The default top-k and no tag keep the key the earlier runs were cached under.
-    if settings.top_k != 5:
+    elif settings.top_k != 5:
         answer_config += f"#k{settings.top_k}"
     if args.tag:
         answer_config += f"#{args.tag}"
     stopped = None
     records: Dict[str, Optional[Dict[str, Any]]] = {}
-    if args.stage in ("answer", "all"):
+    if args.stage in ("answer", "all") and site:
+        cache = Cache(Path(args.cache))
+        try:
+            _, stopped = await answer_stage(runtime, None, answer_config, items, cache, settings.request_budget_seconds,
+                                            args.pause, args.max_requests, site=site)
+            site_health = await site.health()
+        finally:
+            await site.aclose()
+        records = {item["id"]: cached_answer(cache, item, answer_config) for item in items}
+    elif args.stage in ("answer", "all"):
         cache = Cache(Path(args.cache))
         from divrag.llm import client_from_settings
         from divrag.spend import SpendLedger, store_from_env
@@ -333,6 +415,16 @@ async def run_command(args) -> int:
     meta = {"git_commit": _git("rev-parse", "HEAD"), "git_dirty": bool(_git("status", "--porcelain")),
             "index": index, "settings": _settings_record(settings), "split": args.split, "stage": args.stage,
             "questions": str(questions), "answer_config": answer_config, "only": args.only, "limit": args.limit}
+    if site_health is not None:
+        # Answers came from the site: its settings, not this checkout's .env, are the ones that answered.
+        meta["site"] = args.site
+        meta["site_health"] = site_health
+        meta["settings"] = {"models": site_health.get("llm_models") or [], "llm_provider": site_health.get("llm_provider"),
+                            "top_k": site_health.get("top_k"), "rerank": site_health.get("rerank"),
+                            "keyword_search": site_health.get("keyword_search"),
+                            "rerank_candidates": site_health.get("rerank_candidates"),
+                            "number_agreement": site_health.get("number_agreement"),
+                            "request_budget_seconds": None}
     report = build_report(args.label, items, rows, meta, stopped)
     json_path, md_path = write_outputs(report, Path(args.out))
     # Counted for the locked set itself, and for any other set that names its own run log (the held-out set).
@@ -425,6 +517,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     r.add_argument("--pause", type=float, default=2.0, help="seconds between model calls, to pace a shared free quota")
     r.add_argument("--max-requests", type=int, help="stop the answer stage after this many new questions")
     r.add_argument("--tag", help="part of the answer cache key: answers from changed answering code are asked again")
+    r.add_argument("--site", help="ask a deployed copy's /api/ask (e.g. https://…vercel.app) instead of answering "
+                                  "in-process; retrieval metrics still come from the local index")
     common(r)
     f = sub.add_parser("freeze", help="write the hash of the locked items")
     f.add_argument("--hash-file", default=str(HASH_FILE))

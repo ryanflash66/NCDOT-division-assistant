@@ -351,3 +351,71 @@ def test_printed_ranges_expand_on_their_trailing_number():
 def test_preposition_in_is_not_inches():
     assert value_matches("11 ft", None, "Reduce lanes to 11 ft. Keep 11 in the work zone.")
     assert numbers_with_units("set 11 in the zone") == [(11.0, None, "11")]
+
+
+# --- answers from a deployed site (SiteAsker) -----------------------------------
+
+def _site(handler):
+    import httpx
+
+    from evaluation.locked.run import SiteAsker
+
+    return SiteAsker("https://example.test/", transport=httpx.MockTransport(handler))
+
+
+ASKED = {"question": "How far apart are the drums?", "target": "wztc", "asker": "utilities"}
+
+
+def test_site_answer_is_the_payload_the_scorer_reads():
+    import asyncio
+
+    import httpx
+
+    seen = {}
+
+    def handler(request):
+        seen["url"], seen["body"] = str(request.url), json.loads(request.content)
+        return httpx.Response(200, json={"answer": "40 ft [1]", "refused": False, "uncited": False, "sources": [],
+                                         "model": "gpt-6.1-terra", "timing_ms": {"total": 1200}})
+
+    record = asyncio.run(_site(handler).ask(ASKED))
+    assert seen["url"] == "https://example.test/api/ask"
+    assert seen["body"] == {"question": ASKED["question"], "asker": "utilities", "target": "wztc"}
+    assert record["answer"]["model"] == "gpt-6.1-terra"
+    assert record["timing_ms"] == {"total": 1200} and record["passages"] == []
+
+
+def test_site_errors_map_to_the_apps_messages():
+    import asyncio
+
+    import httpx
+    from divrag.llm import TOO_SLOW, UNAVAILABLE, LLMError
+
+    for status, body, message in ((504, {"error": TOO_SLOW}, TOO_SLOW), (504, None, TOO_SLOW),
+                                  (500, None, UNAVAILABLE)):
+        def handler(request, status=status, body=body):
+            return httpx.Response(status, json=body) if body else httpx.Response(status, text="gateway timeout")
+
+        with pytest.raises(LLMError) as raised:
+            asyncio.run(_site(handler).ask(ASKED))
+        assert raised.value.user_message == message
+
+
+def test_site_rate_limit_is_waited_out(monkeypatch):
+    import asyncio
+
+    import httpx
+
+    from evaluation.locked.run import SiteAsker
+
+    monkeypatch.setattr(SiteAsker, "LIMITED_WAITS", (0,))
+    calls = []
+
+    def handler(request):
+        calls.append(1)
+        if len(calls) == 1:
+            return httpx.Response(429, json={"error": "Too many questions in a short time. Please wait a minute and try again."})
+        return httpx.Response(200, json={"answer": "ok", "refused": False})
+
+    assert asyncio.run(_site(handler).ask(ASKED))["answer"]["answer"] == "ok"
+    assert len(calls) == 2
