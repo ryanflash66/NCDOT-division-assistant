@@ -33,6 +33,20 @@ The options are the locked runner's. With `LLM_PROVIDER=openai` and
 first, the free models behind it) and its calls count against the month's
 OpenAI limit (DAR-715); otherwise the free OpenRouter models answer.
 
+The OpenAI key is a hidden secret in the Vercel project and not in any local
+`.env`, so the OpenAI path is scored through the deployed site:
+
+```bash
+.venv\Scripts\python -m evaluation.heldout.run run --label NAME --split locked --pause 8 --site https://ncdot-division-assistant-iota.vercel.app
+```
+
+`--site` posts each question to the site's `/api/ask` and scores the reply;
+the site's own settings (from `/api/health`, saved in the report) answer, and
+only the retrieval columns (hit@k, right document) come from the local index.
+It scores whatever the site has deployed, so it measures main as shipped, not a
+branch. The site allows 8 questions a minute per IP; `--pause 8` keeps under it
+and a 429 is waited out.
+
 ## Schema additions
 
 - `behaviour` (every item here has it): what the right reply does.
