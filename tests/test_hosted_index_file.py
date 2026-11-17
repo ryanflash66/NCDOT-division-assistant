@@ -216,6 +216,84 @@ def test_figure_chunks_are_never_a_following_chunk_or_merged_into_page_text():
     assert [p.chunk["text"] for p in passages] == ["p1\n\np2", "fig1", "fig2"]
 
 
+LIST_P1 = ("WORK ZONE IMPACTS ASSESSMENT\n\nExamples of overall policy issues include:\n\n- A standing team.\n\n"
+           "- Memoranda of understanding with utility operators.\n\n> **3** Available at http://example.gov\n\n**3-13**")
+LIST_P2 = ("WORK ZONE IMPACTS ASSESSMENT\n\n- Criteria for identifying significant projects.\n\n- Training.\n\n"
+           "## 3.5 Next Section\n\nOther text.\n\n**3-14**")
+TABLE_P1 = "Table 4. Taper lengths\n\n|Speed|Taper|\n|---|---|\n|45|540|\n|50|600|\n\n4-12"
+TABLE_P2 = "|55|660|\n|60|720|\n\nNote: lengths in feet.\n\n4-13"
+
+
+def _pages_index(texts_pages):
+    chunks = [_chunk(t, p, "b") for t, p in texts_pages]
+    return chunks, Retriever(IndexFile("m", chunks, _unit([[1, 0, 0]] * len(chunks))), _FakeEmbedder(), None)
+
+
+def test_a_list_split_across_two_pages_brings_the_next_page():
+    # DAR-736, held-out wztc-h033: five items on printed p.3-13, the rest on 3-14. The hit is the
+    # page's first chunk; the page's second chunk and the next page's first come with it.
+    chunks, retriever = _pages_index([("Intro to the policy issues.", 1), (LIST_P1, 1), (LIST_P2, 2), ("p3", 3)])
+
+    hits = retriever.with_next_page([Hit(0.9, chunks[0])])
+    passages = retriever.as_passages(hits)
+
+    assert [h.chunk for h in hits] == [chunks[0], chunks[1], chunks[2]]
+    assert all(h.score == 0.9 for h in hits)
+    assert len(passages) == 1 and (passages[0].chunk["page"], passages[0].chunk["page_end"]) == (1, 2)
+    assert not passages[0].chunk.get("continues")
+
+
+def test_a_hit_on_the_second_page_of_a_list_brings_the_first_page():
+    # Held-out wztc-h032: the search found printed p.A-11; the list starts on A-10.
+    chunks, retriever = _pages_index([("p0", 0), (LIST_P1, 1), (LIST_P2, 2), ("p3", 3)])
+
+    assert [h.chunk for h in retriever.with_next_page([Hit(0.9, chunks[2])])] == [chunks[2], chunks[1]]
+    # A page that starts afresh brings nothing from before it.
+    fresh, retriever = _pages_index([(LIST_P1, 1), ("## 3.5 Next\n\nNew text.", 2)])
+    assert retriever.with_next_page([Hit(0.9, fresh[1])]) == [Hit(0.9, fresh[1])]
+
+
+def test_a_table_split_across_two_pages_brings_the_next_page():
+    chunks, retriever = _pages_index([(TABLE_P1, 4), (TABLE_P2, 5)])
+
+    assert [h.chunk for h in retriever.with_next_page([Hit(0.5, chunks[0])])] == [chunks[0], chunks[1]]
+
+
+def test_a_page_that_ends_its_list_or_is_far_from_the_hit_brings_nothing():
+    closed, retriever = _pages_index([("The list ends here.\n\n- Last item.\n\n12", 1), ("## New Chapter\n\nText.", 2)])
+    assert retriever.with_next_page([Hit(0.5, closed[0])]) == [Hit(0.5, closed[0])]
+    # Three chunks before the page's end: the hit is not what the page's end is about.
+    far, retriever = _pages_index([("a", 1), ("b", 1), (LIST_P1, 1), (LIST_P2, 2)])
+    assert retriever.with_next_page([Hit(0.5, far[0])]) == [Hit(0.5, far[0])]
+    # Running headers and a contents page that runs over are not lists.
+    toc, retriever = _pages_index([("|Intro ........ 1|\n|Scope ........ 3|", 1), ("|Terms ........ 5|", 2)])
+    assert retriever.with_next_page([Hit(0.5, toc[0])]) == [Hit(0.5, toc[0])]
+
+
+def test_a_list_item_cut_by_the_page_break_brings_the_next_page_but_a_plain_sentence_does_not():
+    # A plain sentence over the break is left out on purpose (runs_over): it doubled the added context.
+    sentence, retriever = _pages_index([
+        ("Before closing a lane on a multi-lane highway, the contractor shall notify the Division Engineer and the\n\n"
+         "Part 2: Chapter 5 | July 2019 | Page 44", 1),
+        ("WORK ZONE MANUAL\n\ndistrict office at least 48 hours ahead.", 2)])
+    assert retriever.with_next_page([Hit(0.5, sentence[0])]) == [Hit(0.5, sentence[0])]
+    # Footer and running header skipped, an item that leads on ("including:") before a bulleted page.
+    lead, retriever = _pages_index([
+        ("Notify the Division Engineer before closing a lane, including:\n\nPart 2: Chapter 5 | July 2019 | Page 44", 1),
+        ("WORK ZONE MANUAL\n\n- the district office;\n\n- the local police.", 2)])
+    assert [h.chunk for h in retriever.with_next_page([Hit(0.5, lead[0])])] == lead
+
+
+def test_a_page_whose_list_goes_on_but_whose_next_page_is_missing_is_marked():
+    # The next page has no text in the index (a scan that OCR could not read): page 2 is not there.
+    chunks, retriever = _pages_index([("Plans must show:\n\n- the limits of right-of-way; and\n\nB-16", 1), ("p3", 3)])
+
+    passages = retriever.as_passages(retriever.with_next_page([Hit(0.5, chunks[0])]))
+
+    assert passages[0].chunk["continues"] is True
+    assert passages[0].chunk["parts"] == [chunks[0]] and "continues" not in chunks[0]
+
+
 def test_committed_index_tags_every_chunk_with_a_configured_division():
     from divrag.config import HOSTED_DIR
     from divrag.divisions import BY_ID, document_for

@@ -165,6 +165,18 @@ def test_the_locator_puts_the_printed_page_before_the_pdf_page_when_they_differ(
     assert "When you mention a page" not in system["content"] and "\n8. " not in system["content"]
 
 
+def test_a_passage_whose_list_goes_on_past_the_shown_pages_is_marked_and_the_model_told_to_say_so():
+    # DAR-736: the next page of a list cut at a page break is missing (Retriever.page_continues).
+    cut = dict(_printed(16, "B-16", "Plans must show:\n- the limits of right-of-way; and"), continues=True)
+    system, user = build_messages("List what plans must show.", BY_ID["utilities"], BY_ID["wztc"], [Hit(1.0, cut)])
+
+    assert "the limits of right-of-way; and\n\n(continues on the next page, not shown)" in user["content"]
+    assert "say that the list or table may continue on the next page" in system["content"]
+    # A whole list gets neither.
+    system, user = build_messages("Q?", BY_ID["utilities"], BY_ID["wztc"], [Hit(1.0, _printed(16, "B-16"))])
+    assert "continues on the next page" not in user["content"] + system["content"]
+
+
 def test_a_merged_passage_cites_the_printed_pages_of_the_parts_the_answer_drew_on():
     parts = [_printed(36, "12", "Barrier types: concrete barrier weighs 3,900 lbs."),
              _printed(37, "13", "The NC-PCB is 10 ft long, 24 in wide at the base and 32 in high."),
@@ -365,6 +377,9 @@ class _FakeRetriever:
         return [_hit(10, source=source, division=division, score=self.scores.get(division, -9.0))]
 
     def with_following(self, hits, top=2):
+        return hits
+
+    def with_next_page(self, hits):
         return hits
 
     def as_passages(self, hits):
