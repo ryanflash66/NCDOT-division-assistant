@@ -34,6 +34,7 @@ from llama_index.core import Document, SimpleDirectoryReader
 from llama_index.core.readers.base import BaseReader
 
 from rag.classify import classify
+from rag.strikeout import unstrike, vocabulary
 from rag.table_notes import insert_after_last_table, missing_notes
 from rag.tables import clean_markdown_tables
 
@@ -243,6 +244,20 @@ class _RotatedLines:
             log.debug("no text layer for %s p. %s", self._file, page_number, exc_info=True)
             return []
 
+    def plain_text(self, page_number) -> str:
+        """The page's whole text layer as plain text ("" when it can't be read)."""
+        if not page_number:
+            return ""
+        try:
+            import pymupdf
+
+            if self._doc is None:
+                self._doc = pymupdf.open(str(self._file))
+            return self._doc[int(page_number) - 1].get_text("text")
+        except Exception:  # the marks are then dropped without rejoining the words
+            log.debug("no text layer for %s p. %s", self._file, page_number, exc_info=True)
+            return ""
+
     def close(self) -> None:
         if self._doc is not None:
             self._doc.close()
@@ -289,13 +304,18 @@ class _PdfMarkdownReader(BaseReader):
         pages = pymupdf4llm.to_markdown(str(file), page_chunks=True, show_progress=False, **options)
         boxes = table_boxes(file, pages) if self._tables else {}
         rotated = _RotatedLines(file)
+        # The document's own words, for rejoining words split by false strikeout on a scanned page.
+        words = vocabulary(line for page in pages for line in page["text"].split("\n")) \
+            if any("~~" in page["text"] for page in pages) else frozenset()
         try:
             documents = []
             for page in pages:
                 # "page" on pymupdf4llm's fallback path (no pymupdf.layout); both are 1-based.
                 number = page["metadata"].get("page_number", page["metadata"].get("page"))
                 label = str(number)
-                text = page["text"]
+                # Drawn lines crossing text read as strikeout ("Mo ~~w~~ ing", Chapter 5 p.16): rag.strikeout.
+                text = (unstrike(page["text"], rotated.plain_text(number), words) if "~~" in page["text"]
+                        else page["text"])
                 metadata = {"page_label": label, "file_name": Path(file).name}
                 if number in boxes:
                     metadata["table_bboxes"] = boxes[number]
