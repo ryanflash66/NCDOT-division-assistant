@@ -712,6 +712,15 @@ def test_retry_models_are_the_ones_after_the_model_that_answered():
     assert OpenRouterClient("k", ["a:free"]).retry_models("a:free") == ["a:free"]
 
 
+def test_an_openai_refusal_is_retried_by_openai_never_by_a_free_model():
+    # Locked wztc-075: the first free model answered from the wrong document after OpenAI refused.
+    from divrag.llm import FallbackClient, OpenAIClient
+    client = FallbackClient(OpenAIClient("sk", ["gpt-6.1-terra"]), OpenRouterClient("k", ["a:free", "b:free"]))
+    assert client.retry_models("gpt-6.1-terra") == ["gpt-6.1-terra"]
+    # When OpenAI was not reached and a free model answered, the free models after it retry as before.
+    assert client.retry_models("a:free") == ["b:free"]
+
+
 def test_complete_can_override_the_model_list():
     seen = {}
 
