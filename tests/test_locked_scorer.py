@@ -60,6 +60,26 @@ def test_numbers_with_units_reads_values_and_units():
     assert numbers_with_units("no numbers here") == []
 
 
+def test_value_matches_times_sign_and_number_word_phrases():
+    # Locked wztc-023: the MUTCD table prints 64 × 64 × 48, the gold value is 64 x 64 x 48.
+    assert value_matches("64 x 64 x 48", [], "The table gives **64 × 64 × 48** [1].")
+    # Locked utilities-021: "12 months" is accepted, the answer says "the 12-month warranty period".
+    assert value_matches("1 year", ["12 months"], "after the 12-month warranty period [1]")
+    assert value_matches("2 lanes", [], "on a 2 lane road")
+    assert not value_matches("1 year", ["12 months"], "after the 18-month warranty period")
+
+
+def test_value_matches_phrase_words_in_order_with_the_gaps_a_wording_allows():
+    # Locked wztc-089, wztc-083, utilities-053: the value said in the answer's words.
+    assert value_matches("27 fatalities", [], "reported **27 work zone fatalities** as of November 24 [1]")
+    assert value_matches("Class 2 or 3", [], "a Class 2 or Class 3 yellow-green vest [1]")
+    assert value_matches("not yet been assigned a number", [], "roads that NCDOT has not yet assigned a number [1]")
+    # Locked utilities-041: another word inside the value is a different answer.
+    assert not value_matches("Division Utility", [], "Division Project/Utility personnel transfer it to Central")
+    assert not value_matches("27 fatalities", [], "27 crashes and 3 fatalities")
+    assert not value_matches("Class 2 or 3", [], "Class 3 or 2")
+
+
 def test_value_matches_numbers_within_tolerance_and_units():
     assert value_matches("27.42", ["27.42 ft"], "The maximum deflection is 27.42 feet [1].")
     assert value_matches("27.42", [], "about 27.420 ft")
@@ -159,6 +179,52 @@ def test_refusing_an_answerable_question_is_over_refusal_and_refusing_an_unanswe
     assert good["right_document"] is None and good["page_rank"] is None
     false = score_item(NEGATIVE, RANKED, _payload("The speed is 3e8 [1].", sources=[_source(5)]))
     assert false["false_answer"] is True and false["critical"] is True
+
+
+def test_a_decline_in_the_answers_own_words_is_a_refusal_not_a_confident_answer():
+    # Locked wztc-029: cited, no value, and the first sentence says the documents do not give it.
+    declined = score_item(ITEM, RANKED, _payload(
+        "The guidelines list the strategy, but do not identify a lead unit for it.[1]", sources=[_source(37)]))
+    assert declined["declined"] and declined["over_refusal"] and declined["critical"] is False
+    # A wrong value stated first stays critical, whatever the answer admits after it.
+    wrong = score_item(ITEM, RANKED, _payload("It is 25.37 ft [1]. The documents do not state the 50 mph value.",
+                                              sources=[_source(37)]))
+    assert wrong["declined"] is False and wrong["critical"] is True
+    # The right value with a gap admitted is an answer (the prompt's partial-answer rule).
+    partial = score_item(ITEM, RANKED, _payload("The table does not specify 45 mph; at 40 mph it is 27.42 ft [1].",
+                                                sources=[_source(37)]))
+    assert partial["value_ok"] and partial["declined"] is False and partial["over_refusal"] is False
+    # Something other than the documents "does not": an answer.
+    assert score_item(NEGATIVE, RANKED, _payload("Flaggers do not need a permit [1].", sources=[_source(5)]))["critical"]
+    # Locked tmsd-100 and tmsd-099: a must-refuse question declined, or its false number rejected.
+    gone = score_item(NEGATIVE, RANKED, _payload(
+        "The Fatal Investigation Guidelines do not specify a number of business days. [1]", sources=[_source(5)]))
+    assert gone["declined"] and gone["false_answer"] is False and gone["critical"] is False
+    premise = dict(NEGATIVE, question="The manual says undersaturated is below 0.95 - what marks oversaturation?")
+    corrected = score_item(premise, RANKED, _payload("Above 1.0 [1]. Undersaturated is below **0.85**, not 0.95.[1]",
+                                                     sources=[_source(5)]))
+    assert corrected["false_answer"] is False and corrected["critical"] is False
+    assert score_item(premise, RANKED, _payload("Above 1.0 [1].", sources=[_source(5)]))["critical"]
+
+
+def test_rescore_rewrites_a_report_with_the_current_scorer(tmp_path):
+    items = load_items(FIXTURES)
+    retrievals = {i["id"]: _fake_runtime().retrieval(i) for i in items}
+    records = {"wztc-fx-001": {"answer": _payload("The documents do not give it [1].", sources=[_source(37)]),
+                               "timing_ms": {"total": 2500}}}
+    report = build_report("unit", items, score_rows(items, retrievals, records),
+                          {"git_commit": "abc123", "index": {}, "settings": {"models": ["m:free"]}}, stopped=None)
+    # As the scorer before declines saw it: a confident wrong answer.
+    row = next(r for r in report["items"] if r["id"] == "wztc-fx-001")
+    row.update(declined=None, over_refusal=False, critical=True)
+    report["aggregates"]["all"]["metrics"]["critical"] = {"k": 1, "n": 1, "rate": 1.0, "ci": list(wilson(1, 1))}
+    json_path, _ = write_outputs(report, tmp_path)
+    assert main(["rescore", "--report", str(json_path), "--questions", str(FIXTURES)]) == 0
+    again = json.loads(json_path.read_text(encoding="utf-8"))
+    row = next(r for r in again["items"] if r["id"] == "wztc-fx-001")
+    assert row["critical"] is False and row["over_refusal"] is True and row["hit1"] is True
+    assert again["run"]["rescored"]["before"]["critical"] == "1/1"
+    assert "- Rescored " in (tmp_path / "unit.md").read_text(encoding="utf-8")
 
 
 def test_unverified_numbers_pass_through_from_the_payload():

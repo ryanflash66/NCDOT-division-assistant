@@ -2,6 +2,7 @@
 
     py -m evaluation.heldout.run run --label NAME --split locked --env-file .env
     py -m evaluation.heldout.run freeze | check | validate
+    py -m evaluation.heldout.run rescore --report docs/heldout-set/NAME.json
 
 Same subcommands and options as evaluation.locked.run. The defaults change:
 questions from evaluation/heldout/, the hash in HELDOUT.sha256, reports in
@@ -23,6 +24,7 @@ _DEFAULTS = {
     "freeze": (("--questions", HELDOUT_DIR), ("--hash-file", HASH_FILE)),
     "check": (("--questions", HELDOUT_DIR), ("--hash-file", HASH_FILE)),
     "validate": (("--questions", HELDOUT_DIR),),
+    "rescore": (("--questions", HELDOUT_DIR),),
 }
 
 

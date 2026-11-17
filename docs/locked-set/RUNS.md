@@ -14,3 +14,5 @@ One line per run that included the locked split (README.md: run at release only)
 | 2026-11-05T15:25:49+00:00 | locked-retrieval-page-sum | d60f7d0a33bf6be4dd527272b6e87472790e07da | retrieval | 232 |
 | 2026-11-05T15:53:36+00:00 | final | e7574ac0dc43dc1e9fc05acdbcfe44d40355407b | all | 280 |
 | 2026-11-05T16:20:43+00:00 | baseline-pre-answers | e7574ac0dc43dc1e9fc05acdbcfe44d40355407b | all | 280 |
+| 2026-11-17T00:55:01+00:00 | span-openai | d229207ba614e83e69c0748ac1e738bf889874c4 | all | 18 |
+| 2026-11-17T02:43:39+00:00 | openai-site-main | df9270584d66a2e183a7d042c6902d0f21e4e9eb | all | 280 |

@@ -37,7 +37,18 @@
   "questions": "R:\\_code_\\RAG-Chatbot\\.claude\\worktrees\\dar-652-integration\\evaluation\\locked",
   "answer_config": "openrouter.ai:nvidia/nemotron-3-ultra-550b-a55b:free+nvidia/nemotron-3.5-super-vl:free+google/gemma-4-31b-it:free@477f07b420b4",
   "only": null,
-  "limit": null
+  "limit": null,
+  "rescored": {
+   "at": "2026-11-17T03:07:40+00:00",
+   "git_commit": "79d3c5f",
+   "before": {
+    "value_ok": "221/245",
+    "strict_ok": "144/245",
+    "critical": "8/280",
+    "over_refusal": "16/245",
+    "false_answer": "4/35"
+   }
+  }
  },
  "coverage": {
   "items": 280,
@@ -101,12 +112,12 @@
      ]
     },
     "value_ok": {
-     "k": 221,
+     "k": 222,
      "n": 245,
-     "rate": 0.9020408163265307,
+     "rate": 0.9061224489795918,
      "ci": [
-      0.8583828513412994,
-      0.9332858719237851
+      0.8630769107378128,
+      0.9366290584487446
      ]
     },
     "strict_ok": {
@@ -137,12 +148,12 @@
      ]
     },
     "false_answer": {
-     "k": 4,
+     "k": 3,
      "n": 35,
-     "rate": 0.11428571428571428,
+     "rate": 0.08571428571428572,
      "ci": [
-      0.04535179333097357,
-      0.2595146864621381
+      0.02958236826696982,
+      0.22379273965896496
      ]
     },
     "flagged": {
@@ -162,6 +173,12 @@
       0.0036158171874622162,
       0.04670108102456133
      ]
+    },
+    "clarify_ok": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "ci": null
     }
    }
   },
@@ -256,12 +273,12 @@
       ]
      },
      "false_answer": {
-      "k": 4,
+      "k": 3,
       "n": 28,
-      "rate": 0.14285714285714285,
+      "rate": 0.10714285714285714,
       "ci": [
-       0.05699005319749392,
-       0.31489802163525293
+       0.03711836682929999,
+       0.27195851548672156
       ]
      },
      "flagged": {
@@ -281,6 +298,12 @@
        0.004434364460542482,
        0.056903005223984324
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -338,12 +361,12 @@
       ]
      },
      "value_ok": {
-      "k": 38,
+      "k": 39,
       "n": 41,
-      "rate": 0.926829268292683,
+      "rate": 0.9512195121951219,
       "ci": [
-       0.8057255146228096,
-       0.9748021693660901
+       0.8386102112962914,
+       0.9865190546348308
       ]
      },
      "strict_ok": {
@@ -400,6 +423,12 @@
        0.0,
        0.12064330476584563
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    }
@@ -495,12 +524,12 @@
       ]
      },
      "false_answer": {
-      "k": 3,
+      "k": 2,
       "n": 15,
-      "rate": 0.2,
+      "rate": 0.13333333333333333,
       "ci": [
-       0.07047549346981563,
-       0.45185448715169363
+       0.03736125910306537,
+       0.37881982832322364
       ]
      },
      "flagged": {
@@ -520,6 +549,12 @@
        0.0,
        0.06528490111708637
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -638,6 +673,12 @@
        0.0,
        0.09180986822558396
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -695,12 +736,12 @@
       ]
      },
      "value_ok": {
-      "k": 76,
+      "k": 77,
       "n": 90,
-      "rate": 0.8444444444444444,
+      "rate": 0.8555555555555555,
       "ci": [
-       0.7556715472270163,
-       0.9050172440508919
+       0.7684012207986421,
+       0.9136001121333921
       ]
      },
      "strict_ok": {
@@ -756,6 +797,12 @@
        0.00934590909166131,
        0.11543570750110752
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    }
@@ -874,6 +921,12 @@
        0.02567962434474355,
        0.5131278292743189
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -990,6 +1043,12 @@
        0.0,
        0.3903342879021653
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -1106,6 +1165,12 @@
        0.014865094404917095,
        0.35387991114111694
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -1221,6 +1286,12 @@
        0.0,
        0.3903342879021653
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -1337,6 +1408,12 @@
        0.0,
        0.2991450484195441
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -1453,6 +1530,12 @@
        0.0,
        0.43448246478317476
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -1569,6 +1652,12 @@
        0.0,
        0.3903342879021653
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -1685,6 +1774,12 @@
        0.0,
        0.32440756488388023
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -1800,6 +1895,12 @@
        0.0,
        0.08379879086570391
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -1916,6 +2017,12 @@
        0.0,
        0.3903342879021653
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -1973,12 +2080,12 @@
       ]
      },
      "value_ok": {
-      "k": 58,
+      "k": 59,
       "n": 63,
-      "rate": 0.9206349206349206,
+      "rate": 0.9365079365079365,
       "ci": [
-       0.8272969014909591,
-       0.9656241528231814
+       0.8478082215469362,
+       0.9750343819866059
       ]
      },
      "strict_ok": {
@@ -2031,6 +2138,12 @@
        0.0,
        0.09890099232440402
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -2100,12 +2213,12 @@
       "ci": null
      },
      "false_answer": {
-      "k": 4,
+      "k": 3,
       "n": 35,
-      "rate": 0.11428571428571428,
+      "rate": 0.08571428571428572,
       "ci": [
-       0.04535179333097357,
-       0.2595146864621381
+       0.02958236826696982,
+       0.22379273965896496
       ]
      },
      "flagged": {
@@ -2118,6 +2231,12 @@
       ]
      },
      "false_flag": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "clarify_ok": {
       "k": 0,
       "n": 0,
       "rate": null,
@@ -2238,6 +2357,12 @@
        0.0,
        0.2775327998628892
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    }
@@ -2356,6 +2481,12 @@
        0.0,
        0.2991450484195441
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -2441,6 +2572,12 @@
       "ci": null
      },
      "false_flag": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "clarify_ok": {
       "k": 0,
       "n": 0,
       "rate": null,
@@ -2560,6 +2697,12 @@
        0.0,
        0.154639018924847
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -2666,6 +2809,12 @@
       "ci": null
      },
      "false_flag": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "clarify_ok": {
       "k": 0,
       "n": 0,
       "rate": null,
@@ -2786,6 +2935,12 @@
        0.0,
        0.3903342879021653
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -2902,6 +3057,12 @@
        0.0,
        0.35433043506668743
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -3018,6 +3179,12 @@
        0.0,
        0.3903342879021653
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -3134,6 +3301,12 @@
        0.0,
        0.4898908364545973
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -3250,6 +3423,12 @@
        0.04558726080970055,
        0.6993581574175981
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -3366,6 +3545,12 @@
        0.0,
        0.7934506856227626
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -3479,6 +3664,12 @@
        0.0,
        0.43448246478317476
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -3572,12 +3763,12 @@
       ]
      },
      "false_answer": {
-      "k": 3,
+      "k": 2,
       "n": 10,
-      "rate": 0.3,
+      "rate": 0.2,
       "ci": [
-       0.10779126740630099,
-       0.6032218525388546
+       0.05668215145437519,
+       0.5098375284633583
       ]
      },
      "flagged": {
@@ -3597,6 +3788,12 @@
        0.0,
        0.6576197724933469
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -3713,6 +3910,12 @@
        0.0,
        0.5614970317550454
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -3829,6 +4032,12 @@
        0.02567962434474355,
        0.5131278292743189
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -3935,6 +4144,12 @@
       "ci": null
      },
      "false_flag": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "clarify_ok": {
       "k": 0,
       "n": 0,
       "rate": null,
@@ -4055,6 +4270,12 @@
        0.0,
        0.2991450484195441
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -4161,6 +4382,12 @@
       "ci": null
      },
      "false_flag": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "clarify_ok": {
       "k": 0,
       "n": 0,
       "rate": null,
@@ -4281,6 +4508,12 @@
        0.0,
        0.6576197724933469
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -4397,6 +4630,12 @@
        0.0,
        0.43448246478317476
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -4513,6 +4752,12 @@
        0.0,
        0.7934506856227626
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -4629,6 +4874,12 @@
        0.0,
        0.24249400665524085
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -4744,6 +4995,12 @@
        0.0,
        0.1843181350088518
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -4860,6 +5117,12 @@
        0.0,
        0.6576197724933469
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -4973,6 +5236,12 @@
        0.0,
        0.7934506856227626
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -5089,6 +5358,12 @@
        0.0,
        0.32440756488388023
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -5204,6 +5479,12 @@
        0.0,
        0.3903342879021653
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -5320,6 +5601,12 @@
        0.0,
        0.7934506856227626
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -5436,6 +5723,12 @@
        0.0,
        0.3903342879021653
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -5551,6 +5844,12 @@
        0.0,
        0.16112515805281938
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -5666,6 +5965,12 @@
        0.0,
        0.09405782583720251
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -5782,6 +6087,12 @@
        0.0,
        0.2588329669680317
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -5898,6 +6209,12 @@
        0.0,
        0.22809537235419838
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -6014,6 +6331,12 @@
        0.0,
        0.7934506856227626
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -6099,6 +6422,12 @@
       "ci": null
      },
      "false_flag": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "clarify_ok": {
       "k": 0,
       "n": 0,
       "rate": null,
@@ -6190,6 +6519,12 @@
       ]
      },
      "false_flag": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "clarify_ok": {
       "k": 0,
       "n": 0,
       "rate": null,
@@ -6300,6 +6635,12 @@
       "ci": null
      },
      "false_flag": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "clarify_ok": {
       "k": 0,
       "n": 0,
       "rate": null,
@@ -6419,6 +6760,12 @@
        0.0,
        0.2775327998628892
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -6535,6 +6882,12 @@
        0.0,
        0.7934506856227626
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -6650,6 +7003,12 @@
        0.0,
        0.09890099232440402
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -6766,6 +7125,12 @@
        0.0,
        0.5614970317550454
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -6879,6 +7244,12 @@
        0.0,
        0.7934506856227626
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -6995,6 +7366,12 @@
        0.0,
        0.7934506856227626
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -7111,6 +7488,12 @@
        0.0,
        0.3903342879021653
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -7226,6 +7609,12 @@
        0.030053369748306635,
        0.5635028221864702
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -7342,6 +7731,12 @@
        0.0,
        0.2588329669680317
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -7458,6 +7853,12 @@
        0.0,
        0.5614970317550454
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -7574,6 +7975,12 @@
        0.0,
        0.7934506856227626
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -7690,6 +8097,12 @@
        0.0,
        0.4898908364545973
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -7808,6 +8221,12 @@
        0.0,
        0.154639018924847
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -7916,6 +8335,12 @@
       ]
      },
      "false_flag": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "clarify_ok": {
       "k": 0,
       "n": 0,
       "rate": null,
@@ -8035,6 +8460,12 @@
        0.0,
        0.7934506856227626
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -8151,6 +8582,12 @@
        0.03622410863243014,
        0.6244653702374747
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -8267,6 +8704,12 @@
        0.0,
        0.5614970317550454
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -8383,6 +8826,12 @@
        0.0,
        0.7934506856227626
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -8499,6 +8948,12 @@
        0.0,
        0.6576197724933469
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -8615,6 +9070,12 @@
        0.0,
        0.2991450484195441
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -8704,6 +9165,12 @@
       "n": 0,
       "rate": null,
       "ci": null
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    }
@@ -8763,12 +9230,12 @@
       ]
      },
      "value_ok": {
-      "k": 208,
+      "k": 209,
       "n": 231,
-      "rate": 0.9004329004329005,
+      "rate": 0.9047619047619048,
       "ci": [
-       0.8550314120439071,
-       0.9327340912408046
+       0.8600182275607594,
+       0.9362636595432464
       ]
      },
      "strict_ok": {
@@ -8799,12 +9266,12 @@
       ]
      },
      "false_answer": {
-      "k": 4,
+      "k": 3,
       "n": 32,
-      "rate": 0.125,
+      "rate": 0.09375,
       "ci": [
-       0.04970134387480073,
-       0.2806830548165022
+       0.032401551298366194,
+       0.24218154728387864
       ]
      },
      "flagged": {
@@ -8824,6 +9291,12 @@
        0.003790752490395701,
        0.04889254477653414
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    },
@@ -8943,6 +9416,12 @@
        0.0,
        0.35433043506668743
       ]
+     },
+     "clarify_ok": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
      }
     }
    }
@@ -8954,8 +9433,8 @@
     "n": 245
    },
    "unanswerable": {
-    "answered": 4,
-    "refused": 31,
+    "answered": 3,
+    "refused": 32,
     "n": 35
    },
    "over_refusal": {
@@ -8968,12 +9447,12 @@
     ]
    },
    "false_answer": {
-    "k": 4,
+    "k": 3,
     "n": 35,
-    "rate": 0.11428571428571428,
+    "rate": 0.08571428571428572,
     "ci": [
-     0.04535179333097357,
-     0.2595146864621381
+     0.02958236826696982,
+     0.22379273965896496
     ]
    }
   },
@@ -9008,6 +9487,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9033,6 +9513,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The guardrail warrant curves for 2:1 embankments assume a design speed of 60 mph. [1]",
    "seconds": 2.748,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9064,6 +9546,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -9077,6 +9560,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). The Work Zone Traffic Control documents look more relevant: try asking Work Zone Traffic Control instead.",
    "seconds": 2.399,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9112,6 +9597,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9137,6 +9623,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The runout length LR is 330 ft. [1]",
    "seconds": 1.719,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9171,6 +9659,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -9184,6 +9673,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "5 ft",
    "seconds": 2.459,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9216,6 +9707,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9241,6 +9733,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "A CAT-1 Anchor Unit can be used because no L distance is needed when L1 is equal to or greater than LC on the trailing end of a rigid obstacle warrant [1].",
    "seconds": 1.268,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9274,6 +9768,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -9287,6 +9782,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "125 feet",
    "seconds": 1.511,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9317,6 +9814,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9342,6 +9840,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "A distance of 12.5 feet is added to the tangent runout distance to obtain the total length of need for a hazard on a horizontal curve [1].",
    "seconds": 5.891,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9374,6 +9874,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9399,6 +9900,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The anchor deduction for a Type B-77 structure anchor unit is 22.875 feet. [1]",
    "seconds": 2.185,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9429,6 +9932,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -9442,6 +9946,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "14 feet",
    "seconds": 1.261,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9472,6 +9978,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -9485,6 +9992,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "70 feet",
    "seconds": 2.118,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9515,6 +10024,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -9528,6 +10038,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "15'-6\"",
    "seconds": 1.924,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9558,6 +10070,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9583,6 +10096,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The standard precast temporary concrete median barrier from Roadway Standard Drawings, Std. No. 1170.01 is used for offsets of 4'-0\" to 5'-11\". [1]",
    "seconds": 4.18,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9617,6 +10132,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9642,6 +10158,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The SENTRE impact attenuator is 17 feet long. [1]",
    "seconds": 1.537,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9675,6 +10193,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9700,6 +10219,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "ROAD SYSTEMS, INC. [1]",
    "seconds": 2.048,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9730,6 +10251,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9755,6 +10277,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Intersection bulbs shall be designed in accordance with Policy and Procedure Manual 23/1 [1].",
    "seconds": 1.904,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9786,6 +10310,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9811,6 +10336,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "At a 50 mph design speed, the minimum left or right turn lane length is 550 feet, and this length includes the taper. [1]",
    "seconds": 5.186,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9841,6 +10368,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9866,6 +10394,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The minimum taper length allowed within the minimum turn lane lengths is 100 feet. [1]",
    "seconds": 2.974,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9899,6 +10429,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9924,6 +10455,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "2.5 ft [1]",
    "seconds": 1.706,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -9957,6 +10490,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9982,6 +10516,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "460-240-460 feet [1]",
    "seconds": 2.984,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10012,6 +10548,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10037,6 +10574,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Case IIIA gives the minimum required sight distance at a stop-controlled intersection. [1]",
    "seconds": 2.08,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10068,6 +10607,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10093,6 +10633,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "d = 1.47 V (J + ta) [1]",
    "seconds": 1.566,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10125,6 +10667,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -10138,6 +10681,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 4.044,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -10168,6 +10713,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -10181,6 +10727,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "12/25/2015",
    "seconds": 2.132,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10211,6 +10759,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10236,6 +10785,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The COST Section's performance goal for a retimed corridor is a 20% reduction in travel times. [1]",
    "seconds": 1.657,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10266,6 +10817,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -10279,6 +10831,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Only 1 typical day of data (normally excludes Mondays, Fridays, rainy days & incidents) Only a snap shot in time",
    "seconds": 2.382,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10311,6 +10865,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -10324,6 +10879,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 3.81,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -10354,6 +10911,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -10367,6 +10925,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The documents do not specify a walking speed for a \"pedestrian progression strategy.\" They provide walking speeds for pedestrian clearance timing (3.0 ft/s, 3.5 ft/s, 4.0 ft/s) and general pedestrian characteristics (2.5–6.0 ft/s), but no speed is linked to a progression strategy.",
    "seconds": 2.416,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10397,6 +10957,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10422,6 +10983,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The NCDOT Signal System Timing Philosophy Manual defines undersaturated conditions as those where volume-to-capacity (v/c) ratios are less than 0.85 [1].",
    "seconds": 2.38,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10453,6 +11016,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10478,6 +11042,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The peak hour total for the AM peak turning movement counts is 2,522 vehicles [1].",
    "seconds": 1.479,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10508,6 +11074,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -10521,6 +11088,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$0.014 per stop",
    "seconds": 1.085,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10552,6 +11121,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10577,6 +11147,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The center of the mainline TODS intersection shall not be more than five driving miles from the qualified attraction [1].",
    "seconds": 4.993,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10608,6 +11180,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10633,6 +11206,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Distance shall be recorded to the nearest 1/100 of a mile. [1]",
    "seconds": 1.61,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10664,6 +11239,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10689,6 +11265,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$160.00 per attraction (TODS) sign [1]",
    "seconds": 1.998,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10720,6 +11298,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10745,6 +11324,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Form TOD-5 (Change of Ownership) is filled out when a TODS attraction changes ownership [1].",
    "seconds": 4.76,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10776,6 +11357,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10801,6 +11383,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Type I/engineering grade sheeting (enclosed lens) is required on mini-TODS sign faces [1].",
    "seconds": 3.934,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10832,6 +11416,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -10845,6 +11430,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "90 days",
    "seconds": 1.368,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10875,6 +11462,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10900,6 +11488,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Fatal investigation files must be retained electronically for 10 years according to standard policy [1].",
    "seconds": 1.283,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10930,6 +11520,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -10943,6 +11534,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The field guidelines say to check curves with a Ball Bank Indicator.",
    "seconds": 1.873,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -10973,6 +11566,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -10986,6 +11580,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "> 95% completed by due date",
    "seconds": 4.459,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11018,6 +11614,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11031,6 +11628,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "100 ft",
    "seconds": 1.607,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11064,6 +11663,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11089,6 +11689,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "150 ft per 10 mph of arterial design speed [1].",
    "seconds": 1.677,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11120,6 +11722,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11133,6 +11736,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "24 feet",
    "seconds": 2.062,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11164,6 +11769,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11189,6 +11795,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The Jacksonville Clinton Wilmington district office covers Onslow and Pender counties. [1]",
    "seconds": 2.404,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11220,6 +11828,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11245,6 +11854,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "G.S. 136-96 requires abandonment of a road after 15 years of non-use [1].",
    "seconds": 1.928,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11276,6 +11887,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11289,6 +11901,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "19A NCAC 02D.1002",
    "seconds": 1.39,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11321,6 +11935,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11346,6 +11961,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The Chief Engineer does not set maximum axle weights on light traffic roads under the Administrative Code; the maximum axle weight on light traffic roads is fixed at 13,000 pounds by 19A NCAC 04A.0106(a) [1]. The Chief Engineer sets gross weight limits on bridges under 19A NCAC 04A.0105 [1].",
    "seconds": 2.347,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11378,6 +11995,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11391,6 +12009,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "1995-0513",
    "seconds": 1.78,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11421,6 +12041,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11434,6 +12055,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Public vehicular area",
    "seconds": 2.626,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11465,6 +12088,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11478,6 +12102,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "53 feet",
    "seconds": 1.138,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11509,6 +12135,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11534,6 +12161,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Code 10 is entered for \"Blinded, sunlight\" in the Vision Obstruction field (Section 34) on the DMV-349. [1]",
    "seconds": 2.678,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11568,6 +12197,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11593,6 +12223,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The Chevron Alignment (W1-8) sign on an expressway is 30 x 36 inches. [1]",
    "seconds": 2.562,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11626,6 +12258,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11651,6 +12284,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The oversized dimension for the Trail Crossing plaque (W11-15P) is 36 x 30 inches [1].",
    "seconds": 6.678,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11685,6 +12320,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11710,6 +12346,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Recommended [1]",
    "seconds": 4.335,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11742,6 +12380,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11767,6 +12406,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "120 feet [1]",
    "seconds": 1.211,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11797,6 +12438,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11810,6 +12452,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "3,000 vehicles per day",
    "seconds": 1.635,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11842,6 +12486,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11867,6 +12512,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "700 feet [1]",
    "seconds": 1.981,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11900,6 +12547,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11925,6 +12573,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "0.558 [1]",
    "seconds": 2.197,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -11958,6 +12608,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11983,6 +12634,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "30% [1]",
    "seconds": 0.98,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12014,6 +12667,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12039,6 +12693,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "No. The note to Table 3A states that fluorescence luminance factors (YF) are typical values provided for quality assurance only and shall not be used as a measure of performance during service [1].",
    "seconds": 3.445,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12071,6 +12727,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12096,6 +12753,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The maximum daytime luminance factor for blue retroreflective pavement marking material in Table 5A is 14% [1].",
    "seconds": 1.885,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12126,6 +12785,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -12139,6 +12799,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "5 years",
    "seconds": 2.391,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12171,6 +12833,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12196,6 +12859,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "NCDOT pays 60% of the incremental cost of an incidental sidewalk project for a municipality with a population of 50,000 to 100,000 [1].",
    "seconds": 1.745,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12227,6 +12892,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12252,6 +12918,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Curb extensions and protected corners both reduce vehicle turning speeds at intersections. [1]",
    "seconds": 1.851,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12283,6 +12951,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12308,6 +12977,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The project team developed an initial list of 36 candidate locations. [1]",
    "seconds": 1.231,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12342,6 +13013,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12367,6 +13039,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "20 total crashes [1]",
    "seconds": 1.718,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12400,6 +13074,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12425,6 +13100,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Highway Division 7 is listed for the Manning Dr and Ridge Rd/Skipper Bowles Dr candidate site in Chapel Hill [1].",
    "seconds": 1.414,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12455,6 +13132,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12480,6 +13158,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "FHWA-SA-17-072 [1]",
    "seconds": 4.081,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12511,6 +13191,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12536,6 +13217,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The STEP guide states that for multi-lane roadway crossings with vehicle AADTs exceeding 10,000, a marked crosswalk alone is typically insufficient [1].",
    "seconds": 2.105,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12568,6 +13251,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12593,6 +13277,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "94 pedestrian crashes occurred at marked crosswalk sites on 3- or 4-lane roads [1].",
    "seconds": 2.341,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12626,6 +13312,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -12639,6 +13326,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "23",
    "seconds": 1.322,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12676,6 +13365,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -12689,6 +13379,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "P",
    "seconds": 1.131,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12721,6 +13413,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12746,6 +13439,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The raised median or crossing island must be at least 1.2 m (4 ft) wide to serve adequately as a refuge area for pedestrians [1].",
    "seconds": 2.267,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12779,6 +13474,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12804,6 +13500,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "48 seconds [1]",
    "seconds": 1.695,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12835,6 +13533,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12860,6 +13559,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The manual cites an accident modification factor of 0.77 for all fatal and injury crashes when converting a 4-legged urban intersection from stop control to signal control. [1]",
    "seconds": 2.691,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12892,6 +13593,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -12905,6 +13607,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "40 mph",
    "seconds": 2.343,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12936,6 +13640,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -12949,6 +13654,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "0.90",
    "seconds": 1.673,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -12984,6 +13691,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13009,6 +13717,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "22.0 lux (2.2 fc) [1]",
    "seconds": 1.284,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13040,6 +13750,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13065,6 +13776,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "1,500 to 3,500 ADT [1]",
    "seconds": 1.477,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13100,6 +13813,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13125,6 +13839,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "2,600 veh/hr [1]",
    "seconds": 1.647,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13155,6 +13871,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13168,6 +13885,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "DTFH61-92-C-00138",
    "seconds": 1.787,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13198,6 +13917,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13211,6 +13931,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "47",
    "seconds": 1.88,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13243,6 +13965,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13268,6 +13991,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The Pedestrian Facilities Users Guide states that the maximum sidewalk cross-slope is 1:50 (2 percent) [1].",
    "seconds": 2.695,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13301,6 +14026,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13326,6 +14052,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "0.75 feet [1]",
    "seconds": 1.345,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13359,6 +14087,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13384,6 +14113,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "A 10:1 slope runs from the higher median shoulder break point down toward the center of the median (ditch) [1].",
    "seconds": 1.348,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13417,6 +14148,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13442,6 +14174,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "067 [1]",
    "seconds": 1.096,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13472,6 +14206,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13485,6 +14220,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). The Work Zone Traffic Control documents look more relevant: try asking Work Zone Traffic Control instead.",
    "seconds": 1.608,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13515,6 +14252,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13528,6 +14266,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). The Work Zone Traffic Control documents look more relevant: try asking Work Zone Traffic Control instead.",
    "seconds": 3.532,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -13558,6 +14298,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13571,6 +14312,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 1.602,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13601,6 +14344,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13614,6 +14358,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 1.644,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13644,6 +14390,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13657,6 +14404,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 2.829,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -13687,6 +14436,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13700,6 +14450,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 14.652,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -13730,6 +14482,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13743,6 +14496,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 2.722,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -13773,6 +14528,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13786,6 +14542,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). The Work Zone Traffic Control documents look more relevant: try asking Work Zone Traffic Control instead.",
    "seconds": 2.703,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13816,6 +14574,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13829,6 +14588,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). The Work Zone Traffic Control documents look more relevant: try asking Work Zone Traffic Control instead.",
    "seconds": 2.223,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13859,6 +14620,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13872,6 +14634,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). The Utilities documents look more relevant: try asking Utilities instead.",
    "seconds": 2.263,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13902,6 +14666,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13915,6 +14680,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 4.721,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13945,6 +14712,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13958,6 +14726,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 1.382,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -13988,6 +14758,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14043,6 +14814,8 @@
    "false_answer": true,
    "flagged": false,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$200 per TODS contract (one contract per intersection) [1][2][3][4]",
    "seconds": 3.782,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14073,6 +14846,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14098,6 +14872,8 @@
    "false_answer": true,
    "flagged": false,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The Signal System Timing Philosophy Manual states that oversaturated conditions occur when the volume-to-capacity (v/c) ratio is greater than 1.0 [1].",
    "seconds": 5.452,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14128,6 +14904,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": true,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -14138,9 +14915,11 @@
    "strict_ok": null,
    "critical": false,
    "over_refusal": null,
-   "false_answer": true,
+   "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The passages do not specify a number of business days for the regional office to review the DMV-349 before the 60-day clock starts. The 60-calendar-day (45-business-day) period begins at Step 4 in the Workflow Tracker, but the documents do not state how many business days the regional office has to review the DMV-349 prior to that step.",
    "seconds": 2.484,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14175,6 +14954,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14200,6 +14980,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "12 times the hole diameter [1]",
    "seconds": 1.317,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14233,6 +15015,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14258,6 +15041,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The minimum cover depth for a transverse HDD installation of any size on a fully controlled access roadway is 15 feet [1].",
    "seconds": 7.8,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14292,6 +15077,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14317,6 +15103,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The UAM's open-cut bury depth table (Table 3-2) lists \"Plowed-in communication lines/cable\" with a \"Minimum Depth of Cover\" of \"1.5 feet\" [1].",
    "seconds": 3.687,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14350,6 +15138,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14375,6 +15164,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "0.312 inches [1]",
    "seconds": 1.107,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14408,6 +15199,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14433,6 +15225,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "No, that is not correct. Table 3-3 lists the required wall thickness for a 48-inch encasement pipe as 0.500 inches [1].",
    "seconds": 1.534,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14467,6 +15261,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -14480,6 +15275,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "1 inch",
    "seconds": 3.189,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14513,6 +15310,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14538,6 +15336,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "For a 6-foot-wide trench (greater than 5'-3\"), the steel plate design must be sealed by a North Carolina licensed Professional Engineer and must meet AASHTO LRFD HL-93 loading criteria if exposed to continuous traffic [1].",
    "seconds": 4.118,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14572,6 +15372,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14597,6 +15398,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Use and Occupancy Agreement (U&O) (If 100% NCDOT cost, no betterment) [1]",
    "seconds": 1.577,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14629,6 +15432,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -14642,6 +15446,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Utility Preliminary Engineering Agreement",
    "seconds": 2.355,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14675,6 +15481,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -14688,6 +15495,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$122,000",
    "seconds": 1.779,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14721,6 +15530,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -14734,6 +15544,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$20,000",
    "seconds": 1.215,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14767,6 +15579,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -14780,6 +15593,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$18 per linear foot",
    "seconds": 2.007,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14814,6 +15629,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14839,6 +15655,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The nominal inside diameter of 2-inch SCH 80 conduit is 1.913 inches [1].",
    "seconds": 1.3,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -14871,6 +15689,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14906,6 +15725,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The minimum sag clearance height above a bridge deck for power and telecommunications lines is 25 feet [1][2].",
    "seconds": 13.919,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -14939,6 +15760,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14964,6 +15786,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The minimum horizontal clearance may be reduced to 3 feet [1].",
    "seconds": 14.278,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -14996,6 +15820,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15021,6 +15846,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Temporary shoring is required when a theoretical 2:1 slope from the bottom of excavation intersects the existing ground line less than 5 feet from the outside edge of an open travel lane [1].",
    "seconds": 13.729,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -15053,6 +15880,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15078,6 +15906,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "When a utility line crosses over an interstate highway, the vertical clearance of the lowest utility shall conform to the currently applicable NESC, but shall not be less than 18 feet in any case [1].",
    "seconds": 15.946,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -15110,6 +15940,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15135,6 +15966,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Under standard placement, a street light pole must be placed 5 feet 6 inches behind the face of the guardrail [1].",
    "seconds": 15.284,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -15168,6 +16001,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15193,6 +16027,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "3 feet 6 inches behind the face of the guardrail [1].",
    "seconds": 15.166,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -15224,6 +16060,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15249,6 +16086,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Fire hydrants must be breakaway type and placed at least 6 feet from the back of curb and gutter sections and from the back of ditch in roadway sections. Where there is no ditch, the hydrant should be placed as far as possible from the pavement edge within right of way outer limits. [1]",
    "seconds": 16.231,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -15281,6 +16120,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -15294,6 +16134,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 14.954,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -15326,6 +16168,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15351,6 +16194,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The crossing must occur above the 25-year flood water surface elevation [1].",
    "seconds": 14.848,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -15383,6 +16228,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15408,6 +16254,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The Utilities Accommodation Manual limits the driving (impact moling/piercing) method to a maximum diameter of 6 inches [1]. An 8‑inch conduit therefore exceeds the allowable size for this method.",
    "seconds": 7.272,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -15440,6 +16288,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -15453,6 +16302,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "4-foot, 6-inch centers",
    "seconds": 1.233,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -15485,6 +16336,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15510,6 +16362,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Yes. Excavation within 1,000 feet of a signalized intersection requires notification to the Division Traffic Engineer, and all traffic signal or detection cables must be located before excavation begins [1].",
    "seconds": 1.958,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -15542,6 +16396,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15567,6 +16422,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Fill abandoned pipe with grout or flowable fill to at least 90 percent full, or completely full when on railroad right of way [1].",
    "seconds": 14.567,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -15599,6 +16456,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15624,6 +16482,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "NCDOT is responsible for 75 percent of the non-betterment relocation costs for eligible projects for water and sewer facilities owned by a municipality with a population greater than 10,000 but less than 50,000 [1].",
    "seconds": 8.202,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -15655,6 +16515,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -15668,6 +16529,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 2.143,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -15700,6 +16563,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -15713,6 +16577,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "20 years",
    "seconds": 1.777,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -15746,6 +16612,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -15759,6 +16626,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "7 years",
    "seconds": 2.668,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -15790,6 +16659,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -15803,6 +16673,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "2 years",
    "seconds": 12.45,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -15834,6 +16706,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15859,6 +16732,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "For direct bury utility poles 60 feet and taller, the pole owner must submit a signed attestation indicating that all NESC design requirements for Rule 250C (Extreme Wind Loading), Rule 250D (Extreme Ice with Concurrent Wind), and Rule 250B (standard District Loads) have been considered and achieved for all poles associated with the encroachment [1].",
    "seconds": 2.992,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -15891,6 +16766,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15916,6 +16792,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The largest scale allowed for scaled plans is 1″ = 100′. [1]",
    "seconds": 2.614,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -15948,6 +16826,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -15961,6 +16840,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "5 feet",
    "seconds": 1.794,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -15994,6 +16875,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16019,6 +16901,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Encasements must extend 5 feet beyond the toe of slopes in fill sections. [1]",
    "seconds": 15.099,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -16051,6 +16935,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16064,6 +16949,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "one (1) year",
    "seconds": 1.328,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16097,6 +16984,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16122,6 +17010,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "As-built drawings must be supplied within 30 days after completion of the drilling operation [1].",
    "seconds": 2.948,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16154,6 +17044,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16167,6 +17058,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "5 ft",
    "seconds": 2.825,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16201,6 +17094,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16226,6 +17120,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The blank Encroachment Fee Form in Appendix E shows an Administrative Fee amount of 500.00 pre‑printed in the Financial Posting table [1].",
    "seconds": 2.27,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16259,6 +17155,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16284,6 +17181,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$2,500.00 [1]",
    "seconds": 1.502,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16317,6 +17216,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16330,6 +17230,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The passages do not specify to whom an encroachment is transferred in the NCDOT Encroachment Process flowchart in UAM Appendix B. The flowchart is referenced in the Utilities Accommodation Manual Appendix B, but its detailed steps are not described in the provided text. The Encroachment Submissions User Guide describes a different process for STIP projects, where the District Office sets the Next Action to \"Division Utilities\" and the Division Project/Utility personnel manage the review, but this is not the UAM Appendix B flowchart.",
    "seconds": 7.786,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16361,6 +17263,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16374,6 +17277,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "(919) 733-4420",
    "seconds": 2.508,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16406,6 +17311,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16431,6 +17337,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "48 inches [1]",
    "seconds": 1.968,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16464,6 +17372,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16489,6 +17398,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The Department will agree to vinyl coated chain link fence as a betterment within municipal boundaries, provided the municipality covers the cost differential and assumes future maintenance responsibility. [1]",
    "seconds": 3.147,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16520,6 +17431,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16545,6 +17457,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The Transportation Mobility and Safety Division approves gateway signs requested for installation on freeways. [1]",
    "seconds": 3.245,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16578,6 +17492,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16591,6 +17506,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "300 feet",
    "seconds": 3.119,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16623,6 +17540,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16648,6 +17566,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The municipality must bear the cost of relocating municipal utilities located within an existing Highway system street right of way. [1]",
    "seconds": 4.294,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16680,6 +17600,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16693,6 +17614,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "15 minutes",
    "seconds": 1.645,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16725,6 +17648,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16738,6 +17662,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "24 hours",
    "seconds": 1.968,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16768,6 +17694,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16793,6 +17720,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Carl Barclay, PE- State Utilities Manager presented the August 2017 NCDOT 'Utilities Coordination and Encroachments' webinar according to its title slide [1].",
    "seconds": 1.744,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16825,6 +17754,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16838,6 +17768,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Dark Grey",
    "seconds": 3.828,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16870,6 +17802,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16895,6 +17828,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "A Central Review reason(s) must be selected in conjunction with the Central Utilities next action. [1]",
    "seconds": 2.304,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16927,6 +17862,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16952,6 +17888,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Use SR0000 only for new installations located along roads which have not yet been assigned a number by NCDOT [1].",
    "seconds": 3.896,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -16982,6 +17920,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17007,6 +17946,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "910-364-0601 [1]",
    "seconds": 1.697,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17038,6 +17979,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17063,6 +18005,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "A certified or cashier's check is the only acceptable form of bond when the bond amount is $500.00 or less. [1]",
    "seconds": 2.463,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17094,6 +18038,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17107,6 +18052,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "95 percent",
    "seconds": 2.156,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17138,6 +18085,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17151,6 +18099,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "6 months",
    "seconds": 1.594,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17182,6 +18132,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17207,6 +18158,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The utility must provide its final and complete billing within one year following completion of the utility relocation work. [1]",
    "seconds": 2.223,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17238,6 +18191,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17251,6 +18205,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "10 percent",
    "seconds": 1.719,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17283,6 +18239,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17296,6 +18253,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 9.528,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -17330,6 +18289,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17343,6 +18303,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$569,100",
    "seconds": 1.144,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17373,6 +18335,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17386,6 +18349,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$25 million",
    "seconds": 1.224,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17416,6 +18381,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17429,6 +18395,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "14 percent",
    "seconds": 1.188,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17460,6 +18428,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17485,6 +18454,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "A typical right of way width for a 4-lane rural interstate, freeway, or expressway section is 250′ to 300′. [1]",
    "seconds": 4.849,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17516,6 +18487,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17541,6 +18513,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Quality Level B is obtained by geophysical prospecting to determine approximate horizontal positions of underground utilities, an activity called \"designating\" [1].",
    "seconds": 2.843,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17571,6 +18545,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17596,6 +18571,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$4.62 for every $1 spent on SUE. [1]",
    "seconds": 1.507,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17627,6 +18604,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17640,6 +18618,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Society of Cable Telecommunications Engineers",
    "seconds": 1.235,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17672,6 +18652,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17697,6 +18678,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The UAM glossary defines adverse possession as a period of 20 years. [1]",
    "seconds": 1.897,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17729,6 +18712,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17742,6 +18726,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "16.3A",
    "seconds": 1.395,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17773,6 +18759,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17786,6 +18773,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "15 days",
    "seconds": 1.266,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17816,6 +18805,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17829,6 +18819,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). The Transportation Mobility and Safety documents look more relevant: try asking Transportation Mobility and Safety instead.",
    "seconds": 1.219,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17860,6 +18852,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17873,6 +18866,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 2.886,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -17904,6 +18899,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17917,6 +18913,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 2.86,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17947,6 +18945,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17960,6 +18959,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 2.239,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -17990,6 +18991,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -18003,6 +19005,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). The Transportation Mobility and Safety documents look more relevant: try asking Transportation Mobility and Safety instead.",
    "seconds": 2.149,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -18034,6 +19038,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -18047,6 +19052,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). The Transportation Mobility and Safety documents look more relevant: try asking Transportation Mobility and Safety instead.",
    "seconds": 3.022,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -18077,6 +19084,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -18090,6 +19098,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 5.144,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -18121,6 +19131,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -18134,6 +19145,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 4.906,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18165,6 +19178,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -18178,6 +19192,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). The Transportation Mobility and Safety documents look more relevant: try asking Transportation Mobility and Safety instead.",
    "seconds": 2.77,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -18208,6 +19224,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -18221,6 +19238,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 1.908,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18251,6 +19270,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18276,6 +19296,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "2.08 [1]",
    "seconds": 1.548,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18306,6 +19328,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18331,6 +19354,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "70% (60-90%) [1]",
    "seconds": 3.052,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18361,6 +19386,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18386,6 +19412,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The report gives a crash modification factor of 1.63 for nighttime property-damage-only crashes during temporary lane closures on freeways [1].",
    "seconds": 4.297,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18417,6 +19445,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18442,6 +19471,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The crash rate with the work zone at sites using partial lane closure with 3 lanes in each direction was 10.1006 per 10 million VMT [1].",
    "seconds": 1.91,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18473,6 +19504,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18498,6 +19530,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "A rural widening project is classified as Level 2 when the project length is 5 to 8 miles [1].",
    "seconds": 10.564,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18528,6 +19562,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18553,6 +19588,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "1,500 feet [1]",
    "seconds": 2.054,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18583,6 +19620,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18608,6 +19646,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "645 feet [1]",
    "seconds": 1.419,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18638,6 +19678,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18663,6 +19704,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "60 x 30 inches [1]",
    "seconds": 2.052,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18693,6 +19736,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18718,6 +19762,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "36 x 54 inches [1]",
    "seconds": 4.837,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18748,6 +19794,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18773,6 +19820,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The conventional-road size for the Detour sign designated M4-10 is 48 x 18 inches (width x height) [1].",
    "seconds": 1.651,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18803,6 +19852,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18828,6 +19878,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "53 in. (NCHRP 350 TL-3) [1]",
    "seconds": 7.048,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18858,6 +19910,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18883,6 +19936,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "2,640 feet [1]",
    "seconds": 0.969,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18913,6 +19968,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18938,6 +19994,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "A shoulder taper must be at least 0.33 L, where L is the taper length calculated from Table 6B‑4 [1].",
    "seconds": 2.859,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -18969,6 +20027,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -18982,6 +20041,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "≥ 32 ft",
    "seconds": 1.321,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19012,6 +20073,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19037,6 +20099,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "New York uses a project duration of ≥ 60 days as a criterion for temporary positive protection. [1]",
    "seconds": 1.638,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19067,6 +20131,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19092,6 +20157,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The minimum size for a Yield (R1-2) sign is 30 x 30 x 30 inches [1].",
    "seconds": 2.384,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19123,6 +20190,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19148,6 +20216,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "24,688 lb [1]",
    "seconds": 1.987,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19180,6 +20250,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19205,6 +20276,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "41,852 lb [1]",
    "seconds": 1.826,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19236,6 +20309,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -19249,6 +20323,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 3.322,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -19279,6 +20355,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19304,6 +20381,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$1.04 per vehicle-hour [1]",
    "seconds": 3.113,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19334,6 +20413,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19359,6 +20439,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Ohio DOT considers queues less than 0.75 miles acceptable [1].",
    "seconds": 2.911,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19389,6 +20471,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19414,6 +20497,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Missouri DOT considers delays excessive when they exceed 15 minutes [1].",
    "seconds": 1.515,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19445,6 +20530,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19470,6 +20556,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "64 x 64 x 48 inches [1]",
    "seconds": 2.86,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19501,6 +20589,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19526,6 +20615,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "345 feet [1]",
    "seconds": 1.789,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19558,6 +20649,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19583,6 +20675,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "19:1 [1]",
    "seconds": 1.591,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19614,6 +20708,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -19627,6 +20722,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). The Transportation Mobility and Safety documents look more relevant: try asking Transportation Mobility and Safety instead.",
    "seconds": 5.374,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -19658,6 +20755,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19683,6 +20781,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "7 feet from ground level to the bottom of the panel [1].",
    "seconds": 2.644,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19714,6 +20814,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -19727,6 +20828,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "ADU",
    "seconds": 1.562,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19758,6 +20861,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -19771,6 +20875,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 4.263,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -19802,6 +20908,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -19815,6 +20922,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "FSU",
    "seconds": 1.224,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19847,6 +20956,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -19860,6 +20970,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "> $50,000/day",
    "seconds": 1.993,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19891,6 +21003,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19916,6 +21029,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The maximum water content for gray waterborne paint vehicle is 58% by weight. [1]",
    "seconds": 1.462,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19948,6 +21063,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -19961,6 +21077,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "4%",
    "seconds": 1.24,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -19991,6 +21109,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -20004,6 +21123,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 4.642,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -20034,6 +21155,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20059,6 +21181,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The STOP/SLOW paddle must be held at least 7 feet above ground level. [1]",
    "seconds": 1.483,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20089,6 +21213,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -20102,6 +21227,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "10 sf",
    "seconds": 1.504,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20132,6 +21259,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -20145,6 +21273,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 1.714,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20175,6 +21305,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -20188,6 +21319,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "8 feet",
    "seconds": 1.794,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20218,6 +21351,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -20231,6 +21365,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 2.046,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -20261,6 +21397,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -20274,6 +21411,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "2 inches",
    "seconds": 1.475,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20304,6 +21443,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20329,6 +21469,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Mobile work may stop for up to 5 minutes at a time. [1]",
    "seconds": 1.355,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20359,6 +21501,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20384,6 +21527,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The adjacent travel lane may be narrowed to a minimum of 10 feet as measured from the lane line to the face of the channelizing devices [1].",
    "seconds": 3.286,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20414,6 +21559,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20439,6 +21585,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Type IV projects list pothole patching as an example. [1]",
    "seconds": 1.385,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20469,6 +21617,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20494,6 +21643,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "At least a 2-inch gap should be provided between the hand-trailing edge and its support [1].",
    "seconds": 2.866,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20524,6 +21675,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -20537,6 +21689,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "1,000 feet",
    "seconds": 2.231,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20567,6 +21721,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20592,6 +21747,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The cost update factor shown is 1.67. [1]",
    "seconds": 1.438,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20623,6 +21780,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [
     "55 mph"
@@ -20650,6 +21808,8 @@
    "false_answer": null,
    "flagged": true,
    "false_flag": true,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The layout applies to speeds of 55 mph and below [1].",
    "seconds": 17.543,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20680,6 +21840,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20705,6 +21866,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "For daylight-only operations, the STOP/SLOW paddle detail allows non-reflectorized legends, borders, and backgrounds [1].",
    "seconds": 9.104,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20735,6 +21898,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -20748,6 +21912,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "45 mph",
    "seconds": 5.493,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20778,6 +21944,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20803,6 +21970,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The C dimension is the distance between the second and third signs in a three-sign series. [1]",
    "seconds": 4.187,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20833,6 +22002,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20858,6 +22028,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The anticipated operating speed may be used for 'Speed' in MUTCD Table 6B-2 per its footnote [1].",
    "seconds": 5.048,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20888,6 +22060,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20913,6 +22086,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The crash modification factors in Table 24 are for temporary lane closure on freeways. [1]",
    "seconds": 2.711,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -20943,6 +22118,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -20956,6 +22132,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 6.039,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -20987,6 +22165,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -21000,6 +22179,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 1.414,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21031,6 +22212,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21056,6 +22238,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "ASTM D1135 & D3256 [1]",
    "seconds": 1.975,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21086,6 +22270,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -21099,6 +22284,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$1,000 or more",
    "seconds": 3.335,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21129,6 +22316,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21154,6 +22342,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "5 metres [1]",
    "seconds": 1.861,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21184,6 +22374,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21209,6 +22400,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "900 m [1]",
    "seconds": 1.229,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21239,6 +22432,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21264,6 +22458,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The performance attributes chart lists a maximum deflection of 12 ft. 10 in. for water-filled barrier (NCHRP 350 TL-2) [1].",
    "seconds": 4.516,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21294,6 +22490,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21319,6 +22516,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "$11.89 per person-hour [1]",
    "seconds": 1.995,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21349,6 +22548,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21374,6 +22574,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The Ohio work zone crash rates in Table 26 are expressed in crashes per million VMT. [1]",
    "seconds": 5.5,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21404,6 +22606,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21449,6 +22652,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The dimensions in the MUTCD temporary traffic control sign size tables are shown in inches, in the order width × height. [1][2][3]",
    "seconds": 3.837,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21480,6 +22685,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -21493,6 +22699,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "65 MPH",
    "seconds": 4.641,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21523,6 +22731,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21548,6 +22757,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The STOP/SLOW paddle should be the primary and preferred hand-signaling device [1].",
    "seconds": 2.826,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21578,6 +22789,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -21591,6 +22803,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). The Transportation Mobility and Safety documents look more relevant: try asking Transportation Mobility and Safety instead.",
    "seconds": 2.604,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -21621,6 +22835,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -21634,6 +22849,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 3.864,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -21664,6 +22881,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21689,6 +22907,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "States must perform a process review at least every two years. [1]",
    "seconds": 2.427,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21719,6 +22939,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21744,6 +22965,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The crash modification factor for all crash types and all severities during temporary lane closures on freeways is 1.77 [1].",
    "seconds": 3.638,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21775,6 +22998,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -21788,6 +23012,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "5 feet",
    "seconds": 1.144,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21818,6 +23044,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21843,6 +23070,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "38.82 inches [1]",
    "seconds": 1.65,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21873,6 +23102,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21898,6 +23128,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "33.46 inches [1]",
    "seconds": 1.821,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21928,6 +23160,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21953,6 +23186,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "25.74 inches [1]",
    "seconds": 2.031,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -21984,6 +23219,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22009,6 +23245,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "33.30 inches [1]",
    "seconds": 1.349,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22040,6 +23278,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22075,6 +23314,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "For a 26 ft offset at 50 mph, the NC‑PCB impact design tables list an impact angle of **12.6°** for both asphalt and concrete pavements [1][2].",
    "seconds": 2.59,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22106,6 +23347,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [
     "425 ft"
@@ -22133,6 +23375,8 @@
    "false_answer": null,
    "flagged": true,
    "false_flag": true,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Table 6B‑2 lists a stopping sight distance of 425 ft for a speed of 50 mph, and the MUTCD states that these values may be used to determine the length of a longitudinal buffer space [1].",
    "seconds": 4.254,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22164,6 +23408,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -22177,6 +23422,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "30 ft",
    "seconds": 2.164,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22208,6 +23455,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22233,6 +23481,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The curve correction factor (KCZ) for an 820 ft radius at 50 mph is 1.4 [1].",
    "seconds": 4.689,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22265,6 +23515,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22290,6 +23541,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "25.48 inches [1]",
    "seconds": 1.916,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22322,6 +23575,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22347,6 +23601,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "495 feet [1]",
    "seconds": 1.407,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22375,6 +23631,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22400,6 +23657,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "If the detour delay caused by construction is calculated to be at least $1000, then an ICT is needed unless the detour results from a full road closure for the project duration [1].",
    "seconds": 3.307,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22430,6 +23689,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22455,6 +23715,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "A left turn is given a weight of 0.5 when computing the highest aggregate value for a detour route. [1]",
    "seconds": 2.926,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22483,6 +23745,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -22496,6 +23759,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "1300 vpd",
    "seconds": 1.169,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22524,6 +23789,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22549,6 +23815,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Flaggers must wear ANSI/ISEA 107-2020 (or equivalent) Class 2 or 3 yellow-green safety vests or shirts [1].",
    "seconds": 3.107,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22577,6 +23845,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -22590,6 +23859,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "the first stopped car",
    "seconds": 1.886,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22618,6 +23889,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -22631,6 +23903,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "January 1, 2027",
    "seconds": 1.208,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22659,6 +23933,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22684,6 +23959,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The Resident Engineer is responsible for documenting revisions, additions, or exceptions for positive protection or mitigation measures that occur during construction on Form Positive Work Zone Protection Supplement form. [1]",
    "seconds": 9.369,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22712,6 +23989,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22737,6 +24015,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The effective date is October 12, 2007. [1]",
    "seconds": 1.57,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22765,19 +24045,22 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
    "cited_pages_printed": [],
    "cited_page_ok_pdf": false,
    "cited_page_ok_printed": false,
-   "value_ok": false,
+   "value_ok": true,
    "strict_ok": false,
    "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "2",
    "seconds": 1.783,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22806,6 +24089,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -22819,6 +24103,8 @@
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "27",
    "seconds": 2.813,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22847,6 +24133,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22872,6 +24159,8 @@
    "false_answer": null,
    "flagged": false,
    "false_flag": false,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "Reduce work zone related crashes by 25% within the next 5 years. [1]",
    "seconds": 1.648,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22902,6 +24191,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -22915,6 +24205,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 5.688,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -22945,6 +24237,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -22958,6 +24251,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 1.623,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -22988,6 +24283,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -23001,6 +24297,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 2.132,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -23031,6 +24329,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -23044,6 +24343,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 2.584,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -23074,6 +24375,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -23087,6 +24389,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 2.457,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -23117,6 +24421,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -23142,6 +24447,8 @@
    "false_answer": true,
    "flagged": false,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "The trailer shall be able to support a 100 mph wind load with the display fully extended. [1]",
    "seconds": 2.367,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -23172,6 +24479,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -23185,6 +24493,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). The Utilities documents look more relevant: try asking Utilities instead.",
    "seconds": 2.927,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -23215,6 +24525,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -23228,6 +24539,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 3.245,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -23258,6 +24571,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -23271,6 +24585,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 7.704,
    "model": "nvidia/nemotron-3.5-super-vl:free",
@@ -23301,6 +24617,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -23314,6 +24631,8 @@
    "false_answer": false,
    "flagged": null,
    "false_flag": null,
+   "clarify_ok": null,
+   "behaviour": null,
    "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
    "seconds": 1.8,
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",

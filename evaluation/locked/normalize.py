@@ -28,6 +28,8 @@ UNITS = ("ft", "in", "mph", "%", "deg")
 _UNICODE = {
     "′": "'", "″": '"', "“": '"', "”": '"', "‘": "'", "’": "'",
     "–": "-", "—": "-", "−": "-", " ": " ",
+    # The MUTCD sign tables print sizes as "64 × 64 × 48"; answers copy the ×, gold values use x.
+    "×": "x",
     "½": " 1/2", "¼": " 1/4", "¾": " 3/4", "⅓": " 1/3", "⅔": " 2/3", "⅛": " 1/8",
 }
 _THOUSANDS = re.compile(r"(?<=\d),(?=\d{3}(?!\d))")
@@ -96,13 +98,73 @@ def _single_number(text: str) -> Optional[Tuple[float, Optional[str]]]:
     return (float(match.group(1)), match.group(2)) if match else None
 
 
+_NUMBER_HYPHEN_WORD = re.compile(r"(\d)\s*-\s*(?=[a-z])")
+_PLURAL_AFTER_NUMBER = re.compile(r"(?<![\w.])(\d+(?:\.\d+)? [a-z]+?)s\b")
+
+
+def _phrase_form(text: str) -> str:
+    """Normalized text with "12-month" as "12 month" and "12 months" as "12 month", for phrase values only.
+
+    Scorer-only (the hosted guardrail compares numbers, not phrases): the UAM's
+    bond release (locked utilities-021) is "1 year", accepted as "12 months",
+    and an answer saying "the 12-month warranty period" was scored wrong.
+    """
+    return _PLURAL_AFTER_NUMBER.sub(r"\1", _NUMBER_HYPHEN_WORD.sub(r"\1 ", text))
+
+
+_WORD = re.compile(r"\d+(?:\.\d+)?|[a-z]+|%")
+# Articles and auxiliaries carry no part of a value: the Encroachment guide's SR0000 rule (locked
+# utilities-053) is gold "not yet been assigned a number", answered "has not yet assigned a number".
+_FILLER = frozenset({"a", "an", "the", "be", "been", "is", "are", "was", "were", "has", "have", "had"})
+# Words that may sit between a number and the noun it counts: "27 fatalities" answered as "27 work
+# zone fatalities" (locked wztc-089).
+_COUNT_MODIFIERS = 2
+
+
+def _words(text: str) -> List[str]:
+    return [w for w in _WORD.findall(text) if w not in _FILLER]
+
+
+def _words_in_order(wanted: str, answer: str) -> bool:
+    """Whether a phrase value's words appear in the answer in order, with only the gaps a wording allows.
+
+    Scorer-only, for phrase values (never a single number). Besides filler words, two gaps are allowed:
+    a word of the value repeated ("Class 2 or 3" answered "Class 2 or Class 3", locked wztc-083), and up
+    to _COUNT_MODIFIERS words between a value's leading number and its noun (not inside a ratio: "16:1
+    anchored" is not "16:1 when anchored"). Any other word in between breaks the match, so "Division
+    Utility" is not found in "Division Project/Utility personnel" (locked utilities-041, a wrong answer).
+    """
+    want, have = _words(wanted), _words(answer)
+    if len(want) < 2 or not any(w[0].isalpha() for w in want):
+        return False
+    for start, word in enumerate(have):
+        if word != want[0]:
+            continue
+        j, i, gap = 1, start + 1, 0
+        while j < len(want) and i < len(have):
+            if have[i] == want[j]:
+                j, gap = j + 1, 0
+            elif have[i] in want[:j]:
+                pass
+            elif j == 1 and want[0][0].isdigit() and want[1][0].isalpha() and gap < _COUNT_MODIFIERS:
+                gap += 1
+            else:
+                break
+            i += 1
+        if j == len(want):
+            return True
+    return False
+
+
 def value_matches(expected_value: Optional[str], accept: Optional[Sequence[str]], answer_text: str) -> bool:
     """Whether the answer states the expected value or any accepted alternative.
 
     A candidate that is one number (with or without a unit) matches a number
     in the answer within TOLERANCE; with a unit, the answer's number must carry
     the same unit. Any other candidate (a phrase, a ratio like "16:1", two
-    numbers) must appear in the normalized answer as a substring.
+    numbers) must appear in the normalized answer as a substring, or as its
+    words in order with only filler words, a repeated word or a count's
+    modifiers between them (_words_in_order).
     """
     candidates = [c for c in [expected_value, *(accept or [])] if c is not None and str(c).strip()]
     if not candidates:
@@ -113,7 +175,9 @@ def value_matches(expected_value: Optional[str], accept: Optional[Sequence[str]]
         wanted = normalize(str(candidate))
         single = _single_number(wanted)
         if single is None:
-            if wanted and wanted in answer:
+            if wanted and (wanted in answer or _phrase_form(wanted) in _phrase_form(answer)
+                           or _words_in_order(wanted, answer)
+                           or _words_in_order(_phrase_form(wanted), _phrase_form(answer))):
                 return True
             continue
         value, unit = single
