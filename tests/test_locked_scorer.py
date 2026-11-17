@@ -485,3 +485,21 @@ def test_site_rate_limit_is_waited_out(monkeypatch):
 
     assert asyncio.run(_site(handler).ask(ASKED))["answer"]["answer"] == "ok"
     assert len(calls) == 2
+
+
+def test_site_sends_the_protection_bypass_only_when_set(monkeypatch):
+    import asyncio
+
+    import httpx
+
+    seen = []
+
+    def handler(request):
+        seen.append(request.headers.get("x-vercel-protection-bypass"))
+        return httpx.Response(200, json={"answer": "ok", "refused": False})
+
+    monkeypatch.delenv("VERCEL_AUTOMATION_BYPASS_SECRET", raising=False)
+    asyncio.run(_site(handler).ask(ASKED))
+    monkeypatch.setenv("VERCEL_AUTOMATION_BYPASS_SECRET", "s3cret")
+    asyncio.run(_site(handler).ask(ASKED))
+    assert seen == [None, "s3cret"]

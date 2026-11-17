@@ -133,7 +133,12 @@ class SiteAsker:
         import httpx
 
         self.site = site.rstrip("/")
-        self.client = httpx.AsyncClient(timeout=timeout, transport=transport)
+        # A preview deployment sits behind Vercel login; with the project's Protection Bypass for
+        # Automation secret in this variable the runner gets through, as the deployment itself does
+        # when it fetches its own page images (DAR-733). Unset, nothing is sent.
+        secret = os.environ.get("VERCEL_AUTOMATION_BYPASS_SECRET")
+        headers = {"x-vercel-protection-bypass": secret} if secret else None
+        self.client = httpx.AsyncClient(timeout=timeout, transport=transport, headers=headers)
 
     async def health(self) -> Dict[str, Any]:
         reply = await self.client.get(f"{self.site}/api/health")
