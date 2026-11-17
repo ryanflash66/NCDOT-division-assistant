@@ -28,6 +28,8 @@ UNITS = ("ft", "in", "mph", "%", "deg")
 _UNICODE = {
     "′": "'", "″": '"', "“": '"', "”": '"', "‘": "'", "’": "'",
     "–": "-", "—": "-", "−": "-", " ": " ",
+    # The MUTCD sign tables print sizes as "64 × 64 × 48"; answers copy the ×, gold values use x.
+    "×": "x",
     "½": " 1/2", "¼": " 1/4", "¾": " 3/4", "⅓": " 1/3", "⅔": " 2/3", "⅛": " 1/8",
 }
 _THOUSANDS = re.compile(r"(?<=\d),(?=\d{3}(?!\d))")
@@ -96,6 +98,20 @@ def _single_number(text: str) -> Optional[Tuple[float, Optional[str]]]:
     return (float(match.group(1)), match.group(2)) if match else None
 
 
+_NUMBER_HYPHEN_WORD = re.compile(r"(\d)\s*-\s*(?=[a-z])")
+_PLURAL_AFTER_NUMBER = re.compile(r"(?<![\w.])(\d+(?:\.\d+)? [a-z]+?)s\b")
+
+
+def _phrase_form(text: str) -> str:
+    """Normalized text with "12-month" as "12 month" and "12 months" as "12 month", for phrase values only.
+
+    Scorer-only (the hosted guardrail compares numbers, not phrases): the UAM's
+    bond release (locked utilities-021) is "1 year", accepted as "12 months",
+    and an answer saying "the 12-month warranty period" was scored wrong.
+    """
+    return _PLURAL_AFTER_NUMBER.sub(r"\1", _NUMBER_HYPHEN_WORD.sub(r"\1 ", text))
+
+
 def value_matches(expected_value: Optional[str], accept: Optional[Sequence[str]], answer_text: str) -> bool:
     """Whether the answer states the expected value or any accepted alternative.
 
@@ -113,7 +129,7 @@ def value_matches(expected_value: Optional[str], accept: Optional[Sequence[str]]
         wanted = normalize(str(candidate))
         single = _single_number(wanted)
         if single is None:
-            if wanted and wanted in answer:
+            if wanted and (wanted in answer or _phrase_form(wanted) in _phrase_form(answer)):
                 return True
             continue
         value, unit = single

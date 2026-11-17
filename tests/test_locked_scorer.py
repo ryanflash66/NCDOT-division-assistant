@@ -60,6 +60,15 @@ def test_numbers_with_units_reads_values_and_units():
     assert numbers_with_units("no numbers here") == []
 
 
+def test_value_matches_times_sign_and_number_word_phrases():
+    # Locked wztc-023: the MUTCD table prints 64 × 64 × 48, the gold value is 64 x 64 x 48.
+    assert value_matches("64 x 64 x 48", [], "The table gives **64 × 64 × 48** [1].")
+    # Locked utilities-021: "12 months" is accepted, the answer says "the 12-month warranty period".
+    assert value_matches("1 year", ["12 months"], "after the 12-month warranty period [1]")
+    assert value_matches("2 lanes", [], "on a 2 lane road")
+    assert not value_matches("1 year", ["12 months"], "after the 18-month warranty period")
+
+
 def test_value_matches_numbers_within_tolerance_and_units():
     assert value_matches("27.42", ["27.42 ft"], "The maximum deflection is 27.42 feet [1].")
     assert value_matches("27.42", [], "about 27.420 ft")

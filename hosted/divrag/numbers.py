@@ -29,6 +29,8 @@ UNITS = ("ft", "in", "mph", "%", "deg")
 _UNICODE = {
     "′": "'", "″": '"', "“": '"', "”": '"', "‘": "'", "’": "'",
     "–": "-", "—": "-", "−": "-", " ": " ",
+    # The MUTCD sign tables print sizes as "64 × 64 × 48"; answers copy the ×, gold values use x.
+    "×": "x",
     "½": " 1/2", "¼": " 1/4", "¾": " 3/4", "⅓": " 1/3", "⅔": " 2/3", "⅛": " 1/8",
 }
 _THOUSANDS = re.compile(r"(?<=\d),(?=\d{3}(?!\d))")
