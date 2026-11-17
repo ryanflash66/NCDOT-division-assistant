@@ -23,13 +23,17 @@ Per item (score_item):
     strict_ok              value_ok and cited_page_ok_pdf and not refused ("strict attributed
                            accuracy": right answer from the right page)
     refused, uncited       the answer's flags
+    declined               refused, or a reply that opens by saying the documents do not give what
+                           was asked (declines); on an unanswerable item also a reply that rejects
+                           the number the question asserts (corrects_premise). Answerable: only
+                           without the right value
     unverified             numbers the hosted guardrail could not find in the cited passages,
                            passed through from the payload when present
     flagged                a cited answer (not refused, not uncited) the guardrail marked
                            unverified: the rate DAR-659 wants near zero
     false_flag             flagged although its value is right (the guardrail's false alarms,
                            over the cited answers with the right value)
-    critical               a confident wrong answer: cited (not refused, not uncited) with the
+    critical               a confident wrong answer: cited (not declined, not uncited) with the
                            wrong value, or a cited answer to an unanswerable question, or a cited
                            answer that picks some branches of a clarify item and not the others
     seconds, model, error  the answer call
@@ -191,15 +195,57 @@ def clarify_score(all_of: Sequence[Any], answer: str) -> Tuple[bool, bool]:
     return False, True
 
 
+# A reply that says, in its own words, that the documents do not give what was asked. gpt-6.1-terra
+# writes these instead of the app's refusal and cites the nearest passage, so the refused flag misses
+# them: "The Fatal Investigation Guidelines do not specify a number of business days ..." (locked
+# tmsd-100), "The guidelines list ... but do not identify a lead unit" (wztc-029), "is not provided in
+# Detail 3-2A" (tmsd-090). The subject must be the documents, so "Flaggers do not need to ..." is not one.
+_DOCUMENTS = (r"documents?|manuals?|guides?|guidelines|chapters?|tables?|sections?|details?|specifications?|"
+              r"procedures?|passages?|sources?|reports?|review|rules?|figures?|appendix|polic(?:y|ies)|sop|"
+              r"layouts?|flowcharts?|charts?|standards?|text")
+_SAYS = (r"state|specify|give|provide|list|identify|include|say|cover|require|explain|mention|address|contain|"
+         r"define|set|show|name")
+_DECLINES = re.compile(
+    rf"\b(?:{_DOCUMENTS})\b.*?\b(?:do|does|did)\s+not\s+(?:\w+\s+)?(?:{_SAYS})\b"
+    r"|\bnot\s+(?:provided|given|specified|stated|listed|covered|defined|shown|included|addressed)\s+(?:in|by)\b",
+    re.IGNORECASE)
+_SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-Z(\"“*])")
+
+
+def first_sentence(text: str) -> str:
+    """The answer's first sentence, without bold marks or citation markers."""
+    return _SENTENCE_END.split(_MARKER.sub(" ", text or "").replace("**", "").strip(), maxsplit=1)[0]
+
+
+def declines(text: str) -> bool:
+    """Whether the answer opens by saying the documents do not give what was asked.
+
+    Only the first sentence counts: a value stated first and a gap admitted after it (the prompt's
+    rule 4 partial answer) is still an answer, and its value is what a reader acts on.
+    """
+    return bool(_DECLINES.search(first_sentence(text)))
+
+
+def corrects_premise(question: str, text: str) -> bool:
+    """Whether the answer rejects a number the question asserts: "less than 0.85, not 0.95" (locked tmsd-099)."""
+    for number in set(re.findall(r"\d+(?:\.\d+)?", question or "")):
+        if re.search(rf"\bnot\s+(?:a\s+|an\s+|the\s+)?{re.escape(number)}(?![\d.]\d)", text or "", re.IGNORECASE):
+            return True
+    return False
+
+
 def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]], payload: Optional[Dict[str, Any]],
-               seconds: Optional[float] = None, error: Optional[str] = None) -> Dict[str, Any]:
+               seconds: Optional[float] = None, error: Optional[str] = None,
+               cited: Optional[Tuple[List[Dict[str, Any]], Optional[List[Dict[str, Any]]]]] = None) -> Dict[str, Any]:
     """One row of scores for an item.
 
     `ranked`: the top-TOP retrieval as [{"source", "page", ...}], best first
     (None when the retrieval stage did not run). `payload`: the answer as
     /api/ask returns it (Answer.as_dict), None when the answer stage did not run
     or `error` says why the call failed. Fields that do not apply are None, so
-    aggregates count only the items where a metric is defined.
+    aggregates count only the items where a metric is defined. `cited`: the
+    cited pages already resolved (rescore, from a report row) instead of the
+    payload's sources.
     """
     expected = item.get("expected") or None
     answerable = not item.get("refuse") and expected is not None
@@ -207,7 +253,7 @@ def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]],
         "id": item["id"], "division": item["division"], "asker": item.get("asker"), "type": item.get("type"),
         "edge_cases": list(item.get("edge_cases") or []), "split": item.get("split"), "answerable": answerable,
         "right_document": None, "page_rank": None, "hit1": None, "hit5": None, "top": None,
-        "answered": payload is not None, "refused": None, "uncited": None, "unverified": None,
+        "answered": payload is not None, "refused": None, "declined": None, "uncited": None, "unverified": None,
         "cited_pages_pdf": None, "cited_pages_printed": None, "cited_page_ok_pdf": None, "cited_page_ok_printed": None,
         "value_ok": None, "strict_ok": None, "critical": None, "over_refusal": None, "false_answer": None,
         "flagged": None, "false_flag": None, "clarify_ok": None, "behaviour": item.get("behaviour"), "answer": None, "seconds": seconds, "model": None, "error": error,
@@ -221,8 +267,8 @@ def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]],
     if payload is None:
         return row
     refused, uncited = bool(payload.get("refused")), bool(payload.get("uncited"))
-    pdf, printed = cited_pages(payload)
-    row.update(refused=refused, uncited=uncited, answer=payload.get("answer"), model=payload.get("model"),
+    pdf, printed = cited if cited is not None else cited_pages(payload)
+    row.update(refused=refused, declined=refused, uncited=uncited, answer=payload.get("answer"), model=payload.get("model"),
                cited_pages_pdf=pdf, cited_pages_printed=printed,
                unverified=list(payload["unverified"]) if payload.get("unverified") is not None else None)
     if answerable:
@@ -243,9 +289,13 @@ def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]],
         else:
             row["value_ok"] = value_matches(expected.get("value"), expected.get("accept"), text)
         row["strict_ok"] = bool(row["value_ok"] and row["cited_page_ok_pdf"])
+        # Without the value, a reply that opens with "the documents do not give it" is a refusal in other
+        # words: an over-refusal, not a confident wrong answer.
+        row["declined"] = not row["value_ok"] and declines(text)
+        row["over_refusal"] = row["declined"]
         # The wrong number with a citation beside it is what a visitor would act on;
         # an uncited answer is shown with "No source cited" and is counted separately.
-        row["critical"] = not uncited and not row["value_ok"]
+        row["critical"] = not uncited and not row["value_ok"] and not row["declined"]
         if not uncited and row["unverified"] is not None:
             row["flagged"] = bool(row["unverified"])
             if row["value_ok"]:
@@ -253,7 +303,12 @@ def score_item(item: Dict[str, Any], ranked: Optional[Sequence[Dict[str, Any]]],
     else:
         # "That section is reserved" is the right reply to a question about a section the document
         # prints as "[Reserved]" (23 CFR 630 Subpart C), whether or not the model calls it a refusal.
-        declined = refused or value_matches(None, item.get("accept_reply"), answer_text(payload))
+        # Saying the documents do not give it, or rejecting the number a false premise asserts, is the right
+        # reply in other words (locked tmsd-100, tmsd-099).
+        text = answer_text(payload)
+        declined = (refused or value_matches(None, item.get("accept_reply"), text) or declines(text)
+                    or corrects_premise(item.get("question"), text))
+        row["declined"] = declined
         row["false_answer"] = not declined
         row["critical"] = not declined and not uncited
         if not declined and not uncited and row["unverified"] is not None:
@@ -282,12 +337,15 @@ def clusters(items: Sequence[Dict[str, Any]]) -> int:
 
 
 def abstention(rows: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
-    """The 4-way table (answerable x refused) over the items whose answer stage ran."""
+    """The 4-way table (answerable x refused) over the items whose answer stage ran.
+
+    Refused counts a decline in the answer's own words too (score_item's `declined`).
+    """
     ran = [r for r in rows if r.get("refused") is not None]
     table = {}
     for answerable in (True, False):
         group = [r for r in ran if r["answerable"] == answerable]
-        refused = sum(1 for r in group if r["refused"])
+        refused = sum(1 for r in group if r.get("declined", r["refused"]))
         table["answerable" if answerable else "unanswerable"] = {"answered": len(group) - refused, "refused": refused,
                                                                  "n": len(group)}
     return {**table, "over_refusal": _stat(ran, "over_refusal"), "false_answer": _stat(ran, "false_answer")}

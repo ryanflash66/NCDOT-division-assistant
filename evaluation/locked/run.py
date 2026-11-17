@@ -5,6 +5,8 @@
     py -m evaluation.locked.run freeze      write evaluation/locked/LOCKED.sha256 over the locked items
     py -m evaluation.locked.run check       exit 1 when the locked items no longer match LOCKED.sha256
     py -m evaluation.locked.run validate    the schema checks (evaluation.locked.validate)
+    py -m evaluation.locked.run rescore --report docs/locked-set/NAME.json
+                                            score a report's answers again with the current scorer
 
 `run` writes docs/locked-set/<label>.json (every item's scores, the aggregates
 and the run's metadata: commit, index, settings) and docs/locked-set/<label>.md
@@ -277,6 +279,10 @@ def render_markdown(report: Dict[str, Any]) -> str:
              f"- Coverage: {cov['items']} items; retrieval run on {cov['retrieval_run']}; answers for {cov['answer_run']}"
              + (f"; {cov['errors']} model errors" if cov["errors"] else "")
              + (f"; stopped early: {cov['stopped']}" if cov["stopped"] else ""),
+             *([f"- Rescored {run['rescored']['at']} at commit {run['rescored']['git_commit']} (same answers, current "
+                f"scorer); before: " + ", ".join(f"{m} {v}" for m, v in run["rescored"]["before"].items())]
+               if run.get("rescored") else []),
+             *[f"- {note}" for note in run.get("notes") or []],
              "", "Each cell is count/n with its 95% Wilson interval; n is the number of items the metric is defined for. "
              "Clusters are distinct gold document pages (the independent observations).", ""]
     ab = agg["abstention"]
@@ -489,6 +495,48 @@ def check_command(args) -> int:
     return 0
 
 
+# Kept from the old row on a rescore: they come from the retrieval stage, which a rescore does not run.
+_RETRIEVAL_FIELDS = ("right_document", "page_rank", "hit1", "hit5", "top", "question", "retrieval_ms")
+_RESCORE_SHOWN = ("value_ok", "strict_ok", "critical", "over_refusal", "false_answer")
+
+
+def rescore_command(args) -> int:
+    """Score a report's answers again with the current scorer and rewrite it in place.
+
+    No retrieval, no model call and no RUNS.md line: the answers are the ones the
+    run got, read from the report's rows, so a scorer fix can be applied to a
+    held-out run without asking again or reading its items. The old all-items
+    counts are kept in run.rescored.before.
+    """
+    path = Path(args.report)
+    report = json.loads(path.read_text(encoding="utf-8"))
+    by_id = {item["id"]: item for item in load_items(Path(args.questions))}
+    missing = [row["id"] for row in report["items"] if row["id"] not in by_id]
+    if missing:
+        print(f"{len(missing)} report item(s) not in {args.questions}: {', '.join(missing[:5])}")
+        return 1
+    rows = []
+    for old in report["items"]:
+        payload = None if old.get("refused") is None else {
+            key: old.get(key) for key in ("answer", "refused", "uncited", "unverified", "model")}
+        row = score_item(by_id[old["id"]], None, payload, seconds=old.get("seconds"), error=old.get("error"),
+                         cited=(old.get("cited_pages_pdf") or [], old.get("cited_pages_printed")))
+        row.update({key: old.get(key) for key in _RETRIEVAL_FIELDS})
+        rows.append(row)
+    items = [by_id[row["id"]] for row in rows]
+    old_all = report["aggregates"]["all"]["metrics"]
+    report["aggregates"] = aggregate(rows, items)
+    report["items"] = rows
+    new_all = report["aggregates"]["all"]["metrics"]
+    report["run"]["rescored"] = {"at": _now(), "git_commit": _git("rev-parse", "HEAD"),
+                                 "before": {m: f"{old_all[m]['k']}/{old_all[m]['n']}" for m in _RESCORE_SHOWN if m in old_all}}
+    json_path, md_path = write_outputs(report, path.parent)
+    for metric in _RESCORE_SHOWN:
+        print(f"  {metric}: {report['run']['rescored']['before'].get(metric, '-')} -> {new_all[metric]['k']}/{new_all[metric]['n']}")
+    print(f"report -> {json_path}\n       -> {md_path}")
+    return 0
+
+
 def validate_command(args) -> int:
     from .validate import main as validate_main
 
@@ -528,6 +576,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     common(c)
     v = sub.add_parser("validate", help="check the question files against the schema")
     common(v)
+    s = sub.add_parser("rescore", help="score a report's answers again with the current scorer, in place")
+    s.add_argument("--report", required=True, help="docs/.../<label>.json")
+    common(s)
     argv = list(argv) if argv is not None else sys.argv[1:]
     # The plan's one command is `py -m evaluation.locked.run --label NAME ...`: no subcommand means run.
     if argv and argv[0].startswith("--") and argv[0] not in ("--help",):
@@ -535,7 +586,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parser.parse_args(argv)
     if args.command == "run":
         return asyncio.run(run_command(args))
-    return {"freeze": freeze_command, "check": check_command, "validate": validate_command}[args.command](args)
+    return {"freeze": freeze_command, "check": check_command, "validate": validate_command,
+            "rescore": rescore_command}[args.command](args)
 
 
 if __name__ == "__main__":

@@ -118,9 +118,13 @@ the gold document; a cited range counts when it overlaps), `cited_page_ok_printe
 (the same against `printed_pages`, when the API sends `Source.printed_page`;
 null otherwise), `value_ok` (`normalize.value_matches`), `strict_ok`
 (`value_ok and cited_page_ok_pdf and not refused`: the right answer from the
-right page), `refused`, `uncited`, `unverified` (the hosted guardrail's list,
-when present), `critical` (a confident wrong answer: cited, not refused, wrong
-value; or a cited answer to an unanswerable question), `seconds`, `model`.
+right page), `refused`, `declined` (refused, or a reply whose first sentence
+says the documents do not give what was asked; on an unanswerable item also a
+reply that rejects the number the question asserts, "not 0.95"), `uncited`,
+`unverified` (the hosted guardrail's list, when present), `critical` (a
+confident wrong answer: cited, not declined, wrong value; or a cited answer to
+an unanswerable question), `seconds`, `model`. A declined answerable item
+without its value counts as an over-refusal.
 
 Aggregates: for all items and per split, division, type, edge case and
 asker-vs-target, each metric as count/n with its Wilson interval, the number
@@ -132,8 +136,15 @@ on the rate (0 of 50 only shows it is under 5.8%).
 Values are compared after normalization (`normalize.py`): thousands commas
 dropped, fractions to decimals (`1-1/2` → `1.5`), `12'`/`12-foot`/`12 feet`/
 `12 ft.` → `12 ft`, inches → `in`, `mi/h` → `mph`, `percent` → `%`, `°` → `deg`,
-trailing `.0` dropped; numbers within 1e-9 once the unit agrees, anything else
-as a case-insensitive, whitespace-collapsed substring.
+trailing `.0` dropped, `×` → `x`; numbers within 1e-9 once the unit agrees,
+anything else as a case-insensitive, whitespace-collapsed substring, or as its
+words in order with only articles and auxiliaries, a repeated word ("Class 2
+or Class 3") or up to two words after a leading number ("27 work zone
+fatalities") between them.
+
+`rescore --report docs/.../NAME.json` scores a report's answers again with
+the current scorer and rewrites it in place (the old counts go in
+`run.rescored.before`): no retrieval, no model call, no RUNS.md line.
 
 ## How not to tune on the locked set
 
