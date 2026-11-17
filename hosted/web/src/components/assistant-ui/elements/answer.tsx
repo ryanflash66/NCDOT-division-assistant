@@ -5,7 +5,15 @@ import { Button } from "@/components/ui/button";
 import { carryForSuggestion, messageText, refusedBySoFar, type QuestionMetadata } from "@/runtime/history";
 import { useApp } from "@/state";
 import type { AnswerMetadata, AnswerPayload } from "@/types";
-import { CITE_PREFIX, disputedText, linkCitations, searchedText, unverifiedReasons, unverifiedText } from "./format";
+import {
+  backupNotice,
+  CITE_PREFIX,
+  disputedText,
+  linkCitations,
+  searchedText,
+  unverifiedReasons,
+  unverifiedText,
+} from "./format";
 
 // An answer's text with clickable [n] citations, a refusal with its "Ask … instead"
 // buttons, and the lines under each answer. Everything comes from the message's
@@ -102,7 +110,10 @@ function Refusal({ text, payload }: { text: string; payload: AnswerPayload }) {
   );
 }
 
-/** Under each finished answer: the "No source cited" and unverified-number flags, and what was searched. */
+/**
+ * Under each finished answer: the backup-model notice, the "No source cited" and unverified-number
+ * flags, and what was searched.
+ */
 export function AnswerFooter() {
   const payload = usePayload();
   const divisions = useApp((s) => s.divisions);
@@ -112,9 +123,15 @@ export function AnswerFooter() {
   const reasons = unverifiedReasons(payload.refused ? [] : payload.unverified, payload.second_opinion?.disagreed);
   const unverified = unverifiedText(reasons.missing);
   const disputed = unverifiedText(reasons.disputed);
+  const backup = backupNotice(payload);
   const total = divisions.find((d) => d.id === payload.target?.id)?.documents.length ?? searched?.documents ?? 0;
   return (
     <>
+      {backup && (
+        <p className="aui-backup-model mt-2 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-2 text-sm dark:border-amber-800 dark:bg-amber-950/40">
+          <strong>{backup.title}</strong> {backup.text}
+        </p>
+      )}
       {payload.uncited && !payload.refused && (
         <p className="aui-uncited mt-2 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-2 text-sm dark:border-amber-800 dark:bg-amber-950/40">
           <strong>No source cited.</strong> This answer doesn't point to a page of the documents, so check it there

@@ -1,5 +1,24 @@
 import { describe, expect, it } from "vitest";
-import { disputedText, unverifiedReasons, unverifiedText } from "./format";
+import { backupNotice, disputedText, unverifiedReasons, unverifiedText } from "./format";
+
+describe("backupNotice", () => {
+  it("asks for the cited page to be checked when the backup model answered (DAR-735)", () => {
+    expect(backupNotice({ backup_model: true, refused: false, uncited: false })).toEqual({
+      title: "Answered by the backup model.",
+      text: "The main model couldn't answer just now; double-check the cited page before relying on it.",
+    });
+    expect(backupNotice({ backup_model: true, refused: false, uncited: true })?.text).toMatch(/check the answer in the documents/);
+  });
+
+  it("says a refusal came from the backup model, which may have missed the answer", () => {
+    expect(backupNotice({ backup_model: true, refused: true, uncited: false })?.title).toBe("Checked by the backup model.");
+  });
+
+  it("is null for the main model, or an answer saved before the flag existed", () => {
+    expect(backupNotice({ backup_model: false, refused: false, uncited: false })).toBeNull();
+    expect(backupNotice({ refused: false, uncited: false })).toBeNull();
+  });
+});
 
 describe("unverifiedText", () => {
   it("names the numbers the cited pages don't contain", () => {

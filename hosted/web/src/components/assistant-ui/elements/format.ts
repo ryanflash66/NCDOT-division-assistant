@@ -59,4 +59,29 @@ export function disputedText(numbers: string[] | null | undefined): string {
     : "A second model reading the same pages gave a different number";
 }
 
+/**
+ * The notice under a reply a free backup model wrote because OpenAI couldn't answer (DAR-735),
+ * or null. The flag comes from the server (`backup_model`), never from the model's name: without
+ * LLM_PROVIDER=openai every model is a free one and the server leaves it false.
+ */
+export function backupNotice(payload: {
+  backup_model?: boolean;
+  refused: boolean;
+  uncited: boolean;
+}): { title: string; text: string } | null {
+  if (!payload.backup_model) return null;
+  if (payload.refused) {
+    return {
+      title: "Checked by the backup model.",
+      text: "The main model couldn't answer just now, so it may have missed this; ask again later to have the main model look.",
+    };
+  }
+  return {
+    title: "Answered by the backup model.",
+    text: payload.uncited
+      ? "The main model couldn't answer just now; check the answer in the documents before relying on it."
+      : "The main model couldn't answer just now; double-check the cited page before relying on it.",
+  };
+}
+
 export const CITE_PREFIX = "#cite-";
