@@ -3,16 +3,19 @@
 Endpoints
 ---------
 POST /api/ingest  -- upload files into the data directory and refresh the index.
+                     Needs `Authorization: Bearer <RAG_API_KEY>`.
 POST /api/query   -- retrieve relevant chunks from the index without LLM generation.
 
 Dependencies (get_config, get_index) can be swapped with
 app.dependency_overrides, which is how the tests isolate each run.
 """
 
+import hmac
 import threading
 from typing import Dict, List, Optional
 
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel
 
 from rag import loader
@@ -37,6 +40,30 @@ def get_index(config: AppConfig = Depends(get_config)) -> RetrievalIndex:
             index.ensure_built()
             _indexes[config] = index
         return index
+
+
+_bearer = HTTPBearer(auto_error=False)
+
+
+def require_api_key(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(_bearer),
+    config: AppConfig = Depends(get_config),
+) -> None:
+    """Refuse the caller unless it sends `Authorization: Bearer <RAG_API_KEY>`.
+
+    Ingest overwrites files in data/ and rebuilds the whole index, and nothing
+    else checked who was calling. With RAG_API_KEY unset every call is refused,
+    so a server started without the setting can't be written to.
+    """
+    if not config.api_key:
+        raise HTTPException(status_code=403, detail="Ingest is turned off: set RAG_API_KEY to enable it.")
+    sent = credentials.credentials if credentials else ""
+    if not hmac.compare_digest(sent.encode(), config.api_key.encode()):
+        raise HTTPException(
+            status_code=401,
+            detail="Missing or wrong API key.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -87,7 +114,7 @@ class IngestResponse(BaseModel):
 router = APIRouter(prefix="/api")
 
 
-@router.post("/ingest", response_model=IngestResponse)
+@router.post("/ingest", response_model=IngestResponse, dependencies=[Depends(require_api_key)])
 def ingest_documents(
     files: List[UploadFile] = File(...),
     index: RetrievalIndex = Depends(get_index),
