@@ -50,7 +50,7 @@ from typing import Any, Awaitable, Callable, Dict, List, Optional, Sequence, Tup
 from .agreement import SecondOpinion, answer_numbers, second_opinion, second_opinion_models
 from .divisions import BY_ID, DIVISIONS, Division, document_for
 from .index_file import Hit
-from .llm import Completion, LLMError, OpenRouterClient
+from .llm import Completion, LLMError, OpenRouterClient, answered_by_backup
 from .pages_static import image_url
 from .retrieval import DEFAULT_CANDIDATES, DEFAULT_MAX_CHUNKS_PER_PAGE, Retriever, _page_key, is_table
 from .timing import StepTimer, timed
@@ -253,6 +253,9 @@ class Answer:
     # The number agreement check (agreement.py, DAR-663), when it ran and the second model answered
     # with numbers; its `disagreed` numbers are also in `unverified`.
     second_opinion: Optional[SecondOpinion] = None
+    # `model` is a free model that answered in place of OpenAI (llm.answered_by_backup, DAR-735):
+    # the page tells the reader to check the cited page.
+    backup_model: bool = False
 
     def as_dict(self) -> Dict:
         return {
@@ -263,6 +266,7 @@ class Answer:
             "sources": [s.as_dict() for s in self.sources],
             "model": self.model,
             "first_model": self.first_model,
+            "backup_model": self.backup_model,
             "retried": self.retried,
             "citation_fix": self.citation_fix,
             "second_opinion": self.second_opinion.as_dict() if self.second_opinion else None,
@@ -1169,13 +1173,15 @@ class Answerer:
                    if text else None)
         if opinion:
             unverified = list(dict.fromkeys([*unverified, *opinion.disagreed]))
+        # The model whose text is shown, not the second opinion's (that one only flags numbers).
+        backup = answered_by_backup(self.llm, completion.model)
         if not text:
             with timed(timer, "suggest"):
                 # The same text the question was searched with, so a refused follow-up is matched on its topic.
                 suggest = await asyncio.to_thread(self.suggest_divisions, self.search_query(question, history), target,
                                                   deadline, refused_by)
             return Answer(refusal_text(target, suggest), refused=True, model=completion.model, suggest=suggest,
-                          retried=retried, first_model=first_model)
+                          retried=retried, first_model=first_model, backup_model=backup)
         return Answer(text, refused=False, sources=sources, model=completion.model, retried=retried,
                       first_model=first_model, uncited=not sources, unverified=unverified, citation_fix=citation_fix,
-                      second_opinion=opinion)
+                      second_opinion=opinion, backup_model=backup)

@@ -10,11 +10,15 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "hosted"))
 
+from divrag.answer import NOT_FOUND, Answerer  # noqa: E402
 from divrag.config import DEFAULT_OPENAI_MODEL, load_settings  # noqa: E402
+from divrag.divisions import BY_ID  # noqa: E402
+from divrag.index_file import Hit  # noqa: E402
 from divrag.llm import (  # noqa: E402
     API_URL, BUSY_OPENAI, MISCONFIGURED, OPENAI_URL, TOO_LONG, Completion, FallbackClient, LLMError, OpenAIClient,
-    OpenRouterClient, client_from_settings,
+    OpenRouterClient, answered_by_backup, client_from_settings,
 )
+from divrag.spend import MemoryStore, SpendLedger  # noqa: E402
 
 OPENAI = {"LLM_PROVIDER": "openai", "OPENAI_API_KEY": "sk-openai", "OPENROUTER_API_KEY": "sk-or"}
 FREE = "nvidia/nemotron-3-ultra-550b-a55b:free"
@@ -251,3 +255,119 @@ def test_stream_that_fails_after_showing_text_is_an_error_not_a_second_answer():
     with pytest.raises(LLMError):
         _stream(client)
     assert [url for url, _, _ in seen] == [OPENAI_URL]
+
+
+# Which model answered, for the page's backup notice (DAR-735)
+
+def test_only_a_free_model_answering_in_place_of_openai_is_the_backup():
+    both = client_from_settings(load_settings(OPENAI))
+    assert not answered_by_backup(both, DEFAULT_OPENAI_MODEL)
+    assert answered_by_backup(both, FREE)
+    assert answered_by_backup(both, "other/model:free")  # whatever OpenRouter reports, it is not OpenAI
+    assert not answered_by_backup(both, None)  # nothing retrieved: no model was asked
+    # OpenAI selected without its key: the free models answer alone, in its place.
+    no_key = client_from_settings(load_settings({"LLM_PROVIDER": "openai", "OPENROUTER_API_KEY": "sk-or"}))
+    assert answered_by_backup(no_key, FREE)
+    # The free models chosen on purpose are the site's models, not a backup; nor is OpenAI alone.
+    assert not answered_by_backup(client_from_settings(load_settings({"OPENROUTER_API_KEY": "sk-or"})), FREE)
+    alone = client_from_settings(load_settings({"LLM_PROVIDER": "openai", "OPENAI_API_KEY": "k"}))
+    assert not answered_by_backup(alone, DEFAULT_OPENAI_MODEL)
+
+
+TMP = "TMP Design Manual (Combined, No Links).pdf"
+QUESTION = "What do flaggers wear?"
+PASSAGE = "Flaggers wear high-visibility vests."
+ANSWER = "Flaggers wear high-visibility vests [1]."
+
+
+class _Retriever:
+    reranker = object()  # a reranker, so a refusal with a strong top score is retried
+
+    def retrieve(self, question, division, k=5, candidates=None):
+        return []  # the refusal's search of the other divisions finds nothing
+
+
+def _either(text, model):
+    """A handler that replies `text` as `model`, streamed when the request asks for a stream."""
+    def handler(request):
+        if json.loads(request.content).get("stream"):
+            return _sse(_chunk(text, model, finish="stop"), "[DONE]")
+        return _reply(text, model)
+    return handler
+
+
+def _answer(client, stream=False):
+    answerer = Answerer(_Retriever(), client)
+    hits = [Hit(5.0, {"text": PASSAGE, "source": TMP, "page": 12, "division": "wztc", "section": None})]
+    if stream:
+        run = answerer.answer_stream(QUESTION, BY_ID["utilities"], BY_ID["wztc"], hits, lambda event, data: None)
+    else:
+        run = answerer.answer(QUESTION, BY_ID["utilities"], BY_ID["wztc"], hits)
+    return asyncio.run(run)
+
+
+@pytest.mark.parametrize("stream", [False, True])
+@pytest.mark.parametrize("retry", ["refuses again", "fails"])
+def test_an_openai_refusal_stands_and_no_free_model_is_asked(retry, stream):
+    # Locked wztc-075: after OpenAI refused, the first free model answered 240 ft from the wrong document.
+    calls = []
+
+    def openai(request):
+        calls.append(request)
+        if len(calls) > 1 and retry == "fails":
+            return httpx.Response(500, text="oops")
+        return _either(NOT_FOUND, "gpt-6.1-terra-2026-10-01")(request)
+
+    seen = []
+    result = _answer(_client(openai, _either(ANSWER, FREE), seen), stream)
+
+    assert result.refused and result.retried and result.sources == []
+    assert [url for url, _, _ in seen] == [OPENAI_URL, OPENAI_URL]  # the retry went to OpenAI, nothing to OpenRouter
+    assert result.model == DEFAULT_OPENAI_MODEL and result.as_dict()["backup_model"] is False
+
+
+def test_an_openai_answer_carries_no_backup_notice():
+    result = _answer(_client(_either(ANSWER, "gpt-6.1-terra-2026-10-01"), _either(ANSWER, FREE)))
+    assert not result.refused and result.sources and result.as_dict()["backup_model"] is False
+
+
+@pytest.mark.parametrize("stream", [False, True])
+@pytest.mark.parametrize("failure", [
+    httpx.Response(500, text="oops"),
+    httpx.Response(401, json={"error": {"message": "Incorrect API key provided"}}),
+    httpx.Response(429, json={"error": {"code": "slow_down"}}),
+])
+def test_a_free_answer_after_an_openai_error_is_flagged_as_the_backups(failure, stream):
+    seen = []
+    result = _answer(_client(lambda r: failure, _either(ANSWER, FREE), seen), stream)
+
+    assert [url for url, _, _ in seen] == [OPENAI_URL, API_URL]
+    assert not result.refused and result.answer == ANSWER and result.model == FREE
+    assert result.backup_model and result.as_dict()["backup_model"] is True
+
+
+def test_a_free_refusal_after_an_openai_error_is_flagged_too():
+    result = _answer(_client(lambda r: httpx.Response(500, text="oops"), _either(NOT_FOUND, FREE)))
+    assert result.refused and result.as_dict()["backup_model"] is True
+
+
+def test_answers_past_the_monthly_limit_are_flagged_as_the_backups():
+    # DAR-715's switch: at the limit OpenAI is not called at all, and the free model's answer says so.
+    store = MemoryStore()
+    ledger = SpendLedger(50.0, 5.0, store)
+    asyncio.run(store.add(ledger._key(ledger.month()), 45_000_000))  # $45 of estimated spend this month
+    seen = []
+    transport = _router(_either(ANSWER, "gpt-6.1-terra"), _either(ANSWER, FREE), seen)
+    result = _answer(client_from_settings(load_settings(OPENAI), transport=transport, ledger=ledger))
+
+    assert [url for url, _, _ in seen] == [API_URL]
+    assert result.model == FREE and result.as_dict()["backup_model"] is True
+
+
+def test_openai_selected_without_its_key_flags_every_free_answer():
+    no_key = {"LLM_PROVIDER": "openai", "OPENROUTER_API_KEY": "sk-or"}
+    result = _answer(_client(_either(ANSWER, "gpt-6.1-terra"), _either(ANSWER, FREE), env=no_key))
+    assert result.model == FREE and result.as_dict()["backup_model"] is True
+    # The free models chosen on purpose: the same answer, no notice.
+    plain = _answer(_client(_either(ANSWER, "gpt-6.1-terra"), _either(ANSWER, FREE), env={"OPENROUTER_API_KEY": "sk-or"}))
+    assert plain.model == FREE and plain.as_dict()["backup_model"] is False

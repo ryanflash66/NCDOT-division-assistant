@@ -9,6 +9,7 @@ import time
 from pathlib import Path
 from urllib.parse import urlsplit
 
+import httpx
 import numpy as np
 import pytest
 from fastapi.testclient import TestClient
@@ -18,9 +19,10 @@ sys.path.insert(0, str(HOSTED))
 
 import index as hosted  # noqa: E402
 from divrag.answer import NOT_FOUND  # noqa: E402
+from divrag.config import load_settings  # noqa: E402
 from divrag.divisions import Division, Document  # noqa: E402
 from divrag.index_file import Hit, IndexFile  # noqa: E402
-from divrag.llm import BUSY, TOO_SLOW, Completion, LLMError  # noqa: E402
+from divrag.llm import BUSY, OPENAI_URL, TOO_SLOW, Completion, LLMError, client_from_settings  # noqa: E402
 from divrag.timing import STEPS  # noqa: E402
 
 UAM = "20220713 NCDOT UAM Ver 2-0.pdf"
@@ -745,3 +747,33 @@ def test_openai_provider_answers_and_health_names_it_without_the_key(api, monkey
     assert _ask(client).status_code == 200
     monkeypatch.setattr(hosted, "settings", dataclasses.replace(openai, openai_api_key=None))
     assert _ask(client).status_code == 503
+
+
+def test_a_free_answer_in_place_of_openai_is_flagged_in_ask_and_in_the_streams_done(api, monkeypatch):
+    # DAR-735: OpenAI fails, the free model answers, and the reply says so for the page's notice.
+    client, _, _ = api
+    free = "nvidia/nemotron-3-ultra-550b-a55b:free"
+    text = "Within 5 feet of the travel lane [1]."
+
+    def handler(request):
+        if str(request.url) == OPENAI_URL:
+            return httpx.Response(500, text="oops")
+        if json.loads(request.content).get("stream"):
+            event = {"model": free, "choices": [{"index": 0, "delta": {"content": text}, "finish_reason": "stop"}]}
+            return httpx.Response(200, text=f"data: {json.dumps(event)}\n\ndata: [DONE]\n\n")
+        return httpx.Response(200, json={"model": free, "choices": [{"finish_reason": "stop", "message": {"content": text}}]})
+
+    settings = load_settings({"LLM_PROVIDER": "openai", "OPENAI_API_KEY": "sk-openai", "OPENROUTER_API_KEY": SECRET})
+    monkeypatch.setattr(hosted, "_make_llm", lambda: client_from_settings(settings, transport=httpx.MockTransport(handler)))
+
+    asked = _ask(client).json()
+    done = _events(_stream(client))[-1]
+    assert done[0] == "done"
+    for reply in (asked, done[1]):
+        assert reply["model"] == free and reply["refused"] is False and reply["backup_model"] is True
+
+
+def test_the_free_models_answering_as_configured_carry_no_backup_flag(api):
+    client, _, _ = api
+    assert _ask(client).json()["backup_model"] is False
+    assert _events(_stream(client))[-1][1]["backup_model"] is False
