@@ -1,0 +1,1092 @@
+{
+  "note": "The 28 held-out items read in detail for DAR-732, retired by DAR-737. Development items: not scored, and their gold pages stay out of any new held-out item. replaced_by is the item that took the place.",
+  "items": [
+    {
+      "id": "wztc-h031",
+      "division": "wztc",
+      "asker": "wztc",
+      "question": "What are the steps of FHWA's process for requesting an exception for a significant Interstate project under the work zone rule?",
+      "type": "text",
+      "edge_cases": [
+        "list_page_break",
+        "two_pages",
+        "chapter_page"
+      ],
+      "expected": {
+        "source": "rule_guide.pdf",
+        "pdf_pages": [
+          60,
+          61
+        ],
+        "printed_pages": [
+          "5-8",
+          "5-9"
+        ],
+        "value": "assess the work zone impacts",
+        "accept": [
+          "assess"
+        ],
+        "unit": null,
+        "all_of": [
+          [
+            "assess"
+          ],
+          [
+            "compare"
+          ],
+          [
+            "submit it to the FHWA Division Office",
+            "exception request"
+          ],
+          [
+            "FHWA reviews"
+          ],
+          [
+            "take appropriate action",
+            "appropriate action"
+          ]
+        ]
+      },
+      "refuse": false,
+      "behaviour": "answer",
+      "verified_by": "page_text_match",
+      "note": "rule_guide 5.4.1 Process for Requesting Exceptions: steps 1-3 (assess impacts; compare with policy; prepare and submit the request) on printed 5-8, steps 4-5 (FHWA reviews; take appropriate action) on printed 5-9.",
+      "split": "locked",
+      "replaced_by": "wztc-h101"
+    },
+    {
+      "id": "wztc-h032",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In the Woodrow Wilson Bridge case study of FHWA's work zone impacts assessment guide, what information did the project web site contain? List everything.",
+      "type": "text",
+      "edge_cases": [
+        "list_page_break",
+        "two_pages",
+        "appendix_page"
+      ],
+      "expected": {
+        "source": "wzi_guide.pdf",
+        "pdf_pages": [
+          164,
+          165
+        ],
+        "printed_pages": [
+          "A-10",
+          "A-11"
+        ],
+        "value": "Bridge Bucks",
+        "accept": [],
+        "unit": null,
+        "all_of": [
+          [
+            "overall WWB project"
+          ],
+          [
+            "Bridge Bucks"
+          ],
+          [
+            "Mission Possible"
+          ],
+          [
+            "Construction program"
+          ],
+          [
+            "Project news"
+          ],
+          [
+            "Neighborhood news"
+          ],
+          [
+            "Environmental aspects"
+          ],
+          [
+            "Civil rights",
+            "DBE"
+          ],
+          [
+            "scrapbook"
+          ],
+          [
+            "Project videos"
+          ]
+        ]
+      },
+      "refuse": false,
+      "behaviour": "answer",
+      "verified_by": "page_text_match",
+      "note": "wzi_guide Appendix A (printed A-10 / A-11): WWB project web site contents, 10 bullets: overall project, Bridge Bucks, Mission Possible (with sub-bullets) on p164; construction program, project news, neighborhood news, environmental aspects, civil rights/DBE, scrapbook, videos on p165.",
+      "split": "locked",
+      "replaced_by": "wztc-h102"
+    },
+    {
+      "id": "wztc-h033",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "FHWA's work zone impacts assessment guide gives examples of overall policy issues an agency's work zone guidance can address. List them all.",
+      "type": "text",
+      "edge_cases": [
+        "list_page_break",
+        "two_pages",
+        "chapter_page"
+      ],
+      "expected": {
+        "source": "wzi_guide.pdf",
+        "pdf_pages": [
+          45,
+          46
+        ],
+        "printed_pages": [
+          "3-13",
+          "3-14"
+        ],
+        "value": "multi-disciplinary team",
+        "accept": [
+          "multi-disciplinary"
+        ],
+        "unit": null,
+        "all_of": [
+          [
+            "multi-disciplinary"
+          ],
+          [
+            "organizational strategies"
+          ],
+          [
+            "impacts assessment guidance"
+          ],
+          [
+            "memoranda of understanding",
+            "MOU"
+          ],
+          [
+            "performance levels"
+          ],
+          [
+            "significant projects"
+          ],
+          [
+            "Exception criteria"
+          ],
+          [
+            "training"
+          ]
+        ]
+      },
+      "refuse": false,
+      "behaviour": "answer",
+      "verified_by": "page_text_match",
+      "note": "wzi_guide 3.x 'Examples of Overall Policy Issues', 8 dash items: standing multi-disciplinary team, agency organizational strategies, guidance on using the assessment guidance, MOUs with utility operators, performance levels on printed 3-13; significant-project criteria, exception criteria, training on printed 3-14.",
+      "split": "locked",
+      "replaced_by": "wztc-h103"
+    },
+    {
+      "id": "wztc-h043",
+      "division": "wztc",
+      "asker": "wztc",
+      "question": "What assessment requirements do NCDOT's Work Zone Safety and Mobility Guidelines set during and after construction?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "revision_marks"
+      ],
+      "expected": null,
+      "refuse": true,
+      "behaviour": "refuse",
+      "verified_by": "page_text_match",
+      "note": "WZSafetyAndMobilityGuidelines p23: 'ASSESSMENT REQUIREMENTS DURING/AFTER CONSTRUCTION - To Be Developed' (placeholder, no content). Checked: the heading occurs nowhere else with content.",
+      "split": "locked",
+      "accept_reply": [
+        "to be developed"
+      ],
+      "replaced_by": "wztc-h104"
+    },
+    {
+      "id": "wztc-h072",
+      "division": "wztc",
+      "asker": "tmsd",
+      "question": "How many work zone records did NCDOT's WZ-EVA database hold by the end of 2025?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "not_in_documents"
+      ],
+      "expected": null,
+      "refuse": true,
+      "behaviour": "refuse",
+      "verified_by": "page_text_match",
+      "note": "The 2023 process review gives just over 30,000 records as of 11/30/23 only. Checked: no WZ-EVA count for 2024 or 2025 in any wztc document.",
+      "split": "locked",
+      "replaced_by": "wztc-h105"
+    },
+    {
+      "id": "wztc-h079",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "In Table B.1 of FHWA's TMP guide, when should pedestrian/bicycle access improvements be considered?",
+      "type": "multipage_table",
+      "edge_cases": [
+        "multipage_table",
+        "appendix_page"
+      ],
+      "expected": {
+        "source": "trans_mgmt_plans.pdf",
+        "pdf_pages": [
+          88
+        ],
+        "printed_pages": [
+          "B-6"
+        ],
+        "value": "school route",
+        "accept": [
+          "school route traverses"
+        ],
+        "unit": null,
+        "all_of": [
+          [
+            "Long project duration"
+          ],
+          [
+            "pedestrian/bicyclist activities",
+            "bicyclist"
+          ],
+          [
+            "sidewalks"
+          ],
+          [
+            "school route"
+          ]
+        ]
+      },
+      "refuse": false,
+      "behaviour": "answer",
+      "verified_by": "page_text_match",
+      "note": "Table B.1 (continued), Appendix B-6, row IA12: long project duration; significant pedestrian/bicyclist activities; existing sidewalks traverse the work zone; a school route traverses the work zone.",
+      "split": "locked",
+      "replaced_by": "wztc-h106"
+    },
+    {
+      "id": "wztc-h086",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "For TIP projects and Raleigh Let Division Activities, what do NCDOT's work zone guidelines say to use to determine the level of significance?",
+      "type": "text",
+      "edge_cases": [
+        "cross_reference"
+      ],
+      "expected": {
+        "source": "WZSafetyAndMobilityGuidelines.pdf",
+        "pdf_pages": [
+          17
+        ],
+        "printed_pages": [
+          "17"
+        ],
+        "value": "Table 3",
+        "accept": [
+          "Criteria chart"
+        ],
+        "unit": null,
+        "all_of": [
+          [
+            "Table 3"
+          ],
+          [
+            "page 19",
+            "criteria chart"
+          ]
+        ]
+      },
+      "refuse": false,
+      "behaviour": "answer",
+      "verified_by": "page_text_match",
+      "note": "Guidelines p17: use the Criteria chart shown in Table 3 (See page 19); other division activities and encroachments use the procedures on pages 20-21.",
+      "split": "locked",
+      "replaced_by": "wztc-h107"
+    },
+    {
+      "id": "wztc-h097",
+      "division": "wztc",
+      "asker": "utilities",
+      "question": "What are the objectives of work zone impacts assessment during construction, according to FHWA's work zone impacts assessment guide?",
+      "type": "text",
+      "edge_cases": [
+        "chapter_page"
+      ],
+      "expected": {
+        "source": "wzi_guide.pdf",
+        "pdf_pages": [
+          114
+        ],
+        "printed_pages": [
+          "7-2"
+        ],
+        "value": "Implement the TMP",
+        "accept": [],
+        "unit": null,
+        "all_of": [
+          [
+            "pre-construction coordination"
+          ],
+          [
+            "proposed changes"
+          ],
+          [
+            "Implement the TMP"
+          ],
+          [
+            "monitor and manage"
+          ],
+          [
+            "Revise the TMP"
+          ],
+          [
+            "lessons"
+          ]
+        ]
+      },
+      "refuse": false,
+      "behaviour": "answer",
+      "verified_by": "page_text_match",
+      "note": "wzi_guide 7.2 (printed 7-2): six objectives - resolve pre-construction coordination issues; assess proposed changes before work starts; implement the TMP; actively monitor and manage impacts; revise the TMP; document findings or lessons.",
+      "split": "locked",
+      "replaced_by": "wztc-h108"
+    },
+    {
+      "id": "utilities-h056",
+      "division": "utilities",
+      "asker": "wztc",
+      "question": "In that Indiana cut road permit, what is the maximum variation from vertical allowed on the edge of a removed concrete pavement area?",
+      "type": "scan",
+      "edge_cases": [
+        "symbols",
+        "precision",
+        "degraded_scan",
+        "scan"
+      ],
+      "expected": {
+        "source": "010604.pdf",
+        "pdf_pages": [
+          278
+        ],
+        "printed_pages": [
+          "262"
+        ],
+        "value": "1 1/2 inches",
+        "accept": [
+          "1.5 inches",
+          "1.5 in",
+          "1-1/2"
+        ],
+        "unit": "in"
+      },
+      "refuse": false,
+      "split": "locked",
+      "behaviour": "answer",
+      "verified_by": "page_image_read",
+      "note": "Paragraph (B): maximum variation from the vertical will not exceed 1 1/2 inches (printed with a half glyph; OCR reads it as \"1/½2\", so read off the image).",
+      "replaced_by": "utilities-h106"
+    },
+    {
+      "id": "utilities-h058",
+      "division": "utilities",
+      "asker": "wztc",
+      "question": "Under 23 CFR 645.207, where does the clear zone start?",
+      "type": "text",
+      "edge_cases": [
+        "duplicate_section",
+        "multi_column",
+        "printed_vs_pdf"
+      ],
+      "expected": {
+        "source": "CFR-2024-title23-vol1-part645.pdf",
+        "pdf_pages": [
+          12
+        ],
+        "printed_pages": [
+          "338"
+        ],
+        "value": "edge of the traveled way",
+        "accept": [
+          "edge of the travelled way"
+        ]
+      },
+      "refuse": false,
+      "split": "locked",
+      "behaviour": "answer",
+      "verified_by": "page_text_match",
+      "note": "Two-column CFR page. Clear zone: total roadside border area starting at the edge of the traveled way. Same definition in the TMP Design Manual p. 25 (wztc) and in the 2003 reprint in if03014.pdf p. 91.",
+      "replaced_by": "utilities-h107"
+    },
+    {
+      "id": "utilities-h066",
+      "division": "utilities",
+      "asker": "wztc",
+      "question": "A utility certification isn't needed on a Federal-aid project that doesn't affect any utilities, correct?",
+      "type": "text",
+      "edge_cases": [
+        "false_premise",
+        "multi_column"
+      ],
+      "expected": {
+        "source": "09utilcoordcert.pdf",
+        "pdf_pages": [
+          1
+        ],
+        "printed_pages": [
+          ""
+        ],
+        "value": "all projects",
+        "accept": [
+          "required for all projects",
+          "including those that don't affect"
+        ]
+      },
+      "refuse": false,
+      "split": "locked",
+      "behaviour": "correct",
+      "verified_by": "page_text_match",
+      "note": "Companion guide p. 1: the utility certification is required for all projects, including those that do not affect any utilities.",
+      "replaced_by": "utilities-h108"
+    },
+    {
+      "id": "utilities-h072",
+      "division": "utilities",
+      "asker": "tmsd",
+      "question": "List everything the FHWA utility relocation Program Guide says the plans or drawings supporting a utility agreement should show.",
+      "type": "text",
+      "edge_cases": [
+        "list_page_break",
+        "two_pages",
+        "printed_vs_pdf"
+      ],
+      "expected": {
+        "source": "if03014.pdf",
+        "pdf_pages": [
+          16,
+          17
+        ],
+        "printed_pages": [
+          "B-16",
+          "B-17"
+        ],
+        "value": "limits of right-of-way",
+        "accept": [],
+        "all_of": [
+          [
+            "location, length, size",
+            "operating conditions",
+            "design features"
+          ],
+          [
+            "project number",
+            "plan scale"
+          ],
+          [
+            "limits of right-of-way",
+            "right-of-way to be acquired"
+          ],
+          [
+            "sole expense of the utility",
+            "at the sole expense"
+          ]
+        ]
+      },
+      "refuse": false,
+      "split": "locked",
+      "behaviour": "answer",
+      "verified_by": "page_text_match",
+      "note": "Section Agreements and Authorizations, \"Plans and Drawings\": four dash items, three on B-16 and the last (portion of the work at the sole expense of the utility) on B-17.",
+      "replaced_by": "utilities-h109"
+    },
+    {
+      "id": "utilities-h073",
+      "division": "utilities",
+      "asker": "wztc",
+      "question": "Which investment-related costs does FHWA's utility relocation Program Guide say are generally not allowed in a utility's overhead?",
+      "type": "text",
+      "edge_cases": [
+        "list_page_break",
+        "two_pages",
+        "printed_vs_pdf"
+      ],
+      "expected": {
+        "source": "if03014.pdf",
+        "pdf_pages": [
+          22,
+          23
+        ],
+        "printed_pages": [
+          "B-22",
+          "B-23"
+        ],
+        "value": "Return on Investment",
+        "accept": [
+          "Return on Net Investment"
+        ],
+        "all_of": [
+          [
+            "Return on Investment",
+            "Return on Net Investment",
+            "financing capital"
+          ],
+          [
+            "Float"
+          ],
+          [
+            "Federal income tax"
+          ],
+          [
+            "Capital Stock Tax",
+            "financing operations"
+          ]
+        ]
+      },
+      "refuse": false,
+      "split": "locked",
+      "behaviour": "answer",
+      "verified_by": "page_text_match",
+      "note": "\"Investment Related Costs\" list: Return on Investment (B-22, not allowed), then on B-23 Float (not allowed), Income Tax (State/local allowed, Federal not), Property Tax (allowed), Depreciation (allowed), Capital Stock Tax (not allowed).",
+      "replaced_by": "utilities-h110"
+    },
+    {
+      "id": "utilities-h074",
+      "division": "utilities",
+      "asker": "tmsd",
+      "question": "What impacts on transportation projects do FHWA's 2018 slides on utility accommodation list?",
+      "type": "figure",
+      "edge_cases": [
+        "list_page_break",
+        "two_pages"
+      ],
+      "expected": {
+        "source": "utility_row.pdf",
+        "pdf_pages": [
+          10,
+          11
+        ],
+        "printed_pages": [
+          "10",
+          "11"
+        ],
+        "value": "change orders",
+        "accept": [],
+        "all_of": [
+          [
+            "increase bids",
+            "increased risks"
+          ],
+          [
+            "delayed",
+            "delays"
+          ],
+          [
+            "change orders"
+          ],
+          [
+            "safety is jeopardized",
+            "contractor and public safety"
+          ],
+          [
+            "next season"
+          ],
+          [
+            "strained"
+          ]
+        ]
+      },
+      "refuse": false,
+      "split": "locked",
+      "behaviour": "answer",
+      "verified_by": "page_text_match",
+      "note": "Slides 10 and 11 both titled \"Impacts on Transportation Projects\", three bullets each.",
+      "replaced_by": "utilities-h111"
+    },
+    {
+      "id": "utilities-h080",
+      "division": "utilities",
+      "asker": "wztc",
+      "question": "According to the UAM's credit formula for accrued depreciation of a replaced utility facility, what is the original cost multiplied by?",
+      "type": "text",
+      "edge_cases": [
+        "symbols",
+        "chapter_page"
+      ],
+      "expected": {
+        "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+        "pdf_pages": [
+          176
+        ],
+        "printed_pages": [
+          "4-33"
+        ],
+        "value": "Actual Service Length",
+        "accept": [],
+        "all_of": [
+          [
+            "Actual Service Length"
+          ],
+          [
+            "Total Life Expectancy"
+          ]
+        ]
+      },
+      "refuse": false,
+      "split": "locked",
+      "behaviour": "answer",
+      "verified_by": "page_text_match",
+      "note": "Stacked fraction: (Actual Service Length / Total Life Expectancy) x Original Cost = Accrued (the page prints \"Appreciation\"). The formula is drawn with a fraction bar, so text order is \"Actual Service Length Total Life Expectancy Credit x Original Cost\".",
+      "replaced_by": "utilities-h112"
+    },
+    {
+      "id": "utilities-h087",
+      "division": "utilities",
+      "asker": "wztc",
+      "question": "Since the UAM lets utilities hang conduit on cored slab bridges as long as the hangers are insulated, what else is needed for that attachment?",
+      "type": "text",
+      "edge_cases": [
+        "false_premise",
+        "chapter_page"
+      ],
+      "expected": {
+        "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+        "pdf_pages": [
+          118
+        ],
+        "printed_pages": [
+          "3-45"
+        ],
+        "value": "prohibited",
+        "accept": [
+          "not allowed",
+          "not permitted"
+        ]
+      },
+      "refuse": false,
+      "split": "locked",
+      "behaviour": "correct",
+      "verified_by": "page_text_match",
+      "note": "Section 3 structure attachments, 2.a: utility attachment to bridges of a box beam or cored slab design is prohibited (insulated hangers are rule 1 for metallic attachments to any structure).",
+      "replaced_by": "utilities-h113"
+    },
+    {
+      "id": "utilities-h090",
+      "division": "utilities",
+      "asker": "wztc",
+      "question": "What daily per diem dollar amount can a utility charge for its crews' meals and lodging on a remote relocation job under the UAM?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "not_in_documents"
+      ],
+      "expected": null,
+      "refuse": true,
+      "split": "locked",
+      "behaviour": "refuse",
+      "verified_by": "page_text_match",
+      "note": "UAM 4.5.3 (pdf p. 172) allows meals and lodging in remote areas but caps them by the utility's own published policy or State policy for State workers; no dollar amount is given in any utilities document. The only \"$ per day\" figure is the $1,500 to $2,000 per day minimum in the bond amounts memo (UAM pdf p. 257), which is not a crew expense allowance.",
+      "replaced_by": "utilities-h114"
+    },
+    {
+      "id": "tmsd-h009",
+      "division": "tmsd",
+      "asker": "utilities",
+      "question": "In the TODS manual's sample assemblies (Figure 2K-1), what distance is shown on the Dick and Harry's Fishing Pond panel?",
+      "type": "figure",
+      "edge_cases": [
+        "figure",
+        "symbols",
+        "table_id"
+      ],
+      "expected": {
+        "source": "TODS Manual - September 2024.pdf",
+        "pdf_pages": [
+          39
+        ],
+        "printed_pages": [
+          "36"
+        ],
+        "value": "2 1/2",
+        "accept": [
+          "2.5",
+          "2 ½",
+          "two and a half"
+        ],
+        "unit": "mi"
+      },
+      "refuse": false,
+      "verified_by": "page_image_read",
+      "split": "locked",
+      "behaviour": "answer",
+      "note": "Appendix F sample, Figure 2K-1 combined intersection approach sign assembly: the panel shows \"2 ½\" with a left arrow. The drawing is an image (no text layer); read off the rendered page.",
+      "replaced_by": "tmsd-h107"
+    },
+    {
+      "id": "tmsd-h016",
+      "division": "tmsd",
+      "asker": "utilities",
+      "question": "Can a two-way driveway meet the pavement edge at a 70-degree angle under the access policy?",
+      "type": "text",
+      "edge_cases": [
+        "range_threshold",
+        "units"
+      ],
+      "expected": {
+        "source": "Policy on Access Manual.pdf",
+        "pdf_pages": [
+          61
+        ],
+        "printed_pages": [
+          "51"
+        ],
+        "value": "75 degrees",
+        "accept": [
+          "75°",
+          "75 deg"
+        ],
+        "unit": null
+      },
+      "refuse": false,
+      "verified_by": "page_text_match",
+      "split": "locked",
+      "behaviour": "answer",
+      "note": "Control Dimensions, Driveway Angle (Y): two-way driveways not less than 75 degrees nor more than 90 degrees, so 70 degrees is just below the allowed range (45-90 is only for one-way or right-in/right-out, case by case).",
+      "replaced_by": "tmsd-h108"
+    },
+    {
+      "id": "tmsd-h019",
+      "division": "tmsd",
+      "asker": "wztc",
+      "question": "In the street and driveway access policy, the \"Recommended Treatment for Turn Lanes\" exhibit: what desirable deceleration length goes with a 50 mph design speed?",
+      "type": "rotated",
+      "edge_cases": [
+        "rotated",
+        "scan",
+        "not_first_row_col",
+        "merged_header",
+        "near_identical"
+      ],
+      "expected": {
+        "source": "Policy on Access Manual.pdf",
+        "pdf_pages": [
+          88
+        ],
+        "printed_pages": [
+          "78"
+        ],
+        "value": "300'",
+        "accept": [
+          "300 feet",
+          "300 ft"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "verified_by": "page_image_read",
+      "split": "locked",
+      "behaviour": "answer",
+      "note": "Exhibit (scanned, printed sideways): row design speed 50 / posted 45 mph; columns minimum deceleration 150', desirable deceleration 300', bay taper 100'. Read off the rendered page; the page has no text layer beyond the running header.",
+      "replaced_by": "tmsd-h109"
+    },
+    {
+      "id": "tmsd-h024",
+      "division": "tmsd",
+      "asker": "utilities",
+      "question": "What Walk time should I program for a pedestrian phase when retiming a signal system?",
+      "type": "table",
+      "edge_cases": [
+        "missing_variable"
+      ],
+      "expected": {
+        "source": "Signal System Timing Philosophy Manual.pdf",
+        "pdf_pages": [
+          21
+        ],
+        "printed_pages": [
+          "7"
+        ],
+        "value": "7 seconds",
+        "accept": [],
+        "unit": null,
+        "all_of": [
+          [
+            "7 seconds",
+            "seven seconds"
+          ],
+          [
+            "4 seconds",
+            "four seconds"
+          ],
+          [
+            "10 seconds",
+            "ten seconds"
+          ]
+        ]
+      },
+      "refuse": false,
+      "verified_by": "page_text_match",
+      "split": "locked",
+      "behaviour": "clarify",
+      "note": "Table 3 Tactics, \"Optimize Ped/Walk Time\": usually 7 s; may be cut to a minimum of 4 s at intersections with low pedestrian volumes; may need 10 s, 15 s or more with high pedestrian volumes, school zones or elderly pedestrians. Missing variable: pedestrian volume/context.",
+      "replaced_by": "tmsd-h110"
+    },
+    {
+      "id": "tmsd-h049",
+      "division": "tmsd",
+      "asker": "wztc",
+      "question": "On Figure 1 of the guardrail chapter (warrants for fill section embankments), what fill slope does the shaded band mark as the minimum?",
+      "type": "figure",
+      "edge_cases": [
+        "figure",
+        "scan",
+        "symbols",
+        "table_id"
+      ],
+      "expected": {
+        "source": "03. Guardrail, Barriers and Attenuators.pdf",
+        "pdf_pages": [
+          3
+        ],
+        "printed_pages": [
+          "3-1"
+        ],
+        "value": "3:1",
+        "accept": [
+          "3 to 1",
+          "3H:1V"
+        ],
+        "unit": null
+      },
+      "refuse": false,
+      "verified_by": "page_image_read",
+      "split": "locked",
+      "behaviour": "answer",
+      "note": "Figure 1 (sheet 3-1 / F-1), a scanned chart: the shaded band runs between \"3:1 MINIMUM\" and \"4:1 DESIRABLE\"; on or below the curve barrier is not warranted. Read off the rendered page (the text layer holds only the running header).",
+      "replaced_by": "tmsd-h111"
+    },
+    {
+      "id": "tmsd-h052",
+      "division": "tmsd",
+      "asker": "utilities",
+      "question": "In the Roadway Design Manual's Figure 4 (Recommended Treatment for Turn Lanes, sheet F-4A), what bay taper length goes with a 55 mph design speed?",
+      "type": "rotated",
+      "edge_cases": [
+        "near_identical",
+        "rotated",
+        "figure",
+        "not_first_row_col",
+        "table_id"
+      ],
+      "expected": {
+        "source": "09. At Grade Intersections.pdf",
+        "pdf_pages": [
+          13
+        ],
+        "printed_pages": [
+          "F-4A"
+        ],
+        "value": "150'",
+        "accept": [
+          "150 feet",
+          "150 ft"
+        ],
+        "unit": "ft"
+      },
+      "refuse": false,
+      "verified_by": "page_image_read",
+      "split": "locked",
+      "behaviour": "answer",
+      "note": "RDM ch. 9 Figure 4, sheet 9-1 / F-4A (drawing printed sideways): design speed 55 / posted 50: min decel 200', desirable decel 500', bay taper 150'. The same table is an exhibit of the Policy on Street and Driveway Access (PDF p88); the question names the RDM figure.",
+      "replaced_by": "tmsd-h112"
+    },
+    {
+      "id": "tmsd-h082",
+      "division": "tmsd",
+      "asker": "wztc",
+      "question": "What is the minimum speed for passenger vehicles on North Carolina's interstate highways?",
+      "type": "text",
+      "edge_cases": [
+        "missing_variable"
+      ],
+      "expected": {
+        "source": "L18_TSLG_Guide.pdf",
+        "pdf_pages": [
+          283
+        ],
+        "printed_pages": [
+          "283"
+        ],
+        "value": "40 mph",
+        "accept": [
+          "forty miles per hour",
+          "40 miles per hour"
+        ],
+        "unit": null,
+        "all_of": [
+          [
+            "40 mph",
+            "forty miles per hour",
+            "40 miles per hour"
+          ],
+          [
+            "45 mph",
+            "forty-five miles per hour",
+            "45 miles per hour"
+          ]
+        ]
+      },
+      "refuse": false,
+      "verified_by": "page_text_match",
+      "split": "locked",
+      "behaviour": "clarify",
+      "note": "Missing variable: the speed zone. G.S. 20-141(c): 40 mph in a 55 mph zone; 45 mph in a zone of 60 mph or greater (only when signs post the minimum).",
+      "replaced_by": "tmsd-h113"
+    },
+    {
+      "id": "tmsd-h085",
+      "division": "tmsd",
+      "asker": "tmsd",
+      "question": "Before moving a crane with a normal operating speed of 5 mph across railroad tracks, what steps must the operator take at the crossing under G.S. 20-142.4?",
+      "type": "text",
+      "edge_cases": [
+        "list_page_break",
+        "two_pages",
+        "units"
+      ],
+      "expected": {
+        "source": "L18_TSLG_Guide.pdf",
+        "pdf_pages": [
+          288,
+          289
+        ],
+        "printed_pages": [
+          "288",
+          "289"
+        ],
+        "value": "15 feet",
+        "accept": [],
+        "unit": null,
+        "all_of": [
+          [
+            "15 feet",
+            "15 ft"
+          ],
+          [
+            "50 feet",
+            "50 ft"
+          ],
+          [
+            "listen and look",
+            "look both directions"
+          ],
+          [
+            "crossing can be made safely",
+            "safely"
+          ]
+        ]
+      },
+      "refuse": false,
+      "verified_by": "page_text_match",
+      "split": "locked",
+      "behaviour": "answer",
+      "note": "(c)(1) stop not less than 15 feet nor more than 50 feet from the nearest rail (p288); (2) listen and look both directions; (3) not proceed until the crossing can be made safely (p289). Notice to the railroad superintendent is (b).",
+      "replaced_by": "tmsd-h114"
+    },
+    {
+      "id": "tmsd-h089",
+      "division": "tmsd",
+      "asker": "wztc",
+      "question": "How does the DMV-349 crash report instructional manual define full access control?",
+      "type": "text",
+      "edge_cases": [
+        "duplicate_section"
+      ],
+      "expected": {
+        "source": "C34 - Manual 2012.pdf",
+        "pdf_pages": [
+          107
+        ],
+        "printed_pages": [
+          "107"
+        ],
+        "value": "selected public roads",
+        "accept": [],
+        "unit": null,
+        "all_of": [
+          [
+            "selected public roads"
+          ],
+          [
+            "crossings at grade",
+            "driveway connections"
+          ]
+        ]
+      },
+      "refuse": false,
+      "verified_by": "page_text_match",
+      "split": "locked",
+      "behaviour": "answer",
+      "note": "Glossary: access connections with selected public roads only, prohibiting crossings at grade or direct private driveway connections. Same definition in the utilities UAM (p187).",
+      "replaced_by": "tmsd-h115"
+    },
+    {
+      "id": "tmsd-h097",
+      "division": "tmsd",
+      "asker": "wztc",
+      "question": "Under the pedestrian policy's local government or local sponsor commitment criterion, what questions does NCDOT ask?",
+      "type": "text",
+      "edge_cases": [
+        "list_page_break",
+        "two_pages"
+      ],
+      "expected": {
+        "source": "bikeped_Ped_Policy.pdf",
+        "pdf_pages": [
+          8,
+          9
+        ],
+        "printed_pages": [
+          "8",
+          "9"
+        ],
+        "value": "Capital Improvement Program",
+        "accept": [],
+        "unit": null,
+        "all_of": [
+          [
+            "Capital Improvement Program"
+          ],
+          [
+            "currently connect"
+          ],
+          [
+            "subdivisions"
+          ],
+          [
+            "maintain"
+          ]
+        ]
+      },
+      "refuse": false,
+      "verified_by": "page_text_match",
+      "split": "locked",
+      "behaviour": "answer",
+      "note": "Criterion 2 bullets: local CIP funds for connecting facilities; how many facilities currently connect; how many subdivisions have provided connecting facilities (p8); has a local agency agreed in writing to maintain the facility (starts p8, ends p9).",
+      "replaced_by": "tmsd-h116"
+    },
+    {
+      "id": "tmsd-h100",
+      "division": "tmsd",
+      "asker": "wztc",
+      "question": "Which MASH test level do guardrail end terminals have to meet under the Roadway Design Manual guardrail chapter?",
+      "type": "unanswerable",
+      "edge_cases": [
+        "not_in_documents"
+      ],
+      "expected": null,
+      "refuse": true,
+      "verified_by": "page_text_match",
+      "split": "locked",
+      "behaviour": "refuse",
+      "note": "The guardrail chapter (rev. 2007) refers to NCHRP 350 units (e.g. GRAU-350) and never to MASH; no tmsd document mentions MASH.",
+      "replaced_by": "tmsd-h117"
+    }
+  ]
+}

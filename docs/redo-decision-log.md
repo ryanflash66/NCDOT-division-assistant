@@ -540,6 +540,59 @@ Also open, without a ticket yet:
   - These 28 held-out items were read in detail, so by the held-out rules they are development items now. They need replacing (or leaving out, said so) before the next clean held-out number. Left for the PM.
   - No fixes; DAR-733 (page images for drawing and table pages) is the next ticket this one unblocks.
 
+## DAR-737. Fix the scorer's 11 misses and replace the 28 read items
+
+- **Question:** DAR-732 found 11 of the 28 confident wrong answers on the OpenAI held-out run were right replies the scorer missed (9 reworded values, 2 declines in the model's words). Which general rules fix them without accepting wrong answers, and what does the saved run score with them?
+- **Chose:** six scorer-only rules (`evaluation/locked/normalize.py`, `score.py`; the hosted number guardrail's `normalize()` is unchanged). None names an item; each is tested with a negative case.
+  - A range or list states its first number with the unit of its last: "between 75 and 90 degrees" states 75 degrees, "15 to 50 feet" states 15 feet (tmsd-h016, tmsd-h085).
+  - A phrase value's words side by side in another order, with nothing else between them: "crossings at grade" / "at-grade crossings", "long project duration" / "the project has a long duration" (tmsd-h089, wztc-h079). Never for values with a number ("Class 2 or 3" is not "Class 3 or 2").
+  - A leading quantifier takes up to two modifiers before its noun, as a number already did: "all projects" / "all Federal-aid projects" (utilities-h066).
+  - Words compare without one plural or past-tense ending (-es, -ed, -s, -d, -e; not -ing): "prohibited" / "prohibits" (utilities-h087).
+  - An acronym and its spelled-out form are the same on either side, and once per match a second word joined by "and"/"or" may sit inside the value: "Implement the TMP" / "implement the transportation management plan (TMP)", "Revise the TMP" / "revise and implement the TMP" (wztc-h097).
+  - A decline may use a contraction ("The documents don't state ...", wztc-h072) or name the document by its acronym as the subject ("The UAM does not specify ...", utilities-h090). "require" is left out of the acronym form: "FHWA does not require ..." is a rule, not a gap.
+- **Evidence (rescore of the saved answers, no new calls):**
+  - Locked set (`docs/locked-set/`, 14 reports): no item changes under any rule.
+  - Held-out OpenAI run (`openai-site-main`): confident wrong 28 -> 18 /286, value right 213 -> 220 /242, strict 197 -> 204 /242, answerable declined 6 -> 8 /256, must-refuse answered 4 -> 2 /30. Of the 11 misses, 9 now score right; utilities-h058 (a decline in the model's words, real per DAR-732) moves from confident wrong to declined; one other held-out answer, uncited and without the value, now counts as declined (not read). Left as misses: tmsd-h097 ("currently connect" answered "existing ... connect") and wztc-h031 ("appropriate action" answered "an appropriate TMP"): paraphrases no general rule separates from wrong answers.
+  - Free-model held-out runs: baseline 25 -> 21 /286, after-dar-662 25 -> 21, after-dar-663 26 -> 22 /274, after-dar-664-k8 28 -> 24 /281, after-dar-717 22 -> 19 /285; every change is one of the 28 read items.
+  - The 18 remaining include 3 non-errors (tmsd-h097, wztc-h031, utilities-h080 cited from the FHWA guide instead of the UAM), so the real rate on this run is 15/286 confident wrong plus utilities-h058 declined.
+- **Second part: the 28 read items.** DAR-732 read 28 held-out items in detail (its 28 confident wrong answers), so they are development items now (README, "Rules"). They are retired to `evaluation/heldout/retired/dar-737.json` (each with `replaced_by`; not loaded by any command) and replaced by 28 new items of the same kind, written blind (no model replies, run reports or index read) on pages no held-out, locked or development item uses. Authoring notes: `docs/heldout-set/authoring-dar-737.md`. Back to 286 locked items (311 with tuning); `HELDOUT.sha256` re-frozen (`f9666e88...`).
+
+  | Retired | New | Kind |
+  |---|---|---|
+  | wztc-h031 | wztc-h101 | list over a page break |
+  | wztc-h032 | wztc-h102 | list over a page break, appendix |
+  | wztc-h033 | wztc-h103 | list over a page break |
+  | wztc-h043 | wztc-h104 | refusal, revision marks ("(Vacant)" contact) |
+  | wztc-h072 | wztc-h105 | refusal, not in the documents |
+  | wztc-h079 | wztc-h106 | multipage table continuation |
+  | wztc-h086 | wztc-h107 | cross-reference |
+  | wztc-h097 | wztc-h108 | chapter page |
+  | utilities-h056 | utilities-h106 | stamped scan |
+  | utilities-h058 | utilities-h107 | same section in two divisions |
+  | utilities-h066 | utilities-h108 | false premise, two-column page |
+  | utilities-h072 | utilities-h109 | list over a page break |
+  | utilities-h073 | utilities-h110 | list over a page break |
+  | utilities-h074 | utilities-h111 | slide figures, list over a page break |
+  | utilities-h080 | utilities-h112 | symbols (inch marks) |
+  | utilities-h087 | utilities-h113 | false premise |
+  | utilities-h090 | utilities-h114 | refusal, not in the documents |
+  | tmsd-h009 | tmsd-h107 | scanned drawing |
+  | tmsd-h016 | tmsd-h108 | threshold |
+  | tmsd-h019 | tmsd-h109 | sideways scanned table, merged header |
+  | tmsd-h024 | tmsd-h110 | clarify (area type) |
+  | tmsd-h049 | tmsd-h111 | scanned figure, equation |
+  | tmsd-h052 | tmsd-h112 | sideways drawing with a near-identical twin |
+  | tmsd-h082 | tmsd-h113 | clarify (speed) |
+  | tmsd-h085 | tmsd-h114 | list over a page break, units |
+  | tmsd-h089 | tmsd-h115 | same section in two divisions |
+  | tmsd-h097 | tmsd-h116 | list over a page break |
+  | tmsd-h100 | tmsd-h117 | refusal, not in the documents |
+
+  - Where a spec could not be matched: wztc has no unused "Reserved" section left, so wztc-h104 asks for a contact printed as "(Vacant)"; utilities-h107 drops `multi_column` (no unused two-column utilities page shares text with another division); tmsd-h112 drops `not_first_row_col` (its twin is a drawing, not a table).
+  - Six new values rest on reading the rendered page (scans, sideways pages, drawings: utilities-h106, utilities-h111, tmsd-h107, tmsd-h109, tmsd-h111, tmsd-h112); every other value and list part matches its gold page's text.
+  - Six kept locked items share a gold page with a retired one (tmsd-h058, tmsd-h092, utilities-h055, utilities-h081, wztc-h057, wztc-h080). Their own replies were not read for DAR-732, so they stay; the page was seen.
+  - Runs before this change were scored on the old 28; a run after it is not comparable item for item on those 28, only as a rate.
+
 ## DAR-736. Bring the next page when a list or table runs over a page break
 
 - **Question:** 5 of the 7 incomplete answers on the OpenAI held-out run were lists that continue on the next page (DAR-732), and `with_following` often adds a chunk from the same page. How can every passage whose list or table runs over a page break bring its continuation, without paying for every page end?
