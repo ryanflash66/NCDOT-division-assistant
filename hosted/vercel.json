@@ -9,7 +9,7 @@
   "functions": {
     "index.py": {
       "maxDuration": 60,
-      "includeFiles": "public/**",
+      "includeFiles": "public/{*,assets/**}",
       "excludeFiles": "{public/pages/**,documents/**,web/**,scripts/**,**/__pycache__/**,RESULTS-local.md}"
     }
   },
