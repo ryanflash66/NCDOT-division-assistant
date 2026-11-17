@@ -407,11 +407,10 @@ def _brief(error: LLMError) -> str:
 class FallbackClient:
     """`primary` (OpenAI) with `fallback` (free OpenRouter models) behind it, as one client.
 
-    `models` is one list, the primary's first, so the Answerer's "next model"
-    after a refusal is the first free model, as it is between the free models.
-    A call asks the primary with its models in the list; when that fails (key
-    rejected, budget spent, rate limit, outage) the fallback is asked with the
-    rest, so the site keeps answering.
+    `models` is one list, the primary's first. A call asks the primary with its
+    models in the list; when that fails (key rejected, budget spent, rate
+    limit, outage) the fallback is asked with the rest, so the site keeps
+    answering.
     """
 
     def __init__(self, primary: OpenRouterClient, fallback: OpenRouterClient):
@@ -419,7 +418,20 @@ class FallbackClient:
         self.fallback = fallback
         self.models = list(dict.fromkeys([*primary.models, *fallback.models]))
 
-    retry_models = OpenRouterClient.retry_models
+    def retry_models(self, used: str) -> List[str]:
+        """After the primary answered, the primary again; after a free model, the free models after it.
+
+        A refusal from OpenAI went to the first free model, which then answered
+        from passages OpenAI had judged not to cover the question: locked
+        wztc-075 (MUTCD Table 6B-2 buffer length) came back as 240 ft from a
+        division plan instead of 425 ft, cited. The retry's extra passages (the
+        second look) are now read by OpenAI itself, and when that call fails the
+        refusal stands rather than a free model answering it. The same list
+        bounds the recite and recheck calls.
+        """
+        if used in self.primary.models:
+            return [used]
+        return OpenRouterClient.retry_models(self, used)
 
     def _split(self, models: Optional[Sequence[str]]) -> Tuple[List[str], List[str]]:
         """The models of a call, as the primary's and the fallback's."""

@@ -192,11 +192,13 @@ def test_both_services_failing_reports_the_fallbacks_error():
     assert caught.value.user_message == MISCONFIGURED
 
 
-def test_the_next_model_after_openai_is_the_first_free_one():
+def test_an_openai_refusal_is_retried_by_openai_not_the_free_models():
+    # Locked wztc-075: the first free model answered from the wrong document after OpenAI refused.
     client = _client(lambda r: _reply(), lambda r: _reply())
-    assert client.retry_models(DEFAULT_OPENAI_MODEL)[0] == FREE
-    assert DEFAULT_OPENAI_MODEL not in client.retry_models(DEFAULT_OPENAI_MODEL)
-    # OpenAI alone has no next model: the same one is asked again.
+    assert client.retry_models(DEFAULT_OPENAI_MODEL) == [DEFAULT_OPENAI_MODEL]
+    # A free model that answered is retried by the free models after it, never by OpenAI.
+    assert client.retry_models(FREE) == client.models[client.models.index(FREE) + 1:] != []
+    # OpenAI alone: the same one is asked again.
     alone = client_from_settings(load_settings({"LLM_PROVIDER": "openai", "OPENAI_API_KEY": "k"}))
     assert alone.retry_models(DEFAULT_OPENAI_MODEL) == [DEFAULT_OPENAI_MODEL]
 
@@ -205,8 +207,13 @@ def test_a_call_for_the_free_models_only_never_reaches_openai():
     seen = []
     client = _client(lambda r: _reply(), lambda r: _reply(model=FREE), seen)
 
-    asyncio.run(client.complete(MESSAGES, models=client.retry_models(DEFAULT_OPENAI_MODEL)))  # the retry after a refusal
+    asyncio.run(client.complete(MESSAGES, models=[FREE]))  # the retry after a free model refused
     assert [url for url, _, _ in seen] == [API_URL]
+
+    seen.clear()
+    # The retry after OpenAI refused goes to OpenAI.
+    asyncio.run(client.complete(MESSAGES, models=client.retry_models(DEFAULT_OPENAI_MODEL)))
+    assert [url for url, _, _ in seen] == [OPENAI_URL]
 
     seen.clear()
     # The recheck: the model that wrote the answer first, then the rest.
