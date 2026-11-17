@@ -539,3 +539,19 @@ Also open, without a ticket yet:
   - Only the image-read gold values among the 28 were rechecked (tmsd-h049 against the page image: 3:1 is right); the other 26 image-read gold values were not.
   - These 28 held-out items were read in detail, so by the held-out rules they are development items now. They need replacing (or leaving out, said so) before the next clean held-out number. Left for the PM.
   - No fixes; DAR-733 (page images for drawing and table pages) is the next ticket this one unblocks.
+
+## DAR-737. Fix the scorer's 11 misses and replace the 28 read items
+
+- **Question:** DAR-732 found 11 of the 28 confident wrong answers on the OpenAI held-out run were right replies the scorer missed (9 reworded values, 2 declines in the model's words). Which general rules fix them without accepting wrong answers, and what does the saved run score with them?
+- **Chose:** six scorer-only rules (`evaluation/locked/normalize.py`, `score.py`; the hosted number guardrail's `normalize()` is unchanged). None names an item; each is tested with a negative case.
+  - A range or list states its first number with the unit of its last: "between 75 and 90 degrees" states 75 degrees, "15 to 50 feet" states 15 feet (tmsd-h016, tmsd-h085).
+  - A phrase value's words side by side in another order, with nothing else between them: "crossings at grade" / "at-grade crossings", "long project duration" / "the project has a long duration" (tmsd-h089, wztc-h079). Never for values with a number ("Class 2 or 3" is not "Class 3 or 2").
+  - A leading quantifier takes up to two modifiers before its noun, as a number already did: "all projects" / "all Federal-aid projects" (utilities-h066).
+  - Words compare without one plural or past-tense ending (-es, -ed, -s, -d, -e; not -ing): "prohibited" / "prohibits" (utilities-h087).
+  - An acronym and its spelled-out form are the same on either side, and once per match a second word joined by "and"/"or" may sit inside the value: "Implement the TMP" / "implement the transportation management plan (TMP)", "Revise the TMP" / "revise and implement the TMP" (wztc-h097).
+  - A decline may use a contraction ("The documents don't state ...", wztc-h072) or name the document by its acronym as the subject ("The UAM does not specify ...", utilities-h090). "require" is left out of the acronym form: "FHWA does not require ..." is a rule, not a gap.
+- **Evidence (rescore of the saved answers, no new calls):**
+  - Locked set (`docs/locked-set/`, 14 reports): no item changes under any rule.
+  - Held-out OpenAI run (`openai-site-main`): confident wrong 28 -> 18 /286, value right 213 -> 220 /242, strict 197 -> 204 /242, answerable declined 6 -> 8 /256, must-refuse answered 4 -> 2 /30. Of the 11 misses, 9 now score right; utilities-h058 (a decline in the model's words, real per DAR-732) moves from confident wrong to declined; one other held-out answer, uncited and without the value, now counts as declined (not read). Left as misses: tmsd-h097 ("currently connect" answered "existing ... connect") and wztc-h031 ("appropriate action" answered "an appropriate TMP"): paraphrases no general rule separates from wrong answers.
+  - Free-model held-out runs: baseline 25 -> 21 /286, after-dar-662 25 -> 21, after-dar-663 26 -> 22 /274, after-dar-664-k8 28 -> 24 /281, after-dar-717 22 -> 19 /285; every change is one of the 28 read items.
+  - The 18 remaining include 3 non-errors (tmsd-h097, wztc-h031, utilities-h080 cited from the FHWA guide instead of the UAM), so the real rate on this run is 15/286 confident wrong plus utilities-h058 declined.
