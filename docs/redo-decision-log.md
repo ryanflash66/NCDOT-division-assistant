@@ -539,3 +539,13 @@ Also open, without a ticket yet:
   - Only the image-read gold values among the 28 were rechecked (tmsd-h049 against the page image: 3:1 is right); the other 26 image-read gold values were not.
   - These 28 held-out items were read in detail, so by the held-out rules they are development items now. They need replacing (or leaving out, said so) before the next clean held-out number. Left for the PM.
   - No fixes; DAR-733 (page images for drawing and table pages) is the next ticket this one unblocks.
+
+## DAR-736. Bring the next page when a list or table runs over a page break
+
+- **Question:** 5 of the 7 incomplete answers on the OpenAI held-out run were lists that continue on the next page (DAR-732), and `with_following` often adds a chunk from the same page. How can every passage whose list or table runs over a page break bring its continuation, without paying for every page end?
+- **Chose:** for every passage the model reads, add the next page's first chunk when the page's last line (after dropping folios, footnotes and running footers) is a list item or table row or leads on (`:`, `;`, `,`, "and", "or"), **and** the next page's first line is a list item or table row; mirror it for a passage that starts a page mid-list. Contents pages (leader dots) never count. When the continuation is missing, the passage is marked "may continue" and the prompt tells the model to say so. Report: `docs/redo-reports/dar-736-page-break.md`.
+- **Evidence:**
+  - Retrieval on the 286 held-out questions: 137 change; mean passage text 10,536 -> 12,097 characters (+14.8%); chunks 6.34 -> 7.29; gold pages among the passages 239 -> 245 of 272. About +$0.0004 a question on gpt-6.1-terra.
+  - Paired free-model run on those 137 (main vs this branch, DAR-737 scorer): confident wrong 10 -> 5, value right 101 -> 105 /112, strict 89 -> 95, over-refusal 3 -> 3 /117, must-refuse answered 2 -> 1 /20. Nothing got worse. All 5 gains are DAR-732-read items (development); the other 132 changed questions didn't move.
+  - The five DAR-732 page-break items answer with the full list locally (5/5).
+- **Rejected:** counting an unfinished sentence at a page end as running over: 194 questions changed instead of 137, +34% context instead of +15%, for 2 more gold pages.
