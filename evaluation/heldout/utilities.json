@@ -1714,40 +1714,6 @@
    "note": "Appendix C sample permit form, scanned with no text layer, hand-drawn marks across paragraph (a) and sideways margin labels: pavement replacement not less than 12 inches of bituminous base mixture."
   },
   {
-   "id": "utilities-h056",
-   "division": "utilities",
-   "asker": "wztc",
-   "question": "In that Indiana cut road permit, what is the maximum variation from vertical allowed on the edge of a removed concrete pavement area?",
-   "type": "scan",
-   "edge_cases": [
-    "symbols",
-    "precision",
-    "degraded_scan",
-    "scan"
-   ],
-   "expected": {
-    "source": "010604.pdf",
-    "pdf_pages": [
-     278
-    ],
-    "printed_pages": [
-     "262"
-    ],
-    "value": "1 1/2 inches",
-    "accept": [
-     "1.5 inches",
-     "1.5 in",
-     "1-1/2"
-    ],
-    "unit": "in"
-   },
-   "refuse": false,
-   "split": "locked",
-   "behaviour": "answer",
-   "verified_by": "page_image_read",
-   "note": "Paragraph (B): maximum variation from the vertical will not exceed 1 1/2 inches (printed with a half glyph; OCR reads it as \"1/½2\", so read off the image)."
-  },
-  {
    "id": "utilities-h057",
    "division": "utilities",
    "asker": "tmsd",
@@ -1779,36 +1745,6 @@
    "behaviour": "answer",
    "verified_by": "page_image_read",
    "note": "Figure 10-6 Channelizing Devices (source MUTCD Part VI), scanned with no text layer: Type III barricade 60\" minimum (Types I and II 36\")."
-  },
-  {
-   "id": "utilities-h058",
-   "division": "utilities",
-   "asker": "wztc",
-   "question": "Under 23 CFR 645.207, where does the clear zone start?",
-   "type": "text",
-   "edge_cases": [
-    "duplicate_section",
-    "multi_column",
-    "printed_vs_pdf"
-   ],
-   "expected": {
-    "source": "CFR-2024-title23-vol1-part645.pdf",
-    "pdf_pages": [
-     12
-    ],
-    "printed_pages": [
-     "338"
-    ],
-    "value": "edge of the traveled way",
-    "accept": [
-     "edge of the travelled way"
-    ]
-   },
-   "refuse": false,
-   "split": "locked",
-   "behaviour": "answer",
-   "verified_by": "page_text_match",
-   "note": "Two-column CFR page. Clear zone: total roadside border area starting at the edge of the traveled way. Same definition in the TMP Design Manual p. 25 (wztc) and in the 2003 reprint in if03014.pdf p. 91."
   },
   {
    "id": "utilities-h059",
@@ -2030,36 +1966,6 @@
    "note": "Right column box \"One of Three Circumstances Must Be Addressed\"."
   },
   {
-   "id": "utilities-h066",
-   "division": "utilities",
-   "asker": "wztc",
-   "question": "A utility certification isn't needed on a Federal-aid project that doesn't affect any utilities, correct?",
-   "type": "text",
-   "edge_cases": [
-    "false_premise",
-    "multi_column"
-   ],
-   "expected": {
-    "source": "09utilcoordcert.pdf",
-    "pdf_pages": [
-     1
-    ],
-    "printed_pages": [
-     ""
-    ],
-    "value": "all projects",
-    "accept": [
-     "required for all projects",
-     "including those that don't affect"
-    ]
-   },
-   "refuse": false,
-   "split": "locked",
-   "behaviour": "correct",
-   "verified_by": "page_text_match",
-   "note": "Companion guide p. 1: the utility certification is required for all projects, including those that do not affect any utilities."
-  },
-  {
    "id": "utilities-h067",
    "division": "utilities",
    "asker": "tmsd",
@@ -2235,156 +2141,6 @@
    "note": "\"There are three (3) methods\": Method 1 (Connect site, Sign In, search Permits) at the bottom of p. 5; Method 2 (Utilities Encroachments page, Login button) and Method 3 (search bar on any Connect NCDOT page) on p. 6. The value \"three\" is short, so all_of carries the check."
   },
   {
-   "id": "utilities-h072",
-   "division": "utilities",
-   "asker": "tmsd",
-   "question": "List everything the FHWA utility relocation Program Guide says the plans or drawings supporting a utility agreement should show.",
-   "type": "text",
-   "edge_cases": [
-    "list_page_break",
-    "two_pages",
-    "printed_vs_pdf"
-   ],
-   "expected": {
-    "source": "if03014.pdf",
-    "pdf_pages": [
-     16,
-     17
-    ],
-    "printed_pages": [
-     "B-16",
-     "B-17"
-    ],
-    "value": "limits of right-of-way",
-    "accept": [],
-    "all_of": [
-     [
-      "location, length, size",
-      "operating conditions",
-      "design features"
-     ],
-     [
-      "project number",
-      "plan scale"
-     ],
-     [
-      "limits of right-of-way",
-      "right-of-way to be acquired"
-     ],
-     [
-      "sole expense of the utility",
-      "at the sole expense"
-     ]
-    ]
-   },
-   "refuse": false,
-   "split": "locked",
-   "behaviour": "answer",
-   "verified_by": "page_text_match",
-   "note": "Section Agreements and Authorizations, \"Plans and Drawings\": four dash items, three on B-16 and the last (portion of the work at the sole expense of the utility) on B-17."
-  },
-  {
-   "id": "utilities-h073",
-   "division": "utilities",
-   "asker": "wztc",
-   "question": "Which investment-related costs does FHWA's utility relocation Program Guide say are generally not allowed in a utility's overhead?",
-   "type": "text",
-   "edge_cases": [
-    "list_page_break",
-    "two_pages",
-    "printed_vs_pdf"
-   ],
-   "expected": {
-    "source": "if03014.pdf",
-    "pdf_pages": [
-     22,
-     23
-    ],
-    "printed_pages": [
-     "B-22",
-     "B-23"
-    ],
-    "value": "Return on Investment",
-    "accept": [
-     "Return on Net Investment"
-    ],
-    "all_of": [
-     [
-      "Return on Investment",
-      "Return on Net Investment",
-      "financing capital"
-     ],
-     [
-      "Float"
-     ],
-     [
-      "Federal income tax"
-     ],
-     [
-      "Capital Stock Tax",
-      "financing operations"
-     ]
-    ]
-   },
-   "refuse": false,
-   "split": "locked",
-   "behaviour": "answer",
-   "verified_by": "page_text_match",
-   "note": "\"Investment Related Costs\" list: Return on Investment (B-22, not allowed), then on B-23 Float (not allowed), Income Tax (State/local allowed, Federal not), Property Tax (allowed), Depreciation (allowed), Capital Stock Tax (not allowed)."
-  },
-  {
-   "id": "utilities-h074",
-   "division": "utilities",
-   "asker": "tmsd",
-   "question": "What impacts on transportation projects do FHWA's 2018 slides on utility accommodation list?",
-   "type": "figure",
-   "edge_cases": [
-    "list_page_break",
-    "two_pages"
-   ],
-   "expected": {
-    "source": "utility_row.pdf",
-    "pdf_pages": [
-     10,
-     11
-    ],
-    "printed_pages": [
-     "10",
-     "11"
-    ],
-    "value": "change orders",
-    "accept": [],
-    "all_of": [
-     [
-      "increase bids",
-      "increased risks"
-     ],
-     [
-      "delayed",
-      "delays"
-     ],
-     [
-      "change orders"
-     ],
-     [
-      "safety is jeopardized",
-      "contractor and public safety"
-     ],
-     [
-      "next season"
-     ],
-     [
-      "strained"
-     ]
-    ]
-   },
-   "refuse": false,
-   "split": "locked",
-   "behaviour": "answer",
-   "verified_by": "page_text_match",
-   "note": "Slides 10 and 11 both titled \"Impacts on Transportation Projects\", three bullets each."
-  },
-  {
    "id": "utilities-h075",
    "division": "utilities",
    "asker": "wztc",
@@ -2550,41 +2306,6 @@
    "behaviour": "answer",
    "verified_by": "page_text_match",
    "note": "Section 4.5.3 Other Costs, Product Loss: (1) FPV = 1 + P2/1000 * 0.847; (2) V2 adds 14.65 to P2; (4) Gas Loss = R1/2000."
-  },
-  {
-   "id": "utilities-h080",
-   "division": "utilities",
-   "asker": "wztc",
-   "question": "According to the UAM's credit formula for accrued depreciation of a replaced utility facility, what is the original cost multiplied by?",
-   "type": "text",
-   "edge_cases": [
-    "symbols",
-    "chapter_page"
-   ],
-   "expected": {
-    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
-    "pdf_pages": [
-     176
-    ],
-    "printed_pages": [
-     "4-33"
-    ],
-    "value": "Actual Service Length",
-    "accept": [],
-    "all_of": [
-     [
-      "Actual Service Length"
-     ],
-     [
-      "Total Life Expectancy"
-     ]
-    ]
-   },
-   "refuse": false,
-   "split": "locked",
-   "behaviour": "answer",
-   "verified_by": "page_text_match",
-   "note": "Stacked fraction: (Actual Service Length / Total Life Expectancy) x Original Cost = Accrued (the page prints \"Appreciation\"). The formula is drawn with a fraction bar, so text order is \"Actual Service Length Total Life Expectancy Credit x Original Cost\"."
   },
   {
    "id": "utilities-h081",
@@ -2784,36 +2505,6 @@
    "note": "Cost reimbursement guidance memo (Aug. 20, 2026) p. 1: HB 1094 was signed on July 7, 2026; it memorializes the relocation cost reimbursement expectations in G.S. 136-18(10). The premise date is wrong."
   },
   {
-   "id": "utilities-h087",
-   "division": "utilities",
-   "asker": "wztc",
-   "question": "Since the UAM lets utilities hang conduit on cored slab bridges as long as the hangers are insulated, what else is needed for that attachment?",
-   "type": "text",
-   "edge_cases": [
-    "false_premise",
-    "chapter_page"
-   ],
-   "expected": {
-    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
-    "pdf_pages": [
-     118
-    ],
-    "printed_pages": [
-     "3-45"
-    ],
-    "value": "prohibited",
-    "accept": [
-     "not allowed",
-     "not permitted"
-    ]
-   },
-   "refuse": false,
-   "split": "locked",
-   "behaviour": "correct",
-   "verified_by": "page_text_match",
-   "note": "Section 3 structure attachments, 2.a: utility attachment to bridges of a box beam or cored slab design is prohibited (insulated hangers are rule 1 for metallic attachments to any structure)."
-  },
-  {
    "id": "utilities-h088",
    "division": "utilities",
    "asker": "tmsd",
@@ -2869,22 +2560,6 @@
    "behaviour": "answer",
    "verified_by": "page_text_match",
    "note": "\"Create your Business NCID account here: ... (see Appendix A)\"."
-  },
-  {
-   "id": "utilities-h090",
-   "division": "utilities",
-   "asker": "wztc",
-   "question": "What daily per diem dollar amount can a utility charge for its crews' meals and lodging on a remote relocation job under the UAM?",
-   "type": "unanswerable",
-   "edge_cases": [
-    "not_in_documents"
-   ],
-   "expected": null,
-   "refuse": true,
-   "split": "locked",
-   "behaviour": "refuse",
-   "verified_by": "page_text_match",
-   "note": "UAM 4.5.3 (pdf p. 172) allows meals and lodging in remote areas but caps them by the utility's own published policy or State policy for State workers; no dollar amount is given in any utilities document. The only \"$ per day\" figure is the $1,500 to $2,000 per day minimum in the bond amounts memo (UAM pdf p. 257), which is not a crew expense allowance."
   },
   {
    "id": "utilities-h091",
@@ -3187,6 +2862,375 @@
    "behaviour": "answer",
    "verified_by": "page_text_match",
    "note": "Speaker notes for slides 9-10: \"Explanation of the Various Agreements\" (cont. next slide) ... \"It depends on two things, whose cost and who's constructing.\" The answer sentence is on p. 10 only."
+  },
+  {
+   "id": "utilities-h106",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "In the Washington State DOT utility franchise exhibit reproduced in FHWA's highway/utility guide, what minimum depth must an encasement pipe have from the bottom of the ditch to the top of the casing?",
+   "type": "scan",
+   "edge_cases": [
+    "symbols",
+    "precision",
+    "degraded_scan",
+    "scan"
+   ],
+   "expected": {
+    "source": "010604.pdf",
+    "pdf_pages": [
+     286
+    ],
+    "printed_pages": [
+     "270"
+    ],
+    "value": "3½ feet",
+    "accept": [
+     "3 1/2 feet",
+     "3.5 feet",
+     "3.5 ft",
+     "3-1/2 feet",
+     "3 1/2 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Scanned page (no text layer) of WSDOT form DOT 224-030 Exhibit 'A', item 20: encasement pipe jacked, bored or augered with a minimum depth of 5 feet from top of casing to finished road grade and a minimum of 3½ feet from bottom of ditch to top of casing. A circular stamp is printed over item 20 and partly covers these words; the value was read off the rendered page. RapidOCR reads it as '3½/ feet'."
+  },
+  {
+   "id": "utilities-h107",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "When a utility encroachment application goes to NCDOT, who is responsible for finding out what facilities of others already exist in the encroachment area, per the UAM?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     47
+    ],
+    "printed_pages": [
+     "2-23"
+    ],
+    "value": "encroaching party",
+    "accept": [
+     "the encroacher",
+     "applicant"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 2.4.2: 'it shall be the responsibility of the encroaching party to determine what, if any, facilities of others are in existence'. The same rule is 19A NCAC 02B .0506 in the tmsd Traffic Services Legal Guide (L18 p550). Printed 2-23 vs PDF 47. multi_column dropped: the UAM page is single-column and no unused two-column utilities page shares real text with another division."
+  },
+  {
+   "id": "utilities-h108",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "Under 23 CFR 710.409, a state DOT that sells excess right of way at fair market value still has to put a reversion clause in the deed, right?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise",
+    "multi_column"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part710.pdf",
+    "pdf_pages": [
+     13
+    ],
+    "printed_pages": [
+     "503"
+    ],
+    "value": "no reversion clause",
+    "accept": [
+     "reversion clause is not required",
+     "no reversion clause is required",
+     "does not require a reversion clause"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "correct",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 710.409(d), two-column CFR page 503: reversion is required only when excess property goes to another agency below fair market value for public use; 'Where property is sold at fair market value, no reversion clause is required.' The premise (a reversion clause is required) is wrong."
+  },
+  {
+   "id": "utilities-h109",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "What must a right-of-way use agreement contain under 23 CFR 710.405?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "CFR-2024-title23-vol1-part710.pdf",
+    "pdf_pages": [
+     11,
+     12
+    ],
+    "printed_pages": [
+     "501",
+     "502"
+    ],
+    "value": "safety and integrity",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "safety"
+     ],
+     [
+      "term of the agreement",
+      "term"
+     ],
+     [
+      "design and location"
+     ],
+     [
+      "revocation",
+      "removal"
+     ],
+     [
+      "insurance"
+     ],
+     [
+      "discrimination"
+     ],
+     [
+      "significant revision",
+      "revision"
+     ],
+     [
+      "access",
+      "inspection"
+     ],
+     [
+      "FHWA guidance",
+      "guidance"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "23 CFR 710.405(b) ROW use agreement provisions (1)-(7) on CFR page 501 (safety and integrity, term, design and location, revocation/removal at no cost to FHWA, insurance, non-discrimination, approval of significant revisions) and (8)-(9) on page 502 (access for inspection, maintenance and reconstruction; further terms in FHWA guidance, not mandatory). Printed 501/502 vs PDF 11/12."
+  },
+  {
+   "id": "utilities-h110",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "FHWA's program guide on utility relocation and accommodation says there is no Federal-aid fund just for utility safety. Which funding routes does it say can pay for work on hazardous utility poles, and at what Federal share?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "printed_vs_pdf"
+   ],
+   "expected": {
+    "source": "if03014.pdf",
+    "pdf_pages": [
+     74,
+     75
+    ],
+    "printed_pages": [
+     "B-74",
+     "B-75"
+    ],
+    "value": "regular construction funds",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "regular construction funds",
+      "regular highway construction"
+     ],
+     [
+      "80%",
+      "80 percent"
+     ],
+     [
+      "90%",
+      "90 percent"
+     ],
+     [
+      "100%",
+      "100 percent"
+     ],
+     [
+      "bridge"
+     ],
+     [
+      "safety setaside",
+      "setaside",
+      "set aside",
+      "set-aside"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "FHWA Program Guide, Utility Relocation and Accommodation on Federal-Aid Highway Projects (pages numbered B-n): regular NHS/STP/IM construction funds at the 80% (non-Interstate) / 90% (Interstate) pro rata share (printed B-74); 100% Federal share for listed safety items such as breakaway poles; bridge projects whose approach work is funded at the approach share; STP safety setasides (10%) (B-75)."
+  },
+  {
+   "id": "utilities-h111",
+   "division": "utilities",
+   "asker": "tmsd",
+   "question": "In NCDOT's Utilities Coordination and Encroachments presentation, what bases for a utility's prior rights claim do the two 'Prior Rights Claims' slides list?",
+   "type": "figure",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages"
+   ],
+   "expected": {
+    "source": "UtilitiesCoordination-Encroachments-presentation-notes.pdf",
+    "pdf_pages": [
+     32,
+     33
+    ],
+    "printed_pages": [
+     "30",
+     "31"
+    ],
+    "value": "recorded easement",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "recorded easement"
+     ],
+     [
+      "recorded right of way"
+     ],
+     [
+      "adverse possession"
+     ],
+     [
+      "joint use"
+     ],
+     [
+      "franchise"
+     ],
+     [
+      "paid for",
+      "NCDOT paid",
+      "previous relocation",
+      "NCDOT pays"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "Two slides titled 'Prior Rights Claims' (slide images, read off the rendered page): recorded easement, recorded right of way, existing utilities qualifying for adverse possession (slide 30); joint use agreement with the pole owner, franchise based, NCDOT paid for a previous relocation (slide 31). The speaker notes on the same pages (text layer) carry the same items and are text-checked. Printed 30/31 vs PDF 32/33 (printed_vs_pdf also applies, not tagged to keep the spec's tags)."
+  },
+  {
+   "id": "utilities-h112",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "What plan sheet sizes does the UAM prefer for non-STIP encroachment plans (section 3.2.1.1)?",
+   "type": "text",
+   "edge_cases": [
+    "symbols",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     79
+    ],
+    "printed_pages": [
+     "3-6"
+    ],
+    "value": "11″x17″",
+    "accept": [
+     "11 x 17",
+     "11x17",
+     "11\" x 17\""
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "11″x17″",
+      "11\" x 17\"",
+      "11 x 17",
+      "11x17",
+      "11 by 17"
+     ],
+     [
+      "8.5″x11″",
+      "8.5\" x 11\"",
+      "8.5 x 11",
+      "8.5x11",
+      "8.5 by 11"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "UAM 3.2.1.1 Plan Format: 'Plan sheet size of 11″x17″ or 8.5″x11″ is preferred' (inch marks are U+2033). Full-size 22″x34″ only if requested. Appendix C (UAM p201) and the excluded plan-requirement sheet repeat it; the question names section 3.2.1.1."
+  },
+  {
+   "id": "utilities-h113",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "If an encroachment isn't finished within 30 days of notice and the Division Engineer completes it, NCDOT bills the applicant the cost plus 25 percent for administration, right?",
+   "type": "text",
+   "edge_cases": [
+    "false_premise",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "20220713 NCDOT UAM Ver 2-0.pdf",
+    "pdf_pages": [
+     41
+    ],
+    "printed_pages": [
+     "2-17"
+    ],
+    "value": "15 percent",
+    "accept": [
+     "15%"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "correct",
+   "verified_by": "page_text_match",
+   "note": "UAM 2.3.2 item 12: the Division Engineer may complete the work and charge the applicant for the work done plus 15 percent of the total cost for administrative expense. The premise (25 percent) is wrong."
+  },
+  {
+   "id": "utilities-h114",
+   "division": "utilities",
+   "asker": "wztc",
+   "question": "How many hours of training does a utility locator need before NC811 lets them mark underground lines in North Carolina?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "UAM 1.3.10 describes NC811 and the FHWA highway/utility guide (010604) describes locators and their instruments, but no document gives a training or certification requirement for locators. Searched every utilities document's text layer and the dar-661 utilities OCR text for 'locator' within 100 characters of train/certif/qualif/hour (either order), 'hours of training/instruction', 'training hours' and 'continuing education': no hits."
   }
  ]
 }

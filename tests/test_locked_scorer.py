@@ -80,6 +80,37 @@ def test_value_matches_phrase_words_in_order_with_the_gaps_a_wording_allows():
     assert not value_matches("Class 2 or 3", [], "Class 3 or 2")
 
 
+def test_value_matches_a_range_or_list_that_states_the_value():
+    # Held-out tmsd-h016, tmsd-h085 (DAR-737): the unit at the end of a range belongs to its start too.
+    assert value_matches("75 degrees", ["75°"], "between 75 and 90 degrees; 70 degrees is below the minimum [1]")
+    assert value_matches("15 feet", [], "Stop 15 to 50 feet from the nearest rail [1]")
+    assert value_matches("15 ft", [], "15-50 ft")
+    assert value_matches("10 ft", [], "10, 12, or 14 feet")
+    # The unit must still agree, and a preposition "in" is no unit.
+    assert not value_matches("75 ft", [], "between 75 and 90 degrees")
+    assert not value_matches("6 in", [], "set 5 and 6 in the work zone")
+
+
+def test_value_matches_reordered_words_quantifiers_endings_and_acronyms():
+    # Held-out tmsd-h089, wztc-h079, tmsd-h085 (DAR-737): the same words side by side in another order.
+    assert value_matches("crossings at grade", [], "at-grade crossings and direct private driveways are prohibited")
+    assert value_matches("Long project duration", [], "The project has a long duration.")
+    assert value_matches("listen and look", [], "look and listen in both directions")
+    assert not value_matches("crossings at grade", [], "grade separations at crossings")
+    # utilities-h066: a quantifier takes modifiers before its noun as a number does.
+    assert value_matches("all projects", [], "required for all Federal-aid projects")
+    assert not value_matches("all projects", [], "all of the work on these projects")
+    # utilities-h087: a one-word value with another ending.
+    assert value_matches("prohibited", [], "The UAM prohibits utility attachments")
+    assert not value_matches("prohibited", [], "The UAM permits utility attachments")
+    # wztc-h097: an acronym and its spelled-out form, and a verb joined by "and".
+    assert value_matches("Implement the TMP", [], "Implement the transportation management plan (TMP)")
+    assert value_matches("Revise the TMP", [], "revise and implement the TMP as needed")
+    assert value_matches("memoranda of understanding", [], "sign an MOU with each utility")
+    assert not value_matches("Implement the TMP", [], "Implement the traffic control plan")
+    assert not value_matches("Revise the TMP", [], "revise the schedule and the TMP")
+
+
 def test_value_matches_numbers_within_tolerance_and_units():
     assert value_matches("27.42", ["27.42 ft"], "The maximum deflection is 27.42 feet [1].")
     assert value_matches("27.42", [], "about 27.420 ft")
@@ -205,6 +236,12 @@ def test_a_decline_in_the_answers_own_words_is_a_refusal_not_a_confident_answer(
                                                      sources=[_source(5)]))
     assert corrected["false_answer"] is False and corrected["critical"] is False
     assert score_item(premise, RANKED, _payload("Above 1.0 [1].", sources=[_source(5)]))["critical"]
+    # Held-out wztc-h072 and utilities-h090 (DAR-737): a contraction, and a document named by its acronym.
+    for reply in ("The documents don’t state how many records were held by the end of 2025. [1]",
+                  "The UAM does not specify a daily per diem dollar amount. [1]"):
+        assert score_item(NEGATIVE, RANKED, _payload(reply, sources=[_source(5)]))["declined"]
+    # An agency's rule is an answer: "FHWA does not require" says what the rule is.
+    assert score_item(NEGATIVE, RANKED, _payload("FHWA does not require a permit. [1]", sources=[_source(5)]))["critical"]
 
 
 def test_rescore_rewrites_a_report_with_the_current_scorer(tmp_path):

@@ -98,14 +98,14 @@
    "Final answers: 260 from gpt-6.1-terra, 26 from the free retry model after gpt-6.1-terra refused (17 still refused, 9 answered). OpenAI spend for the run: about $0.90 (site estimate $0.01 before, $0.92 after)."
   ],
   "rescored": {
-   "at": "2026-11-17T03:07:37+00:00",
-   "git_commit": "79d3c5f",
+   "at": "2026-11-17T06:32:12+00:00",
+   "git_commit": "3fc2215610ddbde69d9575fc1db523832a523673",
    "before": {
-    "value_ok": "209/242",
-    "strict_ok": "194/242",
-    "critical": "36/286",
-    "over_refusal": "5/256",
-    "false_answer": "6/30"
+    "value_ok": "213/242",
+    "strict_ok": "197/242",
+    "critical": "28/286",
+    "over_refusal": "6/256",
+    "false_answer": "4/30"
    }
   }
  },
@@ -171,66 +171,66 @@
      ]
     },
     "value_ok": {
-     "k": 213,
+     "k": 220,
      "n": 242,
-     "rate": 0.8801652892561983,
+     "rate": 0.9090909090909091,
      "ci": [
-      0.8331956053439409,
-      0.9152542325420336
+      0.8661985944459466,
+      0.9391985137139608
      ]
     },
     "strict_ok": {
-     "k": 197,
+     "k": 204,
      "n": 242,
-     "rate": 0.8140495867768595,
+     "rate": 0.8429752066115702,
      "ci": [
-      0.7602608691821068,
-      0.8580237795063069
+      0.7918221628342916,
+      0.883409756128055
      ]
     },
     "critical": {
-     "k": 28,
+     "k": 18,
      "n": 286,
-     "rate": 0.0979020979020979,
+     "rate": 0.06293706293706294,
      "ci": [
-      0.06860582746331781,
-      0.13785690241727566
+      0.04017799155292451,
+      0.09728149744772058
      ]
     },
     "over_refusal": {
-     "k": 6,
+     "k": 8,
      "n": 256,
-     "rate": 0.0234375,
+     "rate": 0.03125,
      "ci": [
-      0.010784867555857603,
-      0.0501809956000511
+      0.015918258891511296,
+      0.06044160650774316
      ]
     },
     "false_answer": {
-     "k": 4,
+     "k": 2,
      "n": 30,
-     "rate": 0.13333333333333333,
+     "rate": 0.06666666666666667,
      "ci": [
-      0.053096554840547455,
-      0.296813266820363
+      0.018477023791270378,
+      0.2132345836261692
      ]
     },
     "flagged": {
      "k": 0,
-     "n": 240,
+     "n": 238,
      "rate": 0.0,
      "ci": [
       0.0,
-      0.015753919941558815
+      0.015884202979201578
      ]
     },
     "false_flag": {
      "k": 0,
-     "n": 213,
+     "n": 220,
      "rate": 0.0,
      "ci": [
       0.0,
-      0.017715518248153008
+      0.01716151619513562
      ]
     },
     "clarify_ok": {
@@ -299,66 +299,66 @@
       ]
      },
      "value_ok": {
-      "k": 213,
+      "k": 220,
       "n": 242,
-      "rate": 0.8801652892561983,
+      "rate": 0.9090909090909091,
       "ci": [
-       0.8331956053439409,
-       0.9152542325420336
+       0.8661985944459466,
+       0.9391985137139608
       ]
      },
      "strict_ok": {
-      "k": 197,
+      "k": 204,
       "n": 242,
-      "rate": 0.8140495867768595,
+      "rate": 0.8429752066115702,
       "ci": [
-       0.7602608691821068,
-       0.8580237795063069
+       0.7918221628342916,
+       0.883409756128055
       ]
      },
      "critical": {
-      "k": 28,
+      "k": 18,
       "n": 286,
-      "rate": 0.0979020979020979,
+      "rate": 0.06293706293706294,
       "ci": [
-       0.06860582746331781,
-       0.13785690241727566
+       0.04017799155292451,
+       0.09728149744772058
       ]
      },
      "over_refusal": {
-      "k": 6,
+      "k": 8,
       "n": 256,
-      "rate": 0.0234375,
+      "rate": 0.03125,
       "ci": [
-       0.010784867555857603,
-       0.0501809956000511
+       0.015918258891511296,
+       0.06044160650774316
       ]
      },
      "false_answer": {
-      "k": 4,
+      "k": 2,
       "n": 30,
-      "rate": 0.13333333333333333,
+      "rate": 0.06666666666666667,
       "ci": [
-       0.053096554840547455,
-       0.296813266820363
+       0.018477023791270378,
+       0.2132345836261692
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 240,
+      "n": 238,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.015753919941558815
+       0.015884202979201578
       ]
      },
      "false_flag": {
       "k": 0,
-      "n": 213,
+      "n": 220,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.017715518248153008
+       0.01716151619513562
       ]
      },
      "clarify_ok": {
@@ -428,39 +428,39 @@
       ]
      },
      "value_ok": {
-      "k": 74,
+      "k": 77,
       "n": 85,
-      "rate": 0.8705882352941177,
+      "rate": 0.9058823529411765,
       "ci": [
-       0.7829519105661322,
-       0.9261764720187473
+       0.8251294803137523,
+       0.9515349387077823
       ]
      },
      "strict_ok": {
-      "k": 67,
+      "k": 70,
       "n": 85,
-      "rate": 0.788235294117647,
+      "rate": 0.8235294117647058,
       "ci": [
-       0.689906657554083,
-       0.8616376400119344
+       0.7290439696176283,
+       0.8900363643850442
       ]
      },
      "critical": {
-      "k": 11,
+      "k": 8,
       "n": 98,
-      "rate": 0.11224489795918367,
+      "rate": 0.08163265306122448,
       "ci": [
-       0.06384269945885744,
-       0.18989933369673156
+       0.041944058967642,
+       0.15288287154233562
       ]
      },
      "over_refusal": {
-      "k": 2,
+      "k": 3,
       "n": 90,
-      "rate": 0.022222222222222223,
+      "rate": 0.03333333333333333,
       "ci": [
-       0.006115441986325208,
-       0.07744526688625372
+       0.011400390222806277,
+       0.09347286030389873
       ]
      },
      "false_answer": {
@@ -483,11 +483,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 74,
+      "n": 77,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.04934977939638607
+       0.04751842528243408
       ]
      },
      "clarify_ok": {
@@ -555,66 +555,66 @@
       ]
      },
      "value_ok": {
-      "k": 72,
+      "k": 74,
       "n": 83,
-      "rate": 0.8674698795180723,
+      "rate": 0.891566265060241,
       "ci": [
-       0.7780725361545823,
-       0.9243569350724009
+       0.8065953353528812,
+       0.9418950848070189
       ]
      },
      "strict_ok": {
-      "k": 69,
+      "k": 71,
       "n": 83,
-      "rate": 0.8313253012048193,
+      "rate": 0.8554216867469879,
       "ci": [
-       0.736558859848702,
-       0.8967791879789059
+       0.7640819877833326,
+       0.9153170089771919
       ]
      },
      "critical": {
-      "k": 9,
+      "k": 5,
       "n": 97,
-      "rate": 0.09278350515463918,
+      "rate": 0.05154639175257732,
       "ci": [
-       0.04958321848144811,
-       0.1670088367716433
+       0.022216051037510606,
+       0.11504355411462804
       ]
      },
      "over_refusal": {
-      "k": 3,
+      "k": 4,
       "n": 87,
-      "rate": 0.034482758620689655,
+      "rate": 0.04597701149425287,
       "ci": [
-       0.011795820527505975,
-       0.09654082386874399
+       0.018022688467086906,
+       0.11233033507987294
       ]
      },
      "false_answer": {
-      "k": 1,
+      "k": 0,
       "n": 10,
-      "rate": 0.1,
+      "rate": 0.0,
       "ci": [
-       0.017876213095072896,
-       0.4041500267952385
+       0.0,
+       0.2775327998628892
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 81,
+      "n": 80,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.045278085432415204
+       0.0458181295355271
       ]
      },
      "false_flag": {
       "k": 0,
-      "n": 72,
+      "n": 74,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.05065117259645781
+       0.04934977939638607
       ]
      },
      "clarify_ok": {
@@ -682,30 +682,30 @@
       ]
      },
      "value_ok": {
-      "k": 67,
+      "k": 69,
       "n": 74,
-      "rate": 0.9054054054054054,
+      "rate": 0.9324324324324325,
       "ci": [
-       0.8173774141493173,
-       0.9534200620157751
+       0.8513880607414608,
+       0.9707959138346378
       ]
      },
      "strict_ok": {
-      "k": 61,
+      "k": 63,
       "n": 74,
-      "rate": 0.8243243243243243,
+      "rate": 0.8513513513513513,
       "ci": [
-       0.7222800662989051,
-       0.8943579146331688
+       0.753105074828074,
+       0.9149194045150061
       ]
      },
      "critical": {
-      "k": 8,
+      "k": 5,
       "n": 91,
-      "rate": 0.08791208791208792,
+      "rate": 0.054945054945054944,
       "ci": [
-       0.045220207808304075,
-       0.16398638883637745
+       0.023695099703426786,
+       0.12224802467282925
       ]
      },
      "over_refusal": {
@@ -718,30 +718,30 @@
       ]
      },
      "false_answer": {
-      "k": 2,
+      "k": 1,
       "n": 12,
-      "rate": 0.16666666666666666,
+      "rate": 0.08333333333333333,
       "ci": [
-       0.04696514218385378,
-       0.4480308622529734
+       0.014865094404917095,
+       0.35387991114111694
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 75,
+      "n": 74,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.04872384248280587
+       0.04934977939638607
       ]
      },
      "false_flag": {
       "k": 0,
-      "n": 67,
+      "n": 69,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.05422613939130178
+       0.05273725818905173
       ]
      },
      "clarify_ok": {
@@ -1179,31 +1179,32 @@
       ]
      },
      "value_ok": {
-      "k": 8,
+      "k": 9,
       "n": 9,
-      "rate": 0.8888888888888888,
+      "rate": 1.0,
       "ci": [
-       0.5650002944233439,
-       0.9801091123614551
+       0.7008549515804559,
+       1.0
       ]
      },
      "strict_ok": {
-      "k": 8,
+      "k": 9,
       "n": 9,
-      "rate": 0.8888888888888888,
+      "rate": 1.0,
       "ci": [
-       0.5650002944233439,
-       0.9801091123614551
+       0.7008549515804559,
+       1.0
       ]
      },
      "critical": {
-      "k": 1,
+      "k": 0,
       "n": 9,
-      "rate": 0.1111111111111111,
+      "rate": 0.0,
       "ci": [
-       0.019890887638544907,
-       0.434999705576656
-      ]
+       0.0,
+       0.2991450484195441
+      ],
+      "upper_if_zero": 0.2831288355631134
      },
      "over_refusal": {
       "k": 0,
@@ -1231,11 +1232,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 8,
+      "n": 9,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.32440756488388023
+       0.2991450484195441
       ]
      },
      "clarify_ok": {
@@ -1666,39 +1667,39 @@
       ]
      },
      "value_ok": {
-      "k": 144,
+      "k": 150,
       "n": 163,
-      "rate": 0.8834355828220859,
+      "rate": 0.9202453987730062,
       "ci": [
-       0.8251202631536756,
-       0.9240939962010002
+       0.8683380501546948,
+       0.95280077809803
       ]
      },
      "strict_ok": {
-      "k": 134,
+      "k": 140,
       "n": 163,
-      "rate": 0.8220858895705522,
+      "rate": 0.8588957055214724,
       "ci": [
-       0.7561670823551125,
-       0.8731728955028153
+       0.797165223225571,
+       0.9040993235304056
       ]
      },
      "critical": {
-      "k": 16,
+      "k": 9,
       "n": 173,
-      "rate": 0.09248554913294797,
+      "rate": 0.05202312138728324,
       "ci": [
-       0.057730664785247444,
-       0.144944992041555
+       0.02760783038362031,
+       0.09590087038343206
       ]
      },
      "over_refusal": {
-      "k": 3,
+      "k": 5,
       "n": 173,
-      "rate": 0.017341040462427744,
+      "rate": 0.028901734104046242,
       "ci": [
-       0.005914752805222814,
-       0.04973655705347232
+       0.012406951549592947,
+       0.06586348861188793
       ]
      },
      "false_answer": {
@@ -1718,11 +1719,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 144,
+      "n": 150,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.025983637143036746
+       0.0249702443680766
       ]
      },
      "clarify_ok": {
@@ -1787,12 +1788,12 @@
       "ci": null
      },
      "critical": {
-      "k": 4,
+      "k": 2,
       "n": 30,
-      "rate": 0.13333333333333333,
+      "rate": 0.06666666666666667,
       "ci": [
-       0.053096554840547455,
-       0.296813266820363
+       0.018477023791270378,
+       0.2132345836261692
       ]
      },
      "over_refusal": {
@@ -1802,21 +1803,21 @@
       "ci": null
      },
      "false_answer": {
-      "k": 4,
+      "k": 2,
       "n": 30,
-      "rate": 0.13333333333333333,
+      "rate": 0.06666666666666667,
       "ci": [
-       0.053096554840547455,
-       0.296813266820363
+       0.018477023791270378,
+       0.2132345836261692
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 4,
+      "n": 2,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.4898908364545973
+       0.6576197724933469
       ]
      },
      "false_flag": {
@@ -2011,30 +2012,30 @@
       ]
      },
      "value_ok": {
-      "k": 6,
+      "k": 7,
       "n": 10,
-      "rate": 0.6,
+      "rate": 0.7,
       "ci": [
-       0.31267376973365824,
-       0.8318196702937638
+       0.39677814746114537,
+       0.8922087325936989
       ]
      },
      "strict_ok": {
-      "k": 6,
+      "k": 7,
       "n": 10,
-      "rate": 0.6,
+      "rate": 0.7,
       "ci": [
-       0.31267376973365824,
-       0.8318196702937638
+       0.39677814746114537,
+       0.8922087325936989
       ]
      },
      "critical": {
-      "k": 2,
+      "k": 1,
       "n": 10,
-      "rate": 0.2,
+      "rate": 0.1,
       "ci": [
-       0.05668215145437519,
-       0.5098375284633583
+       0.017876213095072896,
+       0.4041500267952385
       ]
      },
      "over_refusal": {
@@ -2063,11 +2064,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 6,
+      "n": 7,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.3903342879021653
+       0.35433043506668743
       ]
      },
      "clarify_ok": {
@@ -2132,30 +2133,30 @@
       ]
      },
      "value_ok": {
-      "k": 30,
+      "k": 32,
       "n": 35,
-      "rate": 0.8571428571428571,
+      "rate": 0.9142857142857143,
       "ci": [
-       0.7062444591340484,
-       0.9373976892056628
+       0.7762072603410349,
+       0.9704176317330301
       ]
      },
      "strict_ok": {
-      "k": 30,
+      "k": 32,
       "n": 35,
-      "rate": 0.8571428571428571,
+      "rate": 0.9142857142857143,
       "ci": [
-       0.7062444591340484,
-       0.9373976892056628
+       0.7762072603410349,
+       0.9704176317330301
       ]
      },
      "critical": {
-      "k": 5,
+      "k": 3,
       "n": 37,
-      "rate": 0.13513513513513514,
+      "rate": 0.08108108108108109,
       "ci": [
-       0.059132944257320186,
-       0.2797741178400979
+       0.02796057410044797,
+       0.2130067934928839
       ]
      },
      "over_refusal": {
@@ -2184,11 +2185,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 30,
+      "n": 32,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.11351339317396876
+       0.1071791982550706
       ]
      },
      "clarify_ok": {
@@ -2284,12 +2285,12 @@
       "upper_if_zero": 0.14586850331224344
      },
      "over_refusal": {
-      "k": 0,
+      "k": 1,
       "n": 19,
-      "rate": 0.0,
+      "rate": 0.05263157894736842,
       "ci": [
-       0.0,
-       0.16817922405261626
+       0.009351994062300362,
+       0.24638731166898786
       ]
      },
      "false_answer": {
@@ -2742,6 +2743,15 @@
       ]
      },
      "value_ok": {
+      "k": 13,
+      "n": 15,
+      "rate": 0.8666666666666667,
+      "ci": [
+       0.6211801716767764,
+       0.9626387408969346
+      ]
+     },
+     "strict_ok": {
       "k": 12,
       "n": 15,
       "rate": 0.8,
@@ -2750,31 +2760,23 @@
        0.9295245065301844
       ]
      },
-     "strict_ok": {
-      "k": 11,
-      "n": 15,
-      "rate": 0.7333333333333333,
-      "ci": [
-       0.4804956594401943,
-       0.8910254667430761
-      ]
-     },
      "critical": {
+      "k": 0,
+      "n": 15,
+      "rate": 0.0,
+      "ci": [
+       0.0,
+       0.20388330103584862
+      ],
+      "upper_if_zero": 0.18103627252208465
+     },
+     "over_refusal": {
       "k": 2,
       "n": 15,
       "rate": 0.13333333333333333,
       "ci": [
        0.03736125910306537,
        0.37881982832322364
-      ]
-     },
-     "over_refusal": {
-      "k": 1,
-      "n": 15,
-      "rate": 0.06666666666666667,
-      "ci": [
-       0.011866895493268553,
-       0.2981652987378003
       ]
      },
      "false_answer": {
@@ -2794,11 +2796,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 12,
+      "n": 13,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.24249400665524085
+       0.22809537235419838
       ]
      },
      "clarify_ok": {
@@ -2863,31 +2865,32 @@
       ]
      },
      "value_ok": {
-      "k": 13,
+      "k": 15,
       "n": 15,
-      "rate": 0.8666666666666667,
+      "rate": 1.0,
       "ci": [
-       0.6211801716767764,
-       0.9626387408969346
+       0.7961166989641515,
+       1.0
       ]
      },
      "strict_ok": {
-      "k": 13,
+      "k": 15,
       "n": 15,
-      "rate": 0.8666666666666667,
+      "rate": 1.0,
       "ci": [
-       0.6211801716767764,
-       0.9626387408969346
+       0.7961166989641515,
+       1.0
       ]
      },
      "critical": {
-      "k": 2,
+      "k": 0,
       "n": 15,
-      "rate": 0.13333333333333333,
+      "rate": 0.0,
       "ci": [
-       0.03736125910306537,
-       0.37881982832322364
-      ]
+       0.0,
+       0.20388330103584862
+      ],
+      "upper_if_zero": 0.18103627252208465
      },
      "over_refusal": {
       "k": 0,
@@ -2915,11 +2918,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 13,
+      "n": 15,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.22809537235419838
+       0.20388330103584862
       ]
      },
      "clarify_ok": {
@@ -3352,6 +3355,15 @@
       ]
      },
      "value_ok": {
+      "k": 7,
+      "n": 14,
+      "rate": 0.5,
+      "ci": [
+       0.26799202452413634,
+       0.7320079754758637
+      ]
+     },
+     "strict_ok": {
       "k": 6,
       "n": 14,
       "rate": 0.42857142857142855,
@@ -3360,22 +3372,13 @@
        0.6740935542034926
       ]
      },
-     "strict_ok": {
-      "k": 5,
-      "n": 14,
-      "rate": 0.35714285714285715,
-      "ci": [
-       0.1634473175355414,
-       0.612355768960926
-      ]
-     },
      "critical": {
-      "k": 8,
+      "k": 7,
       "n": 14,
-      "rate": 0.5714285714285714,
+      "rate": 0.5,
       "ci": [
-       0.3259064457965074,
-       0.7861920109552588
+       0.26799202452413634,
+       0.7320079754758637
       ]
      },
      "over_refusal": {
@@ -3404,11 +3407,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 6,
+      "n": 7,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.3903342879021653
+       0.35433043506668743
       ]
      },
      "clarify_ok": {
@@ -3706,39 +3709,40 @@
       ]
      },
      "value_ok": {
-      "k": 22,
+      "k": 23,
       "n": 24,
-      "rate": 0.9166666666666666,
+      "rate": 0.9583333333333334,
       "ci": [
-       0.741511978067893,
-       0.9768411847029567
+       0.7975819352134406,
+       0.9926065438344942
       ]
      },
      "strict_ok": {
-      "k": 19,
+      "k": 20,
       "n": 24,
-      "rate": 0.7916666666666666,
+      "rate": 0.8333333333333334,
       "ci": [
-       0.5952954674681133,
-       0.9075517464714814
+       0.6414692935030095,
+       0.9332132367136705
       ]
      },
      "critical": {
-      "k": 2,
-      "n": 24,
-      "rate": 0.08333333333333333,
-      "ci": [
-       0.023158815297043306,
-       0.25848802193210685
-      ]
-     },
-     "over_refusal": {
       "k": 0,
       "n": 24,
       "rate": 0.0,
       "ci": [
        0.0,
        0.13797620467498017
+      ],
+      "upper_if_zero": 0.1173461561549487
+     },
+     "over_refusal": {
+      "k": 1,
+      "n": 24,
+      "rate": 0.041666666666666664,
+      "ci": [
+       0.0073934561655057685,
+       0.20241806478655938
       ]
      },
      "false_answer": {
@@ -3758,11 +3762,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 22,
+      "n": 23,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.14865487460862087
+       0.14311661845042686
       ]
      },
      "clarify_ok": {
@@ -3827,31 +3831,32 @@
       ]
      },
      "value_ok": {
-      "k": 8,
+      "k": 9,
       "n": 9,
-      "rate": 0.8888888888888888,
+      "rate": 1.0,
       "ci": [
-       0.5650002944233439,
-       0.9801091123614551
+       0.7008549515804559,
+       1.0
       ]
      },
      "strict_ok": {
-      "k": 8,
+      "k": 9,
       "n": 9,
-      "rate": 0.8888888888888888,
+      "rate": 1.0,
       "ci": [
-       0.5650002944233439,
-       0.9801091123614551
+       0.7008549515804559,
+       1.0
       ]
      },
      "critical": {
-      "k": 1,
+      "k": 0,
       "n": 9,
-      "rate": 0.1111111111111111,
+      "rate": 0.0,
       "ci": [
-       0.019890887638544907,
-       0.434999705576656
-      ]
+       0.0,
+       0.2991450484195441
+      ],
+      "upper_if_zero": 0.2831288355631134
      },
      "over_refusal": {
       "k": 0,
@@ -3879,11 +3884,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 8,
+      "n": 9,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.32440756488388023
+       0.2991450484195441
       ]
      },
      "clarify_ok": {
@@ -4187,12 +4192,12 @@
       "ci": null
      },
      "critical": {
-      "k": 3,
+      "k": 1,
       "n": 12,
-      "rate": 0.25,
+      "rate": 0.08333333333333333,
       "ci": [
-       0.08894166839405471,
-       0.5323053349335657
+       0.014865094404917095,
+       0.35387991114111694
       ]
      },
      "over_refusal": {
@@ -4202,21 +4207,21 @@
       "ci": null
      },
      "false_answer": {
-      "k": 3,
+      "k": 1,
       "n": 12,
-      "rate": 0.25,
+      "rate": 0.08333333333333333,
       "ci": [
-       0.08894166839405471,
-       0.5323053349335657
+       0.014865094404917095,
+       0.35387991114111694
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 3,
+      "n": 1,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.5614970317550454
+       0.7934506856227626
       ]
      },
      "false_flag": {
@@ -4524,21 +4529,21 @@
       ]
      },
      "critical": {
-      "k": 3,
-      "n": 42,
-      "rate": 0.07142857142857142,
-      "ci": [
-       0.02459040987330592,
-       0.19009426801158313
-      ]
-     },
-     "over_refusal": {
       "k": 2,
       "n": 42,
       "rate": 0.047619047619047616,
       "ci": [
        0.013157524908905607,
        0.15789852396958842
+      ]
+     },
+     "over_refusal": {
+      "k": 3,
+      "n": 42,
+      "rate": 0.07142857142857142,
+      "ci": [
+       0.02459040987330592,
+       0.19009426801158313
       ]
      },
      "false_answer": {
@@ -4627,31 +4632,32 @@
       ]
      },
      "value_ok": {
-      "k": 24,
+      "k": 25,
       "n": 26,
-      "rate": 0.9230769230769231,
+      "rate": 0.9615384615384616,
       "ci": [
-       0.7585844622837095,
-       0.9786449115277238
+       0.8110722109696524,
+       0.9931780150064564
       ]
      },
      "strict_ok": {
-      "k": 24,
+      "k": 25,
       "n": 26,
-      "rate": 0.9230769230769231,
+      "rate": 0.9615384615384616,
       "ci": [
-       0.7585844622837095,
-       0.9786449115277238
+       0.8110722109696524,
+       0.9931780150064564
       ]
      },
      "critical": {
-      "k": 1,
+      "k": 0,
       "n": 26,
-      "rate": 0.038461538461538464,
+      "rate": 0.0,
       "ci": [
-       0.006821984993543487,
-       0.18892778903034757
-      ]
+       0.0,
+       0.1287289218592153
+      ],
+      "upper_if_zero": 0.10883035576078481
      },
      "over_refusal": {
       "k": 1,
@@ -4679,11 +4685,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 24,
+      "n": 25,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.13797620467498017
+       0.13319225093904846
       ]
      },
      "clarify_ok": {
@@ -5734,6 +5740,15 @@
       ]
      },
      "value_ok": {
+      "k": 7,
+      "n": 15,
+      "rate": 0.4666666666666667,
+      "ci": [
+       0.24809535365737387,
+       0.698830199745016
+      ]
+     },
+     "strict_ok": {
       "k": 6,
       "n": 15,
       "rate": 0.4,
@@ -5742,22 +5757,13 @@
        0.6425316987937539
       ]
      },
-     "strict_ok": {
-      "k": 5,
-      "n": 15,
-      "rate": 0.3333333333333333,
-      "ci": [
-       0.1517632443971473,
-       0.5828645226148023
-      ]
-     },
      "critical": {
-      "k": 8,
+      "k": 7,
       "n": 15,
-      "rate": 0.5333333333333333,
+      "rate": 0.4666666666666667,
       "ci": [
-       0.30116980025498397,
-       0.7519046463426261
+       0.24809535365737387,
+       0.698830199745016
       ]
      },
      "over_refusal": {
@@ -5786,11 +5792,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 6,
+      "n": 7,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.3903342879021653
+       0.35433043506668743
       ]
      },
      "clarify_ok": {
@@ -5855,6 +5861,15 @@
       ]
      },
      "value_ok": {
+      "k": 36,
+      "n": 36,
+      "rate": 1.0,
+      "ci": [
+       0.9035813714055363,
+       1.0
+      ]
+     },
+     "strict_ok": {
       "k": 34,
       "n": 36,
       "rate": 0.9444444444444444,
@@ -5863,23 +5878,15 @@
        0.9846300133358382
       ]
      },
-     "strict_ok": {
-      "k": 32,
-      "n": 36,
-      "rate": 0.8888888888888888,
-      "ci": [
-       0.7468519140963513,
-       0.9559335969968435
-      ]
-     },
      "critical": {
-      "k": 2,
+      "k": 0,
       "n": 38,
-      "rate": 0.05263157894736842,
+      "rate": 0.0,
       "ci": [
-       0.014554208147292413,
-       0.17285462131770377
-      ]
+       0.0,
+       0.09180986822558396
+      ],
+      "upper_if_zero": 0.07580765168296455
      },
      "over_refusal": {
       "k": 0,
@@ -5907,11 +5914,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 34,
+      "n": 36,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.10151455415332376
+       0.09641862859446367
       ]
      },
      "clarify_ok": {
@@ -5981,66 +5988,66 @@
       ]
      },
      "value_ok": {
-      "k": 203,
+      "k": 209,
       "n": 229,
-      "rate": 0.8864628820960698,
+      "rate": 0.9126637554585153,
       "ci": [
-       0.8388421329554889,
-       0.9213317677599486
+       0.8689584258420611,
+       0.942752688481203
       ]
      },
      "strict_ok": {
-      "k": 188,
+      "k": 194,
       "n": 229,
-      "rate": 0.8209606986899564,
+      "rate": 0.8471615720524017,
       "ci": [
-       0.7661375504557615,
-       0.8651933162401104
+       0.7948618482798979,
+       0.8880062320238002
       ]
      },
      "critical": {
-      "k": 25,
+      "k": 16,
       "n": 268,
-      "rate": 0.09328358208955224,
+      "rate": 0.05970149253731343,
       "ci": [
-       0.06398418917777007,
-       0.13407779538584205
+       0.03707901707925135,
+       0.09476790198961316
       ]
      },
      "over_refusal": {
-      "k": 6,
+      "k": 7,
       "n": 242,
-      "rate": 0.024793388429752067,
+      "rate": 0.028925619834710745,
       "ci": [
-       0.011411458103998854,
-       0.053026244538532996
+       0.01408080440881795,
+       0.058492222558561444
       ]
      },
      "false_answer": {
-      "k": 3,
+      "k": 1,
       "n": 26,
-      "rate": 0.11538461538461539,
+      "rate": 0.038461538461538464,
       "ci": [
-       0.04003244623610615,
-       0.2897590321171364
+       0.006821984993543487,
+       0.18892778903034757
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 227,
+      "n": 225,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.016641113083928197
+       0.016786551005620237
       ]
      },
      "false_flag": {
       "k": 0,
-      "n": 203,
+      "n": 209,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.018571996361832828
+       0.018048451847580686
       ]
      },
      "clarify_ok": {
@@ -6108,6 +6115,15 @@
       ]
      },
      "value_ok": {
+      "k": 11,
+      "n": 13,
+      "rate": 0.8461538461538461,
+      "ci": [
+       0.5776536898051745,
+       0.9567418216419186
+      ]
+     },
+     "strict_ok": {
       "k": 10,
       "n": 13,
       "rate": 0.7692307692307693,
@@ -6116,31 +6132,22 @@
        0.9182047128150143
       ]
      },
-     "strict_ok": {
-      "k": 9,
-      "n": 13,
-      "rate": 0.6923076923076923,
-      "ci": [
-       0.42369343180549035,
-       0.8731929634428948
-      ]
-     },
      "critical": {
-      "k": 3,
+      "k": 2,
       "n": 18,
-      "rate": 0.16666666666666666,
+      "rate": 0.1111111111111111,
       "ci": [
-       0.05836576805861446,
-       0.39222038103915724
+       0.03101952264561239,
+       0.32799765130178804
       ]
      },
      "over_refusal": {
-      "k": 0,
+      "k": 1,
       "n": 14,
-      "rate": 0.0,
+      "rate": 0.07142857142857142,
       "ci": [
-       0.0,
-       0.2153108027376358
+       0.012722215247890939,
+       0.31468704424151117
       ]
      },
      "false_answer": {
@@ -6163,11 +6170,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 10,
+      "n": 11,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.2775327998628892
+       0.2588329669680317
       ]
      },
      "clarify_ok": {
@@ -6184,31 +6191,31 @@
   },
   "abstention": {
    "answerable": {
-    "answered": 250,
-    "refused": 6,
+    "answered": 248,
+    "refused": 8,
     "n": 256
    },
    "unanswerable": {
-    "answered": 4,
-    "refused": 26,
+    "answered": 2,
+    "refused": 28,
     "n": 30
    },
    "over_refusal": {
-    "k": 6,
+    "k": 8,
     "n": 256,
-    "rate": 0.0234375,
+    "rate": 0.03125,
     "ci": [
-     0.010784867555857603,
-     0.0501809956000511
+     0.015918258891511296,
+     0.06044160650774316
     ]
    },
    "false_answer": {
-    "k": 4,
+    "k": 2,
     "n": 30,
-    "rate": 0.13333333333333333,
+    "rate": 0.06666666666666667,
     "ci": [
-     0.053096554840547455,
-     0.296813266820363
+     0.018477023791270378,
+     0.2132345836261692
     ]
    }
   },
@@ -7034,13 +7041,13 @@
    ],
    "cited_page_ok_pdf": true,
    "cited_page_ok_printed": true,
-   "value_ok": false,
-   "strict_ok": false,
-   "critical": true,
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": false,
-   "false_flag": null,
+   "false_flag": false,
    "clarify_ok": null,
    "behaviour": "answer",
    "answer": "No. The access policy requires a two-way driveway’s angle to the pavement edge to be between 75 and 90 degrees; 70 degrees is below the minimum. [1]",
@@ -10056,7 +10063,7 @@
    ],
    "answered": true,
    "refused": false,
-   "declined": false,
+   "declined": true,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -10066,7 +10073,7 @@
    "value_ok": false,
    "strict_ok": false,
    "critical": false,
-   "over_refusal": false,
+   "over_refusal": true,
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
@@ -11008,13 +11015,13 @@
    ],
    "cited_page_ok_pdf": true,
    "cited_page_ok_printed": true,
-   "value_ok": false,
-   "strict_ok": false,
-   "critical": true,
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": false,
-   "false_flag": null,
+   "false_flag": false,
    "clarify_ok": null,
    "behaviour": "answer",
    "answer": "Before crossing, the operator must: [1]\n\n- Notify a railroad superintendent and give the railroad reasonable time to provide protection at the crossing. [1]\n- Stop 15 to 50 feet from the nearest rail, then look and listen in both directions for approaching trains or on-track equipment and signals of their approach. [1]\n- Proceed only when the crossing can be made safely; do not cross when a warning indicates the immediate approach of a train or on-track equipment. [1]\n\nThe stop, look, listen, and safe-proceed requirements do not apply at crossings officially signed “Exempt” under the conditions specified in the statute. [1]",
@@ -11243,13 +11250,13 @@
    ],
    "cited_page_ok_pdf": true,
    "cited_page_ok_printed": true,
-   "value_ok": false,
-   "strict_ok": false,
-   "critical": true,
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": false,
-   "false_flag": null,
+   "false_flag": false,
    "clarify_ok": null,
    "behaviour": "answer",
    "answer": "The DMV-349 Instructional Manual defines **full access control** as controlling access to favor through traffic: connections are provided only with selected public roads, and at-grade crossings and direct private driveways are prohibited. [1]",
@@ -15089,7 +15096,7 @@
    ],
    "answered": true,
    "refused": false,
-   "declined": false,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15110,8 +15117,8 @@
    "cited_page_ok_printed": false,
    "value_ok": false,
    "strict_ok": false,
-   "critical": true,
-   "over_refusal": false,
+   "critical": false,
+   "over_refusal": true,
    "false_answer": null,
    "flagged": false,
    "false_flag": null,
@@ -15581,13 +15588,13 @@
    ],
    "cited_page_ok_pdf": true,
    "cited_page_ok_printed": null,
-   "value_ok": false,
-   "strict_ok": false,
-   "critical": true,
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": false,
-   "false_flag": null,
+   "false_flag": false,
    "clarify_ok": null,
    "behaviour": "correct",
    "answer": "No. A utility certification is required for all Federal-aid projects, including those that do not affect any utilities. [1] For such a project, the certification should state that no utility facilities will be affected. [1]",
@@ -16822,13 +16829,13 @@
    ],
    "cited_page_ok_pdf": true,
    "cited_page_ok_printed": true,
-   "value_ok": false,
-   "strict_ok": false,
-   "critical": true,
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": false,
-   "false_flag": null,
+   "false_flag": false,
    "clarify_ok": null,
    "behaviour": "correct",
    "answer": "The UAM prohibits utility attachments to cored slab bridges; insulating the hangers does not make the attachment permissible. [1]",
@@ -16990,7 +16997,7 @@
    ],
    "answered": true,
    "refused": false,
-   "declined": false,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17011,10 +17018,10 @@
    "cited_page_ok_printed": null,
    "value_ok": null,
    "strict_ok": null,
-   "critical": true,
+   "critical": false,
    "over_refusal": null,
-   "false_answer": true,
-   "flagged": false,
+   "false_answer": false,
+   "flagged": null,
    "false_flag": null,
    "clarify_ok": null,
    "behaviour": "refuse",
@@ -21395,7 +21402,7 @@
    ],
    "answered": true,
    "refused": false,
-   "declined": false,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21416,10 +21423,10 @@
    "cited_page_ok_printed": null,
    "value_ok": null,
    "strict_ok": null,
-   "critical": true,
+   "critical": false,
    "over_refusal": null,
-   "false_answer": true,
-   "flagged": false,
+   "false_answer": false,
+   "flagged": null,
    "false_flag": null,
    "clarify_ok": null,
    "behaviour": "refuse",
@@ -21787,13 +21794,13 @@
    ],
    "cited_page_ok_pdf": true,
    "cited_page_ok_printed": false,
-   "value_ok": false,
-   "strict_ok": false,
-   "critical": true,
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": false,
-   "false_flag": null,
+   "false_flag": false,
    "clarify_ok": null,
    "behaviour": "answer",
    "answer": "Consider pedestrian/bicycle access improvements when any of these conditions apply: [1]\n\n- The project has a long duration.\n- Pedestrian or bicyclist activity is significant.\n- Existing sidewalks pass through the work zone.\n- A school route passes through the work zone. [1]",
@@ -22785,13 +22792,13 @@
    ],
    "cited_page_ok_pdf": true,
    "cited_page_ok_printed": true,
-   "value_ok": false,
-   "strict_ok": false,
-   "critical": true,
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": false,
-   "false_flag": null,
+   "false_flag": false,
    "clarify_ok": null,
    "behaviour": "answer",
    "answer": "FHWA’s guide lists these objectives for work zone impacts assessment during construction: [1]\n\n- Resolve pre-construction coordination issues and assess proposed changes before work starts. [1]\n- Implement the transportation management plan (TMP), which contains strategies for managing the project’s work zone impacts. [1]\n- Actively monitor and manage impacts during construction, and revise and implement the TMP as needed. [1]\n- Document findings and lessons for use in performance assessments. [1]",

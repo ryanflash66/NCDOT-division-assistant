@@ -117,43 +117,148 @@ _WORD = re.compile(r"\d+(?:\.\d+)?|[a-z]+|%")
 # utilities-053) is gold "not yet been assigned a number", answered "has not yet assigned a number".
 _FILLER = frozenset({"a", "an", "the", "be", "been", "is", "are", "was", "were", "has", "have", "had"})
 # Words that may sit between a number and the noun it counts: "27 fatalities" answered as "27 work
-# zone fatalities" (locked wztc-089).
+# zone fatalities" (locked wztc-089). A leading quantifier counts the same way: "all projects" answered
+# "all Federal-aid projects" (held-out utilities-h066, DAR-737).
 _COUNT_MODIFIERS = 2
+_QUANTIFIERS = frozenset({"all", "each", "every", "any", "both"})
+# Endings that only change a word's number or tense: "prohibited" answered "prohibits" (held-out
+# utilities-h087, DAR-737). Tried in this order; a stem keeps at least 3 letters, so "uses", "used" and
+# "use" are all "use". "-ing" is not stripped: "engineering" is not "engineer".
+_ENDINGS = ("es", "ed", "s", "d", "e")
+
+
+def _stem(word: str) -> str:
+    """The word without one plural or past-tense ending; numbers and short words unchanged."""
+    if len(word) < 4 or not word.isalpha():
+        return word
+    for ending in _ENDINGS:
+        if word.endswith(ending) and len(word) - len(ending) >= 3:
+            return word[:-len(ending)]
+    return word
 
 
 def _words(text: str) -> List[str]:
-    return [w for w in _WORD.findall(text) if w not in _FILLER]
+    return [_stem(w) for w in _WORD.findall(text) if w not in _FILLER]
 
 
 def _words_in_order(wanted: str, answer: str) -> bool:
     """Whether a phrase value's words appear in the answer in order, with only the gaps a wording allows.
 
-    Scorer-only, for phrase values (never a single number). Besides filler words, two gaps are allowed:
-    a word of the value repeated ("Class 2 or 3" answered "Class 2 or Class 3", locked wztc-083), and up
-    to _COUNT_MODIFIERS words between a value's leading number and its noun (not inside a ratio: "16:1
-    anchored" is not "16:1 when anchored"). Any other word in between breaks the match, so "Division
-    Utility" is not found in "Division Project/Utility personnel" (locked utilities-041, a wrong answer).
+    Scorer-only, for phrase values (never a single number). Words are compared without their plural or
+    past-tense ending (_stem). Besides filler words, three gaps are allowed: a word of the value repeated
+    ("Class 2 or 3" answered "Class 2 or Class 3", locked wztc-083); up to _COUNT_MODIFIERS words between a
+    value's leading number or quantifier and its noun (not inside a ratio: "16:1 anchored" is not "16:1 when
+    anchored"); and once, a second verb or noun joined by "and"/"or" ("Revise the TMP" answered "revise and
+    implement the TMP", held-out wztc-h097, DAR-737). Any other word in between breaks the match, so
+    "Division Utility" is not found in "Division Project/Utility personnel" (locked utilities-041, a wrong
+    answer).
     """
     want, have = _words(wanted), _words(answer)
     if len(want) < 2 or not any(w[0].isalpha() for w in want):
         return False
+    leads_count = want[0][0].isdigit() or want[0] in _QUANTIFIERS
     for start, word in enumerate(have):
         if word != want[0]:
             continue
-        j, i, gap = 1, start + 1, 0
+        j, i, gap, joined = 1, start + 1, 0, False
         while j < len(want) and i < len(have):
             if have[i] == want[j]:
                 j, gap = j + 1, 0
             elif have[i] in want[:j]:
                 pass
-            elif j == 1 and want[0][0].isdigit() and want[1][0].isalpha() and gap < _COUNT_MODIFIERS:
+            elif j == 1 and leads_count and want[1][0].isalpha() and gap < _COUNT_MODIFIERS:
                 gap += 1
+            elif (not joined and have[i] in ("and", "or") and i + 2 < len(have) and have[i + 1][0].isalpha()
+                  and have[i + 2] == want[j]):
+                joined, i = True, i + 1
             else:
                 break
             i += 1
         if j == len(want):
             return True
     return False
+
+
+def _words_reordered(wanted: str, answer: str) -> bool:
+    """Whether the answer has exactly a phrase value's words, side by side in another order.
+
+    Scorer-only. English puts a modifier before or after its noun: "crossings at grade" is "at-grade
+    crossings" (held-out tmsd-h089), "long project duration" is "the project has a long duration"
+    (wztc-h079), "listen and look" is "look and listen" (tmsd-h085; DAR-737). The words must be the same
+    ones (filler aside, endings stemmed) with nothing else between them, so a reordering cannot pull in
+    a word from elsewhere in the sentence. Values with a number are never reordered: "Class 2 or 3" is
+    not "Class 3 or 2" for a scorer that can't tell which order matters.
+    """
+    want, have = _words(wanted), _words(answer)
+    if len(want) < 2 or not all(w.isalpha() for w in want):
+        return False
+    target = sorted(want)
+    return any(sorted(have[i:i + len(want)]) == target for i in range(len(have) - len(want) + 1))
+
+
+# Two to six capitals, the way the manuals abbreviate a document or body: TMP, MOU, UAM, MUTCD.
+_ACRONYM = re.compile(r"\b[A-Z]{2,6}\b")
+# Small words an acronym skips: "MOU" is "memoranda of understanding".
+_ACRONYM_SKIPS = frozenset({"of", "and", "for", "the", "on", "in", "to", "&"})
+_LETTER_WORD = re.compile(r"[A-Za-z]+|&")
+
+
+def _contract(text: str, acronyms: Sequence[str]) -> str:
+    """The text with each spelled-out form of an acronym replaced by the acronym.
+
+    Scorer-only. "Implement the TMP" is answered "Implement the transportation management plan (TMP)"
+    (held-out wztc-h097, DAR-737): a run of words whose initials spell an acronym found on either side
+    becomes that acronym, on both sides, before the phrase match.
+    """
+    if not acronyms:
+        return text
+    words = list(_LETTER_WORD.finditer(text))
+    spans = []
+    for acronym in acronyms:
+        letters = acronym.lower()
+        for start in range(len(words)):
+            k, n = start, 0
+            while k < len(words) and n < len(letters):
+                raw = words[k].group(0)
+                word = raw.lower()
+                # A small word stands for its letter when it has it ("DOT" is "Department of Transportation").
+                if word in _ACRONYM_SKIPS and n > 0 and word[0] != letters[n]:
+                    k += 1
+                    continue
+                # An acronym is not the spelled-out form of another one.
+                if word[0] != letters[n] or (len(raw) > 1 and raw.isupper()):
+                    break
+                n, k = n + 1, k + 1
+            if n == len(letters) and k - start > 1:
+                spans.append((words[start].start(), words[k - 1].end(), acronym))
+    out, last = [], 0
+    for begin, end, acronym in sorted(spans):
+        if begin < last:
+            continue
+        out += [text[last:begin], acronym]
+        last = end
+    return "".join(out) + text[last:]
+
+
+# A number joined to a later number that carries a unit: "between 75 and 90 degrees" states 75 degrees
+# (held-out tmsd-h016), "stop 15 to 50 feet" states 15 feet (tmsd-h085; DAR-737). Normalized text.
+_RANGE_START = re.compile(r"(?<![\w.])(\d+(?:\.\d+)?)(?=(?:\s*-\s*|\s*,\s*(?:and\s+|or\s+)?|\s+(?:to|and|or|through)\s+)"
+                          r"\d+(?:\.\d+)?\s(ft|in" + _PREPOSITION + r"|mph|%|deg)(?![a-z%]))")
+
+
+def _one_word(wanted: str, answer: str) -> bool:
+    """A one-word phrase value found as a word of the answer once both lose their endings ("prohibited"
+    answered "prohibits"). Scorer-only."""
+    want = _words(wanted)
+    return len(want) == 1 and want[0].isalpha() and want[0] in _words(answer)
+
+
+def _range_units(text: str) -> str:
+    """Normalized text where each number at the start of a range or list carries the unit of its end."""
+    previous = None
+    while previous != text:
+        previous, text = text, _RANGE_START.sub(lambda m: f"{m.group(1)} {m.group(2)}", text)
+    return text
 
 
 def value_matches(expected_value: Optional[str], accept: Optional[Sequence[str]], answer_text: str) -> bool:
@@ -169,15 +274,23 @@ def value_matches(expected_value: Optional[str], accept: Optional[Sequence[str]]
     candidates = [c for c in [expected_value, *(accept or [])] if c is not None and str(c).strip()]
     if not candidates:
         return False
+    acronyms = sorted(set(_ACRONYM.findall(answer_text or "")).union(*(_ACRONYM.findall(str(c)) for c in candidates)))
     answer = normalize(answer_text)
-    numbers = numbers_with_units(answer)
+    # Scorer-only forms of the answer: ranges with the unit on each end, and spelled-out acronyms contracted.
+    ranged = _range_units(answer)
+    phrased = normalize(_contract(answer_text or "", acronyms))
+    numbers = numbers_with_units(ranged)
     for candidate in candidates:
         wanted = normalize(str(candidate))
         single = _single_number(wanted)
         if single is None:
+            short = normalize(_contract(str(candidate), acronyms))
             if wanted and (wanted in answer or _phrase_form(wanted) in _phrase_form(answer)
+                           or wanted in ranged
                            or _words_in_order(wanted, answer)
-                           or _words_in_order(_phrase_form(wanted), _phrase_form(answer))):
+                           or _words_in_order(_phrase_form(wanted), _phrase_form(answer))
+                           or _words_in_order(short, phrased) or _words_reordered(short, phrased)
+                           or _one_word(short, phrased)):
                 return True
             continue
         value, unit = single

@@ -17,7 +17,8 @@ It uses the locked set's schema, split rule, scorer and runner
 | answer cache | `results/cache.jsonl` (gitignored) |
 | gold pages | none of the pages in the locked set or the development sets (`eval/*.json`, `evaluation/testset.json`) |
 | edge-case tags | only the tags in `evaluation.heldout.EDGE_CASES`, one per row of the edge-case matrix; every command fails on any other tag |
-| how it was written | `docs/heldout-set/authoring-<division>.md` |
+| how it was written | `docs/heldout-set/authoring-<division>.md`; the DAR-737 replacements in `authoring-dar-737.md` |
+| retired items | `retired/`: items read in detail, so development items now; not loaded by any command, and their gold pages stay out of new items |
 
 ## Running
 
