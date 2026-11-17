@@ -9,6 +9,8 @@ rejected or out-of-budget OpenAI key costs the visitor nothing but the better
 model. client_from_settings() picks between them. With a SpendLedger
 (spend.py, DAR-715) OpenAIClient adds each call's estimated cost to the month's
 total and stops calling OpenAI once that reaches the monthly limit.
+answered_by_backup() says when a free model answered in place of OpenAI, for
+the page's notice (DAR-735).
 
 complete() waits for the whole answer; complete_stream() hands it over as it is
 written (server-sent events), so the page can show the text while the model is
@@ -117,7 +119,8 @@ class OpenRouterClient:
     reads_images = False
 
     def __init__(self, api_key: str, models: Sequence[str], temperature: float = 0.1,
-                 reasoning: str = "off", transport: "httpx.AsyncBaseTransport | None" = None):
+                 reasoning: str = "off", transport: "httpx.AsyncBaseTransport | None" = None,
+                 stands_in: bool = False):
         if not models:
             raise ValueError("at least one model is required")
         self._api_key = api_key
@@ -125,6 +128,8 @@ class OpenRouterClient:
         self.temperature = temperature
         self.reasoning = reasoning
         self._transport = transport
+        # Answering in place of OpenAI, which was selected but has no key (answered_by_backup).
+        self.stands_in = stands_in
 
     def retry_models(self, used: str) -> List[str]:
         """The models for a second attempt after `used` answered: the ones after it, or `used` again if it was the last."""
@@ -518,12 +523,33 @@ def client_from_settings(settings: Any, transport: "httpx.AsyncBaseTransport | N
     openrouter = None
     if settings.openrouter_api_key:
         openrouter = OpenRouterClient(settings.openrouter_api_key, settings.models, settings.temperature,
-                                      settings.reasoning, transport=transport)
+                                      settings.reasoning, transport=transport,
+                                      stands_in=settings.llm_provider == "openai" and not settings.openai_api_key)
     if settings.llm_provider != "openai" or not settings.openai_api_key:
         return openrouter
     openai = OpenAIClient(settings.openai_api_key, [settings.openai_model], settings.temperature,
                           settings.reasoning, transport=transport, ledger=ledger, prices=settings.openai_prices)
     return FallbackClient(openai, openrouter) if openrouter else openai
+
+
+def answered_by_backup(llm: Any, model: Optional[str]) -> bool:
+    """Whether a free model wrote the reply in place of OpenAI, so the page can say so (DAR-735).
+
+    True when LLM_PROVIDER=openai but a free OpenRouter model answered: the
+    FallbackClient asked it because OpenAI failed (an error, a timeout, a
+    rejected key, the monthly limit of DAR-715), or OPENAI_API_KEY is missing
+    and the free models answer alone. Decided from the client's own model
+    lists, so the browser never has to guess from a model name.
+
+    Without LLM_PROVIDER=openai the free models are the site's only models, not
+    a backup: a notice there would sit under every answer and tell the reader
+    nothing about this one, so it is False.
+    """
+    if not model:  # no model call (nothing retrieved)
+        return False
+    if isinstance(llm, FallbackClient):
+        return model not in llm.primary.models
+    return isinstance(llm, OpenRouterClient) and llm.stands_in
 
 
 async def _sse_data(lines: AsyncIterator[str]) -> AsyncIterator[str]:

@@ -74,6 +74,11 @@ export type AnswerPayload = {
   sources: Source[];
   model: string | null;
   first_model: string | null;
+  /**
+   * A free model wrote this reply in place of OpenAI, which couldn't answer (DAR-735); the
+   * server decides it from the client that answered. Absent in answers saved before it.
+   */
+  backup_model?: boolean;
   retried: boolean;
   suggest: { id: string; name: string }[];
   asker: { id: string; name: string };
