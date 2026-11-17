@@ -17,6 +17,7 @@ One short report per sub-ticket (DAR-660, step 2). Each gives what changed, befo
 | DAR-662 | [dar-662-refusals.md](dar-662-refusals.md) | why answerable questions were refused; the retry's second look |
 | DAR-661, DAR-718 | [dar-661-heldout-set.md](dar-661-heldout-set.md) | the held-out test set and its first result |
 | DAR-717 | [dar-717-footnotes.md](dar-717-footnotes.md) | notes under a table kept with the table; a prompt rule for note questions (after the redo, measured on its own) |
+| DAR-732 | [dar-732-accuracy-investigation.md](dar-732-accuracy-investigation.md) | the 28 confident wrong answers of the OpenAI held-out run, sorted by cause and page type (per item: [dar-732-buckets.json](dar-732-buckets.json)) |
 
 **Runs and commits** (all in [`../locked-set/RUNS.md`](../locked-set/RUNS.md)):
 
