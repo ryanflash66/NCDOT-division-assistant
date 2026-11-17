@@ -92,6 +92,21 @@
     "onnx_threads": null,
     "affinity": 2
    }
+  },
+  "notes": [
+   "Deployed code: production deployment dpl_Grgx4SxDpPmz8wHj4YsT5kBcoTV7 (ECU team, built from main at df1a0cd, which holds DAR-662, 717, 664 and 663 with their defaults: TOP_K 5, ROW_GUARD off, NUMBER_AGREEMENT off). The commit above is the runner's checkout (the --site mode), not the answering code.",
+   "Final answers: 260 from gpt-6.1-terra, 26 from the free retry model after gpt-6.1-terra refused (17 still refused, 9 answered). OpenAI spend for the run: about $0.90 (site estimate $0.01 before, $0.92 after)."
+  ],
+  "rescored": {
+   "at": "2026-11-17T03:07:37+00:00",
+   "git_commit": "79d3c5f",
+   "before": {
+    "value_ok": "209/242",
+    "strict_ok": "194/242",
+    "critical": "36/286",
+    "over_refusal": "5/256",
+    "false_answer": "6/30"
+   }
   }
  },
  "coverage": {
@@ -156,75 +171,75 @@
      ]
     },
     "value_ok": {
-     "k": 209,
+     "k": 213,
      "n": 242,
-     "rate": 0.8636363636363636,
+     "rate": 0.8801652892561983,
      "ci": [
-      0.8146817663559868,
-      0.9012267742305976
+      0.8331956053439409,
+      0.9152542325420336
      ]
     },
     "strict_ok": {
-     "k": 194,
+     "k": 197,
      "n": 242,
-     "rate": 0.8016528925619835,
+     "rate": 0.8140495867768595,
      "ci": [
-      0.7468713904225512,
-      0.8470072852913197
+      0.7602608691821068,
+      0.8580237795063069
      ]
     },
     "critical": {
-     "k": 36,
+     "k": 28,
      "n": 286,
-     "rate": 0.1258741258741259,
+     "rate": 0.0979020979020979,
      "ci": [
-      0.0923244215249486,
-      0.16934090105960362
+      0.06860582746331781,
+      0.13785690241727566
      ]
     },
     "over_refusal": {
-     "k": 5,
+     "k": 6,
      "n": 256,
-     "rate": 0.01953125,
+     "rate": 0.0234375,
      "ci": [
-      0.008370729784579391,
-      0.04489813224965644
+      0.010784867555857603,
+      0.0501809956000511
      ]
     },
     "false_answer": {
-     "k": 6,
+     "k": 4,
      "n": 30,
-     "rate": 0.2,
+     "rate": 0.13333333333333333,
      "ci": [
-      0.0950510717728987,
-      0.3730569641314825
+      0.053096554840547455,
+      0.296813266820363
      ]
     },
     "flagged": {
      "k": 0,
-     "n": 242,
+     "n": 240,
      "rate": 0.0,
      "ci": [
       0.0,
-      0.01562575669344655
+      0.015753919941558815
      ]
     },
     "false_flag": {
      "k": 0,
-     "n": 209,
+     "n": 213,
      "rate": 0.0,
      "ci": [
       0.0,
-      0.018048451847580686
+      0.017715518248153008
      ]
     },
     "clarify_ok": {
-     "k": 11,
+     "k": 12,
      "n": 14,
-     "rate": 0.7857142857142857,
+     "rate": 0.8571428571428571,
      "ci": [
-      0.524107694133997,
-      0.9242861328730683
+      0.6005862050302965,
+      0.9599060787285351
      ]
     }
    }
@@ -284,75 +299,75 @@
       ]
      },
      "value_ok": {
-      "k": 209,
+      "k": 213,
       "n": 242,
-      "rate": 0.8636363636363636,
+      "rate": 0.8801652892561983,
       "ci": [
-       0.8146817663559868,
-       0.9012267742305976
+       0.8331956053439409,
+       0.9152542325420336
       ]
      },
      "strict_ok": {
-      "k": 194,
+      "k": 197,
       "n": 242,
-      "rate": 0.8016528925619835,
+      "rate": 0.8140495867768595,
       "ci": [
-       0.7468713904225512,
-       0.8470072852913197
+       0.7602608691821068,
+       0.8580237795063069
       ]
      },
      "critical": {
-      "k": 36,
+      "k": 28,
       "n": 286,
-      "rate": 0.1258741258741259,
+      "rate": 0.0979020979020979,
       "ci": [
-       0.0923244215249486,
-       0.16934090105960362
+       0.06860582746331781,
+       0.13785690241727566
       ]
      },
      "over_refusal": {
-      "k": 5,
+      "k": 6,
       "n": 256,
-      "rate": 0.01953125,
+      "rate": 0.0234375,
       "ci": [
-       0.008370729784579391,
-       0.04489813224965644
+       0.010784867555857603,
+       0.0501809956000511
       ]
      },
      "false_answer": {
-      "k": 6,
+      "k": 4,
       "n": 30,
-      "rate": 0.2,
+      "rate": 0.13333333333333333,
       "ci": [
-       0.0950510717728987,
-       0.3730569641314825
+       0.053096554840547455,
+       0.296813266820363
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 242,
+      "n": 240,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.01562575669344655
+       0.015753919941558815
       ]
      },
      "false_flag": {
       "k": 0,
-      "n": 209,
+      "n": 213,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.018048451847580686
+       0.017715518248153008
       ]
      },
      "clarify_ok": {
-      "k": 11,
+      "k": 12,
       "n": 14,
-      "rate": 0.7857142857142857,
+      "rate": 0.8571428571428571,
       "ci": [
-       0.524107694133997,
-       0.9242861328730683
+       0.6005862050302965,
+       0.9599060787285351
       ]
      }
     }
@@ -413,12 +428,12 @@
       ]
      },
      "value_ok": {
-      "k": 73,
+      "k": 74,
       "n": 85,
-      "rate": 0.8588235294117647,
+      "rate": 0.8705882352941177,
       "ci": [
-       0.7692586997665947,
-       0.9173576706727329
+       0.7829519105661322,
+       0.9261764720187473
       ]
      },
      "strict_ok": {
@@ -431,21 +446,21 @@
       ]
      },
      "critical": {
-      "k": 13,
+      "k": 11,
       "n": 98,
-      "rate": 0.1326530612244898,
+      "rate": 0.11224489795918367,
       "ci": [
-       0.07918986679217618,
-       0.21382890146048714
+       0.06384269945885744,
+       0.18989933369673156
       ]
      },
      "over_refusal": {
-      "k": 1,
+      "k": 2,
       "n": 90,
-      "rate": 0.011111111111111112,
+      "rate": 0.022222222222222223,
       "ci": [
-       0.0019640841009183445,
-       0.06028408311753451
+       0.006115441986325208,
+       0.07744526688625372
       ]
      },
      "false_answer": {
@@ -468,11 +483,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 73,
+      "n": 74,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.0499920079557311
+       0.04934977939638607
       ]
      },
      "clarify_ok": {
@@ -540,30 +555,30 @@
       ]
      },
      "value_ok": {
-      "k": 70,
+      "k": 72,
       "n": 83,
-      "rate": 0.8433734939759037,
+      "rate": 0.8674698795180723,
       "ci": [
-       0.7502486450452769,
-       0.9061198772487894
+       0.7780725361545823,
+       0.9243569350724009
       ]
      },
      "strict_ok": {
-      "k": 67,
+      "k": 69,
       "n": 83,
-      "rate": 0.8072289156626506,
+      "rate": 0.8313253012048193,
       "ci": [
-       0.7095661283535466,
-       0.8777109705411443
+       0.736558859848702,
+       0.8967791879789059
       ]
      },
      "critical": {
-      "k": 11,
+      "k": 9,
       "n": 97,
-      "rate": 0.1134020618556701,
+      "rate": 0.09278350515463918,
       "ci": [
-       0.06451358102935628,
-       0.1917446992742115
+       0.04958321848144811,
+       0.1670088367716433
       ]
      },
      "over_refusal": {
@@ -595,11 +610,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 70,
+      "n": 72,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.05202306241026692
+       0.05065117259645781
       ]
      },
      "clarify_ok": {
@@ -667,30 +682,30 @@
       ]
      },
      "value_ok": {
-      "k": 66,
+      "k": 67,
       "n": 74,
-      "rate": 0.8918918918918919,
+      "rate": 0.9054054054054054,
       "ci": [
-       0.800911555641104,
-       0.9441926713184854
+       0.8173774141493173,
+       0.9534200620157751
       ]
      },
      "strict_ok": {
-      "k": 60,
+      "k": 61,
       "n": 74,
-      "rate": 0.8108108108108109,
+      "rate": 0.8243243243243243,
       "ci": [
-       0.7071244273939165,
-       0.8838203043326546
+       0.7222800662989051,
+       0.8943579146331688
       ]
      },
      "critical": {
-      "k": 12,
+      "k": 8,
       "n": 91,
-      "rate": 0.13186813186813187,
+      "rate": 0.08791208791208792,
       "ci": [
-       0.07707107514538468,
-       0.21648681785719748
+       0.045220207808304075,
+       0.16398638883637745
       ]
      },
      "over_refusal": {
@@ -703,39 +718,39 @@
       ]
      },
      "false_answer": {
-      "k": 4,
+      "k": 2,
       "n": 12,
-      "rate": 0.3333333333333333,
+      "rate": 0.16666666666666666,
       "ci": [
-       0.13812009109121315,
-       0.6093779111272004
+       0.04696514218385378,
+       0.4480308622529734
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 77,
+      "n": 75,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.04751842528243408
+       0.04872384248280587
       ]
      },
      "false_flag": {
       "k": 0,
-      "n": 66,
+      "n": 67,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.05500255701354129
+       0.05422613939130178
       ]
      },
      "clarify_ok": {
-      "k": 4,
+      "k": 5,
       "n": 5,
-      "rate": 0.8,
+      "rate": 1.0,
       "ci": [
-       0.37553462976252533,
-       0.9637758913675698
+       0.5655175352168251,
+       1.0
       ]
      }
     }
@@ -1285,6 +1300,15 @@
       ]
      },
      "value_ok": {
+      "k": 9,
+      "n": 13,
+      "rate": 0.6923076923076923,
+      "ci": [
+       0.42369343180549035,
+       0.8731929634428948
+      ]
+     },
+     "strict_ok": {
       "k": 8,
       "n": 13,
       "rate": 0.6153846153846154,
@@ -1293,22 +1317,13 @@
        0.8229029220223743
       ]
      },
-     "strict_ok": {
-      "k": 7,
-      "n": 13,
-      "rate": 0.5384615384615384,
-      "ci": [
-       0.29143795714506004,
-       0.7679393219046169
-      ]
-     },
      "critical": {
-      "k": 3,
+      "k": 2,
       "n": 13,
-      "rate": 0.23076923076923078,
+      "rate": 0.15384615384615385,
       "ci": [
-       0.08179528718498569,
-       0.5025637594672749
+       0.043258178358081184,
+       0.4223463101948254
       ]
      },
      "over_refusal": {
@@ -1337,11 +1352,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 8,
+      "n": 9,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.32440756488388023
+       0.2991450484195441
       ]
      },
      "clarify_ok": {
@@ -1651,39 +1666,39 @@
       ]
      },
      "value_ok": {
-      "k": 141,
+      "k": 144,
       "n": 163,
-      "rate": 0.8650306748466258,
+      "rate": 0.8834355828220859,
       "ci": [
-       0.8041015025973851,
-       0.9091504723082663
+       0.8251202631536756,
+       0.9240939962010002
       ]
      },
      "strict_ok": {
-      "k": 132,
+      "k": 134,
       "n": 163,
-      "rate": 0.8098159509202454,
+      "rate": 0.8220858895705522,
       "ci": [
-       0.7427075771988555,
-       0.8626575443597225
+       0.7561670823551125,
+       0.8731728955028153
       ]
      },
      "critical": {
-      "k": 21,
+      "k": 16,
       "n": 173,
-      "rate": 0.12138728323699421,
+      "rate": 0.09248554913294797,
       "ci": [
-       0.08078131119587899,
-       0.17844217138788782
+       0.057730664785247444,
+       0.144944992041555
       ]
      },
      "over_refusal": {
-      "k": 2,
+      "k": 3,
       "n": 173,
-      "rate": 0.011560693641618497,
+      "rate": 0.017341040462427744,
       "ci": [
-       0.0031761056273468986,
-       0.041165639079955366
+       0.005914752805222814,
+       0.04973655705347232
       ]
      },
      "false_answer": {
@@ -1703,20 +1718,20 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 141,
+      "n": 144,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.026521818075925647
+       0.025983637143036746
       ]
      },
      "clarify_ok": {
-      "k": 8,
+      "k": 9,
       "n": 10,
-      "rate": 0.8,
+      "rate": 0.9,
       "ci": [
-       0.49016247153664183,
-       0.9433178485456247
+       0.5958499732047615,
+       0.9821237869049271
       ]
      }
     }
@@ -1772,12 +1787,12 @@
       "ci": null
      },
      "critical": {
-      "k": 6,
+      "k": 4,
       "n": 30,
-      "rate": 0.2,
+      "rate": 0.13333333333333333,
       "ci": [
-       0.0950510717728987,
-       0.3730569641314825
+       0.053096554840547455,
+       0.296813266820363
       ]
      },
      "over_refusal": {
@@ -1787,21 +1802,21 @@
       "ci": null
      },
      "false_answer": {
-      "k": 6,
+      "k": 4,
       "n": 30,
-      "rate": 0.2,
+      "rate": 0.13333333333333333,
       "ci": [
-       0.0950510717728987,
-       0.3730569641314825
+       0.053096554840547455,
+       0.296813266820363
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 6,
+      "n": 4,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.3903342879021653
+       0.4898908364545973
       ]
      },
      "false_flag": {
@@ -2745,21 +2760,21 @@
       ]
      },
      "critical": {
-      "k": 3,
+      "k": 2,
       "n": 15,
-      "rate": 0.2,
+      "rate": 0.13333333333333333,
       "ci": [
-       0.07047549346981563,
-       0.45185448715169363
+       0.03736125910306537,
+       0.37881982832322364
       ]
      },
      "over_refusal": {
-      "k": 0,
+      "k": 1,
       "n": 15,
-      "rate": 0.0,
+      "rate": 0.06666666666666667,
       "ci": [
-       0.0,
-       0.20388330103584862
+       0.011866895493268553,
+       0.2981652987378003
       ]
      },
      "false_answer": {
@@ -2969,6 +2984,15 @@
       ]
      },
      "value_ok": {
+      "k": 11,
+      "n": 15,
+      "rate": 0.7333333333333333,
+      "ci": [
+       0.4804956594401943,
+       0.8910254667430761
+      ]
+     },
+     "strict_ok": {
       "k": 10,
       "n": 15,
       "rate": 0.6666666666666666,
@@ -2977,22 +3001,13 @@
        0.8482367556028526
       ]
      },
-     "strict_ok": {
-      "k": 9,
-      "n": 15,
-      "rate": 0.6,
-      "ci": [
-       0.357468301206246,
-       0.8017550385865841
-      ]
-     },
      "critical": {
-      "k": 4,
+      "k": 3,
       "n": 17,
-      "rate": 0.23529411764705882,
+      "rate": 0.17647058823529413,
       "ci": [
-       0.09555044322080117,
-       0.4726179811956498
+       0.06191126637620997,
+       0.41029458568834126
       ]
      },
      "over_refusal": {
@@ -3021,11 +3036,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 10,
+      "n": 11,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.2775327998628892
+       0.2588329669680317
       ]
      },
      "clarify_ok": {
@@ -3215,12 +3230,12 @@
       ]
      },
      "value_ok": {
-      "k": 9,
+      "k": 10,
       "n": 11,
-      "rate": 0.8181818181818182,
+      "rate": 0.9090909090909091,
       "ci": [
-       0.523019438039156,
-       0.9486323102539149
+       0.6226415635484043,
+       0.9837678271141151
       ]
      },
      "strict_ok": {
@@ -3233,21 +3248,22 @@
       ]
      },
      "critical": {
-      "k": 2,
-      "n": 11,
-      "rate": 0.18181818181818182,
-      "ci": [
-       0.05136768974608513,
-       0.4769805619608442
-      ]
-     },
-     "over_refusal": {
       "k": 0,
       "n": 11,
       "rate": 0.0,
       "ci": [
        0.0,
        0.2588329669680317
+      ],
+      "upper_if_zero": 0.2384041903808526
+     },
+     "over_refusal": {
+      "k": 1,
+      "n": 11,
+      "rate": 0.09090909090909091,
+      "ci": [
+       0.016232172885884855,
+       0.37735843645159567
       ]
      },
      "false_answer": {
@@ -3267,11 +3283,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 9,
+      "n": 10,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.2991450484195441
+       0.2775327998628892
       ]
      },
      "clarify_ok": {
@@ -3590,12 +3606,12 @@
       "ci": null
      },
      "critical": {
-      "k": 3,
+      "k": 2,
       "n": 14,
-      "rate": 0.21428571428571427,
+      "rate": 0.14285714285714285,
       "ci": [
-       0.07571386712693184,
-       0.47589230586600295
+       0.040093921271464966,
+       0.39941379496970353
       ]
      },
      "over_refusal": {
@@ -3626,12 +3642,12 @@
       "ci": null
      },
      "clarify_ok": {
-      "k": 11,
+      "k": 12,
       "n": 14,
-      "rate": 0.7857142857142857,
+      "rate": 0.8571428571428571,
       "ci": [
-       0.524107694133997,
-       0.9242861328730683
+       0.6005862050302965,
+       0.9599060787285351
       ]
      }
     }
@@ -3690,30 +3706,30 @@
       ]
      },
      "value_ok": {
-      "k": 20,
+      "k": 22,
       "n": 24,
-      "rate": 0.8333333333333334,
+      "rate": 0.9166666666666666,
       "ci": [
-       0.6414692935030095,
-       0.9332132367136705
+       0.741511978067893,
+       0.9768411847029567
       ]
      },
      "strict_ok": {
-      "k": 17,
+      "k": 19,
       "n": 24,
-      "rate": 0.7083333333333334,
+      "rate": 0.7916666666666666,
       "ci": [
-       0.5083230633550337,
-       0.8508535180303913
+       0.5952954674681133,
+       0.9075517464714814
       ]
      },
      "critical": {
-      "k": 4,
+      "k": 2,
       "n": 24,
-      "rate": 0.16666666666666666,
+      "rate": 0.08333333333333333,
       "ci": [
-       0.06678676328632951,
-       0.3585307064969906
+       0.023158815297043306,
+       0.25848802193210685
       ]
      },
      "over_refusal": {
@@ -3742,11 +3758,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 20,
+      "n": 22,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.16112515805281938
+       0.14865487460862087
       ]
      },
      "clarify_ok": {
@@ -4171,12 +4187,12 @@
       "ci": null
      },
      "critical": {
-      "k": 5,
+      "k": 3,
       "n": 12,
-      "rate": 0.4166666666666667,
+      "rate": 0.25,
       "ci": [
-       0.19326031365875665,
-       0.6804886874504503
+       0.08894166839405471,
+       0.5323053349335657
       ]
      },
      "over_refusal": {
@@ -4186,21 +4202,21 @@
       "ci": null
      },
      "false_answer": {
-      "k": 5,
+      "k": 3,
       "n": 12,
-      "rate": 0.4166666666666667,
+      "rate": 0.25,
       "ci": [
-       0.19326031365875665,
-       0.6804886874504503
+       0.08894166839405471,
+       0.5323053349335657
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 5,
+      "n": 3,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.43448246478317476
+       0.5614970317550454
       ]
      },
      "false_flag": {
@@ -4508,21 +4524,21 @@
       ]
      },
      "critical": {
-      "k": 4,
+      "k": 3,
       "n": 42,
-      "rate": 0.09523809523809523,
+      "rate": 0.07142857142857142,
       "ci": [
-       0.03766224880557388,
-       0.22065105808571023
+       0.02459040987330592,
+       0.19009426801158313
       ]
      },
      "over_refusal": {
-      "k": 1,
+      "k": 2,
       "n": 42,
-      "rate": 0.023809523809523808,
+      "rate": 0.047619047619047616,
       "ci": [
-       0.004215404134432499,
-       0.12321201573766646
+       0.013157524908905607,
+       0.15789852396958842
       ]
      },
      "false_answer": {
@@ -4981,6 +4997,15 @@
       ]
      },
      "value_ok": {
+      "k": 9,
+      "n": 13,
+      "rate": 0.6923076923076923,
+      "ci": [
+       0.42369343180549035,
+       0.8731929634428948
+      ]
+     },
+     "strict_ok": {
       "k": 8,
       "n": 13,
       "rate": 0.6153846153846154,
@@ -4989,22 +5014,13 @@
        0.8229029220223743
       ]
      },
-     "strict_ok": {
-      "k": 7,
-      "n": 13,
-      "rate": 0.5384615384615384,
-      "ci": [
-       0.29143795714506004,
-       0.7679393219046169
-      ]
-     },
      "critical": {
-      "k": 3,
+      "k": 2,
       "n": 14,
-      "rate": 0.21428571428571427,
+      "rate": 0.14285714285714285,
       "ci": [
-       0.07571386712693184,
-       0.47589230586600295
+       0.040093921271464966,
+       0.39941379496970353
       ]
      },
      "over_refusal": {
@@ -5033,11 +5049,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 8,
+      "n": 9,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.32440756488388023
+       0.2991450484195441
       ]
      },
      "clarify_ok": {
@@ -5105,30 +5121,30 @@
       ]
      },
      "value_ok": {
-      "k": 29,
+      "k": 30,
       "n": 34,
-      "rate": 0.8529411764705882,
+      "rate": 0.8823529411764706,
       "ci": [
-       0.6987194350454783,
-       0.9355055855521753
+       0.7337915722962817,
+       0.9532855333511766
       ]
      },
      "strict_ok": {
-      "k": 25,
+      "k": 26,
       "n": 34,
-      "rate": 0.7352941176470589,
+      "rate": 0.7647058823529411,
       "ci": [
-       0.5688285871705534,
-       0.8539880932278825
+       0.6000386207746361,
+       0.8756301446736042
       ]
      },
      "critical": {
-      "k": 4,
+      "k": 3,
       "n": 34,
-      "rate": 0.11764705882352941,
+      "rate": 0.08823529411764706,
       "ci": [
-       0.04671446664882335,
-       0.26620842770371833
+       0.030465943674648555,
+       0.22960486562808868
       ]
      },
      "over_refusal": {
@@ -5157,11 +5173,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 29,
+      "n": 30,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.11696979849974075
+       0.11351339317396876
       ]
      },
      "clarify_ok": {
@@ -5226,6 +5242,15 @@
       ]
      },
      "value_ok": {
+      "k": 9,
+      "n": 9,
+      "rate": 1.0,
+      "ci": [
+       0.7008549515804559,
+       1.0
+      ]
+     },
+     "strict_ok": {
       "k": 8,
       "n": 9,
       "rate": 0.8888888888888888,
@@ -5234,23 +5259,15 @@
        0.9801091123614551
       ]
      },
-     "strict_ok": {
-      "k": 7,
-      "n": 9,
-      "rate": 0.7777777777777778,
-      "ci": [
-       0.45258896910698887,
-       0.9367748928821533
-      ]
-     },
      "critical": {
-      "k": 1,
+      "k": 0,
       "n": 9,
-      "rate": 0.1111111111111111,
+      "rate": 0.0,
       "ci": [
-       0.019890887638544907,
-       0.434999705576656
-      ]
+       0.0,
+       0.2991450484195441
+      ],
+      "upper_if_zero": 0.2831288355631134
      },
      "over_refusal": {
       "k": 0,
@@ -5278,11 +5295,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 8,
+      "n": 9,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.32440756488388023
+       0.2991450484195441
       ]
      },
      "clarify_ok": {
@@ -5471,6 +5488,15 @@
       ]
      },
      "value_ok": {
+      "k": 32,
+      "n": 35,
+      "rate": 0.9142857142857143,
+      "ci": [
+       0.7762072603410349,
+       0.9704176317330301
+      ]
+     },
+     "strict_ok": {
       "k": 31,
       "n": 35,
       "rate": 0.8857142857142857,
@@ -5479,22 +5505,13 @@
        0.9546482066690264
       ]
      },
-     "strict_ok": {
-      "k": 30,
-      "n": 35,
-      "rate": 0.8571428571428571,
-      "ci": [
-       0.7062444591340484,
-       0.9373976892056628
-      ]
-     },
      "critical": {
-      "k": 4,
+      "k": 3,
       "n": 36,
-      "rate": 0.1111111111111111,
+      "rate": 0.08333333333333333,
       "ci": [
-       0.04406640300315648,
-       0.25314808590364857
+       0.02874861133599338,
+       0.2182669124927263
       ]
      },
      "over_refusal": {
@@ -5523,11 +5540,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 31,
+      "n": 32,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.11025539546043596
+       0.1071791982550706
       ]
      },
      "clarify_ok": {
@@ -5838,12 +5855,12 @@
       ]
      },
      "value_ok": {
-      "k": 33,
+      "k": 34,
       "n": 36,
-      "rate": 0.9166666666666666,
+      "rate": 0.9444444444444444,
       "ci": [
-       0.7817330875072737,
-       0.9712513886640066
+       0.8185534279135275,
+       0.9846300133358382
       ]
      },
      "strict_ok": {
@@ -5856,12 +5873,12 @@
       ]
      },
      "critical": {
-      "k": 3,
+      "k": 2,
       "n": 38,
-      "rate": 0.07894736842105263,
+      "rate": 0.05263157894736842,
       "ci": [
-       0.027214595506987724,
-       0.20799371457771454
+       0.014554208147292413,
+       0.17285462131770377
       ]
      },
      "over_refusal": {
@@ -5890,11 +5907,11 @@
      },
      "false_flag": {
       "k": 0,
-      "n": 33,
+      "n": 34,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.10426999754245206
+       0.10151455415332376
       ]
      },
      "clarify_ok": {
@@ -5964,75 +5981,75 @@
       ]
      },
      "value_ok": {
-      "k": 199,
+      "k": 203,
       "n": 229,
-      "rate": 0.868995633187773,
+      "rate": 0.8864628820960698,
       "ci": [
-       0.8191443154536647,
-       0.9066714428565555
+       0.8388421329554889,
+       0.9213317677599486
       ]
      },
      "strict_ok": {
-      "k": 185,
+      "k": 188,
       "n": 229,
-      "rate": 0.8078602620087336,
+      "rate": 0.8209606986899564,
       "ci": [
-       0.7519217348693906,
-       0.8536405250225682
+       0.7661375504557615,
+       0.8651933162401104
       ]
      },
      "critical": {
-      "k": 32,
+      "k": 25,
       "n": 268,
-      "rate": 0.11940298507462686,
+      "rate": 0.09328358208955224,
       "ci": [
-       0.08586126099309545,
-       0.1637013300664315
+       0.06398418917777007,
+       0.13407779538584205
       ]
      },
      "over_refusal": {
-      "k": 5,
+      "k": 6,
       "n": 242,
-      "rate": 0.02066115702479339,
+      "rate": 0.024793388429752067,
       "ci": [
-       0.008856723171189875,
-       0.04744565514649442
+       0.011411458103998854,
+       0.053026244538532996
       ]
      },
      "false_answer": {
-      "k": 4,
+      "k": 3,
       "n": 26,
-      "rate": 0.15384615384615385,
+      "rate": 0.11538461538461539,
       "ci": [
-       0.06150033723578355,
-       0.3353119932821348
+       0.04003244623610615,
+       0.2897590321171364
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 228,
+      "n": 227,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.01656933509750344
+       0.016641113083928197
       ]
      },
      "false_flag": {
       "k": 0,
-      "n": 199,
+      "n": 203,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.018938233056634942
+       0.018571996361832828
       ]
      },
      "clarify_ok": {
-      "k": 10,
+      "k": 11,
       "n": 13,
-      "rate": 0.7692307692307693,
+      "rate": 0.8461538461538461,
       "ci": [
-       0.49743624053272495,
-       0.9182047128150143
+       0.5776536898051745,
+       0.9567418216419186
       ]
      }
     }
@@ -6109,12 +6126,12 @@
       ]
      },
      "critical": {
-      "k": 4,
+      "k": 3,
       "n": 18,
-      "rate": 0.2222222222222222,
+      "rate": 0.16666666666666666,
       "ci": [
-       0.09000928108601694,
-       0.45214584316212625
+       0.05836576805861446,
+       0.39222038103915724
       ]
      },
      "over_refusal": {
@@ -6127,21 +6144,21 @@
       ]
      },
      "false_answer": {
-      "k": 2,
+      "k": 1,
       "n": 4,
-      "rate": 0.5,
+      "rate": 0.25,
       "ci": [
-       0.15003898915214947,
-       0.8499610108478506
+       0.04558726080970055,
+       0.6993581574175981
       ]
      },
      "flagged": {
       "k": 0,
-      "n": 14,
+      "n": 13,
       "rate": 0.0,
       "ci": [
        0.0,
-       0.2153108027376358
+       0.22809537235419838
       ]
      },
      "false_flag": {
@@ -6167,31 +6184,31 @@
   },
   "abstention": {
    "answerable": {
-    "answered": 251,
-    "refused": 5,
+    "answered": 250,
+    "refused": 6,
     "n": 256
    },
    "unanswerable": {
-    "answered": 11,
-    "refused": 19,
+    "answered": 4,
+    "refused": 26,
     "n": 30
    },
    "over_refusal": {
-    "k": 5,
+    "k": 6,
     "n": 256,
-    "rate": 0.01953125,
+    "rate": 0.0234375,
     "ci": [
-     0.008370729784579391,
-     0.04489813224965644
+     0.010784867555857603,
+     0.0501809956000511
     ]
    },
    "false_answer": {
-    "k": 6,
+    "k": 4,
     "n": 30,
-    "rate": 0.2,
+    "rate": 0.13333333333333333,
     "ci": [
-     0.0950510717728987,
-     0.3730569641314825
+     0.053096554840547455,
+     0.296813266820363
     ]
    }
   },
@@ -6227,6 +6244,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6284,6 +6302,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6341,6 +6360,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6399,6 +6419,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6427,13 +6448,13 @@
    ],
    "cited_page_ok_pdf": false,
    "cited_page_ok_printed": false,
-   "value_ok": false,
+   "value_ok": true,
    "strict_ok": false,
-   "critical": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": false,
-   "false_flag": null,
+   "false_flag": false,
    "clarify_ok": null,
    "behaviour": "answer",
    "answer": "A mini-TODS sign is **36 inches wide by 12 inches tall**. [1] The TOD-3 form identifies the type, size, and quantity of signs required, but the provided form text does not state the mini-TODS dimensions. [2]",
@@ -6468,6 +6489,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6525,6 +6547,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6582,6 +6605,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6641,6 +6665,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6698,6 +6723,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6755,6 +6781,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6812,6 +6839,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6870,6 +6898,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6927,6 +6956,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -6985,6 +7015,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7043,6 +7074,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7100,6 +7132,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7161,6 +7194,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7220,6 +7254,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7279,6 +7314,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7338,6 +7374,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7395,6 +7432,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7452,6 +7490,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7509,6 +7548,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7567,6 +7607,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7625,6 +7666,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7682,6 +7724,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7737,6 +7780,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7795,6 +7839,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7854,6 +7899,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7916,6 +7962,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -7976,6 +8023,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8033,6 +8081,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8100,6 +8149,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -8148,6 +8198,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8206,6 +8257,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8265,6 +8317,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8322,6 +8375,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8390,6 +8444,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8448,6 +8503,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8505,6 +8561,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8563,6 +8620,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8621,6 +8679,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8679,6 +8738,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8738,6 +8798,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8798,6 +8859,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8856,6 +8918,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8916,6 +8979,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -8977,6 +9041,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9036,6 +9101,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9095,6 +9161,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9153,6 +9220,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9210,6 +9278,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9267,6 +9336,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9324,6 +9394,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9381,6 +9452,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9439,6 +9511,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9496,6 +9569,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9554,6 +9628,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9617,6 +9692,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9686,6 +9762,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9745,6 +9822,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9802,6 +9880,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9860,6 +9939,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9918,6 +9998,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -9975,6 +10056,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": true,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -10023,6 +10105,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10082,6 +10165,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10140,6 +10224,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10197,6 +10282,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10254,6 +10340,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10311,6 +10398,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10370,6 +10458,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10429,6 +10518,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10488,6 +10578,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10546,6 +10637,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10604,6 +10696,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10661,6 +10754,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10718,6 +10812,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10775,6 +10870,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10833,6 +10929,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10892,6 +10989,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -10949,6 +11047,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11008,6 +11107,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11028,8 +11128,8 @@
    "cited_page_ok_printed": false,
    "value_ok": false,
    "strict_ok": false,
-   "critical": true,
-   "over_refusal": false,
+   "critical": false,
+   "over_refusal": true,
    "false_answer": null,
    "flagged": false,
    "false_flag": null,
@@ -11066,6 +11166,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11123,6 +11224,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11182,6 +11284,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11240,6 +11343,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11300,6 +11404,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11346,6 +11451,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11404,6 +11510,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11463,6 +11570,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11521,6 +11629,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11589,6 +11698,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11647,6 +11757,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11692,6 +11803,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11749,6 +11861,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11794,6 +11907,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11839,6 +11953,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -11886,6 +12001,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -11945,6 +12061,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12004,6 +12121,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12062,6 +12180,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12120,6 +12239,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12179,6 +12299,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12237,6 +12358,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12295,6 +12417,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12353,6 +12476,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12412,6 +12536,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12470,6 +12595,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12528,6 +12654,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12586,6 +12713,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12645,6 +12773,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12703,6 +12832,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12761,6 +12891,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12819,6 +12950,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12878,6 +13010,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12937,6 +13070,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -12996,6 +13130,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13054,6 +13189,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -13100,6 +13236,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13158,6 +13295,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13217,6 +13355,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13276,6 +13415,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13334,6 +13474,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13392,6 +13533,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13450,6 +13592,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13508,6 +13651,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13565,6 +13709,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13622,6 +13767,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13680,6 +13826,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13737,6 +13884,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13792,6 +13940,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13849,6 +13998,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13904,6 +14054,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -13961,6 +14112,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14019,6 +14171,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14077,6 +14230,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14135,6 +14289,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14192,6 +14347,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14254,6 +14410,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14315,6 +14472,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14376,6 +14534,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14435,6 +14594,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14495,6 +14655,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14564,6 +14725,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14624,6 +14786,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14684,6 +14847,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14743,6 +14907,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14803,6 +14968,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14863,6 +15029,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14922,6 +15089,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -14980,6 +15148,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15038,6 +15207,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15097,6 +15267,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15155,6 +15326,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15214,6 +15386,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15271,6 +15444,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15289,13 +15463,13 @@
    ],
    "cited_page_ok_pdf": true,
    "cited_page_ok_printed": null,
-   "value_ok": false,
-   "strict_ok": false,
-   "critical": true,
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": false,
-   "false_flag": null,
+   "false_flag": false,
    "clarify_ok": null,
    "behaviour": "answer",
    "answer": "Authorization to advertise for bids can be given only after the project’s plans, specifications, and estimates (PS&E) are approved; the utility certification must be included with the PS&E submitted for approval. [1]",
@@ -15329,6 +15503,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15387,6 +15562,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15444,6 +15620,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15501,6 +15678,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15558,6 +15736,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15616,6 +15795,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -15664,6 +15844,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15723,6 +15904,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15782,6 +15964,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15840,6 +16023,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15902,6 +16086,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -15963,6 +16148,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16023,6 +16209,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16041,13 +16228,13 @@
    ],
    "cited_page_ok_pdf": true,
    "cited_page_ok_printed": false,
-   "value_ok": false,
-   "strict_ok": false,
-   "critical": true,
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": false,
-   "false_flag": null,
+   "false_flag": false,
    "clarify_ok": null,
    "behaviour": "answer",
    "answer": "It describes a **2-inch medium-pressure ductile iron gas main installed in 1948**. [1]",
@@ -16082,6 +16269,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16129,6 +16317,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16187,6 +16376,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16255,6 +16445,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16314,6 +16505,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16374,6 +16566,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16434,6 +16627,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16492,6 +16686,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16549,6 +16744,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16607,6 +16803,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16666,6 +16863,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16724,6 +16922,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16791,6 +16990,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -16848,6 +17048,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16893,6 +17094,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16938,6 +17140,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -16983,6 +17186,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17028,6 +17232,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17073,6 +17278,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17118,6 +17324,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17163,6 +17370,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17220,6 +17428,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17278,6 +17487,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17335,6 +17545,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17392,6 +17603,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17452,6 +17664,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17509,6 +17722,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17566,6 +17780,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17624,6 +17839,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17681,6 +17897,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17738,6 +17955,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17806,6 +18024,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17874,6 +18093,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -17919,6 +18139,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -17976,6 +18197,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18034,6 +18256,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18092,6 +18315,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18149,6 +18373,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18206,6 +18431,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18263,6 +18489,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18321,6 +18548,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18378,6 +18606,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18435,6 +18664,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18492,6 +18722,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18549,6 +18780,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18607,6 +18839,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18664,6 +18897,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18722,6 +18956,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18781,6 +19016,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18840,6 +19076,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18899,6 +19136,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -18958,6 +19196,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19017,6 +19256,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19075,6 +19315,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19133,6 +19374,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19190,6 +19432,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19247,6 +19490,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19304,6 +19548,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19361,6 +19606,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -19406,6 +19652,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -19451,6 +19698,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19508,6 +19756,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -19553,6 +19802,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19613,6 +19863,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19673,6 +19924,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19733,6 +19985,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19792,6 +20045,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19850,6 +20104,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19907,6 +20162,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -19965,6 +20221,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20024,6 +20281,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20083,6 +20341,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20140,6 +20399,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20198,6 +20458,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20216,13 +20477,13 @@
    ],
    "cited_page_ok_pdf": true,
    "cited_page_ok_printed": false,
-   "value_ok": false,
-   "strict_ok": false,
-   "critical": true,
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": false,
-   "false_flag": null,
+   "false_flag": false,
    "clarify_ok": null,
    "behaviour": "answer",
    "answer": "“Pre-existing roadside safety **hardware**” replaced “pre-existing roadside safety features.” [1]",
@@ -20257,6 +20518,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20316,6 +20578,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20374,6 +20637,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20433,6 +20697,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20490,6 +20755,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20548,6 +20814,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20605,6 +20872,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20662,6 +20930,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20720,6 +20989,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20777,6 +21047,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20834,6 +21105,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20901,6 +21173,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -20921,12 +21194,12 @@
    "cited_page_ok_printed": true,
    "value_ok": null,
    "strict_ok": null,
-   "critical": true,
+   "critical": false,
    "over_refusal": false,
    "false_answer": null,
    "flagged": null,
    "false_flag": null,
-   "clarify_ok": false,
+   "clarify_ok": true,
    "behaviour": "clarify",
    "answer": "Repeat the UNEVEN LANES signs every **half mile** where the posted speed is below 45 mph, or every **mile** where it is 45 mph or higher. [1] Install the first sign 500 feet in advance of the drop-off. [1]",
    "seconds": 9.383,
@@ -20958,6 +21231,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21017,6 +21291,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21074,6 +21349,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -21119,6 +21395,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21176,6 +21453,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21196,10 +21474,10 @@
    "cited_page_ok_printed": null,
    "value_ok": null,
    "strict_ok": null,
-   "critical": true,
+   "critical": false,
    "over_refusal": null,
-   "false_answer": true,
-   "flagged": false,
+   "false_answer": false,
+   "flagged": null,
    "false_flag": null,
    "clarify_ok": null,
    "behaviour": "refuse",
@@ -21233,6 +21511,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21253,10 +21532,10 @@
    "cited_page_ok_printed": null,
    "value_ok": null,
    "strict_ok": null,
-   "critical": true,
+   "critical": false,
    "over_refusal": null,
-   "false_answer": true,
-   "flagged": false,
+   "false_answer": false,
+   "flagged": null,
    "false_flag": null,
    "clarify_ok": null,
    "behaviour": "refuse",
@@ -21290,6 +21569,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -21335,6 +21615,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -21380,6 +21661,7 @@
    ],
    "answered": true,
    "refused": true,
+   "declined": true,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [],
@@ -21427,6 +21709,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21485,6 +21768,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21543,6 +21827,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21602,6 +21887,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21659,6 +21945,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21716,6 +22003,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21773,6 +22061,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21831,6 +22120,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21888,6 +22178,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -21946,6 +22237,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22005,6 +22297,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22063,6 +22356,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22120,6 +22414,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22178,6 +22473,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22236,6 +22532,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22294,6 +22591,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22351,6 +22649,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22409,6 +22708,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22466,6 +22766,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22525,6 +22826,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
@@ -22583,6 +22885,7 @@
    ],
    "answered": true,
    "refused": false,
+   "declined": false,
    "uncited": false,
    "unverified": [],
    "cited_pages_pdf": [
