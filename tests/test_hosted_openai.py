@@ -197,7 +197,7 @@ def test_an_openai_refusal_is_retried_by_openai_not_the_free_models():
     client = _client(lambda r: _reply(), lambda r: _reply())
     assert client.retry_models(DEFAULT_OPENAI_MODEL) == [DEFAULT_OPENAI_MODEL]
     # A free model that answered is retried by the free models after it, never by OpenAI.
-    assert DEFAULT_OPENAI_MODEL not in client.retry_models(FREE)
+    assert client.retry_models(FREE) == client.models[client.models.index(FREE) + 1:] != []
     # OpenAI alone: the same one is asked again.
     alone = client_from_settings(load_settings({"LLM_PROVIDER": "openai", "OPENAI_API_KEY": "k"}))
     assert alone.retry_models(DEFAULT_OPENAI_MODEL) == [DEFAULT_OPENAI_MODEL]
