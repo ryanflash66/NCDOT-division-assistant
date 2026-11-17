@@ -7,7 +7,7 @@ without needing a GPU or a downloaded sentence-transformer model.
 """
 
 import hashlib
-from typing import List
+from typing import List, Optional
 
 import pytest
 from fastapi import FastAPI
@@ -49,6 +49,8 @@ class _HashEmbedding(BaseEmbedding):
 # Fixtures
 # ---------------------------------------------------------------------------
 
+API_KEY = "test-ingest-key"
+
 SEED_MANUAL = (
     "# Work Zone Traffic Control Manual\n\n"
     "## Planning\nPrepare a transportation management plan before closing a lane.\n\n"
@@ -71,6 +73,7 @@ def config(tmp_path):
         "CHROMA_PERSIST_DIR": str(tmp_path / "chroma"),
         "CHROMA_COLLECTION": "test_col",
         "CHAT_STORAGE_DIR": str(tmp_path / "chat_history"),
+        "RAG_API_KEY": API_KEY,
     })
     cfg.data_dir.mkdir()
     return cfg
@@ -89,15 +92,16 @@ def index(seeded_config, hash_embed) -> RetrievalIndex:
     return RetrievalIndex(seeded_config, hash_embed)
 
 
-def make_client(index: RetrievalIndex) -> TestClient:
-    """TestClient for the api router with the Retrieval index injected."""
+def make_client(index: RetrievalIndex, key: Optional[str] = API_KEY) -> TestClient:
+    """TestClient for the api router with the Retrieval index injected, sending `key` as its bearer key."""
     import api
 
     app = FastAPI()
     app.include_router(api.router)
     app.dependency_overrides[api.get_config] = lambda: index.config
     app.dependency_overrides[api.get_index] = lambda: index
-    return TestClient(app, raise_server_exceptions=False)
+    headers = {"Authorization": f"Bearer {key}"} if key else {}
+    return TestClient(app, raise_server_exceptions=False, headers=headers)
 
 
 @pytest.fixture()

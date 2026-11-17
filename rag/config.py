@@ -55,6 +55,9 @@ class AppConfig:
     chat_storage_dir: Path
     auth_username: Optional[str]
     auth_password: Optional[str]
+    # Bearer key for POST /api/ingest, which overwrites files in data/ and rebuilds the index.
+    # Unset means every ingest is refused, as the Chainlit login refuses everyone without credentials.
+    api_key: Optional[str]
 
 
 def _path(value: str) -> Path:
@@ -106,4 +109,5 @@ def load_config(env: Optional[Mapping[str, str]] = None) -> AppConfig:
         chat_storage_dir=_path(env.get("CHAT_STORAGE_DIR", "chat_history")),
         auth_username=env.get("CHAINLIT_AUTH_USERNAME") or None,
         auth_password=env.get("CHAINLIT_AUTH_PASSWORD") or None,
+        api_key=env.get("RAG_API_KEY") or None,
     )

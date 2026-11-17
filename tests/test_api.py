@@ -17,6 +17,39 @@ from tests.conftest import make_client
 # POST /api/ingest
 # ---------------------------------------------------------------------------
 
+def _upload():
+    return {"files": ("utility_relocation.md", io.BytesIO(b"# Utility Relocation Guide\n"), "text/plain")}
+
+
+def test_ingest_without_the_key_writes_nothing(index):
+    # Ingest overwrites files in data/ and rebuilds the index; a caller without the key must not reach it.
+    index.ensure_built()
+    for key in (None, "wrong-key"):
+        resp = make_client(index, key=key).post("/api/ingest", files=_upload())
+        assert resp.status_code == 401
+        assert resp.headers["www-authenticate"] == "Bearer"
+    assert not (index.config.data_dir / "utility_relocation.md").exists()
+
+
+def test_ingest_is_refused_when_no_key_is_set(index):
+    # A server started without RAG_API_KEY refuses every ingest, even one sending some key.
+    from dataclasses import replace
+
+    import api
+    index.ensure_built()
+    client = make_client(index)
+    client.app.dependency_overrides[api.get_config] = lambda: replace(index.config, api_key=None)
+    resp = client.post("/api/ingest", files=_upload())
+    assert resp.status_code == 403
+    assert "RAG_API_KEY" in resp.json()["detail"]
+    assert not (index.config.data_dir / "utility_relocation.md").exists()
+
+
+def test_query_needs_no_key(index):
+    index.ensure_built()
+    resp = make_client(index, key=None).post("/api/query", json={"query": "taper"})
+    assert resp.status_code == 200
+
 def test_ingest_markdown_returns_success(client):
     content = (
         "# Utility Relocation Guide\n\n"

@@ -24,6 +24,7 @@ def test_defaults_resolve_against_repo_root():
     assert cfg.max_chat_history == 50
     assert cfg.auth_username is None
     assert cfg.auth_password is None
+    assert cfg.api_key is None
     assert cfg.retrieval_top_k == 5
     assert cfg.chunk_size == 1024
     assert cfg.chunk_overlap == 128

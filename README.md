@@ -212,6 +212,7 @@ Required in `.env` for the chat UI:
 |---|---|
 | `CHAINLIT_AUTH_SECRET` | Signs login sessions. Generate one with `chainlit create-secret` |
 | `CHAINLIT_AUTH_USERNAME` / `CHAINLIT_AUTH_PASSWORD` | The login. If either is unset, every login is refused |
+| `RAG_API_KEY` | Bearer key for `POST /api/ingest` on the retrieval API. If unset, every ingest is refused |
 
 Choosing the LLM:
 
@@ -242,6 +243,8 @@ py -m rag stats      # collection, document and vector counts, last refresh time
 
 Dropping a file into `data/` does nothing until you run a refresh or ingest through the API.
 
+The retrieval API listens only on this machine by default. Keep it that way: don't start it with `--host 0.0.0.0`, since only ingest needs a key and `POST /api/query` returns document text to anyone who can reach it.
+
 ### Privacy
 
 Indexing, embeddings, search and chat history all stay on your machine. What leaves it depends on `LLM_PROVIDER`:
@@ -254,7 +257,7 @@ Indexing, embeddings, search and chat history all stay on your machine. What lea
 ### Retrieval API
 
 ```bash
-curl -F "files=@TMP Design Manual (Combined, No Links).pdf" localhost:8001/api/ingest
+curl -H "Authorization: Bearer $RAG_API_KEY" -F "files=@TMP Design Manual (Combined, No Links).pdf" localhost:8001/api/ingest
 
 curl -H "content-type: application/json" localhost:8001/api/query \
      -d '{"query": "lane closure taper length", "top_k": 4, "where": {"topic": "work_zone"}}'
