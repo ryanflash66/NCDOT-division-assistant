@@ -205,10 +205,19 @@ _DOCUMENTS = (r"documents?|manuals?|guides?|guidelines|chapters?|tables?|section
               r"layouts?|flowcharts?|charts?|standards?|text")
 _SAYS = (r"state|specify|give|provide|list|identify|include|say|cover|require|explain|mention|address|contain|"
          r"define|set|show|name")
+# "do not" or its contraction: "The documents don't state how many ..." (held-out wztc-h072, DAR-737).
+_NOT = r"(?:do|does|did)(?:\s+not|n['’]t)"
 _DECLINES = re.compile(
-    rf"\b(?:{_DOCUMENTS})\b.*?\b(?:do|does|did)\s+not\s+(?:\w+\s+)?(?:{_SAYS})\b"
+    rf"\b(?:{_DOCUMENTS})\b.*?\b{_NOT}\s+(?:\w+\s+)?(?:{_SAYS})\b"
     r"|\bnot\s+(?:provided|given|specified|stated|listed|covered|defined|shown|included|addressed)\s+(?:in|by)\b",
     re.IGNORECASE)
+# A document named by its acronym as the subject: "The UAM does not specify a daily per diem dollar
+# amount" (held-out utilities-h090, DAR-737). Case-sensitive, so the subject is a capitalized acronym, and
+# without "require": "FHWA does not require ..." is an answer about an agency's rule, not a gap.
+_ACRONYM_DECLINES = re.compile(
+    r"^\W*(?:[Tt]he\s+)?[A-Z]{2,6}(?:['’]s)?\b(?:\s+[A-Za-z]+){0,2}?\s+(?:do|does|did)(?:\s+not|n['’]t)\s+"
+    r"(?:\w+\s+)?(?:state|specify|give|provide|list|identify|include|say|cover|explain|mention|address|contain|"
+    r"define|set|show|name)\b")
 _SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-Z(\"“*])")
 
 
@@ -223,7 +232,8 @@ def declines(text: str) -> bool:
     Only the first sentence counts: a value stated first and a gap admitted after it (the prompt's
     rule 4 partial answer) is still an answer, and its value is what a reader acts on.
     """
-    return bool(_DECLINES.search(first_sentence(text)))
+    sentence = first_sentence(text)
+    return bool(_DECLINES.search(sentence) or _ACRONYM_DECLINES.search(sentence))
 
 
 def corrects_premise(question: str, text: str) -> bool:
