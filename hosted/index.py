@@ -44,6 +44,7 @@ from divrag.divisions import BY_ID, DIVISIONS, Division
 from divrag.embedder import Embedder, cpu_info, model_cache_dir, reranker_from_settings
 from divrag.index_file import IndexFile
 from divrag.llm import MISCONFIGURED, TOO_SLOW, LLMError, OpenRouterClient, client_from_settings, tls_context
+from divrag.page_images import PageImages, headers_from_env, load_no_text_pages
 from divrag.retrieval import Retriever
 from divrag.spend import SpendLedger, store_from_env
 from divrag.timing import StepTimer
@@ -99,6 +100,12 @@ class _Runtime:
             log.warning("BM25_K1=%s BM25_B=%s are set, but bm25.npz was built with k1=%s b=%s; rebuild the index"
                         " (prototype.ingest) for them to apply", settings.bm25_k1, settings.bm25_b,
                         built["k1"], built["b"])
+        # One per instance, so the pages it has fetched stay in its memory between questions.
+        self.page_images: Optional[PageImages] = None
+        if settings.page_images_to_model:
+            self.page_images = PageImages(load_no_text_pages(settings.index_dir), settings.page_images_base_url,
+                                          settings.page_images_detail, settings.page_images_max,
+                                          headers_from_env(os.environ, settings.page_images_base_url))
 
     def retriever(self) -> Retriever:
         with self._lock:
@@ -118,7 +125,7 @@ class _Runtime:
         s = self.settings
         return Answerer(self.retriever(), llm, top_k=s.top_k, retry_min_score=s.retry_min_score if s.retry_on_refusal else None,
                         retry_min_seconds=s.retry_min_seconds, number_agreement=s.number_agreement,
-                        row_guard=s.row_guard)
+                        row_guard=s.row_guard, page_images=self.page_images)
 
 
 runtime = _Runtime(settings)
@@ -314,6 +321,10 @@ async def health() -> Dict:
         "llm_models": list(settings.answer_models),
         "llm_configured": settings.llm_configured,
         "number_agreement": settings.number_agreement,
+        # DAR-733: whether OpenAI gets the page images of scanned, sideways, table and figure passages.
+        "page_images_to_model": settings.page_images_to_model,
+        "page_images_max": settings.page_images_max if settings.page_images_to_model else None,
+        "page_images_detail": settings.page_images_detail if settings.page_images_to_model else None,
         # The calendar month's (UTC) estimated OpenAI spend and the limit that switches answers to the free
         # models; "shared": false means this instance's own count only (no KV store). None without OpenAI.
         "openai_spend": await spend.status() if settings.answers_with_openai else None,

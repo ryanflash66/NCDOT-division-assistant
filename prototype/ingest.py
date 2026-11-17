@@ -436,6 +436,11 @@ def main(argv: List[str]) -> int:
                   with_context=not args.no_context, keyword=not args.no_keyword, ocr=args.ocr,
                   with_figures=not args.no_figures)
     index.save(args.out)
+    from prototype.build_report import write_no_text_pages
+
+    # The pages read by OCR, whose images the app can show the model (DAR-733): chunks.json keeps
+    # no mark of a page OCR read well, so the list is written beside it at every build.
+    print(f"{write_no_text_pages(args.out, index.chunks)} pages without a text layer listed")
     size = sum(f.stat().st_size for f in args.out.iterdir() if f.is_file())
     total = time.perf_counter() - started
     print(

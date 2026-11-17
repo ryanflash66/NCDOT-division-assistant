@@ -25,6 +25,7 @@ from typing import Any, AsyncIterator, Dict, List, Optional, Sequence, Tuple
 
 import httpx
 
+from .page_images import openai_messages, text_messages
 from .spend import MONTHLY_LIMIT, SpendLedger, estimated_usage, usage_tokens
 
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
@@ -113,6 +114,9 @@ def _upstream_error(error: Any, service: str = "OpenRouter") -> LLMError:
 class OpenRouterClient:
     service = "OpenRouter"  # in log lines
     url = API_URL
+    # Page images (DAR-733) go only to a service that reads them: the free models may not, so
+    # they get the text-only prompt they always got (page_images.text_messages).
+    reads_images = False
 
     def __init__(self, api_key: str, models: Sequence[str], temperature: float = 0.1,
                  reasoning: str = "off", transport: "httpx.AsyncBaseTransport | None" = None,
@@ -136,7 +140,7 @@ class OpenRouterClient:
     def _body(self, messages: List[Dict[str, str]], models: Optional[Sequence[str]], stream: bool) -> Dict:
         body = {
             "models": list(models) if models else self.models,
-            "messages": messages,
+            "messages": text_messages(messages),
             "temperature": self.temperature,
             "max_tokens": MAX_TOKENS,
             # Reasoning off by default: with it on, Nemotron 3 Ultra took up to a
@@ -330,6 +334,7 @@ class OpenAIClient(OpenRouterClient):
 
     service = "OpenAI"
     url = OPENAI_URL
+    reads_images = True  # gpt-6.1-terra's input modalities are text and image
 
     def __init__(self, api_key: str, models: Sequence[str], temperature: float = 0.1, reasoning: str = "off",
                  transport: "httpx.AsyncBaseTransport | None" = None, ledger: Optional[SpendLedger] = None,
@@ -366,7 +371,7 @@ class OpenAIClient(OpenRouterClient):
         thinking = self.reasoning != "off"
         body: Dict[str, Any] = {
             "model": (list(models) if models else self.models)[0],
-            "messages": messages,
+            "messages": openai_messages(messages),
             # max_tokens is deprecated there and refused by reasoning models.
             "max_completion_tokens": MAX_TOKENS + (REASONING_TOKENS if thinking else 0),
             # "none" is what LLM_REASONING=off means for the default model (config.DEFAULT_OPENAI_MODEL):
@@ -422,6 +427,11 @@ class FallbackClient:
         self.primary = primary
         self.fallback = fallback
         self.models = list(dict.fromkeys([*primary.models, *fallback.models]))
+
+    @property
+    def reads_images(self) -> bool:
+        """Whether page images are worth loading: the primary reads them; the fallback drops them itself."""
+        return self.primary.reads_images
 
     def retry_models(self, used: str) -> List[str]:
         """After the primary answered, the primary again; after a free model, the free models after it.

@@ -51,6 +51,7 @@ from .agreement import SecondOpinion, answer_numbers, second_opinion, second_opi
 from .divisions import BY_ID, DIVISIONS, Division, document_for
 from .index_file import Hit
 from .llm import Completion, LLMError, OpenRouterClient, answered_by_backup
+from .page_images import PageImages
 from .pages_static import image_url
 from .retrieval import DEFAULT_CANDIDATES, DEFAULT_MAX_CHUNKS_PER_PAGE, Retriever, _page_key, is_table
 from .timing import StepTimer, timed
@@ -823,7 +824,8 @@ class Answerer:
     def __init__(self, retriever: Retriever, llm: OpenRouterClient, top_k: int = 5,
                  retry_min_score: Optional[float] = RETRY_MIN_SCORE, retry_min_seconds: float = RETRY_MIN_SECONDS,
                  second_look: int = SECOND_LOOK_PASSAGES, number_agreement: bool = False,
-                 row_guard: bool = False):
+                 row_guard: bool = False, page_images: Optional[PageImages] = None):
+        self.page_images = page_images  # PAGE_IMAGES_TO_MODEL: page images go with their passages (page_images.py)
         self.row_guard = row_guard  # flag a number read from a table row the question's labels don't point to (rowcheck.py)
         self.retriever = retriever
         self.llm = llm
@@ -941,6 +943,20 @@ class Answerer:
                 suggest.append(division.id)
         return suggest
 
+    async def _with_page_images(self, message: Dict[str, Any], hits: Sequence[Hit], start: int = 1) -> Dict[str, Any]:
+        """`message` with the page images of its passages numbered from `start` (PAGE_IMAGES_TO_MODEL, DAR-733).
+
+        Unchanged when the setting is off or the client can't read images (the
+        free OpenRouter models alone). A failure here costs the images, not the answer.
+        """
+        if self.page_images is None or not getattr(self.llm, "reads_images", False):
+            return message
+        try:
+            return await self.page_images.attach(message, hits, start)
+        except Exception:  # noqa: BLE001
+            log.exception("page images failed; answering from the passage text")
+            return message
+
     def _worth_retrying(self, hits: List[Hit], deadline: Optional[float]) -> bool:
         """The top reranker score is at least retry_min_score and enough of the request's time is left."""
         if self.retry_min_score is None or self.retriever.reranker is None:
@@ -970,9 +986,9 @@ class Answerer:
         if extra:
             messages = messages + [
                 {"role": "assistant", "content": first.text},
-                {"role": "user", "content": SECOND_LOOK_RULE.format(
+                await self._with_page_images({"role": "user", "content": SECOND_LOOK_RULE.format(
                     target_name=target.name, context=_numbered(extra, len(hits) + 1), last=len(wider),
-                    not_found=NOT_FOUND)},
+                    not_found=NOT_FOUND)}, extra, len(hits) + 1),
             ]
         models = self.llm.retry_models(first.model)
         log.info("refusal (top score %.2f): retrying %s with %s and %d more passages",
@@ -1117,6 +1133,9 @@ class Answerer:
             return Answer(refusal_text(target, []), refused=True)
         messages = build_messages(question, asker, target, hits, history)
         with timed(timer, "llm"):
+            # Loaded inside the "llm" step: they hold back the model call, and a page this instance
+            # has already sent costs nothing. The later calls resend them with the conversation.
+            messages[-1] = await self._with_page_images(messages[-1], hits)
             completion = await call(messages)
         first_model = completion.model
         with timed(timer, "citations"):

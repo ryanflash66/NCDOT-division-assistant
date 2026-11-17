@@ -42,6 +42,9 @@ DEFAULT_BUDGET_USD = 50.0
 DEFAULT_MARGIN_USD = 5.0
 # A token is about 4 characters of English: used only for a call whose reply never said how many it used.
 CHARS_PER_TOKEN = 4
+# A page image (DAR-733) counts as this many input tokens in that guess: a 510 x 660 render is
+# 16 x 21 patches of 32 px at OpenAI's 1.2 tokens a patch (see page_images.DETAILS).
+IMAGE_TOKENS = 404
 # Totals are kept as whole micro-dollars, so concurrent INCRBYs add exactly.
 MICRO = 1_000_000
 STORE_TIMEOUT_SECONDS = 2.0
@@ -95,7 +98,7 @@ def estimated_usage(messages: Iterable[Dict[str, str]], written: str, cut_off_at
 
     `cut_off_at` is the output token cap for an answer that ran into it (all of it was paid for).
     """
-    prompt = sum(estimate_tokens(m.get("content") or "") for m in messages)
+    prompt = sum(estimate_tokens(m.get("content") or "") + IMAGE_TOKENS * len(m.get("images") or ()) for m in messages)
     return prompt, cut_off_at if cut_off_at is not None else estimate_tokens(written)
 
 
