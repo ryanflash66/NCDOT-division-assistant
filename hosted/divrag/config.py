@@ -56,6 +56,13 @@ LLM_PROVIDER=openai. Everything else has a default suitable for the public demo.
                                 see agreement.py). Off until the held-out measurement says otherwise.
     ROW_GUARD                   "off" (default) or "on": flag an answer whose number sits in a table row that lacks a label
                                 the question names while another row of that table has it (DAR-664, rowcheck.py)
+    PAGE_IMAGES_TO_MODEL        "off" (default) or "on": send OpenAI the page image of each passage from a scanned,
+                                sideways, table, figure or captioned page (page_images.py, DAR-733). Needs the page
+                                images (RENDER_PAGES=1 at build); the free OpenRouter models always get text only
+    PAGE_IMAGES_MAX             images per model call, 1-10 (default 4; see page_images.DEFAULT_MAX_IMAGES)
+    PAGE_IMAGES_DETAIL          OpenAI's image detail: "auto" (default), "low", "high" or "original"
+    PAGE_IMAGES_BASE_URL        where the function fetches the page images it doesn't have on disk (default on
+                                Vercel: the deployment itself, see page_images.base_url_from_env)
     ALLOWED_ORIGINS             comma-separated origins allowed to call the API from another site
                                 (default none: only the page served by this app can call it)
 """
@@ -72,6 +79,7 @@ from .retrieval import (DEFAULT_MAX_CHUNKS_PER_DOCUMENT, DEFAULT_MAX_CHUNKS_PER_
                         PAGE_AGGREGATION_MODES)
 
 from .embedder import RERANK_BATCH_SIZE, RERANK_MODEL_NAME, default_model_file
+from .page_images import DEFAULT_DETAIL, DEFAULT_MAX_IMAGES, DETAILS, MAX_IMAGES_LIMIT, base_url_from_env
 
 HOSTED_DIR = Path(__file__).resolve().parent.parent
 NO_RERANKER = "none"
@@ -138,6 +146,10 @@ class Settings:
     allowed_origins: Tuple[str, ...]
     number_agreement: bool = False
     row_guard: bool = False
+    page_images_to_model: bool = False
+    page_images_max: int = DEFAULT_MAX_IMAGES
+    page_images_detail: str = DEFAULT_DETAIL
+    page_images_base_url: Optional[str] = None
 
     @property
     def answers_with_openai(self) -> bool:
@@ -312,6 +324,20 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     agreement = _setting(env, "NUMBER_AGREEMENT", "off").lower()
     if agreement not in ("on", "off", "1", "0", "true", "false"):
         raise ValueError(f"NUMBER_AGREEMENT must be on or off, got {agreement!r}")
+    # Off by default: each image is about 400 more input tokens of OpenAI's, inside DAR-715's $50 a
+    # month, and a held-out run on a preview has to show it pays first (DAR-733).
+    page_images = _setting(env, "PAGE_IMAGES_TO_MODEL", "off").lower()
+    if page_images not in ("on", "off", "1", "0", "true", "false"):
+        raise ValueError(f"PAGE_IMAGES_TO_MODEL must be on or off, got {page_images!r}")
+    images_max = _setting(env, "PAGE_IMAGES_MAX", DEFAULT_MAX_IMAGES)
+    if not (images_max.isdigit() and 1 <= int(images_max) <= MAX_IMAGES_LIMIT):
+        raise ValueError(f"PAGE_IMAGES_MAX must be a whole number from 1 to {MAX_IMAGES_LIMIT}, got {images_max!r}")
+    images_detail = _setting(env, "PAGE_IMAGES_DETAIL", DEFAULT_DETAIL).lower()
+    if images_detail not in DETAILS:
+        raise ValueError(f"PAGE_IMAGES_DETAIL must be one of {', '.join(DETAILS)}, got {images_detail!r}")
+    images_base = base_url_from_env(env)
+    if images_base and not images_base.startswith(("https://", "http://localhost", "http://127.0.0.1")):
+        raise ValueError(f"PAGE_IMAGES_BASE_URL must be an https:// URL (or http://localhost), got {images_base!r}")
     # Read by embedder.onnx_threads() when the models load; checked here so a bad value stops startup.
     threads = env.get("ONNX_THREADS", "").strip()
     if threads and not (threads.isdigit() and int(threads) >= 1):
@@ -364,4 +390,8 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         allowed_origins=_csv(env.get("ALLOWED_ORIGINS", "")),
         number_agreement=agreement in ("on", "1", "true"),
         row_guard=row_guard in ("on", "1", "true"),
+        page_images_to_model=page_images in ("on", "1", "true"),
+        page_images_max=int(images_max),
+        page_images_detail=images_detail,
+        page_images_base_url=images_base,
     )

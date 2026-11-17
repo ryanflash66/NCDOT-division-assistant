@@ -190,6 +190,40 @@ def load_chunks(index_dir: Path) -> Dict:
     return json.loads((index_dir / "chunks.json").read_text(encoding="utf-8"))
 
 
+def no_text_pages(chunks: Sequence[Dict], documents_dir: Path = DOCUMENTS_DIR) -> Dict[str, Dict[str, List[int]]]:
+    """The pages with a passage but no text layer (read by OCR), {division: {file: [pages]}}, for DAR-733.
+
+    The same rule as the report's `ocr_pages`. The hosted app sends the model
+    these pages' images with their passages (divrag.page_images): the index
+    keeps no mark of a page OCR read well, and 5 of the 6 wrong values in the
+    DAR-732 investigation came from such pages. A document whose PDF isn't in
+    `documents_dir` is left out (its pages are unknown) and named on stderr.
+    """
+    by_document: Dict[tuple, List[Dict]] = {}
+    for chunk in chunks:
+        if chunk.get("division") and chunk.get("source"):
+            by_document.setdefault((chunk["division"], chunk["source"]), []).append(chunk)
+    out: Dict[str, Dict[str, List[int]]] = {}
+    for (division, source), doc_chunks in sorted(by_document.items()):
+        pdf = document_path(division, source, documents_dir)
+        if pdf is None:
+            print(f"no_text_pages: {division}/{source} not in {documents_dir}; its pages are left out", file=sys.stderr)
+            continue
+        pages = document_report(division, source, doc_chunks, pdf)["ocr_pages"] or []
+        if pages:
+            out.setdefault(division, {})[source] = pages
+    return out
+
+
+def write_no_text_pages(index_dir: Path, chunks: Sequence[Dict], documents_dir: Path = DOCUMENTS_DIR) -> int:
+    """Write no_text_pages.json beside the index's chunks; the number of pages listed."""
+    from divrag.page_images import NO_TEXT_FILE
+
+    pages = no_text_pages(chunks, documents_dir)
+    (index_dir / NO_TEXT_FILE).write_text(json.dumps(pages, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    return sum(len(p) for files in pages.values() for p in files.values())
+
+
 def main(argv: List[str]) -> int:
     parser = argparse.ArgumentParser(prog="python -m prototype.build_report", description=__doc__.splitlines()[0])
     parser.add_argument("--index", type=Path, default=DEFAULT_INDEX, help=f"index directory (default {DEFAULT_INDEX})")
@@ -197,11 +231,18 @@ def main(argv: List[str]) -> int:
     parser.add_argument("--documents", type=Path, default=DOCUMENTS_DIR,
                         help=f"folder with one PDF folder per division, for the page columns (default {DOCUMENTS_DIR})")
     parser.add_argument("--markdown", action="store_true", help="print the summary tables as Markdown")
+    parser.add_argument("--no-text-pages", action="store_true",
+                        help="write the index's no_text_pages.json (pages read by OCR, DAR-733) without rebuilding it")
     args = parser.parse_args(argv)
-    if not args.out and not args.markdown:
-        parser.error("give --out PATH and/or --markdown")
+    if not args.out and not args.markdown and not args.no_text_pages:
+        parser.error("give --out PATH, --markdown and/or --no-text-pages")
 
     meta = load_chunks(args.index)
+    if args.no_text_pages:
+        count = write_no_text_pages(args.index, meta["chunks"], args.documents)
+        print(f"{count} pages without a text layer -> {args.index}", file=sys.stderr)
+        if not args.out and not args.markdown:
+            return 0
     settings = {"mode": "standalone", "model": meta.get("model")}
     report = build_report(meta["chunks"], settings=settings, documents_dir=args.documents, index=str(args.index))
     if args.out:
