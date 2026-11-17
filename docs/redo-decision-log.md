@@ -602,3 +602,15 @@ Also open, without a ticket yet:
   - Paired free-model run on those 137 (main vs this branch, DAR-737 scorer): confident wrong 10 -> 5, value right 101 -> 105 /112, strict 89 -> 95, over-refusal 3 -> 3 /117, must-refuse answered 2 -> 1 /20. Nothing got worse. All 5 gains are DAR-732-read items (development); the other 132 changed questions didn't move.
   - The five DAR-732 page-break items answer with the full list locally (5/5).
 - **Rejected:** counting an unfinished sentence at a page end as running over: 194 questions changed instead of 137, +34% context instead of +15%, for 2 more gold pages.
+
+## DAR-733. Show the model the page image for scanned, sideways, table and figure pages
+
+- **Question:** do page images sent with the passages lower confident wrong answers and raise value right on the held-out set, and at what cost?
+- **Chose:** keep `PAGE_IMAGES_TO_MODEL` **off**. The code is on main behind the setting (PR #67). The ticket's rule (on only if confident wrong goes down and value right goes up) is not met. Report: `docs/redo-reports/dar-733-page-images-run.md`.
+- **Evidence:** two OpenAI runs on the same 286 locked items (before DAR-737's swap), same night, DAR-737 scorer. Control: live site, images off (`openai-site-dar735`). Images: CLI preview with images on (`openai-site-dar733-images`).
+  - Confident wrong 16 -> 17 /286; value right 222 -> 222 /242; strict 202 -> 199; answerable declined 6 -> 6; must-refuse answered 1 -> 2 /30.
+  - The images fixed the 3 scan or sideways misreads DAR-732 found (tmsd-h009, tmsd-h019, tmsd-h052); 3 other questions lost their value. That is within the run-to-run spread: the control differs from Nov 16 by as much.
+  - Cost about +80% a question (about $0.0027 -> $0.0049). The estimate said +21%: gpt-6.1-terra billed about 1,300 input tokens an image, not 404.
+  - Mean answer time 6.8 s -> 8.5 s.
+- **Found:** `includeFiles: public/**` put the 247.5 MB of rendered pages into the function (547 MB > 500 MB), so `RENDER_PAGES=1` could never deploy. Fixed in PR #67 (`public/{*,assets/**}`).
+- **Next, if wanted:** images for scans and sideways pages only (the 3 fixes are all of that kind; about half the images), measured on the new held-out set with a repeated control.
