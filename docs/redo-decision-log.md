@@ -518,3 +518,24 @@ Also open, without a ticket yet:
   - The default stays `off`. That changes only after the coordinator's held-out measurement, and only once a second free model answers reliably. As of Nov 11 it doesn't, so the check mostly adds about 13 s and catches nothing.
   - No paid second model was tried (free models only).
   - The held-out catch and false-flag rates are the coordinator's to run.
+
+## DAR-732. Where do the confident wrong answers come from?
+
+- **Question:** the held-out run of production on OpenAI (PR #60, rescored by PR #61) has 28/286 confident wrong answers. Before more fixes, which part of the pipeline produces them: retrieval, reading tables, maps and drawings, the PDF-to-text step, pictures, or documents that disagree?
+- **Chose:**
+  - Read all 28 (reply, gold item, retrieved and cited pages, indexed text of the gold page at the run's index) and put each in one bucket: A never found, B misread, C must-refuse answered, D test wrong, E documents disagree. A vs B: A if any part of the answer was in a passage that never reached the model.
+  - A second label per item says how bad it is: wrong value, incomplete, wrong refusal behaviour, or not an error.
+  - Report for Dr. Namian in plain language: `docs/redo-reports/dar-732-accuracy-investigation.md`; per item: `dar-732-buckets.json`.
+- **Evidence:**
+  - Buckets: A 10/28, B 5/28, C 4/28, D 9/28, E 0/28.
+  - 12/28 are not errors: 9 reworded right answers the scorer's wording match missed, 2 declines in the model's own words ("The UAM does not specify ..."), 1 right formula cited from the FHWA guide instead of the UAM. Real problems: 16/286 (wrong value 6, incomplete 7, wrong refusal behaviour 3).
+  - Page type for A and B (15): list over a page break 5, plain text 4, map or drawing 2, rotated 2, scanned 1, table 1.
+  - 5 of the 6 wrong values are on pages with no text layer (OCR): a lost ½ (tmsd-h009, utilities-h056), a chart label next to the arrow (tmsd-h049), reversed column order on sideways tables (tmsd-h052, tmsd-h019). Image-read items: 5/31 critical against 23/255 for the rest.
+  - Page-break lists: 8/15 critical against 20/271; 5 real (incomplete), 3 scorer misses. `with_following` adds one following chunk for the top two pages only, and that chunk is often on the same page.
+  - The free retry model ended 26 questions; 3 of them are in the 28 (tmsd-h019, h082, h100), all real.
+  - Documents disagreeing caused none of the 28. 4 were answered from another document because the named one never arrived; 3 of those agree with it. The locked run's wztc-075 (NCDOT buffer 240 ft vs MUTCD 425 ft at 50 mph) is the one real state-vs-federal conflict seen.
+- **Surprised us:** the scorer still misses 11/28. PR #61's rules were not widened on the held-out set on purpose (that would tune them on it); the wording misses ("75 and 90 degrees" vs "75 degrees", "prohibits" vs "prohibited") should be fixed from the tuning split.
+- **Not done:**
+  - Only the image-read gold values among the 28 were rechecked (tmsd-h049 against the page image: 3:1 is right); the other 26 image-read gold values were not.
+  - These 28 held-out items were read in detail, so by the held-out rules they are development items now. They need replacing (or leaving out, said so) before the next clean held-out number. Left for the PM.
+  - No fixes; DAR-733 (page images for drawing and table pages) is the next ticket this one unblocks.
