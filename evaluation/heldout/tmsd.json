@@ -259,39 +259,6 @@
    "note": "Worded like the contents entry \"ROUTE IDENTIFICATION ... 28\" (TOC on PDF p3); the answer is on the content page (PDF p31): \"This code is eight digits\"."
   },
   {
-   "id": "tmsd-h009",
-   "division": "tmsd",
-   "asker": "utilities",
-   "question": "In the TODS manual's sample assemblies (Figure 2K-1), what distance is shown on the Dick and Harry's Fishing Pond panel?",
-   "type": "figure",
-   "edge_cases": [
-    "figure",
-    "symbols",
-    "table_id"
-   ],
-   "expected": {
-    "source": "TODS Manual - September 2024.pdf",
-    "pdf_pages": [
-     39
-    ],
-    "printed_pages": [
-     "36"
-    ],
-    "value": "2 1/2",
-    "accept": [
-     "2.5",
-     "2 ½",
-     "two and a half"
-    ],
-    "unit": "mi"
-   },
-   "refuse": false,
-   "verified_by": "page_image_read",
-   "split": "locked",
-   "behaviour": "answer",
-   "note": "Appendix F sample, Figure 2K-1 combined intersection approach sign assembly: the panel shows \"2 ½\" with a left arrow. The drawing is an image (no text layer); read off the rendered page."
-  },
-  {
    "id": "tmsd-h010",
    "division": "tmsd",
    "asker": "wztc",
@@ -480,37 +447,6 @@
    "note": "Chapter 7 D (Driveway Profile): \"should not exceed +/- ten percent\" (plus-minus)."
   },
   {
-   "id": "tmsd-h016",
-   "division": "tmsd",
-   "asker": "utilities",
-   "question": "Can a two-way driveway meet the pavement edge at a 70-degree angle under the access policy?",
-   "type": "text",
-   "edge_cases": [
-    "range_threshold",
-    "units"
-   ],
-   "expected": {
-    "source": "Policy on Access Manual.pdf",
-    "pdf_pages": [
-     61
-    ],
-    "printed_pages": [
-     "51"
-    ],
-    "value": "75 degrees",
-    "accept": [
-     "75°",
-     "75 deg"
-    ],
-    "unit": null
-   },
-   "refuse": false,
-   "verified_by": "page_text_match",
-   "split": "locked",
-   "behaviour": "answer",
-   "note": "Control Dimensions, Driveway Angle (Y): two-way driveways not less than 75 degrees nor more than 90 degrees, so 70 degrees is just below the allowed range (45-90 is only for one-way or right-in/right-out, case by case)."
-  },
-  {
    "id": "tmsd-h017",
    "division": "tmsd",
    "asker": "wztc",
@@ -571,40 +507,6 @@
    "split": "locked",
    "behaviour": "answer",
    "note": "Chapter 7 F, Turn Lanes and Auxiliary Lanes: minimum five inches Asphalt Base Course, three inches Intermediate, two inches Surface."
-  },
-  {
-   "id": "tmsd-h019",
-   "division": "tmsd",
-   "asker": "wztc",
-   "question": "In the street and driveway access policy, the \"Recommended Treatment for Turn Lanes\" exhibit: what desirable deceleration length goes with a 50 mph design speed?",
-   "type": "rotated",
-   "edge_cases": [
-    "rotated",
-    "scan",
-    "not_first_row_col",
-    "merged_header",
-    "near_identical"
-   ],
-   "expected": {
-    "source": "Policy on Access Manual.pdf",
-    "pdf_pages": [
-     88
-    ],
-    "printed_pages": [
-     "78"
-    ],
-    "value": "300'",
-    "accept": [
-     "300 feet",
-     "300 ft"
-    ],
-    "unit": "ft"
-   },
-   "refuse": false,
-   "verified_by": "page_image_read",
-   "split": "locked",
-   "behaviour": "answer",
-   "note": "Exhibit (scanned, printed sideways): row design speed 50 / posted 45 mph; columns minimum deceleration 150', desirable deceleration 300', bay taper 100'. Read off the rendered page; the page has no text layer beyond the running header."
   },
   {
    "id": "tmsd-h020",
@@ -760,47 +662,6 @@
    "split": "locked",
    "behaviour": "answer",
    "note": "Corridor Selection Process, Corridor Categorization: typical (three-year intervals) and critical (about every 18 months) on PDF p8 (\"Page 1\"), non-critical (possibly 5 to 6 years) on PDF p9 (\"Page 2\")."
-  },
-  {
-   "id": "tmsd-h024",
-   "division": "tmsd",
-   "asker": "utilities",
-   "question": "What Walk time should I program for a pedestrian phase when retiming a signal system?",
-   "type": "table",
-   "edge_cases": [
-    "missing_variable"
-   ],
-   "expected": {
-    "source": "Signal System Timing Philosophy Manual.pdf",
-    "pdf_pages": [
-     21
-    ],
-    "printed_pages": [
-     "7"
-    ],
-    "value": "7 seconds",
-    "accept": [],
-    "unit": null,
-    "all_of": [
-     [
-      "7 seconds",
-      "seven seconds"
-     ],
-     [
-      "4 seconds",
-      "four seconds"
-     ],
-     [
-      "10 seconds",
-      "ten seconds"
-     ]
-    ]
-   },
-   "refuse": false,
-   "verified_by": "page_text_match",
-   "split": "locked",
-   "behaviour": "clarify",
-   "note": "Table 3 Tactics, \"Optimize Ped/Walk Time\": usually 7 s; may be cut to a minimum of 4 s at intersections with low pedestrian volumes; may need 10 s, 15 s or more with high pedestrian volumes, school zones or elderly pedestrians. Missing variable: pedestrian volume/context."
   },
   {
    "id": "tmsd-h025",
@@ -1528,39 +1389,6 @@
    "note": "Section 3-6 (cont.), Two Rows of Semi-Rigid Guardrail at Median Piers: a minimum distance of 3.6' from the face of the bridge piers."
   },
   {
-   "id": "tmsd-h049",
-   "division": "tmsd",
-   "asker": "wztc",
-   "question": "On Figure 1 of the guardrail chapter (warrants for fill section embankments), what fill slope does the shaded band mark as the minimum?",
-   "type": "figure",
-   "edge_cases": [
-    "figure",
-    "scan",
-    "symbols",
-    "table_id"
-   ],
-   "expected": {
-    "source": "03. Guardrail, Barriers and Attenuators.pdf",
-    "pdf_pages": [
-     3
-    ],
-    "printed_pages": [
-     "3-1"
-    ],
-    "value": "3:1",
-    "accept": [
-     "3 to 1",
-     "3H:1V"
-    ],
-    "unit": null
-   },
-   "refuse": false,
-   "verified_by": "page_image_read",
-   "split": "locked",
-   "behaviour": "answer",
-   "note": "Figure 1 (sheet 3-1 / F-1), a scanned chart: the shaded band runs between \"3:1 MINIMUM\" and \"4:1 DESIRABLE\"; on or below the curve barrier is not warranted. Read off the rendered page (the text layer holds only the running header)."
-  },
-  {
    "id": "tmsd-h050",
    "division": "tmsd",
    "asker": "utilities",
@@ -1623,40 +1451,6 @@
    "split": "locked",
    "behaviour": "answer",
    "note": "Table 3 (continued), sheet 9-2 / T-3: angle 90, WB-67 row: radius 125 ft, offset 4.5 ft, taper 30:1 (\"Simple Curve Radius with Taper\" spans three columns). Checked on the rendered page that 125 sits on the WB-67 row (WB-62 is 120)."
-  },
-  {
-   "id": "tmsd-h052",
-   "division": "tmsd",
-   "asker": "utilities",
-   "question": "In the Roadway Design Manual's Figure 4 (Recommended Treatment for Turn Lanes, sheet F-4A), what bay taper length goes with a 55 mph design speed?",
-   "type": "rotated",
-   "edge_cases": [
-    "near_identical",
-    "rotated",
-    "figure",
-    "not_first_row_col",
-    "table_id"
-   ],
-   "expected": {
-    "source": "09. At Grade Intersections.pdf",
-    "pdf_pages": [
-     13
-    ],
-    "printed_pages": [
-     "F-4A"
-    ],
-    "value": "150'",
-    "accept": [
-     "150 feet",
-     "150 ft"
-    ],
-    "unit": "ft"
-   },
-   "refuse": false,
-   "verified_by": "page_image_read",
-   "split": "locked",
-   "behaviour": "answer",
-   "note": "RDM ch. 9 Figure 4, sheet 9-1 / F-4A (drawing printed sideways): design speed 55 / posted 50: min decel 200', desirable decel 500', bay taper 150'. The same table is an exhibit of the Policy on Street and Driveway Access (PDF p88); the question names the RDM figure."
   },
   {
    "id": "tmsd-h053",
@@ -2571,48 +2365,6 @@
    "note": "(48a) \"(Effective until December 31, 2024)\": vehicles rented ... \"or loaned by a franchised motor vehicle dealer ... to a customer of that dealer who is having a vehicle serviced\"; the (Effective December 31, 2024) version keeps only vehicles rented to a person."
   },
   {
-   "id": "tmsd-h082",
-   "division": "tmsd",
-   "asker": "wztc",
-   "question": "What is the minimum speed for passenger vehicles on North Carolina's interstate highways?",
-   "type": "text",
-   "edge_cases": [
-    "missing_variable"
-   ],
-   "expected": {
-    "source": "L18_TSLG_Guide.pdf",
-    "pdf_pages": [
-     283
-    ],
-    "printed_pages": [
-     "283"
-    ],
-    "value": "40 mph",
-    "accept": [
-     "forty miles per hour",
-     "40 miles per hour"
-    ],
-    "unit": null,
-    "all_of": [
-     [
-      "40 mph",
-      "forty miles per hour",
-      "40 miles per hour"
-     ],
-     [
-      "45 mph",
-      "forty-five miles per hour",
-      "45 miles per hour"
-     ]
-    ]
-   },
-   "refuse": false,
-   "verified_by": "page_text_match",
-   "split": "locked",
-   "behaviour": "clarify",
-   "note": "Missing variable: the speed zone. G.S. 20-141(c): 40 mph in a 55 mph zone; 45 mph in a zone of 60 mph or greater (only when signs post the minimum)."
-  },
-  {
    "id": "tmsd-h083",
    "division": "tmsd",
    "asker": "utilities",
@@ -2677,55 +2429,6 @@
    "split": "locked",
    "behaviour": "correct",
    "note": "False premise: no speed limit below 20 miles per hour may be set under G.S. 20-141.1."
-  },
-  {
-   "id": "tmsd-h085",
-   "division": "tmsd",
-   "asker": "tmsd",
-   "question": "Before moving a crane with a normal operating speed of 5 mph across railroad tracks, what steps must the operator take at the crossing under G.S. 20-142.4?",
-   "type": "text",
-   "edge_cases": [
-    "list_page_break",
-    "two_pages",
-    "units"
-   ],
-   "expected": {
-    "source": "L18_TSLG_Guide.pdf",
-    "pdf_pages": [
-     288,
-     289
-    ],
-    "printed_pages": [
-     "288",
-     "289"
-    ],
-    "value": "15 feet",
-    "accept": [],
-    "unit": null,
-    "all_of": [
-     [
-      "15 feet",
-      "15 ft"
-     ],
-     [
-      "50 feet",
-      "50 ft"
-     ],
-     [
-      "listen and look",
-      "look both directions"
-     ],
-     [
-      "crossing can be made safely",
-      "safely"
-     ]
-    ]
-   },
-   "refuse": false,
-   "verified_by": "page_text_match",
-   "split": "locked",
-   "behaviour": "answer",
-   "note": "(c)(1) stop not less than 15 feet nor more than 50 feet from the nearest rail (p288); (2) listen and look both directions; (3) not proceed until the crossing can be made safely (p289). Notice to the railroad superintendent is (b)."
   },
   {
    "id": "tmsd-h086",
@@ -2812,42 +2515,6 @@
    "split": "locked",
    "behaviour": "answer",
    "note": "Section 2C.54 Option 01: the TRUCK CROSSING (W8-6) word message sign may be used as an alternate. Same wording in MUTCD Part 6 Section 6H.21 (wztc part6.pdf p43)."
-  },
-  {
-   "id": "tmsd-h089",
-   "division": "tmsd",
-   "asker": "wztc",
-   "question": "How does the DMV-349 crash report instructional manual define full access control?",
-   "type": "text",
-   "edge_cases": [
-    "duplicate_section"
-   ],
-   "expected": {
-    "source": "C34 - Manual 2012.pdf",
-    "pdf_pages": [
-     107
-    ],
-    "printed_pages": [
-     "107"
-    ],
-    "value": "selected public roads",
-    "accept": [],
-    "unit": null,
-    "all_of": [
-     [
-      "selected public roads"
-     ],
-     [
-      "crossings at grade",
-      "driveway connections"
-     ]
-    ]
-   },
-   "refuse": false,
-   "verified_by": "page_text_match",
-   "split": "locked",
-   "behaviour": "answer",
-   "note": "Glossary: access connections with selected public roads only, prohibiting crossings at grade or direct private driveway connections. Same definition in the utilities UAM (p187)."
   },
   {
    "id": "tmsd-h090",
@@ -3117,50 +2784,6 @@
    "note": "Includes (p76): bicycle, tricycle, unicycle, trailers or sidecars attached. Excludes (p77): pedalcycle towed by motor vehicle, including hitching and unoccupied pedalcycle."
   },
   {
-   "id": "tmsd-h097",
-   "division": "tmsd",
-   "asker": "wztc",
-   "question": "Under the pedestrian policy's local government or local sponsor commitment criterion, what questions does NCDOT ask?",
-   "type": "text",
-   "edge_cases": [
-    "list_page_break",
-    "two_pages"
-   ],
-   "expected": {
-    "source": "bikeped_Ped_Policy.pdf",
-    "pdf_pages": [
-     8,
-     9
-    ],
-    "printed_pages": [
-     "8",
-     "9"
-    ],
-    "value": "Capital Improvement Program",
-    "accept": [],
-    "unit": null,
-    "all_of": [
-     [
-      "Capital Improvement Program"
-     ],
-     [
-      "currently connect"
-     ],
-     [
-      "subdivisions"
-     ],
-     [
-      "maintain"
-     ]
-    ]
-   },
-   "refuse": false,
-   "verified_by": "page_text_match",
-   "split": "locked",
-   "behaviour": "answer",
-   "note": "Criterion 2 bullets: local CIP funds for connecting facilities; how many facilities currently connect; how many subdivisions have provided connecting facilities (p8); has a local agency agreed in writing to maintain the facility (starts p8, ends p9)."
-  },
-  {
    "id": "tmsd-h098",
    "division": "tmsd",
    "asker": "wztc",
@@ -3198,22 +2821,6 @@
    "accept_reply": [
     "expired"
    ]
-  },
-  {
-   "id": "tmsd-h100",
-   "division": "tmsd",
-   "asker": "wztc",
-   "question": "Which MASH test level do guardrail end terminals have to meet under the Roadway Design Manual guardrail chapter?",
-   "type": "unanswerable",
-   "edge_cases": [
-    "not_in_documents"
-   ],
-   "expected": null,
-   "refuse": true,
-   "verified_by": "page_text_match",
-   "split": "locked",
-   "behaviour": "refuse",
-   "note": "The guardrail chapter (rev. 2007) refers to NCHRP 350 units (e.g. GRAU-350) and never to MASH; no tmsd document mentions MASH."
   },
   {
    "id": "tmsd-h101",
@@ -3310,6 +2917,425 @@
    "split": "tuning",
    "behaviour": "refuse",
    "note": "Another topic (structures/materials); no tmsd document gives concrete strength."
+  },
+  {
+   "id": "tmsd-h107",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "On the Roadway Design Manual's Figure 3-A sheet for offsetting opposing left-turn lanes on a 36-foot median, about how much deceleration length does the 4° skew angle give?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "symbols",
+    "table_id"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     9
+    ],
+    "printed_pages": [
+     "F-3A-4"
+    ],
+    "value": "385'",
+    "accept": [
+     "385 ft",
+     "385 feet"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "RDM ch.9 Figure 3-A sheet F-3A-4 ('36′ Median (+6′ Offset)'), scanned drawing: note '*A 4 degree skew angle will provide approximately 385′ of deceleration lengths for design speeds up to 40 mph'; the 4° angle is drawn in Inset A and Detail B. The near-identical sheet F-3A-3 (PDF p8, 20′ median) gives 230′ up to 30 mph; the question names the 36-foot median. scan and near_identical also apply; not tagged, to keep the spec's tags."
+  },
+  {
+   "id": "tmsd-h108",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "We'd like a TODS panel about 150 feet before the main intersection. Is that far enough under the TODS manual, and what's the minimum?",
+   "type": "text",
+   "edge_cases": [
+    "range_threshold",
+    "units"
+   ],
+   "expected": {
+    "source": "TODS Manual - September 2024.pdf",
+    "pdf_pages": [
+     25
+    ],
+    "printed_pages": [
+     "22"
+    ],
+    "value": "200 feet",
+    "accept": [
+     "200 ft"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TODS manual sign placement item 13: TODS panels shall be located at least 200 feet in advance of the main intersection (also spaced 200 feet apart and 200 feet from other devices). 150 feet is below the threshold."
+  },
+  {
+   "id": "tmsd-h109",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In the Roadway Design Manual's Table 4 (variable dimensions of 3-centered curves without islands), for design vehicle C43 with R1 = 100' and R2 = 35' and a turn angle of 104 degrees, what is the tangent length T?",
+   "type": "rotated",
+   "edge_cases": [
+    "rotated",
+    "scan",
+    "not_first_row_col",
+    "merged_header",
+    "near_identical"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     27
+    ],
+    "printed_pages": [
+     "T-4"
+    ],
+    "value": "76.20",
+    "accept": [
+     "76.2 ft",
+     "76.20 feet",
+     "76.2"
+    ],
+    "unit": "ft"
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "RDM ch.9 Table 4 sheet T-4, a scanned table printed sideways (rotated 90°). Block 'Design Vehicle C43, R1 = 100', R2 = 35'' (top left): row Δ = 104°, column T under the merged header 'Length in feet' = 76.20 (E = 29.97). Near-identical blocks: C43 with R1 = 120'/R2 = 40' on the same sheet and C43 with R2 = 30' on the continuation sheet (PDF p28)."
+  },
+  {
+   "id": "tmsd-h110",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "Using the hourly adjustment factors in FHWA's marked vs. unmarked crosswalk study, what factor do I divide a 3 p.m. to 4 p.m. pedestrian count by to estimate the daily pedestrian volume?",
+   "type": "table",
+   "edge_cases": [
+    "missing_variable"
+   ],
+   "expected": {
+    "source": "04100.pdf",
+    "pdf_pages": [
+     77
+    ],
+    "printed_pages": [
+     "67"
+    ],
+    "value": "16.2",
+    "accept": [
+     "16.2%",
+     "16.2 percent"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "16.2",
+      "16.2%",
+      "16.2 percent"
+     ],
+     [
+      "8.1",
+      "8.1%",
+      "8.1 percent"
+     ],
+     [
+      "7.4",
+      "7.4%",
+      "7.4 percent"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "clarify",
+   "verified_by": "page_text_match",
+   "note": "Table 12 (adjustment factors by time of day and area type), row 3 p.m. - 4 p.m.: CBD 16.2%, fringe 8.1%, residential 7.4%. Missing variable: area type (CBD / fringe / residential)."
+  },
+  {
+   "id": "tmsd-h111",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "In the Roadway Design Manual's Figure 2 for Case IIIA sight distance, what constant multiplies the design speed V in the equation for the sight distance d along the major highway?",
+   "type": "figure",
+   "edge_cases": [
+    "figure",
+    "scan",
+    "symbols",
+    "table_id"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     34
+    ],
+    "printed_pages": [
+     "F-2"
+    ],
+    "value": "1.47",
+    "accept": [
+     "1.47 V",
+     "1.47V"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "RDM ch.9 section 9-3 Figure 2 'Determining sight distance for Case III A', scanned sheet F-2: S = D + W + L, and d = 1.47 V (J + ta) with subscript a (d sight distance along the major highway, V design speed, J perception-reaction time, ta time to accelerate and clear)."
+  },
+  {
+   "id": "tmsd-h112",
+   "division": "tmsd",
+   "asker": "utilities",
+   "question": "On sheet F-4B of the Roadway Design Manual's Figure 4 (recommended treatment for turn lanes), near side widening: how long is the widening taper ahead of the deceleration length D, in terms of A?",
+   "type": "rotated",
+   "edge_cases": [
+    "near_identical",
+    "rotated",
+    "figure",
+    "table_id"
+   ],
+   "expected": {
+    "source": "09. At Grade Intersections.pdf",
+    "pdf_pages": [
+     14
+    ],
+    "printed_pages": [
+     "F-4B"
+    ],
+    "value": "2/3 A",
+    "accept": [
+     "two-thirds of A",
+     "2/3 of A",
+     "two thirds of A"
+    ],
+    "unit": null
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_image_read",
+   "note": "RDM ch.9 Figure 4 sheet F-4B, drawing printed sideways: near side widening dimensions 2/3 A then D then variable storage length, with A spanning 2/3 A plus D. Near-identical: the Policy on Street and Driveway Access exhibit 'Recommended Treatment for Turn Lanes' (Access manual PDF p89) is the same drawing; the question names the RDM sheet. not_first_row_col dropped: the gold page is a drawing, not a table."
+  },
+  {
+   "id": "tmsd-h113",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "If we set an advisory curve speed with the ball-bank method, what ball-bank reading does the MUTCD Chapter 2C criterion use?",
+   "type": "text",
+   "edge_cases": [
+    "missing_variable"
+   ],
+   "expected": {
+    "source": "Chapter2c.pdf",
+    "pdf_pages": [
+     52
+    ],
+    "printed_pages": [
+     "196"
+    ],
+    "value": "16 degrees",
+    "accept": [
+     "16°"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "16 degrees",
+      "16°"
+     ],
+     [
+      "14 degrees",
+      "14°"
+     ],
+     [
+      "12 degrees",
+      "12°"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "clarify",
+   "verified_by": "page_text_match",
+   "note": "MUTCD Section 2C.59 paragraph 12 E: 16 degrees of ball-bank for speeds of 20 mph or less, 14 degrees for 25 to 30 mph, 12 degrees for 35 mph and higher. Missing variable: the speed."
+  },
+  {
+   "id": "tmsd-h114",
+   "division": "tmsd",
+   "asker": "tmsd",
+   "question": "Under the farm and forest products exemption in G.S. 20-118(c)(12), what limits apply to the five-or-more-axle combination vehicle configuration?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "units"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     265,
+     266
+    ],
+    "printed_pages": [
+     "265",
+     "266"
+    ],
+    "value": "26,000 pounds",
+    "accept": [
+     "26,000 lb"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "26,000 pounds",
+      "26,000 lb"
+     ],
+     [
+      "44,000 pounds",
+      "44,000 lb"
+     ],
+     [
+      "90,000 pounds",
+      "90,000 lb"
+     ],
+     [
+      "48 feet",
+      "48 ft"
+     ],
+     [
+      "11 feet",
+      "11 ft"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "L18 (G.S. 20-118(c)(12)c.2.): single axle 26,000 lb, tandem 44,000 lb, gross 90,000 lb, at least 48 feet from axle one to the last axle (page 265 of 706), and at least 11 feet between axles one and two (page 266)."
+  },
+  {
+   "id": "tmsd-h115",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "Under 19A NCAC 02B .0515 in the Traffic Services Legal Guide, what happens when a utility owner refuses to relocate its facilities for a highway project?",
+   "type": "text",
+   "edge_cases": [
+    "duplicate_section"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     554
+    ],
+    "printed_pages": [
+     "554"
+    ],
+    "value": "order",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "order"
+     ],
+     [
+      "highway improvement contract",
+      "improvement contract"
+     ],
+     [
+      "invoice"
+     ],
+     [
+      "Attorney General"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "19A NCAC 02B .0515(g): the Board issues an order under G.S. 136-18(10); if the utility does not comply, the utility work is included in the highway improvement contract, the owner is invoiced, and unpaid invoices go to the Office of the Attorney General. Duplicate: UAM 4.1.7 (utilities, UAM p147) states the same procedure."
+  },
+  {
+   "id": "tmsd-h116",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What does G.S. 20-158(c) require of drivers at stop signs, signals and other traffic control devices placed somewhere other than an intersection?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages"
+   ],
+   "expected": {
+    "source": "L18_TSLG_Guide.pdf",
+    "pdf_pages": [
+     301,
+     302
+    ],
+    "printed_pages": [
+     "301",
+     "302"
+    ],
+    "value": "stop sign",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "stop sign"
+     ],
+     [
+      "steady red",
+      "complete stop"
+     ],
+     [
+      "flashing red"
+     ],
+     [
+      "flashing yellow"
+     ],
+     [
+      "stop line",
+      "marked crosswalk"
+     ],
+     [
+      "ramp meter"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "L18 G.S. 20-158(c) Control of vehicles at places other than intersections: (1) stop sign, (2) steady red/yellow/green signal, (3) flashing red (page 301 of 706); (4) flashing yellow, (5) where to stop (stop line, crosswalk, before the device), (6) ramp meter (page 302)."
+  },
+  {
+   "id": "tmsd-h117",
+   "division": "tmsd",
+   "asker": "wztc",
+   "question": "What minimum retroreflectivity does the MUTCD set for white legends on green guide signs, in candelas per lux per square meter?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "tmsd holds MUTCD Chapter 2C (warning signs) and Part 3 (markings, with pavement-marking retroreflectivity only); the sign retroreflectivity table (Chapter 2A) is not in the division. Searched all 19 tmsd documents' text layer and the tmsd OCR cache for cd/lx, candela, lx/m, 'Table 2A-', guide sign within 80 characters of retroreflect (either order), 'sign retroreflectivity' and 'retroreflectivity of signs'. Hits: part3 p3 (pavement-marking retroreflectivity in mcd/m2/lx, not signs) and the SI conversion tables on 04100 p4 and 04091 p4 (candela/m2); none gives a sign value."
   }
  ]
 }

@@ -981,182 +981,6 @@
    "split": "locked"
   },
   {
-   "id": "wztc-h031",
-   "division": "wztc",
-   "asker": "wztc",
-   "question": "What are the steps of FHWA's process for requesting an exception for a significant Interstate project under the work zone rule?",
-   "type": "text",
-   "edge_cases": [
-    "list_page_break",
-    "two_pages",
-    "chapter_page"
-   ],
-   "expected": {
-    "source": "rule_guide.pdf",
-    "pdf_pages": [
-     60,
-     61
-    ],
-    "printed_pages": [
-     "5-8",
-     "5-9"
-    ],
-    "value": "assess the work zone impacts",
-    "accept": [
-     "assess"
-    ],
-    "unit": null,
-    "all_of": [
-     [
-      "assess"
-     ],
-     [
-      "compare"
-     ],
-     [
-      "submit it to the FHWA Division Office",
-      "exception request"
-     ],
-     [
-      "FHWA reviews"
-     ],
-     [
-      "take appropriate action",
-      "appropriate action"
-     ]
-    ]
-   },
-   "refuse": false,
-   "behaviour": "answer",
-   "verified_by": "page_text_match",
-   "note": "rule_guide 5.4.1 Process for Requesting Exceptions: steps 1-3 (assess impacts; compare with policy; prepare and submit the request) on printed 5-8, steps 4-5 (FHWA reviews; take appropriate action) on printed 5-9.",
-   "split": "locked"
-  },
-  {
-   "id": "wztc-h032",
-   "division": "wztc",
-   "asker": "utilities",
-   "question": "In the Woodrow Wilson Bridge case study of FHWA's work zone impacts assessment guide, what information did the project web site contain? List everything.",
-   "type": "text",
-   "edge_cases": [
-    "list_page_break",
-    "two_pages",
-    "appendix_page"
-   ],
-   "expected": {
-    "source": "wzi_guide.pdf",
-    "pdf_pages": [
-     164,
-     165
-    ],
-    "printed_pages": [
-     "A-10",
-     "A-11"
-    ],
-    "value": "Bridge Bucks",
-    "accept": [],
-    "unit": null,
-    "all_of": [
-     [
-      "overall WWB project"
-     ],
-     [
-      "Bridge Bucks"
-     ],
-     [
-      "Mission Possible"
-     ],
-     [
-      "Construction program"
-     ],
-     [
-      "Project news"
-     ],
-     [
-      "Neighborhood news"
-     ],
-     [
-      "Environmental aspects"
-     ],
-     [
-      "Civil rights",
-      "DBE"
-     ],
-     [
-      "scrapbook"
-     ],
-     [
-      "Project videos"
-     ]
-    ]
-   },
-   "refuse": false,
-   "behaviour": "answer",
-   "verified_by": "page_text_match",
-   "note": "wzi_guide Appendix A (printed A-10 / A-11): WWB project web site contents, 10 bullets: overall project, Bridge Bucks, Mission Possible (with sub-bullets) on p164; construction program, project news, neighborhood news, environmental aspects, civil rights/DBE, scrapbook, videos on p165.",
-   "split": "locked"
-  },
-  {
-   "id": "wztc-h033",
-   "division": "wztc",
-   "asker": "tmsd",
-   "question": "FHWA's work zone impacts assessment guide gives examples of overall policy issues an agency's work zone guidance can address. List them all.",
-   "type": "text",
-   "edge_cases": [
-    "list_page_break",
-    "two_pages",
-    "chapter_page"
-   ],
-   "expected": {
-    "source": "wzi_guide.pdf",
-    "pdf_pages": [
-     45,
-     46
-    ],
-    "printed_pages": [
-     "3-13",
-     "3-14"
-    ],
-    "value": "multi-disciplinary team",
-    "accept": [
-     "multi-disciplinary"
-    ],
-    "unit": null,
-    "all_of": [
-     [
-      "multi-disciplinary"
-     ],
-     [
-      "organizational strategies"
-     ],
-     [
-      "impacts assessment guidance"
-     ],
-     [
-      "memoranda of understanding",
-      "MOU"
-     ],
-     [
-      "performance levels"
-     ],
-     [
-      "significant projects"
-     ],
-     [
-      "Exception criteria"
-     ],
-     [
-      "training"
-     ]
-    ]
-   },
-   "refuse": false,
-   "behaviour": "answer",
-   "verified_by": "page_text_match",
-   "note": "wzi_guide 3.x 'Examples of Overall Policy Issues', 8 dash items: standing multi-disciplinary team, agency organizational strategies, guidance on using the assessment guidance, MOUs with utility operators, performance levels on printed 3-13; significant-project criteria, exception criteria, training on printed 3-14.",
-   "split": "locked"
-  },
-  {
    "id": "wztc-h034",
    "division": "wztc",
    "asker": "utilities",
@@ -1406,25 +1230,6 @@
    "split": "locked",
    "accept_reply": [
     "reserved"
-   ]
-  },
-  {
-   "id": "wztc-h043",
-   "division": "wztc",
-   "asker": "wztc",
-   "question": "What assessment requirements do NCDOT's Work Zone Safety and Mobility Guidelines set during and after construction?",
-   "type": "unanswerable",
-   "edge_cases": [
-    "revision_marks"
-   ],
-   "expected": null,
-   "refuse": true,
-   "behaviour": "refuse",
-   "verified_by": "page_text_match",
-   "note": "WZSafetyAndMobilityGuidelines p23: 'ASSESSMENT REQUIREMENTS DURING/AFTER CONSTRUCTION - To Be Developed' (placeholder, no content). Checked: the heading occurs nowhere else with content.",
-   "split": "locked",
-   "accept_reply": [
-    "to be developed"
    ]
   },
   {
@@ -2348,22 +2153,6 @@
    "split": "locked"
   },
   {
-   "id": "wztc-h072",
-   "division": "wztc",
-   "asker": "tmsd",
-   "question": "How many work zone records did NCDOT's WZ-EVA database hold by the end of 2025?",
-   "type": "unanswerable",
-   "edge_cases": [
-    "not_in_documents"
-   ],
-   "expected": null,
-   "refuse": true,
-   "behaviour": "refuse",
-   "verified_by": "page_text_match",
-   "note": "The 2023 process review gives just over 30,000 records as of 11/30/23 only. Checked: no WZ-EVA count for 2024 or 2025 in any wztc document.",
-   "split": "locked"
-  },
-  {
    "id": "wztc-h073",
    "division": "wztc",
    "asker": "utilities",
@@ -2483,51 +2272,6 @@
    "behaviour": "answer",
    "verified_by": "page_text_match",
    "note": "trans_mgmt_plans Table B.1 TMP Strategy Matrix (continued), Appendix B-8, row IB8 Lighting devices: triggers when night work is being conducted, long project duration, high traffic volume. The table runs over several appendix pages; this row is on a continuation page.",
-   "split": "locked"
-  },
-  {
-   "id": "wztc-h079",
-   "division": "wztc",
-   "asker": "utilities",
-   "question": "In Table B.1 of FHWA's TMP guide, when should pedestrian/bicycle access improvements be considered?",
-   "type": "multipage_table",
-   "edge_cases": [
-    "multipage_table",
-    "appendix_page"
-   ],
-   "expected": {
-    "source": "trans_mgmt_plans.pdf",
-    "pdf_pages": [
-     88
-    ],
-    "printed_pages": [
-     "B-6"
-    ],
-    "value": "school route",
-    "accept": [
-     "school route traverses"
-    ],
-    "unit": null,
-    "all_of": [
-     [
-      "Long project duration"
-     ],
-     [
-      "pedestrian/bicyclist activities",
-      "bicyclist"
-     ],
-     [
-      "sidewalks"
-     ],
-     [
-      "school route"
-     ]
-    ]
-   },
-   "refuse": false,
-   "behaviour": "answer",
-   "verified_by": "page_text_match",
-   "note": "Table B.1 (continued), Appendix B-6, row IA12: long project duration; significant pedestrian/bicyclist activities; existing sidewalks traverse the work zone; a school route traverses the work zone.",
    "split": "locked"
   },
   {
@@ -2717,44 +2461,6 @@
    "behaviour": "answer",
    "verified_by": "page_text_match",
    "note": "23 CFR 630.1012(e) Responsible persons: designate a trained person, as specified in 630.1008(d).",
-   "split": "locked"
-  },
-  {
-   "id": "wztc-h086",
-   "division": "wztc",
-   "asker": "utilities",
-   "question": "For TIP projects and Raleigh Let Division Activities, what do NCDOT's work zone guidelines say to use to determine the level of significance?",
-   "type": "text",
-   "edge_cases": [
-    "cross_reference"
-   ],
-   "expected": {
-    "source": "WZSafetyAndMobilityGuidelines.pdf",
-    "pdf_pages": [
-     17
-    ],
-    "printed_pages": [
-     "17"
-    ],
-    "value": "Table 3",
-    "accept": [
-     "Criteria chart"
-    ],
-    "unit": null,
-    "all_of": [
-     [
-      "Table 3"
-     ],
-     [
-      "page 19",
-      "criteria chart"
-     ]
-    ]
-   },
-   "refuse": false,
-   "behaviour": "answer",
-   "verified_by": "page_text_match",
-   "note": "Guidelines p17: use the Criteria chart shown in Table 3 (See page 19); other division activities and encroachments use the procedures on pages 20-21.",
    "split": "locked"
   },
   {
@@ -3069,53 +2775,6 @@
    "split": "locked"
   },
   {
-   "id": "wztc-h097",
-   "division": "wztc",
-   "asker": "utilities",
-   "question": "What are the objectives of work zone impacts assessment during construction, according to FHWA's work zone impacts assessment guide?",
-   "type": "text",
-   "edge_cases": [
-    "chapter_page"
-   ],
-   "expected": {
-    "source": "wzi_guide.pdf",
-    "pdf_pages": [
-     114
-    ],
-    "printed_pages": [
-     "7-2"
-    ],
-    "value": "Implement the TMP",
-    "accept": [],
-    "unit": null,
-    "all_of": [
-     [
-      "pre-construction coordination"
-     ],
-     [
-      "proposed changes"
-     ],
-     [
-      "Implement the TMP"
-     ],
-     [
-      "monitor and manage"
-     ],
-     [
-      "Revise the TMP"
-     ],
-     [
-      "lessons"
-     ]
-    ]
-   },
-   "refuse": false,
-   "behaviour": "answer",
-   "verified_by": "page_text_match",
-   "note": "wzi_guide 7.2 (printed 7-2): six objectives - resolve pre-construction coordination issues; assess proposed changes before work starts; implement the TMP; actively monitor and manage impacts; revise the TMP; document findings or lessons.",
-   "split": "locked"
-  },
-  {
    "id": "wztc-h098",
    "division": "wztc",
    "asker": "tmsd",
@@ -3213,6 +2872,352 @@
    "verified_by": "page_text_match",
    "note": "fhwahop12005 Example 2.2 table (printed 9), footnote (**): delay times reported as average delay time per vehicle in minutes. The table itself has no unit.",
    "split": "tuning"
+  },
+  {
+   "id": "wztc-h101",
+   "division": "wztc",
+   "asker": "wztc",
+   "question": "When a work zone TMP is written up as a report, which roles and responsibilities does FHWA's TMP guide say the plan should document?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "trans_mgmt_plans.pdf",
+    "pdf_pages": [
+     33,
+     34
+    ],
+    "printed_pages": [
+     "3-3",
+     "3-4"
+    ],
+    "value": "TMP manager",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "TMP manager"
+     ],
+     [
+      "stakeholders",
+      "review committee"
+     ],
+     [
+      "approval contact"
+     ],
+     [
+      "implementation task leader",
+      "task leaders"
+     ],
+     [
+      "TMP monitors",
+      "monitors"
+     ],
+     [
+      "emergency contacts",
+      "emergency contact"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Section 3.3 TMP Roles and Responsibilities: TMP manager, stakeholders/review committee, approval contact(s) and TMP implementation task leaders on printed 3-3; TMP monitors and emergency contacts on printed 3-4."
+  },
+  {
+   "id": "wztc-h102",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In the FHWA work zone impacts guide's Woodrow Wilson Bridge (I-495/US 1 interchange) case study, what construction traffic impact mitigation measures did the EIS list?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "appendix_page"
+   ],
+   "expected": {
+    "source": "wzi_guide.pdf",
+    "pdf_pages": [
+     159,
+     160
+    ],
+    "printed_pages": [
+     "A-5",
+     "A-6"
+    ],
+    "value": "six lanes",
+    "accept": [
+     "6 lanes"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "minimize delay"
+     ],
+     [
+      "six lanes",
+      "6 lanes"
+     ],
+     [
+      "businesses and residences",
+      "access to businesses"
+     ],
+     [
+      "rerouting",
+      "reroute"
+     ],
+     [
+      "road closures",
+      "detours"
+     ],
+     [
+      "local media",
+      "media"
+     ],
+     [
+      "hotline",
+      "hot line"
+     ],
+     [
+      "pedestrians and bicyclists",
+      "bicyclists"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Appendix A case study, EIS 'potential' mitigation measures for construction traffic: MOT/sequencing planned to minimize delay; six lanes kept over the Potomac; access to businesses and residences; rerouting may be necessary; signs for road closures/detours; local media notified (printed A-5); signs with a hotline phone number; MOT plan for pedestrians and bicyclists (printed A-6). The ROD commitments that follow on A-6 repeat the sign and hotline items; the question asks for the EIS list."
+  },
+  {
+   "id": "wztc-h103",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "What contracting strategies does FHWA's guide to developing transportation management plans list under IC2 for cutting project duration or traffic impacts?",
+   "type": "text",
+   "edge_cases": [
+    "list_page_break",
+    "two_pages",
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "trans_mgmt_plans.pdf",
+    "pdf_pages": [
+     50,
+     51
+    ],
+    "printed_pages": [
+     "4-8",
+     "4-9"
+    ],
+    "value": "design-build",
+    "accept": [
+     "design build"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "design-build",
+      "design build"
+     ],
+     [
+      "A+B",
+      "A + B"
+     ],
+     [
+      "incentive/disincentive",
+      "incentive"
+     ],
+     [
+      "lane rental"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Section 4.1 strategy IC2 Contracting strategies: design-build and A+B bidding on printed 4-8; incentive/disincentive clauses and lane rental on printed 4-9."
+  },
+  {
+   "id": "wztc-h104",
+   "division": "wztc",
+   "asker": "wztc",
+   "question": "Who is listed as NCDOT's State Work Zone Operations & Programs Engineer in the TMP Design Manual contacts?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "revision_marks"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "TMP Design Manual p3 (contacts) lists the position as '(Vacant) State Work Zone Operations & Programs Engineer' with no name; the only other mention (p70) names no one. The right reply is that the post is shown as vacant. Not an exact match for the spec: no unused 'Reserved'/'To Be Developed' section is left in wztc, so this uses the vacancy placeholder.",
+   "accept_reply": [
+    "vacant"
+   ]
+  },
+  {
+   "id": "wztc-h105",
+   "division": "wztc",
+   "asker": "tmsd",
+   "question": "What is the minimum age to work as a certified flagger on an NCDOT work zone?",
+   "type": "unanswerable",
+   "edge_cases": [
+    "not_in_documents"
+   ],
+   "expected": null,
+   "refuse": true,
+   "split": "locked",
+   "behaviour": "refuse",
+   "verified_by": "page_text_match",
+   "note": "The flagging documents (SOP 10-9, Chapter 2/5 training notes, part6, 2024 Standard Specifications) cover flagger qualification and training but give no minimum age. Searched every wztc document's text layer and the Chapter_2/Chapter_5 OCR text for: years of age, years old, minimum age, age requirement, 'age of 16/17/18', '18 years', and 'age' within 60 characters of 'flagg'. The only hits are 'storage requirements' (2024 Std Specs p199, wzi_guide p171) and 'signage requirements' (wzi_guide p93), unrelated."
+  },
+  {
+   "id": "wztc-h106",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "In the continuation of Table B.1 in FHWA's TMP guide, under which conditions is rideshare promotion (strategy IIA13) suggested?",
+   "type": "multipage_table",
+   "edge_cases": [
+    "multipage_table",
+    "appendix_page"
+   ],
+   "expected": {
+    "source": "trans_mgmt_plans.pdf",
+    "pdf_pages": [
+     98
+    ],
+    "printed_pages": [
+     "B-16"
+    ],
+    "value": "Urban area",
+    "accept": [],
+    "unit": null,
+    "all_of": [
+     [
+      "urban area",
+      "urban"
+     ],
+     [
+      "long project duration",
+      "long duration"
+     ],
+     [
+      "high expectation of delay",
+      "expectation of delay"
+     ],
+     [
+      "carpools",
+      "carpool"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Appendix B Table B.1 (Continued), row IIA13 Rideshare promotions, conditions column: urban area; long project duration; high expectation of delay; where advantages to carpools exist. Text checked on the page; the row assignment was read off the rendered page."
+  },
+  {
+   "id": "wztc-h107",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "Where does NCDOT's TMP Design Manual send designers for guidance on temporary barrier at a drop-off of more than 3 inches?",
+   "type": "text",
+   "edge_cases": [
+    "cross_reference"
+   ],
+   "expected": {
+    "source": "TMP Design Manual (Combined, No Links).pdf",
+    "pdf_pages": [
+     40
+    ],
+    "printed_pages": [
+     "16"
+    ],
+    "value": "Chapter 2.2",
+    "accept": [
+     "2.2 Drop-Offs"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "Chapter 2.2",
+      "2.2 Drop-Offs",
+      "section 2.2"
+     ],
+     [
+      "WZTCS Design Manual",
+      "WZTCS"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "TMP Design Manual 5.6.2.1 Drop-offs: drop-offs greater than 3 inches need special attention; see Chapter 2.2 Drop-Offs in the WZTCS Design Manual for temporary barrier guidelines. p41 (an excluded page) repeats the same pointer for slopes; the question is about drop-offs."
+  },
+  {
+   "id": "wztc-h108",
+   "division": "wztc",
+   "asker": "utilities",
+   "question": "What intrusion countermeasures has NYSDOT identified for stationary, mobile and short-duration work zones, according to FHWA's work zone impacts guide?",
+   "type": "text",
+   "edge_cases": [
+    "chapter_page"
+   ],
+   "expected": {
+    "source": "wzi_guide.pdf",
+    "pdf_pages": [
+     146
+    ],
+    "printed_pages": [
+     "9-6"
+    ],
+    "value": "reduced channelization spacing",
+    "accept": [
+     "channelization spacing"
+    ],
+    "unit": null,
+    "all_of": [
+     [
+      "channelization spacing"
+     ],
+     [
+      "flagger station"
+     ],
+     [
+      "rumble strip"
+     ],
+     [
+      "reduced speed"
+     ],
+     [
+      "police enforcement",
+      "police"
+     ],
+     [
+      "dynamic message sign",
+      "DMS"
+     ],
+     [
+      "drone radar"
+     ]
+    ]
+   },
+   "refuse": false,
+   "split": "locked",
+   "behaviour": "answer",
+   "verified_by": "page_text_match",
+   "note": "Chapter 9 sidebar: NYSDOT's seven intrusion countermeasures (reduced channelization spacing, enhanced flagger stations, rumble strips, reduced speed limits, police enforcement, DMS, drone radar)."
   }
  ]
 }
