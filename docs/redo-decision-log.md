@@ -592,3 +592,13 @@ Also open, without a ticket yet:
   - Six new values rest on reading the rendered page (scans, sideways pages, drawings: utilities-h106, utilities-h111, tmsd-h107, tmsd-h109, tmsd-h111, tmsd-h112); every other value and list part matches its gold page's text.
   - Six kept locked items share a gold page with a retired one (tmsd-h058, tmsd-h092, utilities-h055, utilities-h081, wztc-h057, wztc-h080). Their own replies were not read for DAR-732, so they stay; the page was seen.
   - Runs before this change were scored on the old 28; a run after it is not comparable item for item on those 28, only as a rate.
+
+## DAR-736. Bring the next page when a list or table runs over a page break
+
+- **Question:** 5 of the 7 incomplete answers on the OpenAI held-out run were lists that continue on the next page (DAR-732), and `with_following` often adds a chunk from the same page. How can every passage whose list or table runs over a page break bring its continuation, without paying for every page end?
+- **Chose:** for every passage the model reads, add the next page's first chunk when the page's last line (after dropping folios, footnotes and running footers) is a list item or table row or leads on (`:`, `;`, `,`, "and", "or"), **and** the next page's first line is a list item or table row; mirror it for a passage that starts a page mid-list. Contents pages (leader dots) never count. When the continuation is missing, the passage is marked "may continue" and the prompt tells the model to say so. Report: `docs/redo-reports/dar-736-page-break.md`.
+- **Evidence:**
+  - Retrieval on the 286 held-out questions: 137 change; mean passage text 10,536 -> 12,097 characters (+14.8%); chunks 6.34 -> 7.29; gold pages among the passages 239 -> 245 of 272. About +$0.0004 a question on gpt-6.1-terra.
+  - Paired free-model run on those 137 (main vs this branch, DAR-737 scorer): confident wrong 10 -> 5, value right 101 -> 105 /112, strict 89 -> 95, over-refusal 3 -> 3 /117, must-refuse answered 2 -> 1 /20. Nothing got worse. All 5 gains are DAR-732-read items (development); the other 132 changed questions didn't move.
+  - The five DAR-732 page-break items answer with the full list locally (5/5).
+- **Rejected:** counting an unfinished sentence at a page end as running over: 194 questions changed instead of 137, +34% context instead of +15%, for 2 more gold pages.

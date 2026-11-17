@@ -64,6 +64,9 @@ class _FakeRetriever:
     def with_following(self, hits, top=2):
         return hits
 
+    def with_next_page(self, hits):
+        return hits
+
     def as_passages(self, hits):
         return hits
 

@@ -49,6 +49,102 @@ def is_table(chunk: Dict[str, Any]) -> bool:
     return chunk.get("kind") == "table" or bool(_PIPE_TABLE.search(chunk.get("text") or ""))
 
 
+# What a page's text may end with after its last sentence (DAR-736): blank lines, the folio
+# ("B-16", "**3-13**", "**Appendix A-10**", "Page 5 of 12", "iv") and footnotes, which the PDF
+# reader writes as "> **3** Available at ...". They are skipped before asking whether the page ends
+# in the middle of something.
+_FOLIO = re.compile(r"^\W*(?:page\s+)?(?:appendix\s+)?(?:[A-Z]{1,2}\s*[-.]\s*)?\d{1,4}(?:\s*-\s*\d{1,4})?(?:\s+of\s+\d+)?\W*$"
+                    r"|^\W*[ivxlc]{1,6}\W*$", re.IGNORECASE)
+_FOOTNOTE = re.compile(r"^\s*>")
+# A list item: a bullet, "1." / "1)" / "(1)", or "a." / "a)" / "(a)".
+_LIST_ITEM = re.compile(r"^\s*(?:[-*•▪◦–]|\(?\d{1,2}[.)]|\(?[a-zA-Z][.)])\s+")
+_TABLE_ROW = re.compile(r"^\s*\|.*\|\s*$")
+_SENTENCE_END = re.compile(r"[.!?][\"'”’)\]]*$")
+# A line that ends a page and says the list goes on: "... where applicable; and", "including:".
+_LEADS_ON = re.compile(r"(?:[:;,]|\b(?:and|or))$", re.IGNORECASE)
+# Running headers, footers and slide titles are short lines with no sentence end ("Part 2: Chapter 5
+# | July 2019| Page 44", "WORK ZONE IMPACTS ASSESSMENT", "# Impacts on Transportation Projects"). Up to
+# this many are skipped at a page's end and at the next page's start.
+_FURNITURE_LINES = 3
+_FURNITURE_CHARS = 80
+# How many more chunks of its page a hit may bring to reach the page's end (DAR-736). The FHWA work
+# zone guide's eight policy issues (held-out wztc-h033) start in one chunk of printed p.3-13, run
+# through the page's second chunk and end on 3-14: the hit is one chunk short of the page's end.
+SAME_PAGE_REACH = 1
+
+
+# A table of contents line: "Development and Implementation Process ......... 3-10". A contents
+# page running over is no list a question asks for, and bringing the next one only costs context.
+_LEADER_DOTS = re.compile(r"(?:\.\s?){5,}|…{2,}")
+
+
+def _is_item(line: str) -> bool:
+    return bool(_LIST_ITEM.match(line) or _TABLE_ROW.match(line)) and not _LEADER_DOTS.search(line)
+
+
+def _furniture(line: str) -> bool:
+    """A blank line, folio, footnote, heading or other short line with no sentence end: not the page's content."""
+    text = line.strip()
+    if not text or _FOLIO.match(text) or _FOOTNOTE.match(line) or text.startswith("#"):
+        return True
+    plain = text.replace("**", "").replace("_", "").strip()
+    # A short line in lower case is the end or start of a sentence cut by the break, not a header.
+    return (len(plain) < _FURNITURE_CHARS and not plain[:1].islower() and not _is_item(text)
+            and not _SENTENCE_END.search(plain) and not _LEADS_ON.search(plain))
+
+
+def _last_line(text: str) -> str:
+    lines = (text or "").splitlines()
+    skipped = 0
+    while lines and (not lines[-1].strip() or _FOLIO.match(lines[-1].strip()) or _FOOTNOTE.match(lines[-1])
+                     or (skipped < _FURNITURE_LINES and _furniture(lines[-1]))):
+        skipped += 0 if not lines[-1].strip() else 1
+        lines.pop()
+    return lines[-1].strip() if lines else ""
+
+
+def _first_line(text: str) -> str:
+    lines = (text or "").splitlines()
+    skipped = 0
+    while lines and (not lines[0].strip() or (skipped < _FURNITURE_LINES and _furniture(lines[0]))):
+        skipped += 0 if not lines[0].strip() else 1
+        lines.pop(0)
+    return lines[0].strip() if lines else ""
+
+
+def leads_on(text: str) -> bool:
+    """Whether a page's text ends on a line that says more follows: "...; and", "including:", or a table row."""
+    last = _last_line(text)
+    return bool((_is_item(last) and _TABLE_ROW.match(last)) or _LEADS_ON.search(last.replace("**", "").rstrip()))
+
+
+def runs_over(text: str, next_text: str) -> bool:
+    """Whether a list, table or sentence at the end of `text` goes on at the start of `next_text` (the next page).
+
+    Running headers, footers, folios, footnotes and repeated slide titles are
+    skipped on both sides; then it does when:
+
+    - the page ends on a list item, a table row or a line that leads on (":",
+      ";", "and") and the next page starts with a list item or table row: the
+      UAM's list of what plans must show (held-out utilities-h072) ends printed
+      p.B-16 on "- the limits of right-of-way ...; and" and B-17 starts "- the
+      portion of the work ..."; a Federal-aid course's slide of impacts
+      (utilities-h074) ends on its third bullet and the next slide, under the
+      same title, has the rest;
+    Looking at the next page too keeps this off the 4 in 5 page ends that look
+    unfinished on their own (a footer, a drawing's label, a table of contents).
+
+    A plain sentence cut by the break (no sentence end, next page in lower case)
+    does not count. On the 286 held-out locked questions it more than doubled
+    what this adds (mean context +34% instead of +15%, 194 questions changed
+    instead of 137) for 2 more gold pages reached (247 instead of 245 of 272).
+    """
+    last, first = _last_line(text), _first_line(next_text)
+    if not last or not first:
+        return False
+    return bool((_is_item(last) or _LEADS_ON.search(last.replace("**", "").rstrip())) and _is_item(first))
+
+
 class Retriever:
     def __init__(self, index: IndexFile, embedder: Embedder, reranker: Optional[Reranker] = None,
                  candidates: int = DEFAULT_CANDIDATES, keyword: bool = True,
@@ -179,6 +275,100 @@ class Retriever:
                 out.append(Hit(hit.score, after))
         return out
 
+    def with_next_page(self, hits: List[Hit]) -> List[Hit]:
+        """The hits, each one near the end of a page that stops mid-list or mid-table followed by the next page's start.
+
+        with_following adds one chunk for the top two hits only, and that chunk is
+        often still on the same page: the FHWA guide's eight policy issues (held-out
+        wztc-h033) reached the model as the five on printed p.3-13, and the three on
+        3-14 never did. In DAR-732, 5 of the 7 incomplete answers were such lists.
+
+        Every hit counts, at any rank. A hit at most SAME_PAGE_REACH chunks before
+        its page's last chunk brings the chunks up to that last one and, when the
+        list, table or sentence there runs over (runs_over), the next page's first
+        chunk. The same holds backwards: a hit near the start of a page that
+        continues the previous one brings that page's last chunk (held-out
+        wztc-h032: the search found the list's second page). A hit further into
+        its page brings nothing: the page break is not what matched. Chunks the
+        hits already hold are not added twice. Each added chunk carries the score
+        of the hit that brought it, so the hit's rank still orders the passages.
+        """
+        seen = {id(h.chunk) for h in hits}
+        out: List[Hit] = []
+        for hit in hits:
+            out.append(hit)
+            for chunk in self._from_previous_page(hit.chunk) + self._to_next_page(hit.chunk):
+                if id(chunk) not in seen:
+                    seen.add(id(chunk))
+                    out.append(Hit(hit.score, chunk))
+        return out
+
+    def _preceding(self, chunk: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """The chunk before this one in the same document (never a figure chunk), or None."""
+        i = self.index.position(chunk)
+        if is_figure(chunk) or i <= 0 or i >= len(self.index.chunks):
+            return None
+        before = self.index.chunks[i - 1]
+        return before if before.get("source") == chunk.get("source") and not is_figure(before) else None
+
+    def _from_previous_page(self, chunk: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """The chunks from the previous page's last one up to `chunk`, when that page's list or table runs onto this one.
+
+        The mirror of _to_next_page: the FHWA guide's example web-site contents
+        (held-out wztc-h032) start on printed p.A-10 and end on A-11, and the
+        search found A-11.
+        """
+        chain: List[Dict[str, Any]] = []
+        current = chunk
+        for _ in range(SAME_PAGE_REACH + 1):
+            before = self._preceding(current)
+            if before is None or _last_page(before) != current.get("page"):
+                break
+            chain.append(before)
+            current = before
+        else:
+            return []  # the page starts before the reach
+        if (before is None or _last_page(before) != (current.get("page") or 0) - 1
+                or not runs_over(before.get("text"), current.get("text"))):
+            return []
+        return chain + [before]
+
+    def _to_next_page(self, chunk: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """The chunks from after `chunk` to the next page's first one, when its page ends open; else none."""
+        chain: List[Dict[str, Any]] = []
+        current = chunk
+        for _ in range(SAME_PAGE_REACH + 1):
+            after = self.index.following(current)
+            if after is None or after.get("page") != _last_page(current):
+                break
+            chain.append(after)
+            current = after
+        else:
+            return []  # the page goes on past the reach
+        if (after is None or after.get("page") != _last_page(current) + 1
+                or not runs_over(current.get("text"), after.get("text"))):
+            return []
+        return chain + [after]
+
+    def page_continues(self, chunk: Dict[str, Any]) -> bool:
+        """Whether the chunk is the last of its page, its list or table goes on, and the next page is missing (DAR-736).
+
+        as_passages asks this of a passage's last part: had the next page's first
+        chunk been among the hits, it would have been merged after it. When the
+        next page is in the index, runs_over decides; when it is not (a page with
+        no text, the end of the document), the page must end on a line that
+        leads on ("; and", ":", a table row). The passage is then shown with a
+        note that it may go on.
+        """
+        if is_figure(chunk):
+            return False
+        after = self.index.following(chunk)
+        if after is not None and after.get("page") == _last_page(chunk):
+            return False  # not the page's last chunk
+        if after is not None and after.get("page") == _last_page(chunk) + 1:
+            return runs_over(chunk.get("text"), after.get("text"))
+        return leads_on(chunk.get("text"))
+
     def as_passages(self, hits: List[Hit]) -> List[Hit]:
         """The hits in reading order, with chunks that follow each other merged into one passage.
 
@@ -209,7 +399,18 @@ class Retriever:
             else:
                 passages.append(hit)
             last_position = position
-        return passages
+        return [self._mark_continues(p) for p in passages]
+
+    def _mark_continues(self, passage: Hit) -> Hit:
+        """The passage with `continues` set when its last part ends a page open and the next page isn't in the index.
+
+        A copy: the index's own chunks are never changed. A single chunk keeps
+        itself as its only part, so callers that match parts by identity still find it.
+        """
+        parts = passage.chunk.get("parts") or [passage.chunk]
+        if not self.page_continues(parts[-1]):
+            return passage
+        return Hit(passage.score, dict(passage.chunk, parts=parts, continues=True))
 
 
 def aggregate_pages(hits: List[Hit], mode: str, k: int, max_per_page: int = DEFAULT_MAX_CHUNKS_PER_PAGE,
@@ -274,6 +475,11 @@ def aggregate_pages(hits: List[Hit], mode: str, k: int, max_per_page: int = DEFA
             per_document[source] = per_document.get(source, 0) + 1
     out = out[:k]
     return out + sorted(held, key=lambda h: -h.score)[:k - len(out)]
+
+
+def _last_page(chunk) -> int:
+    """The last PDF page a chunk is on (a table joined over a page break has page_end)."""
+    return chunk.get("page_end") or chunk.get("page") or 0
 
 
 def _page_key(chunk) -> Tuple:

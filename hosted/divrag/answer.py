@@ -165,6 +165,11 @@ _NOTE_QUESTION = re.compile(
     r"|\b(?:the|a|its|this|that)\s+notes?\b|\bnotes?\s+(?:to|under|below|beneath|for|of|in|on|at)\b",
     re.IGNORECASE,
 )
+# Added when a passage ends a page in the middle of a list or table and the next page isn't among
+# the passages (DAR-736, Retriever.page_continues). In DAR-732, 3 of the 5 lists cut at a page break
+# were presented as complete (the FHWA guide's 5 of 8 policy issues, held-out wztc-h033).
+CONTINUES_RULE = """A passage marked "(continues on the next page, not shown)" stops in the middle of a list or table. Answer from what it shows, and say that the list or table may continue on the next page."""
+CONTINUES_NOTE = "(continues on the next page, not shown)"
 # Added when the question comes with earlier turns.
 HISTORY_RULE ="""The earlier conversation, when shown, is only there to understand what the question refers to (for example "it" or "that barrier"). It is not a source: take every fact from the numbered passages and cite them, never from the earlier answers. If the passages do not answer the question, reply with exactly {not_found}, even if the earlier conversation did."""
 
@@ -393,6 +398,8 @@ def passage_text(chunk: Dict) -> str:
         context = part.get("context")
         out.append(f"{context}\n{part['text']}" if context and context != last else part["text"])
         last = context
+    if chunk.get("continues"):
+        out.append(CONTINUES_NOTE)
     return "\n\n".join(out)
 
 
@@ -418,6 +425,8 @@ def build_messages(question: str, asker: Division, target: Division, hits: List[
     extra = [PAGE_RULE] if any(_shows_printed_page(hit.chunk) for hit in hits) else []
     if _NOTE_QUESTION.search(question):
         extra.append(NOTE_RULE)
+    if any(hit.chunk.get("continues") for hit in hits):
+        extra.append(CONTINUES_RULE)
     if earlier:
         extra.append(HISTORY_RULE.format(not_found=NOT_FOUND))
     system += "".join(f"\n{n}. {rule}" for n, rule in enumerate(extra, 8))
@@ -862,9 +871,8 @@ class Answerer:
         """
         ranked = self.retriever.retrieve(self.search_query(question, history), division=target.id,
                                          k=self._ranked_depth(), timer=timer, sources=documents)
-        first = ranked[:self.top_k]
-        return Passages(self.retriever.as_passages(self.retriever.with_following(first, top=FOLLOWING_FOR_TOP)),
-                        more=ranked[self.top_k:])
+        first = self.retriever.with_following(ranked[:self.top_k], top=FOLLOWING_FOR_TOP)
+        return Passages(self.retriever.as_passages(self.retriever.with_next_page(first)), more=ranked[self.top_k:])
 
     def _ranked_depth(self) -> int:
         """How many ranked hits retrieve() asks for: the top k, plus the rest of the reranked pool for a retry.
@@ -909,7 +917,11 @@ class Answerer:
                     continue
                 tables[_page_key(hit.chunk)] = tables.get(_page_key(hit.chunk), 0) + 1
             picked.append(hit)
-        return self.retriever.as_passages(picked) if picked else []
+        if not picked:
+            return []
+        # The next page comes along here too; a chunk the first passages hold is not shown twice.
+        extended = [h for h in self.retriever.with_next_page(picked) if id(h.chunk) not in shown]
+        return self.retriever.as_passages(extended)
 
     def suggest_divisions(self, question: str, target: Division, deadline: Optional[float] = None,
                           refused_by: Sequence[str] = ()) -> List[str]:
