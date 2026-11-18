@@ -614,3 +614,23 @@ Also open, without a ticket yet:
   - Mean answer time 6.8 s -> 8.5 s.
 - **Found:** `includeFiles: public/**` put the 247.5 MB of rendered pages into the function (547 MB > 500 MB), so `RENDER_PAGES=1` could never deploy. Fixed in PR #67 (`public/{*,assets/**}`).
 - **Next, if wanted:** images for scans and sideways pages only (the 3 fixes are all of that kind; about half the images), measured on the new held-out set with a repeated control.
+
+## DAR-738. Held-out run on the new 286-item set with production as of Nov 17
+
+- **Question:** what does production score on the held-out set now that DAR-736's page-break fix is live and DAR-737 has swapped the 28 read items?
+- **Chose:** record `openai-site-dar738` as the current production number. Nothing changes in the code. Report: `docs/heldout-set/openai-site-dar738.{md,json}`.
+- **Run:** Nov 17, live site (deployment `dpl_4To5cpHgfCvnctAPDYK879yBFVoe`, main at b7de568 with #69 and #70, `PAGE_IMAGES_TO_MODEL` off), the 286 locked items after DAR-737 (hash check passes), DAR-737 scorer, fresh cache tag so no earlier answer was reused. gpt-6.1-terra answered all 286; the free backup never answered; 0 errors. Median answer 7.2 s, p90 9.6 s. Cost about $1.32 (site spend ledger $4.56 -> $5.88; the ledger is shared, so this is an upper bound; estimate was $1.10-1.30).
+- **Numbers (95% Wilson):**
+
+  | | this run (new set) | `openai-site-dar735` (old set, before #69) |
+  |---|---|---|
+  | Value right | 226/242 (90-96%) | 222/242 (88-95%) |
+  | Cited PDF page right | 228/249 (87-94%) | 223/251 (84-92%) |
+  | Confident wrong | 7/286 (1-5%) | 16/286 (3-9%) |
+  | Answerable declined | 8/256 (2-6%) | 6/256 (1-5%) |
+  | Must-refuse answered | 0/30 (0-11%) | 1/30 (1-17%) |
+  | Strict (value and page) | 209/242 (81-90%) | 202/242 (78-88%) |
+  | Clarify right | 14/14 | 12/14 |
+
+- **How to read the comparison:** as rates only. 28 of the 286 items changed, and the 28 removed were picked because they had failed (DAR-732), so part of the drop in confident wrong comes from the swap, not from the code. The intervals for confident wrong overlap. The page-break strata moved the expected way (list over a page break: value right 10/14, confident wrong 4/14; before 7/14 and 7/14), but that edge case also had items swapped.
+- **Not read:** per the held-out rules, only the tables were read; no item's reply was opened, so all 286 stay locked.
