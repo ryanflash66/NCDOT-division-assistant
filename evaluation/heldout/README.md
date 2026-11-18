@@ -48,6 +48,22 @@ It scores whatever the site has deployed, so it measures main as shipped, not a
 branch. The site allows 8 questions a minute per IP; `--pause 8` keeps under it
 and a 429 is waited out.
 
+### RAGAS judge on a run's answers (DAR-650)
+
+```bash
+.venv\Scripts\python -m evaluation.heldout.ragas --report docs/heldout-set/NAME.json --judge-base-url https://api.openai.com/v1 --judge-models gpt-6.1-terra --dry-run
+```
+
+Scores a finished run's cached answers on the RAGAS metrics of
+`evaluation/run_ragas.py` (faithfulness, answer relevancy, context precision
+and recall), with no new answer calls. A `--site` run keeps no passage text,
+so the passages are rebuilt on the local index; it stops unless the index and
+retriever settings are the run's and the cited excerpts are found in them.
+`--dry-run` prints the judge's cost from the actual prompts; without it the
+judge needs `JUDGE_API_KEY` and counts against the month's OpenAI limit.
+Aggregates go to `docs/heldout-set/ragas-NAME.md`, per-item scores and verdicts
+to the gitignored `evaluation/heldout/results/NAME-*`, charts to `evaluation/charts/heldout-NAME/`.
+
 ## Schema additions
 
 - `behaviour` (every item here has it): what the right reply does.
