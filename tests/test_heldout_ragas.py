@@ -6,8 +6,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from evaluation.heldout.ragas import (check_settings, excerpts_found, page_retrieval, pick_answer_config, ragas_item,
-                                      reference_of)
+from evaluation.heldout.ragas import (answer_matches, cached_judge_configs, check_settings, excerpts_found,
+                                      load_site_answers, page_retrieval, pick_answer_config, ragas_item, reference_of)
 
 TMP = "TMP Design Manual (Combined, No Links).pdf"
 
@@ -47,8 +47,30 @@ def _record(text):
 
 def test_the_cached_run_whose_answers_are_the_reports_is_picked():
     rows = {"a": {"answer": "x"}, "b": {"answer": "y"}}
-    answers = {"old": {"a": _record("x"), "b": _record("other")}, "new": {"a": _record("x"), "b": _record("y")}}
-    assert pick_answer_config(answers, rows) == "new"
+    # The best match sorts first by name and the worse one last, so neither name order passes this.
+    answers = {"a-best": {"a": _record("x"), "b": _record("y")}, "z-worse": {"a": _record("x"), "b": _record("other")}}
+    assert pick_answer_config(answers, rows) == "a-best"
+    answers = {"a-worse": {"a": _record("x"), "b": _record("other")}, "z-best": {"a": _record("x"), "b": _record("y")}}
+    assert pick_answer_config(answers, rows) == "z-best"
+
+
+def test_a_cached_answer_that_is_not_the_reports_is_not_judged():
+    assert answer_matches(_record("x"), {"answer": "x"})
+    assert not answer_matches(_record("a later answer"), {"answer": "x"})
+    assert answer_matches({"answer": None, "error": "timeout"}, {"answer": None})
+
+
+def test_a_cut_off_cache_line_is_skipped(tmp_path):
+    cache = tmp_path / "cache.jsonl"
+    cache.write_text('{"kind": "answer", "answer_config": "c", "id": "a", "answer": {"answer": "x"}}\n'
+                     '{"kind": "answer", "answer_con\n', encoding="utf-8")
+    assert list(load_site_answers(cache)["c"]) == ["a"]
+
+
+def test_the_report_stage_scores_with_the_judges_of_the_cached_verdicts():
+    verdicts = {("a", "c", "h", "r", "openai"): {}, ("b", "c", "h", "r", "openai"): {},
+                ("c", "c", "h", "r", "free"): {}, ("a", "other", "h", "r", "free"): {}}
+    assert cached_judge_configs(SimpleNamespace(verdicts=verdicts), "c") == ["openai", "free"]
 
 
 def test_no_matching_run_stops():
@@ -68,6 +90,16 @@ def test_settings_and_index_must_be_the_runs():
     assert check_settings(_settings(), run, {"sha256_12": "abc"}) == []
     problems = check_settings(_settings(rerank_candidates=20), run, {"sha256_12": "def"})
     assert len(problems) == 2 and "rerank_candidates" in problems[1]
+
+
+def test_the_sites_reranker_and_fusion_settings_are_checked_too():
+    run = {"index": {"sha256_12": "abc"}, "settings": {"top_k": 5},
+           "site_health": {"rrf_k": 60, "fusion_weights": [1.0, 1.0], "max_chunks_per_page": 2, "llm_provider": "openai"}}
+    same = _settings(rrf_k=60, fusion_weights=(1.0, 1.0), max_chunks_per_page=2, llm_provider="openrouter")
+    assert check_settings(same, run, {"sha256_12": "abc"}) == []
+    problems = check_settings(_settings(rrf_k=60, fusion_weights=(1.0, 2.0), max_chunks_per_page=3), run,
+                              {"sha256_12": "abc"})
+    assert [p.split()[0] for p in problems] == ["max_chunks_per_page", "fusion_weights"]
 
 
 def test_cited_excerpts_are_found_among_the_rebuilt_passages_excerpts():

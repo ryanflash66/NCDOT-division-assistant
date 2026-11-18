@@ -94,12 +94,32 @@ def pick_answer_config(answers: Dict[str, Dict[str, Dict[str, Any]]], report_row
 def load_site_answers(cache_path: Path) -> Dict[str, Dict[str, Dict[str, Any]]]:
     """{answer_config: {id: record}} from the held-out answer cache, the latest record per key."""
     out: Dict[str, Dict[str, Dict[str, Any]]] = {}
-    for line in cache_path.read_text(encoding="utf-8").splitlines():
-        if line.strip():
+    for number, line in enumerate(cache_path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
             record = json.loads(line)
-            if record.get("kind") == "answer":
-                out.setdefault(record["answer_config"], {})[record["id"]] = record
+        except ValueError:
+            # A run stopped mid-write leaves a cut-off last line (as rr.Cache): that item has no answer here.
+            print(f"warning: {cache_path.name} line {number} is not valid JSON; skipped", file=sys.stderr)
+            continue
+        if record.get("kind") == "answer":
+            out.setdefault(record["answer_config"], {})[record["id"]] = record
     return out
+
+
+def answer_matches(record: Optional[Dict[str, Any]], row: Dict[str, Any]) -> bool:
+    """Whether the cached answer is the one the report scored: pick_answer_config takes a run when 95% match."""
+    return ((record or {}).get("answer") or {}).get("answer") == row.get("answer")
+
+
+# Every setting that changes which passages the model reads. A --site run records the site's in run.site_health
+# (the reranker, fusion and per-page caps as well as top_k), a local run only the first four in run.settings.
+PASSAGE_SETTINGS = ("top_k", "rerank", "keyword_search", "rerank_candidates", "rerank_model", "rerank_model_file",
+                    "rerank_text_only", "keyword_field", "keyword_field_boost", "keyword_id_boost", "page_aggregation",
+                    "max_chunks_per_page", "max_chunks_per_document", "rrf_k", "fusion_weights", "bm25_k1", "bm25_b")
+# The code that builds them, the second look after a refusal included (Answerer._second_look, with_next_page).
+PASSAGE_CODE = ("hosted/divrag", "hosted/index")
 
 
 def check_settings(settings, run: Dict[str, Any], index: Dict[str, Any]) -> List[str]:
@@ -107,12 +127,36 @@ def check_settings(settings, run: Dict[str, Any], index: Dict[str, Any]) -> List
     problems = []
     if run.get("index", {}).get("sha256_12") != index["sha256_12"]:
         problems.append(f"index {index['sha256_12']} is not the run's {run.get('index', {}).get('sha256_12')}")
-    ran = run.get("settings") or {}
-    for key, local in (("top_k", settings.top_k), ("rerank", settings.rerank), ("keyword_search", settings.keyword_search),
-                       ("rerank_candidates", settings.rerank_candidates)):
-        if ran.get(key) is not None and ran[key] != local:
-            problems.append(f"{key} is {local} here and was {ran[key]} in the run")
+    ran = {**(run.get("site_health") or {}), **(run.get("settings") or {})}
+    for key in PASSAGE_SETTINGS:
+        local = getattr(settings, key, None)
+        was = tuple(ran[key]) if isinstance(ran.get(key), list) else ran.get(key)
+        if was is not None and local is not None and was != (tuple(local) if isinstance(local, list) else local):
+            problems.append(f"{key} is {local} here and was {was} in the run")
     return problems
+
+
+def check_code(run: Dict[str, Any]) -> List[str]:
+    """Whether the retrieval code here is the run's: a --site run records the commit production was deployed from."""
+    import subprocess
+
+    commit = run.get("git_commit")
+    if not commit:
+        return []
+    diff = subprocess.run(["git", "diff", "--quiet", commit, "--", *PASSAGE_CODE], cwd=ROOT, capture_output=True)
+    if diff.returncode == 0:
+        return []
+    return [f"the retrieval code ({', '.join(PASSAGE_CODE)}) differs from the run's commit {commit[:12]}"
+            if diff.returncode == 1 else f"can't compare the retrieval code with the run's commit {commit[:12]}"]
+
+
+def cached_judge_configs(cache, answer_config: str) -> List[str]:
+    """The judges that gave this run's cached verdicts, most verdicts first: what --stage report scores with."""
+    counts: Dict[str, int] = {}
+    for key in cache.verdicts:
+        if key[1] == answer_config:
+            counts[key[4]] = counts.get(key[4], 0) + 1
+    return sorted(counts, key=lambda c: -counts[c])
 
 
 def excerpts_found(answer: Dict[str, Any], shown: Sequence[str]) -> Tuple[int, int]:
@@ -231,18 +275,22 @@ async def run(args) -> int:
     settings = load_settings()
     runtime = Runtime(settings)
     problems = check_settings(settings, held.get("run") or {}, index_info(settings.index_dir, len(runtime.index.chunks)))
+    problems += check_code(held.get("run") or {})
     if problems and not args.ignore_settings:
         raise SystemExit("the passages can't be rebuilt as the run saw them: " + "; ".join(problems))
     answerer = runtime.answerer(llm=None)
 
     cache = rr.Cache(Path(args.cache))
     retrievals: Dict[str, Dict[str, Any]] = {}
-    rebuilt = {"answers": 0, "found": 0, "cited": 0, "mismatched": 0, "retried": 0}
+    rebuilt = {"answers": 0, "found": 0, "cited": 0, "mismatched": 0, "retried": 0, "not_the_reports": 0}
     for item in items:
         record = site.get(item["id"])
         row = report_rows[item["id"]]
         if record and record.get("question_sha") not in (None, question_sha(by_id[item["id"]])):
             record = None  # the question was edited after the run: its answer is not this item's
+        if record and not answer_matches(record, row):
+            record = None  # a later answer for this item: judging it would score an answer the report doesn't hold
+            rebuilt["not_the_reports"] += 1
         answer = (record or {}).get("answer")
         retried = bool(answer and answer.get("retried"))
         passages, shown = rebuild_passages(answerer, item, retried)
@@ -259,14 +307,23 @@ async def run(args) -> int:
                        "answer": answer, "error": record.get("error"), "passages": passages if answer else [],
                        "timing_ms": record.get("timing_ms"), "rebuilt": True})
     print(f"passages rebuilt for {rebuilt['answers']} answers: cited excerpts found {rebuilt['found']}/{rebuilt['cited']}; "
-          f"{rebuilt['mismatched']} answers with a missing excerpt; {rebuilt['retried']} retried", flush=True)
+          f"{rebuilt['mismatched']} answers with a missing excerpt; {rebuilt['retried']} retried; "
+          f"{rebuilt['not_the_reports']} cached answers left out as not the report's", flush=True)
     if rebuilt["mismatched"] > args.max_mismatch and not args.ignore_settings:
         raise SystemExit(f"{rebuilt['mismatched']} answers cite text the rebuilt passages don't hold "
                          f"(--max-mismatch {args.max_mismatch}): the judge would grade them on the wrong passages")
 
-    ledger = SpendLedger(settings.openai_monthly_budget_usd, settings.openai_budget_margin_usd, store_from_env(os.environ))
-    judges = rr._judges(args, ledger)
-    judge_configs = [label for _, label in judges]
+    if args.stage == "report" and not args.judge_models:
+        # Score with the judges that gave the cached verdicts: the default (free) judge's labels find none
+        # of an OpenAI judge's, and the report would come out without judge metrics.
+        judge_configs = cached_judge_configs(cache, answer_config)
+        if not judge_configs:
+            raise SystemExit(f"no cached verdicts for {answer_config} in {args.cache}: run the judge stage first")
+    else:
+        ledger = SpendLedger(settings.openai_monthly_budget_usd, settings.openai_budget_margin_usd,
+                             store_from_env(os.environ))
+        judges = rr._judges(args, ledger)
+        judge_configs = [label for _, label in judges]
     if args.stage in ("judge", "all"):
         judge, judge_config = judges[0]
         todo = [(i, cache.answer(i["id"], answer_config)) for i in items
