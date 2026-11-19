@@ -93,6 +93,13 @@ class ChatClient:
     def _body(self, messages: List[Dict[str, str]], model: str, models: Sequence[str]) -> Dict[str, Any]:
         body: Dict[str, Any] = {"model": model, "messages": messages, "temperature": self.temperature,
                                 "max_tokens": self.max_tokens}
+        if is_openai(self.base_url):
+            # OpenAI refuses max_tokens for its reasoning models (as divrag.llm.OpenAIClient notes), and
+            # leaves temperature settable only at effort "none", which is what the site answers with.
+            body["max_completion_tokens"] = body.pop("max_tokens")
+            body["reasoning_effort"] = self.reasoning or "none"
+            if body["reasoning_effort"] != "none":
+                body.pop("temperature")
         if self.json_mode:
             body["response_format"] = {"type": "json_object"}
         if is_openrouter(self.base_url):
