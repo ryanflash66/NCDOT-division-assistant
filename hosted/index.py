@@ -3,9 +3,11 @@
     GET  /                the page (public/index.html, built from web/ by `npm run build`)
     GET  /api/divisions   divisions, their documents (with passage counts) and example questions
     POST /api/warm        load the models now, returning once they are ready
-    POST /api/ask         {"question", "asker", "target", "history"?, "documents"?, "refused_by"?}
+    POST /api/ask         {"question", "asker", "target", "history"?, "documents"?, "refused_by"?, "faq"?}
                           -> answer with cited sources, timing_ms per step and
-                             searched {documents, passages}
+                             searched {documents, passages}; a checked answer to a
+                             frequent question (faq.py, DAR-673) comes from the store
+                             instead, with checked_answer {id, checked_on, similarity}
     POST /api/ask/stream  the same question; the steps, the answer's text as it is
                           written, then the same answer, as server-sent events
     GET  /api/health      index and model settings, and the month's estimated OpenAI spend (no secrets)
@@ -42,6 +44,8 @@ from divrag.answer import Answer, Answerer, Emit, LiveSteps, live_step_labels
 from divrag.config import Settings, load_settings
 from divrag.divisions import BY_ID, DIVISIONS, Division
 from divrag.embedder import Embedder, cpu_info, model_cache_dir, reranker_from_settings
+from divrag.faq import FaqService, Match, PageText, served_payload
+from divrag.faq import store_from_env as faq_store_from_env
 from divrag.index_file import IndexFile
 from divrag.llm import MISCONFIGURED, TOO_SLOW, LLMError, OpenRouterClient, client_from_settings, tls_context
 from divrag.page_images import PageImages, headers_from_env, load_no_text_pages
@@ -107,6 +111,11 @@ class _Runtime:
                                           settings.page_images_detail, settings.page_images_max,
                                           headers_from_env(os.environ, settings.page_images_base_url))
 
+    @property
+    def loaded(self) -> bool:
+        """The models are loaded on this instance (a question can be embedded without waiting)."""
+        return self._retriever is not None
+
     def retriever(self) -> Retriever:
         with self._lock:
             if self._retriever is None:
@@ -129,6 +138,8 @@ class _Runtime:
 
 
 runtime = _Runtime(settings)
+# Checked answers (DAR-673): the Upstash store spend.py uses, under this deployment's own namespace.
+faq = FaqService(faq_store_from_env(os.environ), PageText(runtime.index), settings.faq_threshold)
 
 
 class _RateLimiter:
@@ -185,6 +196,8 @@ class AskRequest(BaseModel):
     documents: Optional[List[str]] = Field(default=None, max_length=200)
     # Divisions that already refused this question, sent by an "Ask … instead": a refusal never suggests them again.
     refused_by: List[str] = Field(default_factory=list, max_length=20)
+    # False skips the checked-answer store: scripts/faq.py re-runs a stored question through the full pipeline.
+    faq: bool = True
 
 
 class Question(NamedTuple):
@@ -195,6 +208,7 @@ class Question(NamedTuple):
     documents: Optional[List[str]]
     history: List[Dict[str, str]]
     refused_by: Tuple[str, ...] = ()
+    faq: bool = True
 
 
 def _check(body: AskRequest, request: Request) -> Union[Question, JSONResponse]:
@@ -221,7 +235,7 @@ def _check(body: AskRequest, request: Request) -> Union[Question, JSONResponse]:
         return _error(503, MISCONFIGURED)
     # Unknown ids are dropped: they could only ever skip a division that doesn't exist.
     refused_by = tuple(d for d in dict.fromkeys(body.refused_by) if d in BY_ID)
-    return Question(question, asker, target, documents, [t.model_dump() for t in body.history], refused_by)
+    return Question(question, asker, target, documents, [t.model_dump() for t in body.history], refused_by, body.faq)
 
 
 def _make_llm() -> OpenRouterClient:
@@ -328,6 +342,9 @@ async def health() -> Dict:
         # The calendar month's (UTC) estimated OpenAI spend and the limit that switches answers to the free
         # models; "shared": false means this instance's own count only (no KV store). None without OpenAI.
         "openai_spend": await spend.status() if settings.answers_with_openai else None,
+        # Checked answers (DAR-673): whether they are served, the threshold, and the store's namespace.
+        "faq": {"on": settings.faq, "threshold": settings.faq_threshold, "namespace": faq.store.namespace,
+                "shared": faq.store.shared},
         "cpus": cpu_info(),
     }
 
@@ -379,6 +396,10 @@ async def _answer(checked: Question, emit: Optional[Emit] = None) -> Tuple[int, 
     """
     question, asker, target = checked.text, checked.asker, checked.target
     started = time.perf_counter()
+    match = await _checked_answer(checked)
+    if match is not None:
+        return 200, _faq_payload(checked, match, started)
+    faq_ms = _ms_since(started)
     steps = LiveSteps(_step_labels(checked), emit)
     if emit is not None:
         # The setting the runtime builds the reranker from, not the retriever: on a cold instance
@@ -409,7 +430,44 @@ async def _answer(checked: Question, emit: Optional[Emit] = None) -> Tuple[int, 
     except Exception:  # noqa: BLE001 - never send internals to the browser
         log.exception("ask failed ms %s", _ms_text(dict(timer.as_ms(), total=_ms_since(started))))
         return 500, {"error": GENERIC_ERROR}
-    return 200, _payload(checked, result, timer, steps, started, retrieved, streamed=emit is not None)
+    reply = _payload(checked, result, timer, steps, started, retrieved, streamed=emit is not None)
+    reply["timing_ms"]["faq"] = faq_ms
+    return 200, reply
+
+
+async def _checked_answer(checked: Question) -> Optional[Match]:
+    """The stored checked answer for this question, or None (faq.py has the rules).
+
+    Never for a follow-up: a stored answer never saw the earlier turns. On an
+    instance whose models aren't loaded yet only the same text matches, so the
+    lookup never waits for them (the full pipeline would load them anyway).
+    """
+    if not (settings.faq and checked.faq) or checked.history:
+        return None
+    embed = None
+    if runtime.loaded:
+        embed = runtime.retriever().embedder.passages
+    try:
+        return await faq.lookup(checked.text, checked.target.id, checked.documents, embed)
+    except Exception:  # noqa: BLE001 - a store or model problem must never cost the visitor the full answer
+        log.exception("faq lookup failed; answering in full")
+        return None
+
+
+def _faq_payload(checked: Question, match: Match, started: float) -> Dict:
+    """A checked answer as /api/ask returns it (also the stream's done event); logs the one line per question."""
+    ms = _ms_since(started)
+    log.info("ask asker=%s target=%s chars=%d faq=%s similarity=%.4f checked_on=%s ms faq=%d total=%d",
+             checked.asker.id, checked.target.id, len(checked.text), match.entry.id, match.similarity,
+             match.entry.checked_on, ms, ms)
+    payload = served_payload(match)
+    payload["asker"] = {"id": checked.asker.id, "name": checked.asker.name}
+    payload["target"] = {"id": checked.target.id, "name": checked.target.name}
+    payload["steps"] = [{"id": "faq", "label": "Found a checked answer to this question", "ms": ms}]
+    payload["timing_ms"] = {"faq": ms, "total": ms}
+    # Nothing was searched: the page says "Checked answer" instead of "Searched N passages".
+    payload["searched"] = None
+    return payload
 
 
 def _payload(checked: Question, result: Answer, timer: StepTimer, steps: LiveSteps, started: float,
@@ -436,6 +494,7 @@ def _payload(checked: Question, result: Answer, timer: StepTimer, steps: LiveSte
     payload["steps"] = steps.done
     payload["timing_ms"] = timing
     payload["searched"] = _searched(target, checked.documents)
+    payload["checked_answer"] = None
     return payload
 
 
