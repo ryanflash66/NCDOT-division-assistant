@@ -63,6 +63,13 @@ LLM_PROVIDER=openai. Everything else has a default suitable for the public demo.
     PAGE_IMAGES_DETAIL          OpenAI's image detail: "auto" (default), "low", "high" or "original"
     PAGE_IMAGES_BASE_URL        where the function fetches the page images it doesn't have on disk (default on
                                 Vercel: the deployment itself, see page_images.base_url_from_env)
+    CONFLICT_CHECK              "on" (default) or "off": when an answer states numbers and its passages come from two or
+                                more documents, one more model call compares them; when they disagree the reply names
+                                each document's value, level and citation and a labelled recommendation (DAR-674,
+                                conflict.py)
+    DOCUMENT_PRECEDENCE         which register level governs when documents disagree, highest first, for example
+                                "federal,state,division,internal" (default unset: the recommendation is the model's
+                                judgment; see register.py)
     ALLOWED_ORIGINS             comma-separated origins allowed to call the API from another site
                                 (default none: only the page served by this app can call it)
 """
@@ -80,6 +87,7 @@ from .retrieval import (DEFAULT_MAX_CHUNKS_PER_DOCUMENT, DEFAULT_MAX_CHUNKS_PER_
 
 from .embedder import RERANK_BATCH_SIZE, RERANK_MODEL_NAME, default_model_file
 from .page_images import DEFAULT_DETAIL, DEFAULT_MAX_IMAGES, DETAILS, MAX_IMAGES_LIMIT, base_url_from_env
+from .register import LEVELS
 
 HOSTED_DIR = Path(__file__).resolve().parent.parent
 NO_RERANKER = "none"
@@ -150,6 +158,8 @@ class Settings:
     page_images_max: int = DEFAULT_MAX_IMAGES
     page_images_detail: str = DEFAULT_DETAIL
     page_images_base_url: Optional[str] = None
+    conflict_check: bool = False
+    document_precedence: Tuple[str, ...] = ()
 
     @property
     def answers_with_openai(self) -> bool:
@@ -338,6 +348,20 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     images_base = base_url_from_env(env)
     if images_base and not images_base.startswith(("https://", "http://localhost", "http://127.0.0.1")):
         raise ValueError(f"PAGE_IMAGES_BASE_URL must be an https:// URL (or http://localhost), got {images_base!r}")
+    # On by default (DAR-674, decided Nov 17): when an answer states numbers and its passages come from
+    # two or more documents, one more model call compares them, and the reply names every document's
+    # value with its level and a labelled recommendation (conflict.py).
+    conflict = _setting(env, "CONFLICT_CHECK", "on").lower()
+    if conflict not in ("on", "off", "1", "0", "true", "false"):
+        raise ValueError(f"CONFLICT_CHECK must be on or off, got {conflict!r}")
+    # Which level governs when documents disagree, highest first ("federal,state,division,internal").
+    # Unset: the recommendation is the model's own judgment, as decided Nov 17; NCDOT can set an
+    # order here without a code change. Levels left out rank below those listed.
+    precedence = tuple(level.lower() for level in _csv(env.get("DOCUMENT_PRECEDENCE", "")))
+    unknown = [level for level in precedence if level not in LEVELS]
+    if unknown or len(set(precedence)) != len(precedence):
+        raise ValueError(f"DOCUMENT_PRECEDENCE must list levels from {', '.join(LEVELS)} once each, highest first; "
+                         f"got {env.get('DOCUMENT_PRECEDENCE')!r}")
     # Read by embedder.onnx_threads() when the models load; checked here so a bad value stops startup.
     threads = env.get("ONNX_THREADS", "").strip()
     if threads and not (threads.isdigit() and int(threads) >= 1):
@@ -394,4 +418,6 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         page_images_max=int(images_max),
         page_images_detail=images_detail,
         page_images_base_url=images_base,
+        conflict_check=conflict in ("on", "1", "true"),
+        document_precedence=precedence,
     )

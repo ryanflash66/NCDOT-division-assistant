@@ -94,6 +94,21 @@ export function pagesText(source: Source): string | null {
   return first === last ? `p.${first} (${pdf})` : `pp.${first}–${last} (${pdf})`;
 }
 
+/**
+ * The tooltip of a source's level label (DAR-674): who issued the document, whether it is a rule
+ * or guidance, and its edition, as far as the register knows them.
+ */
+export function levelTitle(source: Source): string | undefined {
+  if (!source.level_label) return undefined;
+  const kind = source.binding === "rule" ? "rule" : source.binding === "guidance" ? "guidance" : null;
+  const parts = [
+    `${source.level_label} document${kind ? ` (${kind})` : ""}`,
+    source.issuer ? `issued by ${source.issuer}` : null,
+    source.edition ? `edition: ${source.edition}` : null,
+  ];
+  return parts.filter(Boolean).join("; ");
+}
+
 /** The title attribute for pagesText's label: set only when it shows a printed page number. */
 export function pagesTitle(source: Source): string | undefined {
   return printedPages(source) ? PRINTED_PAGE_TITLE : undefined;

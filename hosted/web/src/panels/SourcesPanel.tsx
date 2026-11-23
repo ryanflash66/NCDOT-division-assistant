@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useAuiState } from "@assistant-ui/react";
 import { cn } from "@/lib/utils";
-import { pagesText, pagesTitle, pickAnswer } from "@/panels/answers";
+import { levelTitle, pagesText, pagesTitle, pickAnswer } from "@/panels/answers";
 import { webUrl } from "@/panels/format";
 import { PageImage } from "@/panels/PageImage";
 import { useApp } from "@/state";
@@ -142,6 +142,7 @@ function SourceItem({ source: s, current }: { source: Source; current: boolean }
   const textId = useId();
   const pages = pagesText(s);
   const section = s.section ? `Section ${s.section}` : null;
+  const level = s.level_label ? String(s.level_label) : null;
   const href = webUrl(s.url);
 
   return (
@@ -166,8 +167,15 @@ function SourceItem({ source: s, current }: { source: Source; current: boolean }
         </span>
         <span className="leading-snug font-semibold">{String(s.title || "")}</span>
       </div>
-      {(pages || section) && (
+      {(level || pages || section) && (
         <div className="mt-0.5 text-[0.85rem] text-muted-foreground">
+          {/* The document's level in the register (DAR-674): "Federal · p.775 (PDF p.11) · Section 6B.03". */}
+          {level && (
+            <span title={levelTitle(s)} className="font-semibold text-foreground">
+              {level}
+            </span>
+          )}
+          {level && (pages || section) && " · "}
           {/* The title explains the two numbers of "p.13 (PDF p.37)"; the link still opens the PDF index. */}
           {pages && <span title={pagesTitle(s)}>{pages}</span>}
           {pages && section && " · "}
