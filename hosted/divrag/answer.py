@@ -53,6 +53,7 @@ from .index_file import Hit
 from .llm import Completion, LLMError, OpenRouterClient, answered_by_backup
 from .page_images import PageImages
 from .pages_static import image_url
+from .readings import READING_RULE, SOURCE_READING_CHARS, Readings, notice, passage_readings, reading_text
 from .retrieval import DEFAULT_CANDIDATES, DEFAULT_MAX_CHUNKS_PER_PAGE, Retriever, _page_key, is_table
 from .timing import StepTimer, timed
 from .rowcheck import misread_numbers
@@ -232,6 +233,17 @@ class Source:
     printed_page: Optional[str] = None
     printed_page_end: Optional[str] = None
     image: Optional[str] = None  # site-relative URL of the page's image, when rendered (DAR-654)
+    # The image readings of the cited pages whose two readings differ (readings.py, DAR-739):
+    # the Sources panel shows them beside the OCR excerpt, and the answer gets a notice.
+    readings: Tuple[Dict[str, Any], ...] = ()
+
+    def notice(self, answer: str = "") -> Optional[str]:
+        """The low-quality-scan warning for this source, or None when its page readings agree."""
+        pages = sorted({int(r["page"]) for r in self.readings})
+        if not pages:
+            return None
+        where = f"{self.title}, PDF page{'s' if len(pages) > 1 else ''} {', '.join(map(str, pages))}"
+        return notice(where, self.readings, answer)
 
     def as_dict(self) -> Dict:
         return {
@@ -239,6 +251,7 @@ class Source:
             "page_end": self.page_end, "section": self.section, "url": self.url, "excerpt": self.excerpt,
             "printed_page": self.printed_page, "printed_page_end": self.printed_page_end,
             "image": self.image,
+            "readings": [dict(r) for r in self.readings],
         }
 
 
@@ -263,6 +276,12 @@ class Answer:
     # the page tells the reader to check the cited page.
     backup_model: bool = False
 
+    def notices(self) -> List[str]:
+        """One warning per cited source whose page readings differ (DAR-739); none for a refusal."""
+        if self.refused:
+            return []
+        return [n for n in (s.notice(self.answer) for s in self.sources) if n]
+
     def as_dict(self) -> Dict:
         return {
             "answer": self.answer,
@@ -276,6 +295,7 @@ class Answer:
             "retried": self.retried,
             "citation_fix": self.citation_fix,
             "second_opinion": self.second_opinion.as_dict() if self.second_opinion else None,
+            "notices": self.notices(),
             "suggest": [{"id": d, "name": BY_ID[d].name} for d in self.suggest],
         }
 
@@ -400,6 +420,8 @@ def passage_text(chunk: Dict) -> str:
         last = context
     if chunk.get("continues"):
         out.append(CONTINUES_NOTE)
+    # The page's image reading when its two readings differ (DAR-739); the model takes values from it.
+    out += [reading_text(r) for r in passage_readings(chunk)]
     return "\n\n".join(out)
 
 
@@ -427,6 +449,8 @@ def build_messages(question: str, asker: Division, target: Division, hits: List[
         extra.append(NOTE_RULE)
     if any(hit.chunk.get("continues") for hit in hits):
         extra.append(CONTINUES_RULE)
+    if any(passage_readings(hit.chunk) for hit in hits):
+        extra.append(READING_RULE)
     if earlier:
         extra.append(HISTORY_RULE.format(not_found=NOT_FOUND))
     system += "".join(f"\n{n}. {rule}" for n, rule in enumerate(extra, 8))
@@ -486,7 +510,22 @@ def _source_for(hit: Hit, n: int) -> Source:
         printed_page=printed,
         printed_page_end=printed_end,
         image=image_url(chunk),
+        readings=tuple(_shown_reading(r) for r in passage_readings(chunk) if _on_pages(chunk, r["page"])),
     )
+
+
+def _on_pages(chunk: Dict, page: int) -> bool:
+    """Whether a page is one the source cites (narrow() may have dropped some of a merged passage's pages)."""
+    first = chunk.get("page")
+    return bool(first) and int(first) <= int(page) <= int(chunk.get("page_end") or first)
+
+
+def _shown_reading(reading: Dict[str, Any]) -> Dict[str, Any]:
+    """A page reading as the Sources panel shows it: the image reading cut to SOURCE_READING_CHARS."""
+    image = reading.get("image") or ""
+    if len(image) > SOURCE_READING_CHARS:
+        image = image[:SOURCE_READING_CHARS].rsplit(" ", 1)[0] + " …"
+    return dict(reading, image=image)
 
 
 _WORD = re.compile(r"[a-z0-9]+(?:\.[0-9]+)*")
@@ -530,6 +569,9 @@ def narrow(chunk: Dict, sentences: str) -> Dict:
     sections = [s for part in kept if part.get("section") for s in part["section"].split("; ")]
     narrowed = dict(kept[0], text="\n\n".join(part["text"] for part in kept), section="; ".join(dict.fromkeys(sections)) or None)
     narrowed.pop("page_end", None)
+    readings = [r for part in kept for r in part.get("readings") or ()]
+    if readings:
+        narrowed["readings"] = readings
     if pages:
         narrowed["page"] = min(pages)
         if max(pages) != min(pages):
@@ -817,6 +859,11 @@ class LiveSteps:
             self._emit("step", {"id": live, "label": self._labels[live], "status": status, "ms": ms})
 
 
+def _chunk_key(chunk: Dict) -> Tuple:
+    """A chunk's identity that survives a copy: its document, pages and text."""
+    return (chunk.get("division"), chunk.get("source"), chunk.get("page"), chunk.get("page_end"), chunk.get("text"))
+
+
 def _time_left(deadline: Optional[float], needed: float) -> bool:
     """At least `needed` seconds of the request are left (always, without a deadline).
 
@@ -833,7 +880,10 @@ class Answerer:
     def __init__(self, retriever: Retriever, llm: OpenRouterClient, top_k: int = 5,
                  retry_min_score: Optional[float] = RETRY_MIN_SCORE, retry_min_seconds: float = RETRY_MIN_SECONDS,
                  second_look: int = SECOND_LOOK_PASSAGES, number_agreement: bool = False,
-                 row_guard: bool = False, page_images: Optional[PageImages] = None):
+                 row_guard: bool = False, page_images: Optional[PageImages] = None,
+                 readings: Optional[Readings] = None):
+        # PAGE_READINGS (DAR-739): a passage from a page whose two readings differ carries its image reading.
+        self.readings = readings
         self.page_images = page_images  # PAGE_IMAGES_TO_MODEL: page images go with their passages (page_images.py)
         self.row_guard = row_guard  # flag a number read from a table row the question's labels don't point to (rowcheck.py)
         self.retriever = retriever
@@ -900,7 +950,8 @@ class Answerer:
         too: a table's labelled rows are split into many chunks that score alike,
         and they would otherwise fill the second look with one table.
         """
-        shown = {id(part) for hit in hits for part in hit.chunk.get("parts", [hit.chunk])}
+        # By content, not identity: Readings.annotate copies the chunks it adds a reading to.
+        shown = {_chunk_key(part) for hit in hits for part in hit.chunk.get("parts", [hit.chunk])}
         tables: Dict[Tuple, int] = {}
         for hit in hits:
             for part in hit.chunk.get("parts", [hit.chunk]):
@@ -910,7 +961,7 @@ class Answerer:
         for hit in getattr(hits, "more", []):
             if len(picked) >= self.second_look:
                 break
-            if id(hit.chunk) in shown:
+            if _chunk_key(hit.chunk) in shown:
                 continue
             if is_table(hit.chunk):
                 if tables.get(_page_key(hit.chunk), 0) >= SECOND_LOOK_TABLE_CHUNKS_PER_PAGE:
@@ -920,8 +971,15 @@ class Answerer:
         if not picked:
             return []
         # The next page comes along here too; a chunk the first passages hold is not shown twice.
-        extended = [h for h in self.retriever.with_next_page(picked) if id(h.chunk) not in shown]
-        return self.retriever.as_passages(extended)
+        extended = [h for h in self.retriever.with_next_page(picked) if _chunk_key(h.chunk) not in shown]
+        return self._annotated(self.retriever.as_passages(extended))
+
+    def _annotated(self, hits: List[Hit]) -> List[Hit]:
+        """The hits with their pages' image readings where the two readings differ (Readings.annotate)."""
+        if self.readings is None:
+            return hits
+        annotated = self.readings.annotate(hits)
+        return Passages(annotated, more=hits.more) if isinstance(hits, Passages) else annotated
 
     def suggest_divisions(self, question: str, target: Division, deadline: Optional[float] = None,
                           refused_by: Sequence[str] = ()) -> List[str]:
@@ -1143,6 +1201,7 @@ class Answerer:
         """The answer, with `call` asking the model (complete(), or a streamed call)."""
         if not hits:
             return Answer(refusal_text(target, []), refused=True)
+        hits = self._annotated(hits)
         messages = build_messages(question, asker, target, hits, history)
         with timed(timer, "llm"):
             # Loaded inside the "llm" step: they hold back the model call, and a page this instance

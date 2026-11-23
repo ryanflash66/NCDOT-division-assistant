@@ -45,3 +45,28 @@ describe("AnswerFooter backup notice (DAR-735)", () => {
     expect(screen.queryByText(/double-check the cited page/)).toBeNull();
   });
 });
+
+describe("AnswerFooter low-quality scan notice (DAR-739)", () => {
+  const notice =
+    "Doc, PDF page 278 is from a low-quality scan; the two readings differ (“0.5 in” in the text vs “1.5 in” in the image). Check the page before relying on this value.";
+
+  it("shows each notice the server sent", () => {
+    render(<Harness messages={[ask, answer("a1", payload([source(1)], { notices: [notice] }))]} />);
+    expect(screen.getByText("Two readings of the page differ.")).toBeTruthy();
+    expect(screen.getByText(/“0.5 in” in the text vs “1.5 in” in the image/)).toBeTruthy();
+  });
+
+  it("shows none for a refusal or an answer saved before the field", () => {
+    render(
+      <Harness
+        messages={[
+          ask,
+          answer("a1", payload([], { notices: [notice] })),
+          question("q2", "And for a lane closure?"),
+          answer("a2", payload([source(1)])),
+        ]}
+      />,
+    );
+    expect(screen.queryByText(/Two readings/)).toBeNull();
+  });
+});

@@ -195,3 +195,18 @@ describe("SourcesPanel", () => {
     expect((document.activeElement as HTMLElement).dataset.n).toBe("2");
   });
 });
+
+describe("SourcesPanel page readings (DAR-739)", () => {
+  it("shows the image reading of a page whose two readings differ under its excerpt", () => {
+    const reading = { page: 278, agreement: "disagree", image: "will not exceed 1 1/2 inches", differences: [["0.5 in", "1.5 in"]] as [string, string][] };
+    render(
+      <Harness
+        messages={[question("q1", "How far may the edge vary?"), answer("a1", payload([source(1, { excerpt: "will not exceed 1/2 inches", readings: [reading] }), source(2)]))]}
+      />,
+    );
+    expect(screen.getByText("will not exceed 1/2 inches")).toBeTruthy();
+    expect(screen.getByText("will not exceed 1 1/2 inches")).toBeTruthy();
+    expect(screen.getByText(/Read from the page image \(PDF p\.278\); differs from the text above/)).toBeTruthy();
+    expect(screen.getAllByText(/Read from the page image/)).toHaveLength(1);
+  });
+});

@@ -42,6 +42,20 @@ export type Source = {
   printed_page_end?: string | null;
   /** Site-relative URL of the cited page's image (/pages/...), when it was rendered (DAR-654). */
   image: string | null;
+  /**
+   * The image readings of the cited pages whose OCR text and image reading disagree (DAR-739):
+   * the page's text as OpenAI read it from the page image, and the differences ("X vs Y").
+   * Absent in answers saved before it, and empty when the page's two readings agree.
+   */
+  readings?: PageReading[];
+};
+
+export type PageReading = {
+  page: number;
+  agreement: "disagree" | "image_only" | string;
+  image: string;
+  /** [OCR text, image reading] snippets around each differing number. */
+  differences: [string, string][];
 };
 
 export type StepEvent = {
@@ -79,6 +93,11 @@ export type AnswerPayload = {
    * server decides it from the client that answered. Absent in answers saved before it.
    */
   backup_model?: boolean;
+  /**
+   * One warning per cited page whose two readings differ (DAR-739): a low-quality scan, the two
+   * readings, and "check the page". Absent in answers saved before it.
+   */
+  notices?: string[];
   retried: boolean;
   suggest: { id: string; name: string }[];
   asker: { id: string; name: string };

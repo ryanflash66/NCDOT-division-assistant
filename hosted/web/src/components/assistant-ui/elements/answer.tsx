@@ -111,8 +111,8 @@ function Refusal({ text, payload }: { text: string; payload: AnswerPayload }) {
 }
 
 /**
- * Under each finished answer: the backup-model notice, the "No source cited" and unverified-number
- * flags, and what was searched.
+ * Under each finished answer: the backup-model notice, the low-quality-scan notices (DAR-739), the
+ * "No source cited" and unverified-number flags, and what was searched.
  */
 export function AnswerFooter() {
   const payload = usePayload();
@@ -132,6 +132,17 @@ export function AnswerFooter() {
           <strong>{backup.title}</strong> {backup.text}
         </p>
       )}
+      {!payload.refused &&
+        (payload.notices ?? []).map((notice) => (
+          // The server writes the whole warning (readings.py): the page, both readings, and "check the page".
+          <p
+            key={notice}
+            role="alert"
+            className="aui-low-quality mt-2 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-2 text-sm dark:border-amber-800 dark:bg-amber-950/40"
+          >
+            <strong>Two readings of the page differ.</strong> {notice}
+          </p>
+        ))}
       {payload.uncited && !payload.refused && (
         <p className="aui-uncited mt-2 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-2 text-sm dark:border-amber-800 dark:bg-amber-950/40">
           <strong>No source cited.</strong> This answer doesn't point to a page of the documents, so check it there

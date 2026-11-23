@@ -45,6 +45,7 @@ from divrag.embedder import Embedder, cpu_info, model_cache_dir, reranker_from_s
 from divrag.index_file import IndexFile
 from divrag.llm import MISCONFIGURED, TOO_SLOW, LLMError, OpenRouterClient, client_from_settings, tls_context
 from divrag.page_images import PageImages, headers_from_env, load_no_text_pages
+from divrag.readings import Readings, load as load_readings
 from divrag.retrieval import Retriever
 from divrag.spend import SpendLedger, store_from_env
 from divrag.timing import StepTimer
@@ -106,6 +107,11 @@ class _Runtime:
             self.page_images = PageImages(load_no_text_pages(settings.index_dir), settings.page_images_base_url,
                                           settings.page_images_detail, settings.page_images_max,
                                           headers_from_env(os.environ, settings.page_images_base_url))
+        # The image readings of the picture pages (DAR-739), read once at indexing time; empty without the file.
+        self.readings: Optional[Readings] = load_readings(settings.index_dir) if settings.page_readings else None
+        if self.readings is not None:
+            log.info("page readings: %d pages, %d differ", len(self.readings),
+                     sum(1 for r in self.readings.pages.values() if r.differs))
 
     def retriever(self) -> Retriever:
         with self._lock:
@@ -125,7 +131,7 @@ class _Runtime:
         s = self.settings
         return Answerer(self.retriever(), llm, top_k=s.top_k, retry_min_score=s.retry_min_score if s.retry_on_refusal else None,
                         retry_min_seconds=s.retry_min_seconds, number_agreement=s.number_agreement,
-                        row_guard=s.row_guard, page_images=self.page_images)
+                        row_guard=s.row_guard, page_images=self.page_images, readings=self.readings)
 
 
 runtime = _Runtime(settings)
