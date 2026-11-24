@@ -10,7 +10,7 @@ two or more documents, one more model call reads the passages
 (CONFLICT_PROMPT): for each document, the value it gives for the case the
 question asks, and a recommendation. Whether they disagree is decided here,
 not by the model: each value must be in its passage (verify.py), and at least
-two documents must give two different values. The model is not shown the
+two documents must give values whose numbers differ (_differ). The model is not shown the
 answer: asked whether the documents disagree "with the answer", the free
 models only repeated the answer's document and value. The answer then ends
 with a block that lists each value with its document's level (register.py),
@@ -35,10 +35,9 @@ import re
 from dataclasses import dataclass
 from typing import Any, Awaitable, Callable, Dict, List, Optional, Sequence
 
-from .agreement import answer_numbers
+from .agreement import answer_numbers, disagreeing
 from .divisions import document_for
 from .index_file import Hit
-from .numbers import normalize
 from .register import REGISTER, Register
 from .verify import unverified_numbers
 
@@ -161,6 +160,22 @@ def _values(raw: Any, hits: Sequence[Hit], passage_text: Callable[[Dict], str],
     return values
 
 
+def _differ(values: Sequence[Value]) -> bool:
+    """Two documents' values state different numbers of the same kind (agreement.py's rules).
+
+    Compared as text, 10 of 286 held-out answers (openai-site-dar674) showed a
+    disagreement and most were one value written two ways: "three years" and
+    "3 years", "200foot minimum" and "at least 200 feet", "3.5 ft/s" and
+    "1.1 m/s (3.5 ft/s)", "L MIN = W × S² / 60" and "L = WS² / 60". As numbers,
+    a value that only adds a conversion or leaves a number out is no
+    disagreement, and neither is a value in words ("as high as practical")
+    against a number: this check is for different values of the same thing.
+    """
+    numbers = [answer_numbers(v.value) for v in values]
+    return any(disagreeing(a, b)[0] or disagreeing(b, a)[0]
+               for i, a in enumerate(numbers) for b in numbers[i + 1:])
+
+
 def _salvage(text: str) -> Optional[Dict[str, Any]]:
     """The values and recommendation of a reply that is almost JSON, or None when it has no value objects."""
     values = []
@@ -198,7 +213,7 @@ def parse(reply: str, hits: Sequence[Hit], passage_text: Callable[[Dict], str],
         log.info("conflict check: unreadable reply; no disagreement shown")
         return None
     values = _values(data.get("values"), hits, passage_text, register)
-    if len({v.file for v in values}) < 2 or len({normalize(v.value) for v in values}) < 2:
+    if len({v.file for v in values}) < 2 or not _differ(values):
         return None
     recommendation = " ".join(str(data.get("recommendation") or "").split())
     if len(recommendation) > MAX_RECOMMENDATION_CHARS:

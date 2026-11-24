@@ -137,6 +137,20 @@ def test_two_values_that_are_the_same_are_no_disagreement():
     assert result.conflict is None
 
 
+def test_one_value_written_two_ways_is_no_disagreement():
+    # Pairs from the held-out run openai-site-dar674 that showed a false disagreement when compared as text.
+    same = [("three years", "3 years"), ("200foot minimum", "at least 200 feet"), ("3.5 ft/s", "1.1 m/s (3.5 ft/s)"),
+            ("L MIN = W × S² / 60", "L = WS² / 60"), ("5' minimum", "5’ min"),
+            ("7 feet from ground level to the bottom of the panel", "as high as practical")]
+    differ = [("425 ft", "240 ft"), ("65 MPH", "60 MPH"), ("CI/ASCE 38-02", "ASCE/UESI/CI 38-22")]
+
+    def values(a, b):
+        return [conflict_module.Value(1, a, MUTCD, "A", None, None), conflict_module.Value(2, b, DRAWINGS, "B", None, None)]
+
+    assert [conflict_module._differ(values(a, b)) for a, b in same] == [False] * len(same)
+    assert [conflict_module._differ(values(a, b)) for a, b in differ] == [True] * len(differ)
+
+
 def test_document_precedence_writes_the_recommendation_when_it_picks_one_level():
     result, _ = _ask([FIRST, _reply([(1, "425 ft"), (2, "240 ft")], "Follow the NCDOT drawing [2].")],
                      precedence=("state", "federal"))
