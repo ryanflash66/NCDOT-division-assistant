@@ -162,7 +162,7 @@ def test_every_answer_reports_each_step_in_ms_and_logs_one_line(api, caplog):
 
     for data in (answered, refused):
         timing = data["timing_ms"]
-        assert list(timing) == list(STEPS) + ["retrieval", "total"]
+        assert list(timing) == list(STEPS) + ["retrieval", "total", "faq"]
         assert all(isinstance(ms, int) and ms >= 0 for ms in timing.values())
         assert timing["total"] >= timing["retrieval"]
         assert data["model"] == "test/model:free" and data["retried"] is False

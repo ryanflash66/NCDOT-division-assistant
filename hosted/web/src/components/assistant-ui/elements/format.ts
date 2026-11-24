@@ -84,4 +84,14 @@ export function backupNotice(payload: {
   };
 }
 
+/** "Checked answer, Nov 20, 2026." from the YYYY-MM-DD a person checked it (DAR-673); the date as sent if it isn't one. */
+export function checkedText(checkedOn: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(checkedOn);
+  if (!match) return `Checked answer, ${checkedOn}.`;
+  const [, year, month, day] = match;
+  const when = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+  const shown = when.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+  return `Checked answer, ${shown}.`;
+}
+
 export const CITE_PREFIX = "#cite-";

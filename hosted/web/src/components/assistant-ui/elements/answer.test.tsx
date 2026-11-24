@@ -45,3 +45,29 @@ describe("AnswerFooter backup notice (DAR-735)", () => {
     expect(screen.queryByText(/double-check the cited page/)).toBeNull();
   });
 });
+
+describe("AnswerFooter checked answer (DAR-673)", () => {
+  it("says when a person checked a stored answer, instead of what was searched", () => {
+    render(
+      <Harness
+        messages={[
+          ask,
+          answer(
+            "a1",
+            payload([source(1)], {
+              checked_answer: { id: "utilities-detour", checked_on: "2026-11-20", similarity: 0.97 },
+              searched: null,
+            }),
+          ),
+        ]}
+      />,
+    );
+    expect(screen.getByText(/Checked answer, Nov 20, 2026\./)).toBeTruthy();
+    expect(screen.queryByText(/^Searched /)).toBeNull();
+  });
+
+  it("shows no checked line for a full-pipeline answer", () => {
+    render(<Harness messages={[ask, answer("a1", payload([source(1)], { checked_answer: null }))]} />);
+    expect(screen.queryByText(/Checked answer/)).toBeNull();
+  });
+});
