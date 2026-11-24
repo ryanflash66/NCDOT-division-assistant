@@ -9,14 +9,15 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { count, documentsText, webUrl } from "@/panels/format";
-import { useApp } from "@/state";
+import { ALL_DIVISIONS, askable, useApp } from "@/state";
 import type { Division, DivisionDocument } from "@/types";
 import { warmUp } from "@/warm";
 
 // The left panel (public/js/docs.js): who is asking and whom, then the documents grouped
 // by division. The division being asked comes first, and its documents have checkboxes that
 // choose which of them the next question searches; the other divisions' documents are
-// listed read-only, because answers come only from the asked division's documents.
+// listed read-only, because answers come only from the asked division's documents. With "All
+// divisions" asked (DAR-666) every division is being asked, so each has its checkboxes.
 
 // Shows the Upload button only. It is not access control: there are no accounts or roles
 // yet (per Dr. Namian), so the team opens the page with ?team=1.
@@ -28,7 +29,9 @@ export function DocsPanel() {
   const target = useApp((s) => s.target);
   const setAsker = useApp((s) => s.setAsker);
   const setTarget = useApp((s) => s.setTarget);
-  const items = divisions.map((d) => ({ value: d.id, label: d.name }));
+  const askerItems = divisions.map((d) => ({ value: d.id, label: d.name }));
+  const targetItems = askable(divisions).map((d) => ({ value: d.id, label: d.name }));
+  const every = target === ALL_DIVISIONS;
   const asked = divisions.find((d) => d.id === target);
 
   return (
@@ -37,7 +40,7 @@ export function DocsPanel() {
         <Picker
           label="I work in"
           value={asker}
-          items={items}
+          items={askerItems}
           onChange={(id) => {
             setAsker(id);
             warmUp();
@@ -46,7 +49,7 @@ export function DocsPanel() {
         <Picker
           label="Ask"
           value={target}
-          items={items}
+          items={targetItems}
           onChange={(id) => {
             setTarget(id);
             warmUp();
@@ -55,12 +58,25 @@ export function DocsPanel() {
       </div>
       <div className="flex flex-col gap-3">
         {/* Keyed by division, so switching "Ask" forgets the last-document warning. */}
-        {asked && <AskedGroup key={asked.id} division={asked} />}
-        {divisions
-          .filter((d) => d !== asked)
-          .map((d) => (
-            <OtherGroup key={d.id} division={d} />
-          ))}
+        {every ? (
+          <>
+            <p className="text-[0.85rem] text-muted-foreground">
+              Each question searches every division's documents, and each source shows its division.
+            </p>
+            {divisions.map((d) => (
+              <AskedGroup key={`all-${d.id}`} division={d} />
+            ))}
+          </>
+        ) : (
+          <>
+            {asked && <AskedGroup key={asked.id} division={asked} />}
+            {divisions
+              .filter((d) => d !== asked)
+              .map((d) => (
+                <OtherGroup key={d.id} division={d} />
+              ))}
+          </>
+        )}
       </div>
       {TEAM && <UploadPlaceholder />}
     </div>

@@ -7,26 +7,30 @@ import {
   type RefObject,
   type SyntheticEvent,
   useId,
+  useMemo,
   useState,
 } from "react";
 import { cn } from "@/lib/utils";
 import { findMention, matchDivisions, type Mention, removeMention, typedMention } from "@/mention";
-import { useApp } from "@/state";
+import { ALL_DIVISIONS, askable, askableById, useApp } from "@/state";
 import type { Division } from "@/types";
 import { warmUp } from "@/warm";
 
 // The composer's @ picker (DAR-628): type @ to pick the division a question goes to, as in
 // Slack. The picked division is the chip at the start of the composer, which always shows
 // where the next question goes (with no @, the last division asked) and opens the same
-// list when clicked. "I work in" and the left panel's Ask picker are unchanged.
+// list when clicked. "I work in" and the left panel's Ask picker are unchanged. The list ends
+// with "All divisions" (DAR-666), which searches every division's documents at once.
 
 /** Open from a typed @ (its place in the text) or from the chip (nothing to take out). */
 type Open = { mention: Mention | null; active: number };
 
 export function useDivisionMention(inputRef: RefObject<HTMLTextAreaElement | null>) {
   const aui = useAui();
-  const divisions = useApp((s) => s.divisions);
-  const target = useApp((s) => s.divisions.find((d) => d.id === s.target));
+  const loaded = useApp((s) => s.divisions);
+  const targetId = useApp((s) => s.target);
+  const divisions = useMemo(() => askable(loaded), [loaded]);
+  const target = askableById(loaded, targetId);
   const [open, setOpen] = useState<Open | null>(null);
   const listId = useId();
 
@@ -147,6 +151,8 @@ export function useDivisionMention(inputRef: RefObject<HTMLTextAreaElement | nul
           onClick={() => pick(d, open!.mention)}
           className={cn(
             "flex cursor-pointer items-baseline justify-between gap-3 rounded-md px-2.5 py-1.5 text-sm",
+            // "All divisions" is a different kind of choice: set apart from the divisions above it.
+            d.id === ALL_DIVISIONS && i > 0 && "mt-1 border-t",
             i === active && "bg-accent text-accent-foreground",
           )}
         >

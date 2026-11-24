@@ -74,6 +74,20 @@ describe("DocsPanel", () => {
     expect(asked.getByRole("checkbox").getAttribute("aria-disabled")).toBe("true");
   });
 
+  // DAR-666: with All divisions asked, every division is asked, each with its own checkboxes.
+  it("gives every division its checkboxes when All divisions is asked", async () => {
+    const useApp = await setup("all");
+    expect(screen.queryByText(/Not asked/)).toBeNull();
+    const wztc = within(group(/Asking Work Zone/));
+    expect(wztc.getAllByRole("checkbox")).toHaveLength(2);
+    expect(within(group(/Asking Utilities/)).getAllByRole("checkbox")).toHaveLength(1);
+    expect(screen.getByText(/searches every division's documents/)).toBeTruthy();
+    fireEvent.click(wztc.getAllByRole("checkbox")[0]!);
+    const { selectedDocuments } = await import("@/state");
+    // The ticked documents of every division together; the server searches only those.
+    expect(selectedDocuments(useApp.getState(), "all")).toEqual(["flagger.pdf", "uam.pdf"]);
+  });
+
   it("hides the upload placeholder without ?team=1", async () => {
     await setup();
     expect(screen.queryByRole("button", { name: "Upload documents" })).toBeNull();

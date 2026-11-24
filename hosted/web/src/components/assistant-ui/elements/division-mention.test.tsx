@@ -65,6 +65,7 @@ describe("the composer's @ division picker", () => {
     expect(screen.getAllByRole("option").map((o) => o.textContent)).toEqual([
       "Work Zone Traffic Controlasking now",
       "Utilities",
+      "All divisions",
     ]);
     expect(input().getAttribute("aria-expanded")).toBe("true");
     fireEvent.keyDown(input(), { key: "ArrowDown" });
@@ -122,7 +123,33 @@ describe("the composer's @ division picker", () => {
   it("opens the same list from the chip", () => {
     render(<Harness />);
     fireEvent.click(screen.getByRole("button", { name: /Asking Work Zone/ }));
-    expect(screen.getAllByRole("option")).toHaveLength(2);
+    expect(screen.getAllByRole("option")).toHaveLength(3);
     expect(screen.getAllByRole("option")[0]!.getAttribute("aria-selected")).toBe("true");
+  });
+
+  // DAR-666: "All divisions" sits at the end of the same list.
+  it("picks All divisions from the list, and shows it on the chip", async () => {
+    render(<Harness />);
+    type("@all");
+    expect(screen.getAllByRole("option").map((o) => o.textContent)).toEqual(["All divisions"]);
+    await act(async () => {
+      fireEvent.keyDown(input(), { key: "Enter" });
+    });
+    expect(useApp.getState().target).toBe("all");
+    expect(screen.getByRole("button", { name: "Asking All divisions. Change division" })).toBeTruthy();
+    // Opened from the chip, the list marks it as the one being asked.
+    fireEvent.click(screen.getByRole("button", { name: /Asking All divisions/ }));
+    expect(screen.getAllByRole("option")[2]!.textContent).toBe("All divisionsasking now");
+    expect(screen.getAllByRole("option")[2]!.getAttribute("aria-selected")).toBe("true");
+  });
+
+  it("picks All divisions pasted with the question", async () => {
+    render(<Harness />);
+    await act(async () => {
+      type("@All divisions who pays for the detour?");
+      await Promise.resolve();
+    });
+    expect(useApp.getState().target).toBe("all");
+    expect(input().value).toBe("who pays for the detour?");
   });
 });

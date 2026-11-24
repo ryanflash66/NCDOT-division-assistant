@@ -55,13 +55,13 @@ from typing import Any, Awaitable, Callable, Dict, List, Optional, Sequence, Tup
 
 from .agreement import SecondOpinion, answer_numbers, second_opinion, second_opinion_models
 from .conflict import Conflict, check as check_conflict, worth_checking
-from .divisions import BY_ID, DIVISIONS, Division, document_for
+from .divisions import BY_ID, DIVISIONS, Division, document_for, is_all
 from .index_file import Hit
 from .llm import Completion, LLMError, OpenRouterClient, answered_by_backup
 from .page_images import PageImages
 from .register import entry_for, level_label
 from .pages_static import image_url
-from .retrieval import DEFAULT_CANDIDATES, DEFAULT_MAX_CHUNKS_PER_PAGE, Retriever, _page_key, is_table
+from .retrieval import DEFAULT_CANDIDATES, DEFAULT_MAX_CHUNKS_PER_PAGE, DEFAULT_MERGED_CANDIDATES, Retriever, _page_key, is_table
 from .timing import StepTimer, timed
 from .rowcheck import misread_numbers
 from .verify import unverified_numbers
@@ -146,7 +146,7 @@ HISTORY_ANSWER_CHARS = 1500
 HISTORY_QUESTION_CHARS = 500
 
 SYSTEM_PROMPT = """You answer questions for North Carolina Department of Transportation (NCDOT) staff.
-You are answering on behalf of the {target_name} division ({target_unit}), using only numbered passages from its documents.
+{on_behalf}
 {asker_line}
 
 Rules:
@@ -183,9 +183,12 @@ _NOTE_QUESTION = re.compile(
 CONTINUES_RULE = """A passage marked "(continues on the next page, not shown)" stops in the middle of a list or table. Answer from what it shows, and say that the list or table may continue on the next page."""
 CONTINUES_NOTE = "(continues on the next page, not shown)"
 # Added when the question comes with earlier turns.
+# Added for an "All divisions" question (DAR-666): the passages come from every division, and the
+# reader needs to know whose rule each part of the answer is, since divisions' manuals can differ.
+ALL_DIVISIONS_RULE = """Each passage's heading starts with the division whose document it is. When the answer draws on more than one division's documents, say which division each part comes from."""
 HISTORY_RULE ="""The earlier conversation, when shown, is only there to understand what the question refers to (for example "it" or "that barrier"). It is not a source: take every fact from the numbered passages and cite them, never from the earlier answers. If the passages do not answer the question, reply with exactly {not_found}, even if the earlier conversation did."""
 
-USER_PROMPT = """{history}Passages from the {target_name} division's documents:
+USER_PROMPT = """{history}Passages from {documents}:
 
 {context}
 
@@ -208,7 +211,7 @@ Answer the question again from the passages. Put the number of the passage that 
 # ones instead of answering a new question. The one refusal with the answer readable in
 # the top 5 was a table cell (wztc-029: the lead unit "WZTCU" in a cell of a wide table),
 # so the rule names table cells, figure text and notes.
-SECOND_LOOK_RULE = """More passages from the {target_name} division's documents, numbered after the first ones:
+SECOND_LOOK_RULE = """More passages from {documents}, numbered after the first ones:
 
 {context}
 
@@ -316,14 +319,21 @@ class Passages(list):
         self.more = list(more)
 
 
-def _locator(hit: Hit, level: bool = False) -> str:
-    """The passage's heading: document title, pages and section; `level` puts the register level first ("Federal · ...")."""
+def _locator(hit: Hit, level: bool = False, division: bool = False) -> str:
+    """The passage's heading: document title, pages and section.
+
+    `level` puts the register level first ("Federal · ..."); `division` the
+    division's name before that ("Utilities · ...", an "All divisions" question).
+    """
     chunk = hit.chunk
     document = document_for(chunk.get("source") or "")
     parts = [document.title if document else (chunk.get("source") or "unknown document")]
     entry = entry_for(chunk.get("source") or "") if level else None
     if entry is not None:
         parts[0] = f"{level_label(entry.level)} · {parts[0]}"
+    owner = BY_ID.get(chunk.get("division") or "") if division else None
+    if owner is not None:
+        parts[0] = f"{owner.name} · {parts[0]}"
     if chunk.get("page"):
         parts.append(_pages(chunk))
     if chunk.get("section"):
@@ -450,18 +460,27 @@ def build_messages(question: str, asker: Division, target: Division, hits: List[
     first). Its last HISTORY_TURNS turns go before the passages, with a rule
     that they only explain what the question refers to.
     """
-    if asker.id == target.id:
+    every = is_all(target)
+    if every:
+        asker_line = (f"The person asking works in {asker.name} ({asker.unit}); explain another division's terms "
+                      "briefly only where the passages do.")
+        on_behalf = ("You are answering from the documents of every division in this demo ("
+                     + "; ".join(d.name for d in DIVISIONS) + "), using only numbered passages from them.")
+    elif asker.id == target.id:
         asker_line = f"The person asking also works in {target.name}."
     else:
         asker_line = (
             f"The person asking works in a different division, {asker.name} ({asker.unit}), and may not know "
             f"{target.name}'s terms; explain them briefly only where the passages do."
         )
+    if not every:
+        on_behalf = (f"You are answering on behalf of the {target.name} division ({target.unit}), "
+                     "using only numbered passages from its documents.")
     earlier = _history_text(history)
-    system = SYSTEM_PROMPT.format(
-        target_name=target.name, target_unit=target.unit, asker_line=asker_line, not_found=NOT_FOUND
-    )
-    extra = [PAGE_RULE] if any(_shows_printed_page(hit.chunk) for hit in hits) else []
+    system = SYSTEM_PROMPT.format(on_behalf=on_behalf, asker_line=asker_line, not_found=NOT_FOUND)
+    extra = [ALL_DIVISIONS_RULE] if every else []
+    if any(_shows_printed_page(hit.chunk) for hit in hits):
+        extra.append(PAGE_RULE)
     if _NOTE_QUESTION.search(question):
         extra.append(NOTE_RULE)
     if any(hit.chunk.get("continues") for hit in hits):
@@ -469,17 +488,24 @@ def build_messages(question: str, asker: Division, target: Division, hits: List[
     if earlier:
         extra.append(HISTORY_RULE.format(not_found=NOT_FOUND))
     system += "".join(f"\n{n}. {rule}" for n, rule in enumerate(extra, 8))
-    user = USER_PROMPT.format(history=earlier, target_name=target.name, context=_numbered(hits), question=question)
+    user = USER_PROMPT.format(history=earlier, documents=_documents_of(target), context=_numbered(hits, divisions=every),
+                              question=question)
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
-def _numbered(hits: Sequence[Hit], start: int = 1, levels: bool = False) -> str:
+def _numbered(hits: Sequence[Hit], start: int = 1, levels: bool = False, divisions: bool = False) -> str:
     """The passages as the prompt shows them, numbered from `start`: "[n] (locator)" and the text.
 
-    `levels` names each document's register level in its locator (the conflict check's prompt only).
+    `levels` names each document's register level in its locator (the conflict check's prompt only);
+    `divisions` its division (an "All divisions" question, DAR-666).
     """
-    return "\n\n---\n\n".join(f"[{n}] ({_locator(hit, levels)})\n{passage_text(hit.chunk)}"
+    return "\n\n---\n\n".join(f"[{n}] ({_locator(hit, levels, divisions)})\n{passage_text(hit.chunk)}"
                                 for n, hit in enumerate(hits, start))
+
+
+def _documents_of(target: Division) -> str:
+    """Whose documents the passages are, as the prompts say it: "the Utilities division's documents"."""
+    return "every division's documents" if is_all(target) else f"the {target.name} division's documents"
 
 
 def _marker_numbers(marker: "re.Match[str]", n_hits: int) -> List[int]:
@@ -629,6 +655,10 @@ _REFUSAL_TITLES = 3
 
 
 def refusal_text(target: Division, suggest: List[str]) -> str:
+    if is_all(target):
+        # Every division was searched: there is none left to suggest.
+        return (f"I couldn't find an answer to that in any division's documents ({len(target.documents)} documents "
+                f"in {'; '.join(d.name for d in DIVISIONS)}). Try rephrasing the question.")
     if len(target.documents) <= _REFUSAL_TITLES:
         searched = "; ".join(d.title for d in target.documents)
     else:
@@ -804,9 +834,10 @@ OCCASIONAL_STEPS = ("retry", "recite", "recheck", "agree", "compare", "suggest")
 
 def live_step_labels(target: Division, passages: int, top_k: int) -> Dict[str, str]:
     """What the page calls each live step; `passages` is how many the search looks through."""
+    searching = "every division's documents" if is_all(target) else f"{target.name} documents"
     return {
         "read": "Reading your question",
-        "search": f"Searching {target.name} documents ({passages:,} passages)",
+        "search": f"Searching {searching} ({passages:,} passages)",
         "rerank": f"Picking the {top_k} best passages",
         "write": "Writing the answer",
         "check": "Checking sources",
@@ -885,7 +916,12 @@ class Answerer:
                  retry_min_score: Optional[float] = RETRY_MIN_SCORE, retry_min_seconds: float = RETRY_MIN_SECONDS,
                  second_look: int = SECOND_LOOK_PASSAGES, number_agreement: bool = False,
                  row_guard: bool = False, page_images: Optional[PageImages] = None,
-                 conflict_check: bool = False, precedence: Sequence[str] = ()):
+                 conflict_check: bool = False, precedence: Sequence[str] = (),
+                 all_top_k: Optional[int] = None, merged_candidates: int = DEFAULT_MERGED_CANDIDATES):
+        # ALL_DIVISIONS_TOP_K and ALL_DIVISIONS_CANDIDATES (DAR-666): an "All divisions" question's passages
+        # and reranked pool; None reads top_k passages, as a single division's question does.
+        self.all_top_k = all_top_k or top_k
+        self.merged_candidates = merged_candidates
         self.conflict_check = conflict_check  # CONFLICT_CHECK: compare the documents behind a numeric answer (DAR-674)
         self.precedence = tuple(precedence)  # DOCUMENT_PRECEDENCE: the recommendation by level order; () the model's
         self.page_images = page_images  # PAGE_IMAGES_TO_MODEL: page images go with their passages (page_images.py)
@@ -923,12 +959,23 @@ class Answerer:
         (aggregate_pages only cuts its order to k), so the first answer reads what
         it read before.
         """
-        ranked = self.retriever.retrieve(self.search_query(question, history), division=target.id,
-                                         k=self._ranked_depth(), timer=timer, sources=documents)
-        first = self.retriever.with_following(ranked[:self.top_k], top=FOLLOWING_FOR_TOP)
-        return Passages(self.retriever.as_passages(self.retriever.with_next_page(first)), more=ranked[self.top_k:])
+        top_k = self.top_k_for(target)
+        if is_all(target):
+            # Every division searched on its own, merged and reranked once (Retriever.retrieve_across).
+            ranked = self.retriever.retrieve_across(self.search_query(question, history), [d.id for d in DIVISIONS],
+                                                    k=self._ranked_depth(top_k, self.merged_candidates), timer=timer,
+                                                    merged=self.merged_candidates, sources=documents)
+        else:
+            ranked = self.retriever.retrieve(self.search_query(question, history), division=target.id,
+                                             k=self._ranked_depth(top_k), timer=timer, sources=documents)
+        first = self.retriever.with_following(ranked[:top_k], top=FOLLOWING_FOR_TOP)
+        return Passages(self.retriever.as_passages(self.retriever.with_next_page(first)), more=ranked[top_k:])
 
-    def _ranked_depth(self) -> int:
+    def top_k_for(self, target: Division) -> int:
+        """How many ranked passages the first answer reads: ALL_DIVISIONS_TOP_K for "All divisions", else TOP_K."""
+        return self.all_top_k if is_all(target) else self.top_k
+
+    def _ranked_depth(self, top_k: Optional[int] = None, pool: Optional[int] = None) -> int:
         """How many ranked hits retrieve() asks for: the top k, plus the rest of the reranked pool for a retry.
 
         Only the reranked pool: a deeper k would widen the pool itself (Retriever.retrieve
@@ -936,11 +983,12 @@ class Answerer:
         searches, changing the first answer's top k. Nothing deeper is fetched when
         no retry can run (no reranker, RETRY_ON_REFUSAL=off, or second_look 0).
         """
-        pool = getattr(self.retriever, "candidates", None)
+        top_k = self.top_k if top_k is None else top_k
+        pool = getattr(self.retriever, "candidates", None) if pool is None else pool
         if (not self.second_look or self.retry_min_score is None or self.retriever.reranker is None
                 or not isinstance(pool, int)):
-            return self.top_k
-        return max(self.top_k, min(pool, SECOND_LOOK_RANKED))
+            return top_k
+        return max(top_k, min(pool, SECOND_LOOK_RANKED))
 
     def _second_look(self, hits: List[Hit]) -> List[Hit]:
         """Up to `second_look` of the hits ranked after `hits` (their `more`), picked in rank order, as passages.
@@ -1053,7 +1101,8 @@ class Answerer:
             messages = messages + [
                 {"role": "assistant", "content": first.text},
                 await self._with_page_images({"role": "user", "content": SECOND_LOOK_RULE.format(
-                    target_name=target.name, context=_numbered(extra, len(hits) + 1), last=len(wider),
+                    documents=_documents_of(target), context=_numbered(extra, len(hits) + 1, divisions=is_all(target)),
+                    last=len(wider),
                     not_found=NOT_FOUND)}, extra, len(hits) + 1),
             ]
         models = self.llm.retry_models(first.model)
@@ -1283,6 +1332,9 @@ class Answerer:
             text, sources = _grade(f"{completion.text.rstrip()}\n\n{conflict.block()}", hits)
         # The model whose text is shown, not the second opinion's (that one only flags numbers).
         backup = answered_by_backup(self.llm, completion.model)
+        if not text and is_all(target):
+            return Answer(refusal_text(target, []), refused=True, model=completion.model, retried=retried,
+                          first_model=first_model, backup_model=backup)
         if not text:
             with timed(timer, "suggest"):
                 # The same text the question was searched with, so a refused follow-up is matched on its topic.

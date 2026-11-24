@@ -4,6 +4,7 @@
     GET  /api/divisions   divisions, their documents (with passage counts) and example questions
     POST /api/warm        load the models now, returning once they are ready
     POST /api/ask         {"question", "asker", "target", "history"?, "documents"?, "refused_by"?, "faq"?}
+                          (target "all": every division's documents at once, DAR-666)
                           -> answer with cited sources, timing_ms per step and
                              searched {documents, passages}; a checked answer to a
                              frequent question (faq.py, DAR-673) comes from the store
@@ -42,7 +43,7 @@ from pydantic import BaseModel, Field
 
 from divrag.answer import Answer, Answerer, Emit, LiveSteps, live_step_labels
 from divrag.config import Settings, load_settings
-from divrag.divisions import BY_ID, DIVISIONS, Division
+from divrag.divisions import BY_ID, DIVISIONS, Division, is_all, target_for
 from divrag.embedder import Embedder, cpu_info, model_cache_dir, reranker_from_settings
 from divrag.faq import FaqService, Match, PageText, served_payload
 from divrag.faq import store_from_env as faq_store_from_env
@@ -135,7 +136,8 @@ class _Runtime:
         return Answerer(self.retriever(), llm, top_k=s.top_k, retry_min_score=s.retry_min_score if s.retry_on_refusal else None,
                         retry_min_seconds=s.retry_min_seconds, number_agreement=s.number_agreement,
                         row_guard=s.row_guard, page_images=self.page_images,
-                        conflict_check=s.conflict_check, precedence=s.document_precedence)
+                        conflict_check=s.conflict_check, precedence=s.document_precedence,
+                        all_top_k=s.all_divisions_top_k, merged_candidates=s.all_divisions_candidates)
 
 
 runtime = _Runtime(settings)
@@ -219,12 +221,14 @@ def _check(body: AskRequest, request: Request) -> Union[Question, JSONResponse]:
         return _error(400, "Please type a question.")
     if len(question) > settings.max_question_chars:
         return _error(400, f"Please keep the question under {settings.max_question_chars} characters.")
-    asker, target = BY_ID.get(body.asker), BY_ID.get(body.target)
+    # Only the target may be "all" (DAR-666): the asker is the visitor's own division.
+    asker, target = BY_ID.get(body.asker), target_for(body.target)
     if asker is None or target is None:
         return _error(400, "Unknown division.")
     documents = None
     if body.documents is not None:
         # Only the target's own documents can be searched; anything else is dropped, never searched.
+        # "All divisions" owns every division's documents.
         owned = {doc.file for doc in target.documents}
         documents = [d for d in dict.fromkeys(body.documents) if d in owned]
         if not documents:
@@ -252,7 +256,12 @@ def _searched(target: Division, documents: Optional[List[str]]) -> Dict[str, int
     handful that reached the reranker. `documents` None means all of the target's.
     """
     searched = len(documents) if documents is not None else len(target.documents)
-    return {"documents": searched, "passages": runtime.index.count(target.id, documents)}
+    return {"documents": searched, "passages": runtime.index.count(_division_filter(target), documents)}
+
+
+def _division_filter(target: Division) -> Optional[str]:
+    """The index's division filter for a target: its id, or None (every division) for "All divisions"."""
+    return None if is_all(target) else target.id
 
 
 @app.get("/", include_in_schema=False)
@@ -348,6 +357,9 @@ async def health() -> Dict:
         # The calendar month's (UTC) estimated OpenAI spend and the limit that switches answers to the free
         # models; "shared": false means this instance's own count only (no KV store). None without OpenAI.
         "openai_spend": await spend.status() if settings.answers_with_openai else None,
+        # DAR-666: an "All divisions" question's passages and reranked pool.
+        "all_divisions_top_k": settings.all_divisions_top_k,
+        "all_divisions_candidates": settings.all_divisions_candidates,
         # Checked answers (DAR-673): whether they are served, the threshold, and the store's namespace.
         "faq": {"on": settings.faq, "threshold": settings.faq_threshold, "namespace": faq.store.namespace,
                 "shared": faq.store.shared},
@@ -390,8 +402,9 @@ async def ask_stream(body: AskRequest, request: Request):
 
 def _step_labels(checked: Question) -> Dict[str, str]:
     """The live steps' labels; the passage count is the same cached row filter the search uses."""
-    passages = runtime.index.count(checked.target.id, checked.documents)
-    return live_step_labels(checked.target, passages, settings.top_k)
+    passages = runtime.index.count(_division_filter(checked.target), checked.documents)
+    top_k = settings.all_divisions_top_k if is_all(checked.target) else settings.top_k
+    return live_step_labels(checked.target, passages, top_k)
 
 
 async def _answer(checked: Question, emit: Optional[Emit] = None) -> Tuple[int, Dict]:
@@ -450,6 +463,8 @@ async def _checked_answer(checked: Question) -> Optional[Match]:
     """
     if not (settings.faq and checked.faq) or checked.history:
         return None
+    if is_all(checked.target):
+        return None  # each stored answer was checked as one division's answer (faq.py)
     embed = None
     if runtime.loaded:
         embed = runtime.retriever().embedder.passages

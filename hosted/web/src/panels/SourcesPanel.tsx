@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { levelTitle, pagesText, pagesTitle, pickAnswer } from "@/panels/answers";
 import { webUrl } from "@/panels/format";
 import { PageImage } from "@/panels/PageImage";
-import { useApp } from "@/state";
+import { ALL_DIVISIONS, useApp } from "@/state";
 import type { Source } from "@/types";
 
 // The right panel (public/js/sources.js): the passages the shown answer cites. Clicking
@@ -70,6 +70,7 @@ export function SourcesPanel() {
   const activeAnswerId = useApp((s) => s.activeAnswerId);
   const activeAt = useApp((s) => s.activeAt);
   const focusedSource = useApp((s) => s.focusedSource);
+  const divisions = useApp((s) => s.divisions);
   const answer = useMemo(
     () => pickAnswer(messages, activeAnswerId, activeAt),
     [messages, activeAnswerId, activeAt],
@@ -121,7 +122,13 @@ export function SourcesPanel() {
       {sources.length > 0 && (
         <ol>
           {sources.map((s) => (
-            <SourceItem key={`${answer.id}-${s.n}`} source={s} current={Number(s.n) === current} />
+            <SourceItem
+              key={`${answer.id}-${s.n}`}
+              source={s}
+              current={Number(s.n) === current}
+              // An "All divisions" answer (DAR-666) draws on several divisions: each source names its own.
+              division={answer.targetId === ALL_DIVISIONS ? divisionName(divisions, s.division) : null}
+            />
           ))}
         </ol>
       )}
@@ -134,7 +141,13 @@ export function SourcesPanel() {
   );
 }
 
-function SourceItem({ source: s, current }: { source: Source; current: boolean }) {
+/** The division's name for a source's division id, the id itself when the list doesn't know it. */
+function divisionName(divisions: { id: string; name: string }[], id: string | null | undefined): string | null {
+  if (!id) return null;
+  return divisions.find((d) => d.id === id)?.name ?? id;
+}
+
+function SourceItem({ source: s, current, division }: { source: Source; current: boolean; division?: string | null }) {
   const n = Number(s.n);
   const text = s.excerpt ? String(s.excerpt) : "";
   const long = text.length > CLAMP_CHARS;
@@ -167,8 +180,10 @@ function SourceItem({ source: s, current }: { source: Source; current: boolean }
         </span>
         <span className="leading-snug font-semibold">{String(s.title || "")}</span>
       </div>
-      {(level || pages || section) && (
+      {(division || level || pages || section) && (
         <div className="mt-0.5 text-[0.85rem] text-muted-foreground">
+          {division && <span className="aui-source-division font-semibold text-foreground">{division}</span>}
+          {division && (level || pages || section) && " · "}
           {/* The document's level in the register (DAR-674): "Federal · p.775 (PDF p.11) · Section 6B.03". */}
           {level && (
             <span title={levelTitle(s)} className="font-semibold text-foreground">

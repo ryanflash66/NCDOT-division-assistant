@@ -33,6 +33,8 @@ LLM_PROVIDER=openai. Everything else has a default suitable for the public demo.
     KEYWORD_ID_BOOST            how many times more a table, figure or document number the question names counts in the field (default 2)
     RERANK_CANDIDATES          vector hits handed to the reranker (default 40; see retrieval.DEFAULT_CANDIDATES)
     TOP_K                       passages given to the model (default 5)
+    ALL_DIVISIONS_TOP_K         passages given to the model for an "All divisions" question (default 8, DAR-666)
+    ALL_DIVISIONS_CANDIDATES    of the divisions' merged ranking, how many are reranked (default 40, DAR-666)
     PAGE_AGGREGATION            "off" (default), "max" or "sum": rank the reranked chunks by page before the top k
                                 (see retrieval.aggregate_pages)
     MAX_CHUNKS_PER_PAGE         chunks one page may give to the top k when PAGE_AGGREGATION is on (default 2)
@@ -88,8 +90,8 @@ from typing import Dict, Mapping, Optional, Tuple
 
 from .keyword import B, DEFAULT_FIELD_BOOST, DEFAULT_ID_BOOST, K1, RRF_K
 from .spend import DEFAULT_BUDGET_USD, DEFAULT_MARGIN_USD, price_for
-from .retrieval import (DEFAULT_MAX_CHUNKS_PER_DOCUMENT, DEFAULT_MAX_CHUNKS_PER_PAGE, DEFAULT_PAGE_AGGREGATION,
-                        PAGE_AGGREGATION_MODES)
+from .retrieval import (DEFAULT_MAX_CHUNKS_PER_DOCUMENT, DEFAULT_MAX_CHUNKS_PER_PAGE, DEFAULT_MERGED_CANDIDATES,
+                        DEFAULT_PAGE_AGGREGATION, PAGE_AGGREGATION_MODES)
 
 from .embedder import RERANK_BATCH_SIZE, RERANK_MODEL_NAME, default_model_file
 from .faq import DEFAULT_THRESHOLD as DEFAULT_FAQ_THRESHOLD
@@ -97,6 +99,8 @@ from .page_images import DEFAULT_DETAIL, DEFAULT_MAX_IMAGES, DETAILS, MAX_IMAGES
 from .register import LEVELS
 
 HOSTED_DIR = Path(__file__).resolve().parent.parent
+# Passages an "All divisions" question's first answer reads (DAR-666). See ALL_DIVISIONS_TOP_K below.
+DEFAULT_ALL_DIVISIONS_TOP_K = 8
 NO_RERANKER = "none"
 
 # Free models only, so the public link cannot spend the account's credits.
@@ -169,6 +173,10 @@ class Settings:
     document_precedence: Tuple[str, ...] = ()
     faq: bool = True
     faq_threshold: float = DEFAULT_FAQ_THRESHOLD
+    # An "All divisions" question (DAR-666): the passages its first answer reads, and how many of the
+    # divisions' merged ranking are reranked (retrieval.DEFAULT_MERGED_CANDIDATES).
+    all_divisions_top_k: int = DEFAULT_ALL_DIVISIONS_TOP_K
+    all_divisions_candidates: int = DEFAULT_MERGED_CANDIDATES
 
     @property
     def answers_with_openai(self) -> bool:
@@ -324,6 +332,12 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         raise ValueError(f"TOP_K must be 1-10, got {top_k}")
     retrieval = retrieval_options(env)
     bm25_k1, bm25_b = bm25_parameters(env)
+    all_top_k = int(env.get("ALL_DIVISIONS_TOP_K", str(DEFAULT_ALL_DIVISIONS_TOP_K)))
+    if not 1 <= all_top_k <= 10:
+        raise ValueError(f"ALL_DIVISIONS_TOP_K must be 1-10, got {all_top_k}")
+    all_candidates = int(env.get("ALL_DIVISIONS_CANDIDATES", str(DEFAULT_MERGED_CANDIDATES)))
+    if not all_top_k <= all_candidates <= 120:
+        raise ValueError(f"ALL_DIVISIONS_CANDIDATES must be ALL_DIVISIONS_TOP_K to 120, got {all_candidates}")
     budget = float(env.get("REQUEST_BUDGET_SECONDS", "55"))
     if not 10 <= budget <= 58:
         raise ValueError(f"REQUEST_BUDGET_SECONDS must be 10-58 (Vercel stops the function at 60), got {budget}")
@@ -438,4 +452,6 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         document_precedence=precedence,
         faq=faq in ("on", "1", "true"),
         faq_threshold=faq_threshold,
+        all_divisions_top_k=all_top_k,
+        all_divisions_candidates=all_candidates,
     )
