@@ -16,3 +16,4 @@ One line per run that included the locked split (README.md: run at release only)
 | 2026-11-17T18:17:21+00:00 | openai-site-dar738 | b7de56824e3824bf27e173fd9e2defe2c8cf387a | all | 286 |
 | 2026-11-18T21:43:28+00:00 | ragas-openai-site-dar738 | 88c0d7fd37b5dcb3a15422a431e1730527b44a91 | ragas judge (DAR-650; answers of openai-site-dar738) | 286 |
 | 2026-11-24T06:33:43+00:00 | openai-site-dar674 | 65371e847baf2ed57f5fc28261799faef357a875 | all | 286 |
+| 2026-11-24T09:34:56+00:00 | openai-site-dar674-rerun | 6f0bc8f116ef625b672563b3ba49aa60d647af97 | all | 286 |
