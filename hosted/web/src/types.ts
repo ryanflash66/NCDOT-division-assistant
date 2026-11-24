@@ -104,7 +104,14 @@ export type AnswerPayload = {
   target: { id: string; name: string };
   steps: { id: string; label: string; ms: number }[];
   timing_ms: Record<string, number>;
-  searched: { documents: number; passages: number };
+  /** Null for a checked answer, which searched nothing (DAR-673). */
+  searched: { documents: number; passages: number } | null;
+  /**
+   * A checked answer to a frequent question, served from the store instead of the full pipeline
+   * (DAR-673): its entry, the date a person checked it, and how close the question was. Null (or
+   * absent in answers saved before it) for every other answer.
+   */
+  checked_answer?: { id: string; checked_on: string; similarity: number } | null;
 };
 
 /** What an assistant message carries in metadata.custom (written by the adapter, DAR-631). */

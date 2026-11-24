@@ -127,14 +127,17 @@ class RedisStore:
 
     shared = True
 
-    def __init__(self, url: str, token: str, transport: "httpx.AsyncBaseTransport | None" = None):
+    def __init__(self, url: str, token: str, transport: "httpx.AsyncBaseTransport | None" = None,
+                 timeout: float = STORE_TIMEOUT_SECONDS):
         self._url = url.rstrip("/")
         self._token = token
         self._transport = transport
+        self._timeout = timeout
 
-    async def _pipeline(self, *commands: list) -> list:
+    async def pipeline(self, *commands: list) -> list:
+        """Run the commands in one request (Upstash's /pipeline); their results in order, or StoreError."""
         try:
-            async with httpx.AsyncClient(timeout=STORE_TIMEOUT_SECONDS, transport=self._transport) as client:
+            async with httpx.AsyncClient(timeout=self._timeout, transport=self._transport) as client:
                 response = await client.post(f"{self._url}/pipeline", json=list(commands),
                                              headers={"Authorization": f"Bearer {self._token}"})
         except httpx.HTTPError as exc:
@@ -152,14 +155,14 @@ class RedisStore:
         return results
 
     async def get(self, key: str) -> int:
-        (value,) = await self._pipeline(["GET", key])
+        (value,) = await self.pipeline(["GET", key])
         try:
             return int(value or 0)
         except (TypeError, ValueError) as exc:
             raise StoreError(f"not a number at {key}: {value!r}") from exc
 
     async def add(self, key: str, micro: int) -> int:
-        total, _ = await self._pipeline(["INCRBY", key, micro], ["EXPIRE", key, KEY_TTL_SECONDS])
+        total, _ = await self.pipeline(["INCRBY", key, micro], ["EXPIRE", key, KEY_TTL_SECONDS])
         return int(total)
 
 
