@@ -50,6 +50,10 @@ FLAGS = (AGREE, DISAGREE, IMAGE_ONLY)
 # Differences kept per page in page_readings.json, and shown in one notice.
 MAX_DIFFERENCES = 8
 NOTICE_DIFFERENCES = 2
+# One side of a difference that the other reading has no counterpart for.
+MISSING = "(missing)"
+# Words the notice shows either side of the answer's number in a long difference.
+NOTICE_WORDS = 5
 # Words either side of a differing number in an "X vs Y" snippet.
 SNIPPET_WORDS = 3
 # A table row: a line of the image reading with at least this many numbers.
@@ -150,15 +154,15 @@ def _value_differences(ocr: List[str], image: List[str], wanted: set) -> List[Tu
             continue
         numbers = set(_numbers(ocr[i1:i2])) | set(_numbers(image[j1:j2]))
         if numbers & wanted:
-            out.append((_snippet(ocr, i1, i2) if i2 > i1 else "(missing)",
-                        _snippet(image, j1, j2) if j2 > j1 else "(missing)"))
+            out.append((_snippet(ocr, i1, i2) if i2 > i1 else MISSING,
+                        _snippet(image, j1, j2) if j2 > j1 else MISSING))
             wanted -= numbers
         if not wanted:
             break
     for value, unit in sorted(wanted, key=lambda n: (n[0], n[1] or "")):
         # A number the alignment didn't reach: name it alone.
         shown = _number_text(value) + (f" {unit}" if unit else "")
-        out.append(("(missing)", shown))
+        out.append((MISSING, shown))
     return out
 
 
@@ -312,8 +316,12 @@ def _numbers_of(text: str) -> set:
 def notice(where: str, readings: Sequence[Mapping[str, Any]], answer: str = "") -> Optional[str]:
     """The warning for one cited source whose page readings differ, or None when none do.
 
-    The differences that hold a number the answer states come first, so the
-    notice names the value the reader is about to rely on.
+    Only a difference that holds a number the answer states warns the reader: on
+    the full run (Nov 24) half of the 1,192 pages differed somewhere, mostly in a
+    printed page number, a chart's axis labels or a line one reading left out,
+    and a warning about a value the answer doesn't use tells the reader nothing.
+    The DAR-732 misreads all qualify: the answer states 1 1/2 in, 2 1/2 or 575 ft,
+    and that number is in the difference.
     """
     differing = [r for r in readings if r.get("agreement") in (DISAGREE, IMAGE_ONLY)]
     if not differing:
@@ -321,8 +329,35 @@ def notice(where: str, readings: Sequence[Mapping[str, Any]], answer: str = "") 
     pairs = [tuple(d) for r in differing for d in r.get("differences") or ()]
     if not pairs:
         return NOTICE_NO_TEXT.format(where=where)
-    stated = _numbers_of(answer)
-    pairs.sort(key=lambda d: not (_numbers_of(d[0] + " " + d[1]) & stated))
-    shown = "; ".join(f"“{ocr}” in the text vs “{image}” in the image"
+    stated = _numbers_of(_CITATION.sub(" ", answer))
+    pairs = [d for d in pairs if _numbers_of(d[0] + " " + d[1]) & stated]
+    if not pairs:
+        return None
+    # A value one reading changed (1/2 vs 1 1/2, a row read backwards) says more than a stretch
+    # only one reading has, which on a sideways table can be the whole page (tmsd-h019).
+    pairs.sort(key=lambda d: MISSING in d)
+    shown = "; ".join(_pair_text(_around(ocr, stated), _around(image, stated))
                       for ocr, image in pairs[:NOTICE_DIFFERENCES])
     return NOTICE.format(where=where, pairs=shown)
+
+
+def _around(snippet: str, stated: set, words: int = NOTICE_WORDS) -> str:
+    """A long snippet cut to `words` words either side of the first number the answer states."""
+    parts = snippet.split()
+    if len(parts) <= 2 * words + 1:
+        return snippet
+    at = next((i for i, part in enumerate(parts) if _numbers_of(part) & stated), 0)
+    start, end = max(0, at - words), min(len(parts), at + words + 1)
+    return ("… " if start else "") + " ".join(parts[start:end]) + (" …" if end < len(parts) else "")
+
+
+# The answer's citation markers ("[1]", "[1, 2]", "[1-3]"): their numbers are not values.
+_CITATION = re.compile(r"\[\s*\d+(?:\s*[,\-–]\s*\d+)*\s*\]")
+
+
+def _pair_text(ocr: str, image: str) -> str:
+    if ocr == MISSING:
+        return f"“{image}” in the image, not in the text"
+    if image == MISSING:
+        return f"“{ocr}” in the text, not in the image"
+    return f"“{ocr}” in the text vs “{image}” in the image"

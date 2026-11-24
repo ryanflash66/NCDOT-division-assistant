@@ -184,11 +184,30 @@ def test_an_image_only_page_gets_a_notice_without_pairs_and_a_refusal_gets_none(
     assert Answer("Not covered.", refused=True, sources=sources).notices() == []
 
 
-def test_the_notice_names_the_difference_holding_the_answers_number_first():
+def test_the_notice_names_only_the_differences_holding_the_answers_numbers():
     reading = {"page": 5, "agreement": rd.DISAGREE,
                "differences": [["width 10 ft", "width 12 ft"], ["taper 0.5 in", "taper 1.5 in"]]}
     notice = rd.notice("Doc, PDF page 5", [reading], "The taper is 1 1/2 in [1].")
-    assert notice.index("taper 0.5 in") < notice.index("width 10 ft")
+    assert "“taper 0.5 in” in the text vs “taper 1.5 in” in the image" in notice
+    assert "width" not in notice
+
+
+def test_no_notice_when_the_page_differs_only_where_the_answer_doesnt_look():
+    # The full run's common case: a printed page number or a chart label one reading lacks.
+    reading = {"page": 251, "agreement": rd.DISAGREE,
+               "differences": [["alternative intersection treatments t t 3", "alternative intersection treatments 233"],
+                               [rd.MISSING, "vertical axis 0 vertical axis 200"]]}
+    assert rd.notice("Doc, PDF page 251", [reading], "A jughandle moves left turns to the right [1].") is None
+    # A citation marker's number is not a value the answer states.
+    marked = {"page": 3, "agreement": rd.DISAGREE, "differences": [["lane 1", "lane 7"]]}
+    assert rd.notice("Doc, PDF page 3", [marked], "Close the lane first [1].") is None
+
+
+def test_a_value_only_one_reading_has_is_named_as_such():
+    # tmsd-h009: the OCR text lost the sign's mileage; the image reading has it.
+    reading = {"page": 39, "agreement": rd.DISAGREE, "differences": [[rd.MISSING, "s jet boats 2.5 dick and harry"]]}
+    notice = rd.notice("TODS, PDF page 39", [reading], "The sign shows Steward's Jet Boats at 2 1/2 miles [1].")
+    assert "“s jet boats 2.5 dick and harry” in the image, not in the text" in notice
 
 
 def test_a_narrowed_citation_keeps_only_the_cited_pages_readings():
