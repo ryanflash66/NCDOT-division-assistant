@@ -93,7 +93,7 @@ class Runtime:
         s = self.settings
         return Answerer(self.retriever, llm, top_k=s.top_k, retry_min_score=s.retry_min_score if s.retry_on_refusal else None,
                         retry_min_seconds=s.retry_min_seconds, number_agreement=s.number_agreement,
-                        row_guard=s.row_guard)
+                        row_guard=s.row_guard, conflict_check=s.conflict_check, precedence=s.document_precedence)
 
     def retrieval(self, item: Dict[str, Any]) -> Dict[str, Any]:
         """The top-k ranking the answer is built from (Answerer.retrieve's first step, before the following chunks)."""
@@ -389,6 +389,9 @@ async def run_command(args) -> int:
     # The default top-k and no tag keep the key the earlier runs were cached under.
     elif settings.top_k != 5:
         answer_config += f"#k{settings.top_k}"
+    # Answers that may end with a "documents give different values" block (DAR-674) are new answers.
+    if not site and settings.conflict_check:
+        answer_config += "#conflict"
     if args.tag:
         answer_config += f"#{args.tag}"
     stopped = None

@@ -1,6 +1,7 @@
 """Build the hosted demo's index offline from each division's documents.
 
     py -m prototype.ingest [--division ID ...] [--out hosted/index] [--compare] [--timings FILE]
+    py -m prototype.ingest --retag [--out hosted/index]
 
 The divisions and their documents come from hosted/divrag/divisions.py; each
 document is read from hosted/documents/<division id>/<file> (where
@@ -19,6 +20,11 @@ drawing caption also gets a chunk of its own (`kind: "figure"`: caption, nearby
 lines and the drawing's OCR labels, rag.figures), and a chunk from a page OCR
 read badly or had to turn carries `flags` (rag.ocr). A table chunk that ends
 with the notes printed under its table (rag.table_notes) carries `notes: true`.
+Every chunk carries its document's `level` and `edition` from the register
+(hosted/divrag/register.json, DAR-674). After a register change, --retag
+rewrites them in an existing index's chunks.json without reading the PDFs:
+they are not part of what is embedded or keyword-searched, so the vectors and
+bm25.npz stay as they are.
 --reuse keeps the vectors of chunks that haven't changed. Building the index needs
 requirements.txt (llama-index, pymupdf4llm) as well as hosted/requirements.txt;
 the hosted app needs only the latter.
@@ -31,6 +37,7 @@ similarity between the two models' vectors.
 import argparse
 import bisect
 import json
+import os
 import re
 import sys
 import time
@@ -44,7 +51,8 @@ from prototype import HOSTED_DIR  # noqa: F401  (puts hosted/ on sys.path)
 from divrag.config import bm25_parameters
 from divrag.divisions import BY_ID, DIVISIONS, DOCUMENTS_DIR, Division, Document
 from divrag.embedder import Embedder
-from divrag.index_file import IndexFile, search_text
+from divrag.index_file import CHUNKS_FILE, IndexFile, search_text
+from divrag.register import tag
 from rag import loader, pages
 from rag.config import AppConfig, load_config
 from rag.table_merge import merge_continued_tables, page_lines, page_span
@@ -379,11 +387,27 @@ def build(config: AppConfig, divisions: List[Division], embedder: Embedder,
     print(f"read and split {read_split:.0f}s, embedded {len(chunks)} chunks in {embed_seconds:.0f}s")
     if timings is not None:
         timings.update(documents=stats, read_split=read_split, embed=embed_seconds)
+    tag(chunks)
     index = IndexFile(embedder.model_name, chunks, vectors)
     if not keyword:
         return index
     k1, b = bm25_parameters()  # BM25_K1 and BM25_B are baked into bm25.npz here (DAR-657)
     return index.with_keyword_index(k1=k1, b=b)
+
+
+def retag(directory: Path) -> int:
+    """Rewrite the register's level and edition onto every chunk of the index in `directory`; the chunk count.
+
+    Only chunks.json changes, written as IndexFile.save writes it.
+    """
+    path = Path(directory) / CHUNKS_FILE
+    meta = json.loads(path.read_text(encoding="utf-8"))
+    tag(meta["chunks"])
+    # Write beside it and swap: a retag stopped half-way must not leave a truncated chunks.json the app can't load.
+    partial = path.with_name(path.name + ".tmp")
+    partial.write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
+    os.replace(partial, path)
+    return len(meta["chunks"])
 
 
 def compare(config: AppConfig, index: IndexFile, embedder: Embedder) -> None:
@@ -423,7 +447,12 @@ def main(argv: List[str]) -> int:
     parser.add_argument("--report", type=Path, help="also write the build report (page coverage and table-quality "
                         "flags per document, see prototype.build_report) as JSON here")
     parser.add_argument("--no-figures", action="store_true", help="no separate figure chunks (the index as before DAR-658)")
+    parser.add_argument("--retag", action="store_true", help="only rewrite each chunk's level and edition from the "
+                        "register in the --out index (no PDFs read, vectors and keyword index unchanged)")
     args = parser.parse_args(argv)
+    if args.retag:
+        print(f"{retag(args.out)} chunks tagged from the register -> {args.out / CHUNKS_FILE}")
+        return 0
 
     load_dotenv()
     config = load_config()

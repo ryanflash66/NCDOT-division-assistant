@@ -17,6 +17,10 @@ unit length); a division filter restricts it to that division's rows before
 ranking, so another division's chunk can never be returned. A `sources` filter
 (document file names) narrows it further to the documents the visitor ticked.
 Only numpy is needed to load and search it.
+
+A document the register (register.py) marks superseded by a newer edition that
+is also in the index is left out of every search the same way (DAR-674), so an
+old edition can never reach the reranker or the model while the new one is there.
 """
 
 import json
@@ -31,6 +35,7 @@ import numpy as np
 from .divisions import document_for
 from .keyword import B, K1, KEYWORD_FILE, VERSION, KeywordIndex
 from .query import ID_PATTERN, id_name
+from .register import REGISTER, Register
 
 CHUNKS_FILE = "chunks.json"
 VECTORS_FILE = "vectors.npy"
@@ -125,9 +130,11 @@ class Hit:
 
 class IndexFile:
     def __init__(self, model: str, chunks: List[Dict[str, Any]], vectors: np.ndarray,
-                 keyword: Optional[KeywordIndex] = None):
+                 keyword: Optional[KeywordIndex] = None, register: Register = REGISTER):
         if len(chunks) != len(vectors):
             raise ValueError(f"{len(chunks)} chunks but {len(vectors)} vectors")
+        # Documents whose newer edition is in this index too (register.py): never searched.
+        self.superseded = register.superseded({c.get("source") for c in chunks if c.get("source")})
         self.model = model
         self.chunks = chunks
         self.vectors = vectors
@@ -186,7 +193,8 @@ class IndexFile:
         division's rows takes about a millisecond.
         """
         if division not in self._rows_cache:
-            rows = [i for i, c in enumerate(self.chunks) if division is None or c.get("division") == division]
+            rows = [i for i, c in enumerate(self.chunks) if (division is None or c.get("division") == division)
+                    and c.get("source") not in self.superseded]
             self._rows_cache[division] = np.array(rows, dtype=int)
         rows = self._rows_cache[division]
         if sources is None:

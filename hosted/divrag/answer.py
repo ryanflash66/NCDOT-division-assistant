@@ -28,6 +28,12 @@ time allowing: a number read from the wrong cell is on the cited page, so the
 check above passes it, but the two models seldom misread the same cell. The
 first answer's numbers the second contradicts are added to `unverified`.
 
+With CONFLICT_CHECK on (conflict.py, DAR-674), an answer that states numbers
+from passages of two or more documents gets one more call that compares them.
+When the documents give different values, the answer ends with each value,
+its document's level (Federal, State, Division, Internal; register.py) and
+citation, and a recommendation labelled as one. Neither value is hidden.
+
 answer() waits for the model's whole reply; answer_stream() passes the text on
 as it is written. Both grade, retry and refuse the same way.
 
@@ -48,10 +54,12 @@ from dataclasses import dataclass, field
 from typing import Any, Awaitable, Callable, Dict, List, Optional, Sequence, Tuple
 
 from .agreement import SecondOpinion, answer_numbers, second_opinion, second_opinion_models
+from .conflict import Conflict, check as check_conflict, worth_checking
 from .divisions import BY_ID, DIVISIONS, Division, document_for
 from .index_file import Hit
 from .llm import Completion, LLMError, OpenRouterClient, answered_by_backup
 from .page_images import PageImages
+from .register import entry_for, level_label
 from .pages_static import image_url
 from .retrieval import DEFAULT_CANDIDATES, DEFAULT_MAX_CHUNKS_PER_PAGE, Retriever, _page_key, is_table
 from .timing import StepTimer, timed
@@ -116,6 +124,10 @@ AGREEMENT_MIN_SECONDS = RETRY_MIN_SECONDS
 # ... and is given at most this long: the answer's sources and flags wait for it (they come with
 # the checked answer), and the free models answered the tuning split's questions in 2-17 s.
 AGREEMENT_MAX_SECONDS = 20.0
+# The conflict check (DAR-674) runs only with this much of the request left, for at most CONFLICT_MAX_SECONDS:
+# it comes after the answer is final, and a slow comparison must not cost the answer.
+CONFLICT_MIN_SECONDS = 8.0
+CONFLICT_MAX_SECONDS = 15.0
 EXCERPT_CHARS = 700
 # The best hits also bring the next chunk of their document (see Retriever.with_following).
 FOLLOWING_FOR_TOP = 2
@@ -232,13 +244,21 @@ class Source:
     printed_page: Optional[str] = None
     printed_page_end: Optional[str] = None
     image: Optional[str] = None  # site-relative URL of the page's image, when rendered (DAR-654)
+    # The document's register row (register.py, DAR-674): level ("federal"), what the page calls it
+    # ("Federal"), who issued it, rule or guidance, and its edition.
+    level: Optional[str] = None
+    level_label: Optional[str] = None
+    issuer: Optional[str] = None
+    binding: Optional[str] = None
+    edition: Optional[str] = None
 
     def as_dict(self) -> Dict:
         return {
             "n": self.n, "division": self.division, "title": self.title, "page": self.page,
             "page_end": self.page_end, "section": self.section, "url": self.url, "excerpt": self.excerpt,
             "printed_page": self.printed_page, "printed_page_end": self.printed_page_end,
-            "image": self.image,
+            "image": self.image, "level": self.level, "level_label": self.level_label, "issuer": self.issuer,
+            "binding": self.binding, "edition": self.edition,
         }
 
 
@@ -262,6 +282,9 @@ class Answer:
     # `model` is a free model that answered in place of OpenAI (llm.answered_by_backup, DAR-735):
     # the page tells the reader to check the cited page.
     backup_model: bool = False
+    # The documents behind the answer disagree (conflict.py, DAR-674): the answer text ends with each
+    # value and the recommendation; this is the same for the page.
+    conflict: Optional[Conflict] = None
 
     def as_dict(self) -> Dict:
         return {
@@ -276,6 +299,7 @@ class Answer:
             "retried": self.retried,
             "citation_fix": self.citation_fix,
             "second_opinion": self.second_opinion.as_dict() if self.second_opinion else None,
+            "conflict": self.conflict.as_dict() if self.conflict else None,
             "suggest": [{"id": d, "name": BY_ID[d].name} for d in self.suggest],
         }
 
@@ -292,10 +316,14 @@ class Passages(list):
         self.more = list(more)
 
 
-def _locator(hit: Hit) -> str:
+def _locator(hit: Hit, level: bool = False) -> str:
+    """The passage's heading: document title, pages and section; `level` puts the register level first ("Federal · ...")."""
     chunk = hit.chunk
     document = document_for(chunk.get("source") or "")
     parts = [document.title if document else (chunk.get("source") or "unknown document")]
+    entry = entry_for(chunk.get("source") or "") if level else None
+    if entry is not None:
+        parts[0] = f"{level_label(entry.level)} · {parts[0]}"
     if chunk.get("page"):
         parts.append(_pages(chunk))
     if chunk.get("section"):
@@ -353,6 +381,17 @@ def printed_pages(chunk: Dict) -> Tuple[Optional[str], Optional[str]]:
 def recent_turns(history: Sequence[Dict[str, str]]) -> List[Dict[str, str]]:
     """The last HISTORY_TURNS turns of the conversation, oldest first."""
     return list(history)[-HISTORY_TURNS:]
+
+
+def _compare_question(question: str, history: Sequence[Dict[str, str]]) -> str:
+    """The question the conflict check asks about: a follow-up keeps the question it follows.
+
+    "And at 50 mph?" alone names no rule, so the check could pick each document's value for a
+    different case; the previous question (clipped as search_query clips it) says which one.
+    """
+    turns = recent_turns(history)
+    previous = _clip(turns[-1].get("question") or "", HISTORY_QUESTION_CHARS) if turns else ""
+    return f"{question}\n(This follows the earlier question: {previous})" if previous else question
 
 
 def _clip(text: str, limit: int) -> str:
@@ -434,9 +473,13 @@ def build_messages(question: str, asker: Division, target: Division, hits: List[
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
-def _numbered(hits: Sequence[Hit], start: int = 1) -> str:
-    """The passages as the prompt shows them, numbered from `start`: "[n] (locator)" and the text."""
-    return "\n\n---\n\n".join(f"[{n}] ({_locator(hit)})\n{passage_text(hit.chunk)}" for n, hit in enumerate(hits, start))
+def _numbered(hits: Sequence[Hit], start: int = 1, levels: bool = False) -> str:
+    """The passages as the prompt shows them, numbered from `start`: "[n] (locator)" and the text.
+
+    `levels` names each document's register level in its locator (the conflict check's prompt only).
+    """
+    return "\n\n---\n\n".join(f"[{n}] ({_locator(hit, levels)})\n{passage_text(hit.chunk)}"
+                                for n, hit in enumerate(hits, start))
 
 
 def _marker_numbers(marker: "re.Match[str]", n_hits: int) -> List[int]:
@@ -474,6 +517,7 @@ def _source_for(hit: Hit, n: int) -> Source:
     if url and page:
         url = f"{url}#page={page}"
     printed, printed_end = printed_pages(chunk)
+    entry = entry_for(chunk.get("source") or "")
     return Source(
         n=n,
         division=chunk.get("division") or "",
@@ -486,6 +530,11 @@ def _source_for(hit: Hit, n: int) -> Source:
         printed_page=printed,
         printed_page_end=printed_end,
         image=image_url(chunk),
+        level=entry.level if entry else None,
+        level_label=level_label(entry.level) if entry else None,
+        issuer=entry.issuer if entry else None,
+        binding=entry.binding if entry else None,
+        edition=entry.edition if entry else None,
     )
 
 
@@ -742,6 +791,7 @@ LIVE_STEPS: Tuple[Tuple[str, Tuple[str, ...]], ...] = (
     ("recite", ("recite",)),
     ("recheck", ("recheck",)),
     ("agree", ("agree",)),
+    ("compare", ("compare",)),
     ("suggest", ("suggest",)),
 )
 
@@ -749,7 +799,7 @@ LIVE_STEPS: Tuple[Tuple[str, Tuple[str, ...]], ...] = (
 # unverified number, or, for "agree", an answer with numbers while
 # NUMBER_AGREEMENT is on), so the page isn't told about them in advance: a step
 # left "not started" at the end would read as if the answer stopped short (DAR-636).
-OCCASIONAL_STEPS = ("retry", "recite", "recheck", "agree", "suggest")
+OCCASIONAL_STEPS = ("retry", "recite", "recheck", "agree", "compare", "suggest")
 
 
 def live_step_labels(target: Division, passages: int, top_k: int) -> Dict[str, str]:
@@ -764,6 +814,7 @@ def live_step_labels(target: Division, passages: int, top_k: int) -> Dict[str, s
         "recite": "Finding the source for the answer…",
         "recheck": "Checking the numbers against the source…",
         "agree": "Asking a second model to check the numbers…",
+        "compare": "Comparing what the documents say…",
         "suggest": "Checking whether another division covers it",
     }
 
@@ -833,7 +884,10 @@ class Answerer:
     def __init__(self, retriever: Retriever, llm: OpenRouterClient, top_k: int = 5,
                  retry_min_score: Optional[float] = RETRY_MIN_SCORE, retry_min_seconds: float = RETRY_MIN_SECONDS,
                  second_look: int = SECOND_LOOK_PASSAGES, number_agreement: bool = False,
-                 row_guard: bool = False, page_images: Optional[PageImages] = None):
+                 row_guard: bool = False, page_images: Optional[PageImages] = None,
+                 conflict_check: bool = False, precedence: Sequence[str] = ()):
+        self.conflict_check = conflict_check  # CONFLICT_CHECK: compare the documents behind a numeric answer (DAR-674)
+        self.precedence = tuple(precedence)  # DOCUMENT_PRECEDENCE: the recommendation by level order; () the model's
         self.page_images = page_images  # PAGE_IMAGES_TO_MODEL: page images go with their passages (page_images.py)
         self.row_guard = row_guard  # flag a number read from a table row the question's labels don't point to (rowcheck.py)
         self.retriever = retriever
@@ -1090,6 +1144,24 @@ class Answerer:
             return await second_opinion(self.llm.complete, messages, models, first_numbers, asked,
                                         lambda raw: _grade(raw, hits)[0], timeout)
 
+    async def _compare(self, question: str, text: str, hits: List[Hit], asked: str,
+                       deadline: Optional[float], timer: Optional[StepTimer]) -> Optional[Conflict]:
+        """The conflict check (conflict.py), when it is on and worth a call; None otherwise.
+
+        Like the second opinion it runs after the answer is final, as its own
+        conversation (the question and the passages with their levels), on the
+        configured models in order: OpenAI first when it answers.
+        """
+        if not (self.conflict_check and worth_checking(text, hits, asked)
+                and _time_left(deadline, CONFLICT_MIN_SECONDS)):
+            return None
+        timeout = CONFLICT_MAX_SECONDS
+        if deadline is not None:
+            timeout = min(timeout, deadline - time.monotonic() - RETRY_MARGIN_SECONDS)
+        with timed(timer, "compare"):
+            return await check_conflict(self.llm.complete, question, hits, _numbered(hits, levels=True),
+                                        passage_text, timeout, self.precedence)
+
     async def answer(self, question: str, asker: Division, target: Division, hits: List[Hit],
                      deadline: Optional[float] = None, timer: Optional[StepTimer] = None,
                      history: Sequence[Dict[str, str]] = (), refused_by: Sequence[str] = ()) -> Answer:
@@ -1204,6 +1276,11 @@ class Answerer:
                    if text else None)
         if opinion:
             unverified = list(dict.fromkeys([*unverified, *opinion.disagreed]))
+        conflict = (await self._compare(_compare_question(question, history), text, hits, asked, deadline, timer)
+                    if text and sources else None)
+        if conflict:
+            # The block cites passages by their numbers in `hits`, as the answer does, so both are renumbered together.
+            text, sources = _grade(f"{completion.text.rstrip()}\n\n{conflict.block()}", hits)
         # The model whose text is shown, not the second opinion's (that one only flags numbers).
         backup = answered_by_backup(self.llm, completion.model)
         if not text:
@@ -1215,4 +1292,4 @@ class Answerer:
                           retried=retried, first_model=first_model, backup_model=backup)
         return Answer(text, refused=False, sources=sources, model=completion.model, retried=retried,
                       first_model=first_model, uncited=not sources, unverified=unverified, citation_fix=citation_fix,
-                      second_opinion=opinion, backup_model=backup)
+                      second_opinion=opinion, backup_model=backup, conflict=conflict)
