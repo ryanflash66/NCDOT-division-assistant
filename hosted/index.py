@@ -140,7 +140,8 @@ class _Runtime:
         s = self.settings
         return Answerer(self.retriever(), llm, top_k=s.top_k, retry_min_score=s.retry_min_score if s.retry_on_refusal else None,
                         retry_min_seconds=s.retry_min_seconds, number_agreement=s.number_agreement,
-                        row_guard=s.row_guard, page_images=self.page_images, readings=self.readings)
+                        row_guard=s.row_guard, page_images=self.page_images,
+                        conflict_check=s.conflict_check, precedence=s.document_precedence, readings=self.readings)
 
 
 runtime = _Runtime(settings)
@@ -282,8 +283,10 @@ def divisions() -> Dict:
                 "name": d.name,
                 "unit": d.unit,
                 "passages": count(d.id),
+                # An edition the register marks superseded, with its newer one indexed, is never searched,
+                # so it isn't offered for selection either (DAR-674).
                 "documents": [{"file": doc.file, "title": doc.title, "url": doc.url, "passages": count(d.id, [doc.file])}
-                              for doc in d.documents],
+                              for doc in d.documents if doc.file not in runtime.index.superseded],
                 "examples": list(d.examples),
             }
             for d in DIVISIONS
@@ -341,6 +344,9 @@ async def health() -> Dict:
         "llm_models": list(settings.answer_models),
         "llm_configured": settings.llm_configured,
         "number_agreement": settings.number_agreement,
+        # DAR-674: compare the documents behind a numeric answer, and the level order that recommends (none: the model).
+        "conflict_check": settings.conflict_check,
+        "document_precedence": list(settings.document_precedence),
         # DAR-733: whether OpenAI gets the page images of scanned, sideways, table and figure passages.
         "page_images_to_model": settings.page_images_to_model,
         "page_images_max": settings.page_images_max if settings.page_images_to_model else None,

@@ -43,6 +43,16 @@ export type Source = {
   /** Site-relative URL of the cited page's image (/pages/...), when it was rendered (DAR-654). */
   image: string | null;
   /**
+   * The document's row in the register (hosted/divrag/register.json, DAR-674): its level
+   * ("federal", shown as `level_label` "Federal"), issuer, rule or guidance, and edition.
+   * Absent in answers saved before it.
+   */
+  level?: string | null;
+  level_label?: string | null;
+  issuer?: string | null;
+  binding?: string | null;
+  edition?: string | null;
+  /**
    * The image readings of the cited pages whose OCR text and image reading disagree (DAR-739):
    * the page's text as OpenAI read it from the page image, and the differences ("X vs Y").
    * Absent in answers saved before it, and empty when the page's two readings agree.
@@ -84,6 +94,17 @@ export type AnswerPayload = {
     numbers: string[];
     disagreed: string[];
     instead?: string[];
+  } | null;
+  /**
+   * The documents behind the answer give different values (DAR-674). The answer text already
+   * ends with each value, its level and citation, and the recommendation; `by` says whether the
+   * recommendation is the model's judgment or the configured document precedence.
+   */
+  conflict?: {
+    values: { value: string; title: string; level: string | null; level_label: string | null }[];
+    recommendation: string;
+    by: "model" | "precedence";
+    model: string | null;
   } | null;
   sources: Source[];
   model: string | null;

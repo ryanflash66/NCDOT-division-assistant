@@ -103,6 +103,35 @@ describe("SourcesPanel", () => {
     expect(within(items[2]).getByText("PDF page 5").getAttribute("title")).toBeNull();
   });
 
+  it("shows each source's document level first, with its issuer and edition in the tooltip", () => {
+    const leveled = [
+      question("q1", "What buffer length for 50 mph?"),
+      answer(
+        "a1",
+        payload([
+          source(1, {
+            page: 11,
+            section: "6B.03",
+            level: "federal",
+            level_label: "Federal",
+            issuer: "FHWA",
+            binding: "rule",
+            edition: "11th Edition, December 2023",
+          }),
+          source(2, { page: 30, section: null, level: "state", level_label: "State" }),
+        ]),
+      ),
+    ];
+    render(<Harness messages={leveled} />);
+    const items = screen.getAllByRole("listitem");
+    const federal = within(items[0]).getByText("Federal");
+    expect(federal.parentElement?.textContent).toBe("Federal · PDF page 11 · Section 6B.03");
+    expect(federal.getAttribute("title")).toBe(
+      "Federal document (rule); issued by FHWA; edition: 11th Edition, December 2023",
+    );
+    expect(within(items[1]).getByText("State").parentElement?.textContent).toBe("State · PDF page 30");
+  });
+
   it("clamps a long passage with Show more / Show less", () => {
     render(<Harness messages={first} />);
     const toggle = screen.getByRole("button", { name: "Show more" });

@@ -67,6 +67,13 @@ LLM_PROVIDER=openai. Everything else has a default suitable for the public demo.
                                 OCR text and image reading disagree (index/page_readings.json, prototype.read_pages)
                                 carries the image reading, and the reply warns the reader (readings.py, DAR-739).
                                 Nothing changes while the index has no readings; "off" ignores them
+    CONFLICT_CHECK              "on" (default) or "off": when an answer states numbers and its passages come from two or
+                                more documents, one more model call compares them; when they disagree the reply names
+                                each document's value, level and citation and a labelled recommendation (DAR-674,
+                                conflict.py)
+    DOCUMENT_PRECEDENCE         which register level governs when documents disagree, highest first, for example
+                                "federal,state,division,internal" (default unset: the recommendation is the model's
+                                judgment; see register.py)
     FAQ                         "on" (default) or "off": serve checked answers to frequent questions from the store
                                 (faq.py, DAR-673); the store is empty until entries are added with scripts/faq.py
     FAQ_THRESHOLD               question-to-question similarity a checked answer needs, 0.5-1 (default 0.95; see
@@ -91,6 +98,7 @@ from .retrieval import (DEFAULT_MAX_CHUNKS_PER_DOCUMENT, DEFAULT_MAX_CHUNKS_PER_
 from .embedder import RERANK_BATCH_SIZE, RERANK_MODEL_NAME, default_model_file
 from .faq import DEFAULT_THRESHOLD as DEFAULT_FAQ_THRESHOLD
 from .page_images import DEFAULT_DETAIL, DEFAULT_MAX_IMAGES, DETAILS, MAX_IMAGES_LIMIT, base_url_from_env
+from .register import LEVELS
 
 HOSTED_DIR = Path(__file__).resolve().parent.parent
 NO_RERANKER = "none"
@@ -162,6 +170,8 @@ class Settings:
     page_images_detail: str = DEFAULT_DETAIL
     page_images_base_url: Optional[str] = None
     page_readings: bool = True
+    conflict_check: bool = False
+    document_precedence: Tuple[str, ...] = ()
     faq: bool = True
     faq_threshold: float = DEFAULT_FAQ_THRESHOLD
 
@@ -357,6 +367,20 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         raise ValueError(f"PAGE_READINGS must be on or off, got {readings!r}")
     if images_base and not images_base.startswith(("https://", "http://localhost", "http://127.0.0.1")):
         raise ValueError(f"PAGE_IMAGES_BASE_URL must be an https:// URL (or http://localhost), got {images_base!r}")
+    # On by default (DAR-674, decided Nov 17): when an answer states numbers and its passages come from
+    # two or more documents, one more model call compares them, and the reply names every document's
+    # value with its level and a labelled recommendation (conflict.py).
+    conflict = _setting(env, "CONFLICT_CHECK", "on").lower()
+    if conflict not in ("on", "off", "1", "0", "true", "false"):
+        raise ValueError(f"CONFLICT_CHECK must be on or off, got {conflict!r}")
+    # Which level governs when documents disagree, highest first ("federal,state,division,internal").
+    # Unset: the recommendation is the model's own judgment, as decided Nov 17; NCDOT can set an
+    # order here without a code change. Levels left out rank below those listed.
+    precedence = tuple(level.lower() for level in _csv(env.get("DOCUMENT_PRECEDENCE", "")))
+    unknown = [level for level in precedence if level not in LEVELS]
+    if unknown or len(set(precedence)) != len(precedence):
+        raise ValueError(f"DOCUMENT_PRECEDENCE must list levels from {', '.join(LEVELS)} once each, highest first; "
+                         f"got {env.get('DOCUMENT_PRECEDENCE')!r}")
     faq = _setting(env, "FAQ", "on").lower()
     if faq not in ("on", "off", "1", "0", "true", "false"):
         raise ValueError(f"FAQ must be on or off, got {faq!r}")
@@ -421,6 +445,8 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         page_images_detail=images_detail,
         page_images_base_url=images_base,
         page_readings=readings in ("on", "1", "true"),
+        conflict_check=conflict in ("on", "1", "true"),
+        document_precedence=precedence,
         faq=faq in ("on", "1", "true"),
         faq_threshold=faq_threshold,
     )
