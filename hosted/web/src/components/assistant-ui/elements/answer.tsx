@@ -7,6 +7,7 @@ import { useApp } from "@/state";
 import type { AnswerMetadata, AnswerPayload } from "@/types";
 import {
   backupNotice,
+  checkedText,
   CITE_PREFIX,
   disputedText,
   linkCitations,
@@ -112,7 +113,7 @@ function Refusal({ text, payload }: { text: string; payload: AnswerPayload }) {
 
 /**
  * Under each finished answer: the backup-model notice, the "No source cited" and unverified-number
- * flags, and what was searched.
+ * flags, and what was searched, or for a checked answer (DAR-673) the date a person checked it.
  */
 export function AnswerFooter() {
   const payload = usePayload();
@@ -155,6 +156,12 @@ export function AnswerFooter() {
         >
           <strong>{disputed}</strong> {disputedText(payload.second_opinion?.instead)}, so check the number in the
           document before relying on it.
+        </p>
+      )}
+      {payload.checked_answer && (
+        <p className="aui-checked mt-2 text-xs font-medium text-emerald-700 dark:text-emerald-400">
+          {checkedText(payload.checked_answer.checked_on)} A person checked this answer and its cited pages; it is
+          shown without searching again.
         </p>
       )}
       {shown && <p className="aui-searched text-muted-foreground mt-2 text-xs">{searchedText(searched, total)}</p>}

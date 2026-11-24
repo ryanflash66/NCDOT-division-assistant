@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { backupNotice, disputedText, unverifiedReasons, unverifiedText } from "./format";
+import { backupNotice, checkedText, disputedText, unverifiedReasons, unverifiedText } from "./format";
 
 describe("backupNotice", () => {
   it("asks for the cited page to be checked when the backup model answered (DAR-735)", () => {
@@ -47,5 +47,15 @@ describe("disputedText", () => {
   it("says what the second model read", () => {
     expect(disputedText(["27.42 ft"])).toBe("A second model reading the same pages gave 27.42 ft instead");
     expect(disputedText([])).toBe("A second model reading the same pages gave a different number");
+  });
+});
+
+describe("checkedText (DAR-673)", () => {
+  it("writes the check date the way the page writes dates", () => {
+    expect(checkedText("2026-11-20")).toBe("Checked answer, Nov 20, 2026.");
+  });
+
+  it("keeps a date it can't read as sent", () => {
+    expect(checkedText("last week")).toBe("Checked answer, last week.");
   });
 });

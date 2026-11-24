@@ -70,6 +70,12 @@ LLM_PROVIDER=openai. Everything else has a default suitable for the public demo.
     DOCUMENT_PRECEDENCE         which register level governs when documents disagree, highest first, for example
                                 "federal,state,division,internal" (default unset: the recommendation is the model's
                                 judgment; see register.py)
+    FAQ                         "on" (default) or "off": serve checked answers to frequent questions from the store
+                                (faq.py, DAR-673); the store is empty until entries are added with scripts/faq.py
+    FAQ_THRESHOLD               question-to-question similarity a checked answer needs, 0.5-1 (default 0.95; see
+                                faq.DEFAULT_THRESHOLD and evaluation/faq/RESULTS.md before changing it)
+    FAQ_NAMESPACE               the store's key prefix for this deployment (default VERCEL_ENV, else "local"), so a
+                                preview never reads or pulls production's entries
     ALLOWED_ORIGINS             comma-separated origins allowed to call the API from another site
                                 (default none: only the page served by this app can call it)
 """
@@ -86,6 +92,7 @@ from .retrieval import (DEFAULT_MAX_CHUNKS_PER_DOCUMENT, DEFAULT_MAX_CHUNKS_PER_
                         PAGE_AGGREGATION_MODES)
 
 from .embedder import RERANK_BATCH_SIZE, RERANK_MODEL_NAME, default_model_file
+from .faq import DEFAULT_THRESHOLD as DEFAULT_FAQ_THRESHOLD
 from .page_images import DEFAULT_DETAIL, DEFAULT_MAX_IMAGES, DETAILS, MAX_IMAGES_LIMIT, base_url_from_env
 from .register import LEVELS
 
@@ -160,6 +167,8 @@ class Settings:
     page_images_base_url: Optional[str] = None
     conflict_check: bool = False
     document_precedence: Tuple[str, ...] = ()
+    faq: bool = True
+    faq_threshold: float = DEFAULT_FAQ_THRESHOLD
 
     @property
     def answers_with_openai(self) -> bool:
@@ -362,6 +371,13 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     if unknown or len(set(precedence)) != len(precedence):
         raise ValueError(f"DOCUMENT_PRECEDENCE must list levels from {', '.join(LEVELS)} once each, highest first; "
                          f"got {env.get('DOCUMENT_PRECEDENCE')!r}")
+    faq = _setting(env, "FAQ", "on").lower()
+    if faq not in ("on", "off", "1", "0", "true", "false"):
+        raise ValueError(f"FAQ must be on or off, got {faq!r}")
+    faq_threshold = float(_setting(env, "FAQ_THRESHOLD", DEFAULT_FAQ_THRESHOLD))
+    if not 0.5 <= faq_threshold <= 1:
+        # Below 0.5 nearly any question of the division would get a stored answer.
+        raise ValueError(f"FAQ_THRESHOLD must be between 0.5 and 1, got {faq_threshold}")
     # Read by embedder.onnx_threads() when the models load; checked here so a bad value stops startup.
     threads = env.get("ONNX_THREADS", "").strip()
     if threads and not (threads.isdigit() and int(threads) >= 1):
@@ -420,4 +436,6 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         page_images_base_url=images_base,
         conflict_check=conflict in ("on", "1", "true"),
         document_precedence=precedence,
+        faq=faq in ("on", "1", "true"),
+        faq_threshold=faq_threshold,
     )
