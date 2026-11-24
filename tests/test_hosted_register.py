@@ -67,6 +67,22 @@ def test_a_bad_register_row_stops_the_load(row, message):
         _register(**{"a.pdf": row})
 
 
+def test_editions_that_supersede_each_other_stop_the_load():
+    # Every edition in a cycle would count as superseded and the index would drop them all.
+    with pytest.raises(ValueError, match="cycle"):
+        _register(**{"a.pdf": {"superseded_by": "b.pdf"}, "b.pdf": {"superseded_by": "a.pdf"}})
+
+
+def test_retag_leaves_no_partial_file_behind(tmp_path):
+    from prototype.ingest import retag
+
+    chunks = [{"text": "t", "source": "part6.pdf", "page": 1, "division": "wztc"}]
+    (tmp_path / CHUNKS_FILE).write_text(json.dumps({"chunks": chunks}), encoding="utf-8")
+    assert retag(tmp_path) == 1
+    assert [p.name for p in tmp_path.iterdir()] == [CHUNKS_FILE]
+    assert json.loads((tmp_path / CHUNKS_FILE).read_text(encoding="utf-8"))["chunks"][0]["level"] == "federal"
+
+
 def _index(register, *sources):
     chunks = [{"text": f"text {i}", "source": s, "page": 1, "division": "wztc"} for i, s in enumerate(sources)]
     vectors = np.eye(len(sources), dtype=np.float32)

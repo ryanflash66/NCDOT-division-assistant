@@ -65,6 +65,16 @@ class Register:
                                                      or entry.superseded_by not in entries):
                 raise ValueError(f"register: {entry.file!r} is superseded by {entry.superseded_by!r}, "
                                  "which is not another document in the register")
+        # A cycle (A by B, B by A) would mark every edition in it superseded, and the index would then
+        # drop all of them: no newer edition is left to answer from.
+        for entry in entries.values():
+            seen = [entry.file]
+            newer = entry.superseded_by
+            while newer is not None:
+                if newer in seen:
+                    raise ValueError(f"register: editions supersede each other in a cycle: {' -> '.join([*seen, newer])}")
+                seen.append(newer)
+                newer = entries[newer].superseded_by
         return cls(entries, labels)
 
     @classmethod

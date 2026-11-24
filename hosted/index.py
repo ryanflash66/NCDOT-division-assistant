@@ -263,8 +263,10 @@ def divisions() -> Dict:
                 "name": d.name,
                 "unit": d.unit,
                 "passages": count(d.id),
+                # An edition the register marks superseded, with its newer one indexed, is never searched,
+                # so it isn't offered for selection either (DAR-674).
                 "documents": [{"file": doc.file, "title": doc.title, "url": doc.url, "passages": count(d.id, [doc.file])}
-                              for doc in d.documents],
+                              for doc in d.documents if doc.file not in runtime.index.superseded],
                 "examples": list(d.examples),
             }
             for d in DIVISIONS

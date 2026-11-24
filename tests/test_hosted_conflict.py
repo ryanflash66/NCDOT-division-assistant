@@ -8,7 +8,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "hosted"))
 
 from divrag import conflict as conflict_module  # noqa: E402
-from divrag.answer import Answerer, _numbered, passage_text  # noqa: E402
+from divrag.answer import Answerer, _compare_question, _numbered, passage_text  # noqa: E402
 from divrag.divisions import BY_ID  # noqa: E402
 from divrag.index_file import Hit  # noqa: E402
 from divrag.llm import Completion, LLMError  # noqa: E402
@@ -185,3 +185,10 @@ def test_parse_reads_json_wrapped_in_text_and_rejects_bad_passage_numbers():
 def test_numbered_passages_name_their_level_only_when_asked():
     assert "Federal ·" not in _numbered(_hits())
     assert _numbered(_hits(), levels=True).startswith("[1] (Federal · MUTCD")
+
+
+def test_a_follow_up_is_compared_with_the_question_it_follows():
+    history = [{"question": "What buffer length does Table 6B-2 give for 45 mph?", "answer": "360 feet [1]."}]
+    asked = _compare_question("And at 50 mph?", history)
+    assert asked.startswith("And at 50 mph?") and "Table 6B-2" in asked
+    assert _compare_question("And at 50 mph?", []) == "And at 50 mph?"

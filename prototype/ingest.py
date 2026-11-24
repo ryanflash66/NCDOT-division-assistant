@@ -37,6 +37,7 @@ similarity between the two models' vectors.
 import argparse
 import bisect
 import json
+import os
 import re
 import sys
 import time
@@ -402,7 +403,10 @@ def retag(directory: Path) -> int:
     path = Path(directory) / CHUNKS_FILE
     meta = json.loads(path.read_text(encoding="utf-8"))
     tag(meta["chunks"])
-    path.write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
+    # Write beside it and swap: a retag stopped half-way must not leave a truncated chunks.json the app can't load.
+    partial = path.with_name(path.name + ".tmp")
+    partial.write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
+    os.replace(partial, path)
     return len(meta["chunks"])
 
 

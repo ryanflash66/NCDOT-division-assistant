@@ -383,6 +383,17 @@ def recent_turns(history: Sequence[Dict[str, str]]) -> List[Dict[str, str]]:
     return list(history)[-HISTORY_TURNS:]
 
 
+def _compare_question(question: str, history: Sequence[Dict[str, str]]) -> str:
+    """The question the conflict check asks about: a follow-up keeps the question it follows.
+
+    "And at 50 mph?" alone names no rule, so the check could pick each document's value for a
+    different case; the previous question (clipped as search_query clips it) says which one.
+    """
+    turns = recent_turns(history)
+    previous = _clip(turns[-1].get("question") or "", HISTORY_QUESTION_CHARS) if turns else ""
+    return f"{question}\n(This follows the earlier question: {previous})" if previous else question
+
+
 def _clip(text: str, limit: int) -> str:
     """The text in at most `limit` characters (plus " …" when cut), never an empty prefix.
 
@@ -1265,7 +1276,7 @@ class Answerer:
                    if text else None)
         if opinion:
             unverified = list(dict.fromkeys([*unverified, *opinion.disagreed]))
-        conflict = (await self._compare(question, text, hits, asked, deadline, timer)
+        conflict = (await self._compare(_compare_question(question, history), text, hits, asked, deadline, timer)
                     if text and sources else None)
         if conflict:
             # The block cites passages by their numbers in `hits`, as the answer does, so both are renumbered together.
