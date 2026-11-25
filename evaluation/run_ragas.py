@@ -201,7 +201,8 @@ class Pipeline:
         s = self.settings
         return Answerer(self.retriever, llm, top_k=s.top_k, retry_min_score=s.retry_min_score if s.retry_on_refusal else None,
                         retry_min_seconds=s.retry_min_seconds, number_agreement=s.number_agreement,
-                        row_guard=s.row_guard, conflict_check=s.conflict_check, precedence=s.document_precedence)
+                        row_guard=s.row_guard, conflict_check=s.conflict_check, precedence=s.document_precedence,
+                        all_top_k=s.all_divisions_top_k, merged_candidates=s.all_divisions_candidates)
 
     def retrieval(self, item: Dict[str, Any]) -> Dict[str, Any]:
         """The deterministic part: ranked top-k pages, every page shown, page metrics and retrieval time."""
@@ -243,12 +244,13 @@ async def _with_busy_waits(call, label: str):
 
 async def answer_one(pipe: Pipeline, llm, item: Dict[str, Any], budget: float) -> Dict[str, Any]:
     """One question through the hosted answering path (hosted/index.py _answer), timed per step."""
-    from divrag.divisions import BY_ID
+    from divrag.divisions import BY_ID, target_for
     from divrag.llm import TOO_SLOW, LLMError
     from divrag.timing import StepTimer
 
     answerer = pipe.answerer(llm)
-    target, asker = BY_ID[item["target"]], BY_ID[item.get("asker") or item["target"]]
+    # The target may be "all" (DAR-666, every division at once); the asker is always one division.
+    target, asker = target_for(item["target"]), BY_ID[item.get("asker") or item["target"]]
     timer = StepTimer()
     started = time.perf_counter()
     hits = await asyncio.to_thread(answerer.retrieve, item["question"], target, timer)

@@ -392,3 +392,24 @@ def document_for(file: str) -> Optional[Document]:
             if document.file == file:
                 return document
     return None
+
+
+# "All divisions" (DAR-666): one question searched in every division's documents at once. It is
+# a target only, never an asker, and not a row of DIVISIONS: everything that lists the divisions
+# (the register's check, the refusal's suggestions, the index build) keeps reading DIVISIONS.
+ALL_ID = "all"
+ALL = Division(
+    id=ALL_ID,
+    name="All divisions",
+    unit="every division in this demo",
+    documents=tuple(doc for division in DIVISIONS for doc in division.documents),
+)
+
+
+def target_for(division_id: str) -> Optional[Division]:
+    """The division a question can be asked of: one of DIVISIONS, or ALL; None for an unknown id."""
+    return ALL if division_id == ALL_ID else BY_ID.get(division_id)
+
+
+def is_all(division: Division) -> bool:
+    return division.id == ALL_ID

@@ -3,7 +3,7 @@ import { type ComponentProps, useCallback } from "react";
 import { MarkdownText } from "@/components/assistant-ui/elements/markdown-text";
 import { Button } from "@/components/ui/button";
 import { carryForSuggestion, messageText, refusedBySoFar, type QuestionMetadata } from "@/runtime/history";
-import { useApp } from "@/state";
+import { askableById, useApp } from "@/state";
 import type { AnswerMetadata, AnswerPayload } from "@/types";
 import {
   backupNotice,
@@ -125,7 +125,7 @@ export function AnswerFooter() {
   const unverified = unverifiedText(reasons.missing);
   const disputed = unverifiedText(reasons.disputed);
   const backup = backupNotice(payload);
-  const total = divisions.find((d) => d.id === payload.target?.id)?.documents.length ?? searched?.documents ?? 0;
+  const total = askableById(divisions, payload.target?.id)?.documents.length ?? searched?.documents ?? 0;
   return (
     <>
       {backup && (

@@ -1,7 +1,7 @@
 import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { AssistantRuntimeProvider, useExternalStoreRuntime, type ThreadMessageLike } from "@assistant-ui/react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { answer, payload, question, source } from "@/panels/fixtures";
+import { answer, DIVISIONS, payload, question, source } from "@/panels/fixtures";
 import { SourcesPanel } from "@/panels/SourcesPanel";
 import { useApp } from "@/state";
 
@@ -130,6 +130,34 @@ describe("SourcesPanel", () => {
       "Federal document (rule); issued by FHWA; edition: 11th Edition, December 2023",
     );
     expect(within(items[1]).getByText("State").parentElement?.textContent).toBe("State · PDF page 30");
+  });
+
+  // DAR-666: an "All divisions" answer cites several divisions, so each source names its own, first.
+  it("names each source's division for an All divisions answer, and only then", () => {
+    useApp.setState({ divisions: DIVISIONS });
+    const everywhere = [
+      question("q1", "Who pays for a detour, and how long is the taper?"),
+      answer(
+        "a1",
+        payload(
+          [
+            source(1, { page: 11, section: null, level: "state", level_label: "State" }),
+            source(2, { division: "wztc", title: "Traffic Management Plan Manual", page: 30, section: null }),
+          ],
+          { target: { id: "all", name: "All divisions" } },
+        ),
+      ),
+    ];
+    const { unmount } = render(<Harness messages={everywhere} />);
+    const items = screen.getAllByRole("listitem");
+    expect(within(items[0]).getByText("Utilities").parentElement?.textContent).toBe("Utilities · State · PDF page 11");
+    expect(within(items[1]).getByText("Work Zone Traffic Control").parentElement?.textContent).toBe(
+      "Work Zone Traffic Control · PDF page 30",
+    );
+    unmount();
+    // Asked of one division, its sources are all that division's: no label, as before.
+    render(<Harness messages={first} />);
+    expect(document.querySelector(".aui-source-division")).toBeNull();
   });
 
   it("clamps a long passage with Show more / Show less", () => {

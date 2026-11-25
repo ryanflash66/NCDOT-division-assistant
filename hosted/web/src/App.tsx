@@ -10,7 +10,7 @@ import { DocsPanel } from "@/panels/DocsPanel";
 import { SourcesPanel } from "@/panels/SourcesPanel";
 import { answerAdapter } from "@/runtime/adapter";
 import { load, save } from "@/runtime/saved";
-import { useApp } from "@/state";
+import { ALL_DIVISIONS, useApp } from "@/state";
 
 // Read once, before the first render: the runtime takes it as its initial messages.
 const saved = load();
@@ -43,7 +43,7 @@ export default function App() {
         // Back to the restored conversation's divisions, so a follow-up after a reload
         // goes to the same documents with its history.
         const known = (id: string | null) => !!id && reply.divisions.some((d) => d.id === id);
-        if (saved.messages.length && known(saved.asker) && known(saved.target)) {
+        if (saved.messages.length && known(saved.asker) && (known(saved.target) || saved.target === ALL_DIVISIONS)) {
           setAsker(saved.asker!);
           setTarget(saved.target!);
         }

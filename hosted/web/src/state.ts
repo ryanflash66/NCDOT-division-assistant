@@ -70,8 +70,46 @@ export const useApp = create<AppState>((set, get) => ({
   setDrawer: (drawer) => set({ drawer }),
 }));
 
-/** The document files to search for a division, or null when all of them are ticked. */
+/**
+ * "All divisions" (DAR-666): the target that searches every division's documents at once. The
+ * server takes the same id (divrag/divisions.py ALL_ID). It is offered next to the divisions
+ * wherever the division to ask is picked, never as "I work in".
+ */
+export const ALL_DIVISIONS = "all";
+
+/** "All divisions" as a Division: every division's documents, in order. */
+export function allDivisions(divisions: Division[]): Division {
+  return {
+    id: ALL_DIVISIONS,
+    name: "All divisions",
+    unit: "every division in this demo",
+    documents: divisions.flatMap((d) => d.documents),
+    examples: [],
+    passages: divisions.reduce((n, d) => n + d.passages, 0),
+  };
+}
+
+/** The divisions a question can be asked of: each division, then "All divisions" (none before they load). */
+export function askable(divisions: Division[]): Division[] {
+  return divisions.length ? [...divisions, allDivisions(divisions)] : [];
+}
+
+/** The division (or "All divisions") with this id, or undefined. */
+export function askableById(divisions: Division[], id: string | null | undefined): Division | undefined {
+  if (!id) return undefined;
+  return id === ALL_DIVISIONS ? (divisions.length ? allDivisions(divisions) : undefined) : divisions.find((d) => d.id === id);
+}
+
+/**
+ * The document files to search for a division, or null when all of them are ticked. For "All
+ * divisions" it is every division's ticked documents together, or null when all are ticked.
+ */
 export function selectedDocuments(state: Pick<AppState, "divisions" | "unticked">, divisionId: string): string[] | null {
+  if (divisionId === ALL_DIVISIONS) {
+    const picks = state.divisions.map((d) => selectedDocuments(state, d.id));
+    if (picks.every((p) => p === null)) return null;
+    return state.divisions.flatMap((d, i) => picks[i] ?? d.documents.map((doc) => doc.file));
+  }
   const division = state.divisions.find((d) => d.id === divisionId);
   if (!division) return null;
   const off = state.unticked[divisionId] ?? {};

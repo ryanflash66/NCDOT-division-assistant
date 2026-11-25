@@ -20,7 +20,7 @@ sys.path.insert(0, str(HOSTED))
 import index as hosted  # noqa: E402
 from divrag.answer import NOT_FOUND  # noqa: E402
 from divrag.config import load_settings  # noqa: E402
-from divrag.divisions import Division, Document  # noqa: E402
+from divrag.divisions import ALL, Division, Document  # noqa: E402
 from divrag.index_file import Hit, IndexFile  # noqa: E402
 from divrag.llm import BUSY, OPENAI_URL, TOO_SLOW, Completion, LLMError, client_from_settings  # noqa: E402
 from divrag.timing import STEPS  # noqa: E402
@@ -60,6 +60,22 @@ class _FakeRetriever:
         if self.printed_page is not None:
             chunk["printed_page"] = self.printed_page
         return [Hit(2.0, chunk)]
+
+    def retrieve_across(self, question, divisions, k=5, timer=None, merged=40, sources=None, parts=()):
+        """An "All divisions" search (DAR-666): one Utilities hit and one Work Zone hit, recorded as division "*all*"."""
+        self.across = list(divisions)
+        self.divisions.append("*all*")
+        self.sources.append(sources)
+        self.questions.append(question)
+        if timer is not None:
+            with timer.step("embed"):
+                pass
+            with timer.step("search"):
+                pass
+        return [Hit(2.0, {"text": "Any work within 5 feet of the edge of any travel lane shall require a lane closure.",
+                          "source": UAM, "page": 126, "division": "utilities", "section": "3.6.4.1"}),
+                Hit(1.0, {"text": "A lane closure needs a 500 ft taper.", "source": TMP, "page": 37,
+                          "division": "wztc", "section": "3.2"})]
 
     def with_following(self, hits, top=2):
         return hits
@@ -780,3 +796,70 @@ def test_the_free_models_answering_as_configured_carry_no_backup_flag(api):
     client, _, _ = api
     assert _ask(client).json()["backup_model"] is False
     assert _events(_stream(client))[-1][1]["backup_model"] is False
+
+
+# "All divisions" (DAR-666)
+
+def test_all_divisions_searches_every_division_once_and_labels_each_source(api):
+    client, retriever, llm = api
+    llm.reply = "Utility work next to a travel lane needs a lane closure [1], and the closure needs a taper [2]."
+
+    data = _ask(client, target="all").json()
+
+    assert retriever.divisions == ["*all*"] and retriever.across == ["wztc", "utilities", "tmsd"]
+    assert data["target"] == {"id": "all", "name": "All divisions"}
+    assert [s["division"] for s in data["sources"]] == ["utilities", "wztc"]
+    assert all(s["level_label"] for s in data["sources"])  # and its level (DAR-674)
+    system, user = llm.messages[0]["content"], llm.messages[1]["content"]
+    assert "every division in this demo" in system and "8. Each passage's heading starts with the division" in system
+    assert user.startswith("Passages from every division's documents:")
+    assert "[1] (Utilities · Utilities Accommodation Manual" in user
+    assert "[2] (Work Zone Traffic Control · " in user
+
+
+def test_all_divisions_refusal_suggests_no_division_and_names_every_one(api):
+    client, retriever, llm = api
+    llm.reply = NOT_FOUND
+
+    data = _ask(client, "What is the hourly rate for law enforcement?", target="all").json()
+
+    assert data["refused"] is True and data["sources"] == [] and data["suggest"] == []
+    assert data["answer"].startswith("I couldn't find an answer to that in any division's documents")
+    # The refusal's search for a division to suggest never ran: every division was searched already.
+    assert retriever.divisions == ["*all*"]
+
+
+def test_all_divisions_searches_the_ticked_documents_of_any_division(api, small_index):
+    client, retriever, _ = api
+
+    ticked = client.post("/api/ask", json={"question": "When is a lane closure required?", "asker": "wztc",
+                                           "target": "all", "documents": [UAM, TMP, "not-a-document.pdf"]}).json()
+    everything = _ask(client, target="all").json()
+
+    assert retriever.sources == [[UAM, TMP], None]
+    assert ticked["searched"] == {"documents": 2, "passages": 5}
+    assert everything["searched"] == {"documents": len(ALL.documents), "passages": 5}
+
+
+def test_all_divisions_is_a_target_only(api):
+    client, _, _ = api
+    assert _ask(client, asker="all", target="utilities").status_code == 400
+
+
+def test_the_stream_says_it_searches_every_division(api):
+    client, _, _ = api
+    events = _events(_stream(client, target="all"))
+    labels = {data["id"]: data.get("label") for event, data in events if event == "step"}
+    assert labels["search"].startswith("Searching every division's documents (")
+    assert events[-1][0] == "done" and events[-1][1]["target"]["id"] == "all"
+
+
+def test_all_divisions_never_serves_a_checked_answer(api, monkeypatch):
+    client, _, _ = api
+    monkeypatch.setattr(hosted, "settings", dataclasses.replace(hosted.settings, faq=True))
+
+    async def lookup(*args, **kwargs):
+        raise AssertionError("an All divisions question must not look up a stored answer")
+
+    monkeypatch.setattr(hosted.faq, "lookup", lookup)
+    assert _ask(client, target="all").json()["checked_answer"] is None

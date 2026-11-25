@@ -93,7 +93,8 @@ class Runtime:
         s = self.settings
         return Answerer(self.retriever, llm, top_k=s.top_k, retry_min_score=s.retry_min_score if s.retry_on_refusal else None,
                         retry_min_seconds=s.retry_min_seconds, number_agreement=s.number_agreement,
-                        row_guard=s.row_guard, conflict_check=s.conflict_check, precedence=s.document_precedence)
+                        row_guard=s.row_guard, conflict_check=s.conflict_check, precedence=s.document_precedence,
+                        all_top_k=s.all_divisions_top_k, merged_candidates=s.all_divisions_candidates)
 
     def retrieval(self, item: Dict[str, Any]) -> Dict[str, Any]:
         """The top-k ranking the answer is built from (Answerer.retrieve's first step, before the following chunks)."""

@@ -8,6 +8,8 @@ export type ShownAnswer = {
   id: string;
   question: string;
   sources: Source[];
+  /** The division the question was asked of; "all" for "All divisions" (DAR-666). */
+  targetId: string | null;
 };
 
 function payloadOf(message: ThreadMessage) {
@@ -55,11 +57,14 @@ export function pickAnswer(
   const startedAfterPick = +messages[newest].createdAt > activeAt;
   const index = picked >= 0 && !startedAfterPick ? picked : newest;
   const message = messages[index];
-  const sources = payloadOf(message)?.sources;
+  const payload = payloadOf(message);
+  const sources = payload?.sources;
+  const meta = message.metadata.custom as AnswerMetadata | undefined;
   return {
     id: message.id,
     question: questionBefore(messages, index),
     sources: Array.isArray(sources) ? sources : [],
+    targetId: payload?.target?.id ?? meta?.targetId ?? null,
   };
 }
 

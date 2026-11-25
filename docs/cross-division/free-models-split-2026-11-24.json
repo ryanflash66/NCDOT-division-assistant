@@ -1,0 +1,5008 @@
+{
+ "meta": {
+  "label": "free-models-split-2026-11-24",
+  "commit": "cac180a",
+  "at": "2026-11-25T01:04:09+00:00",
+  "models": [
+   "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "nvidia/nemotron-3.5-super-vl:free",
+   "google/gemma-4-31b-it:free"
+  ],
+  "answer_config": "openrouter.ai:nvidia/nemotron-3-ultra-550b-a55b:free+nvidia/nemotron-3.5-super-vl:free+google/gemma-4-31b-it:free#k5#all8-40",
+  "top_k": 5,
+  "all_divisions_top_k": 8,
+  "all_divisions_candidates": 40,
+  "cost_model": "gpt-6.1-terra (1.0, 5.0)",
+  "asked": 108,
+  "of": 108
+ },
+ "summary": {
+  "pair": {
+   "n": 12,
+   "both_value_ok": {
+    "k": 10,
+    "n": 12
+   },
+   "both_strict_ok": {
+    "k": 9,
+    "n": 12
+   },
+   "one_value_ok": {
+    "k": 2,
+    "n": 12
+   },
+   "refused": {
+    "k": 0,
+    "n": 12
+   },
+   "parts_value_ok": {
+    "k": 22,
+    "n": 24
+   },
+   "parts_in_passages": {
+    "k": 21,
+    "n": 24
+   },
+   "cited_two_divisions": {
+    "k": 12,
+    "n": 12
+   }
+  },
+  "single_own": {
+   "n": 41,
+   "refused": {
+    "k": 1,
+    "n": 41
+   },
+   "value_ok": {
+    "k": 40,
+    "n": 41
+   },
+   "strict_ok": {
+    "k": 36,
+    "n": 41
+   },
+   "critical": {
+    "k": 0,
+    "n": 41
+   },
+   "over_refusal": {
+    "k": 1,
+    "n": 41
+   },
+   "in_passages": {
+    "k": 40,
+    "n": 41
+   }
+  },
+  "single_all": {
+   "n": 41,
+   "refused": {
+    "k": 1,
+    "n": 41
+   },
+   "value_ok": {
+    "k": 38,
+    "n": 41
+   },
+   "strict_ok": {
+    "k": 31,
+    "n": 41
+   },
+   "critical": {
+    "k": 2,
+    "n": 41
+   },
+   "over_refusal": {
+    "k": 1,
+    "n": 41
+   },
+   "in_passages": {
+    "k": 39,
+    "n": 41
+   }
+  },
+  "refuse_own": {
+   "n": 7,
+   "refused": {
+    "k": 7,
+    "n": 7
+   },
+   "false_answer": {
+    "k": 0,
+    "n": 7
+   }
+  },
+  "refuse_all": {
+   "n": 7,
+   "refused": {
+    "k": 7,
+    "n": 7
+   },
+   "false_answer": {
+    "k": 0,
+    "n": 7
+   }
+  },
+  "time_cost_own": {
+   "n": 48,
+   "total_s_mean": 5.3,
+   "total_s_median": 2.5,
+   "retrieval_s_mean": 0.3,
+   "rerank_s_mean": 0.3,
+   "passages_mean": 3.4,
+   "calls_mean": 1.6,
+   "input_tokens_mean": 6739.9,
+   "output_tokens_mean": 35.8,
+   "openai_usd_per_question": 0.00692
+  },
+  "time_cost_all": {
+   "n": 60,
+   "total_s_mean": 8.0,
+   "total_s_median": 5.7,
+   "retrieval_s_mean": 0.4,
+   "rerank_s_mean": 0.4,
+   "passages_mean": 6.4,
+   "calls_mean": 2.1,
+   "input_tokens_mean": 11406.5,
+   "output_tokens_mean": 142.5,
+   "openai_usd_per_question": 0.01212
+  }
+ },
+ "rows": [
+  {
+   "id": "x-01",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 31,
+    "search": 38,
+    "rerank": 955,
+    "llm": 4172,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3518,
+    "suggest": 0,
+    "retrieval": 1024,
+    "total": 8721
+   },
+   "calls": 2,
+   "tokens": [
+    12542,
+    281
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The documents do not specify what share of a traffic cone's weight must be in its base. The MUTCD guidance only states that ballast should be kept to the minimum amount needed and that cones may be doubled up or have weighted bases or sandbag rings for stability [1]. For abandoning a pipe in NCDOT right of way, the pipe must be filled with grout or flowable fill to at least 90 percent full, or completely full when on railroad right of way [2].",
+   "cited_divisions": [
+    "utilities",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-037",
+     "division": "wztc",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": false
+    },
+    {
+     "id": "utilities-026",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": true
+  },
+  {
+   "id": "x-02",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 22,
+    "search": 23,
+    "rerank": 731,
+    "llm": 1288,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 11007,
+    "suggest": 0,
+    "retrieval": 776,
+    "total": 13078
+   },
+   "calls": 2,
+   "tokens": [
+    9877,
+    436
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Mobile work may stop for up to 5 minutes at a time [1]. Under standard placement in the Utilities Accommodation Manual, a street light pole must be placed 5 feet 6 inches behind the face of the guardrail [2].\n\n**The documents give different values:**\n- Division, NCDOT Maintenance/Utility Traffic Control Guidelines (MUTCG), Chapter 5: Work Operations / Construction & Maintenance Activities: 5 minutes [1]\n- Federal, Work Zone Operations Best Practices Guidebook, Third Edition (FHWA-HOP-13-012, 2013): 15 minutes [3]\n- State, Utilities Accommodation Manual, Version 2.0 (July 2022): 5 feet 6 inches [2]\n- Federal, Highway/Utility Guide (FHWA-SA-93-049, June 1993): 3.5 feet [4]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): For mobile work stoppage duration, follow the NCDOT MUTCG value of 5 minutes [1] because it is the current state guideline that defines the Mobile category, whereas the 15-minute figure in the FHWA guidebook [3] describes an older version of NCDOT's definitions. For street light pole placement behind guardrail, follow the NCDOT Utilities Accommodation Manual value of 5 feet 6 inches [2] as it is the current state standard for pole placement, while the 3.5-foot value in the 1993 FHWA Highway/Utility Guide [4] is an older federal reference.",
+   "cited_divisions": [
+    "utilities",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-041",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": false,
+     "in_passages": false
+    },
+    {
+     "id": "utilities-018",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": false,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-03",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 25,
+    "search": 22,
+    "rerank": 745,
+    "llm": 2658,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 12595,
+    "suggest": 0,
+    "retrieval": 792,
+    "total": 16051
+   },
+   "calls": 2,
+   "tokens": [
+    10786,
+    402
+   ],
+   "passages": 8,
+   "passage_divisions": [
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Per the MUTCD notes for Figure 6P-2, the signing shown shall be used whenever blasting caps are used within 1,000 feet of a roadway [1]. Under the Utilities Accommodation Manual, for a utility to have a compensable interest by adverse possession, possession must have begun 20 years prior to the facilities being taken into NCDOT right of way [2].\n\n**The documents give different values:**\n- State, NCDOT 2024 Roadway Standard Drawings, Division 11: Work Zone Traffic Control (combined): 1,000' [3]\n- Federal, MUTCD 11th Edition (December 2023), Part 6: Temporary Traffic Control: 1,000 feet [1]\n- State, Utilities Accommodation Manual, Version 2.0 (July 2022): 20 years [2]\n- Division, NCDOT Utility Cost Reimbursement Guidance (Aug 20, 2026): 20 years (without color of title) [4]\n- Internal, NCDOT Utilities Coordination and Encroachments Webinar, slides with speaker notes (Aug 2017): 20 years [5]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): For the blasting zone signing distance, both the federal MUTCD 11th Edition (passage 3) and the NCDOT Roadway Standard Drawings (passage 1) specify 1,000 feet, so they are consistent. For the adverse possession period, the Utilities Accommodation Manual (passage 5) states the governing statutory requirement of 20 years prior to facilities being taken into NCDOT right of way, which is also reflected in the Utility Cost Reimbursement Guidance (passage 7) and the 2017 webinar (passage 8); the UAM is the current authoritative manual for compensable interest determinations.",
+   "cited_divisions": [
+    "utilities",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-045",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    },
+    {
+     "id": "utilities-029",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": true,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-04",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 16,
+    "search": 19,
+    "rerank": 411,
+    "llm": 2607,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 5270,
+    "suggest": 0,
+    "retrieval": 446,
+    "total": 8332
+   },
+   "calls": 2,
+   "tokens": [
+    12417,
+    220
+   ],
+   "passages": 8,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The MUTCD lists the End Work Zone Speed Limit (R2‑12) sign as 36 × 54 inches for freeway or expressway installations [1]. The July 7 2010 Chief Engineer memo requires any alternate specialty fence on control‑of‑access limits to meet a minimum height of 48 inches [2].\n\n**The documents give different values:**\n- Federal, MUTCD 11th Edition (December 2023), Part 6: Temporary Traffic Control: 36 x 54 [1]\n- State, Utilities Accommodation Manual, Version 2.0 (July 2022): 48\" [2]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): Check both documents; neither value is shown as the one to follow.",
+   "cited_divisions": [
+    "utilities",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-009",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    },
+    {
+     "id": "utilities-043",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": true,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-05",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 42,
+    "search": 40,
+    "rerank": 627,
+    "llm": 1984,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 8801,
+    "suggest": 0,
+    "retrieval": 709,
+    "total": 11500
+   },
+   "calls": 2,
+   "tokens": [
+    6383,
+    261
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The minimum size for a Yield (R1‑2) sign on a conventional road is 36 × 36 × 36 inches, with a minimum of 30 × 30 × 30 inches [1]. The minimum passing sight distance required for no‑passing zone markings at a 45 mph speed limit is 700 feet [2].\n\n**The documents give different values:**\n- Federal, MUTCD 11th Edition (December 2023), Part 6: Temporary Traffic Control: 30 x 30 x 30 [1]\n- Federal, MUTCD 11th Edition (December 2023), Part 3: Markings: 700 feet [2]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): Check both documents; neither value is shown as the one to follow.",
+   "cited_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-016",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    },
+    {
+     "id": "tmsd-056",
+     "division": "tmsd",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": true,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-06",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 24,
+    "search": 24,
+    "rerank": 1100,
+    "llm": 2604,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 8692,
+    "suggest": 0,
+    "retrieval": 1148,
+    "total": 12451
+   },
+   "calls": 2,
+   "tokens": [
+    10425,
+    325
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "According to 23 CFR 630.1008(e) (page 253), States shall perform a work zone process review at least every two years [1]. Under 23 CFR 924.9(3)(i), a Strategic Highway Safety Plan update must be completed no later than 5 years from the date of the previous approved version [2].",
+   "cited_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-067",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    },
+    {
+     "id": "tmsd-061",
+     "division": "tmsd",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": true,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-07",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 25,
+    "search": 31,
+    "rerank": 485,
+    "llm": 2644,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3706,
+    "suggest": 0,
+    "retrieval": 541,
+    "total": 6895
+   },
+   "calls": 2,
+   "tokens": [
+    9584,
+    359
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "A rural widening project is classified as Level 2 (Significant/High Impact) when its length is 5 to 8 miles [1]. The NCDOT district office that covers Onslow and Pender counties is the Jacksonville office in Division 3 [2].",
+   "cited_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-005",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    },
+    {
+     "id": "tmsd-043",
+     "division": "tmsd",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": true,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-08",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 53,
+    "search": 31,
+    "rerank": 1131,
+    "llm": 2762,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 1215,
+    "total": 3982
+   },
+   "calls": 1,
+   "tokens": [
+    7339,
+    55
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The Feasibility Study Unit (FSU) leads the revision of the Feasibility Study process to account for work zone impacts [1]. The field guidelines say to use a Ball Bank Indicator to check curves at a fatal crash site [2].",
+   "cited_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-030",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    },
+    {
+     "id": "tmsd-038",
+     "division": "tmsd",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": true,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-09",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 25,
+    "search": 22,
+    "rerank": 340,
+    "llm": 2730,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 4846,
+    "suggest": 0,
+    "retrieval": 387,
+    "total": 7967
+   },
+   "calls": 2,
+   "tokens": [
+    7850,
+    291
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "For a transverse HDD installation under pavement with a drilled/reamed hole diameter of 6–15 inches, Table 3‑1 of the Utilities Accommodation Manual requires a minimum cover of 12 times the hole diameter [1]. Detail 3‑2A in the Roadway Design Manual shows that for locals and collectors with a design‑year ADT of 400–1,500, the usable shoulder width “N” is 6 ft [2].\n\n**The documents give different values:**\n- State, Utilities Accommodation Manual, Version 2.0 (July 2022): 12 times hole diameter [1]\n- State, NCDOT Roadway Design Manual Part I, Chapter 3: Guardrail, Barriers and Attenuators: 5' [2]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): Check both documents; neither value is shown as the one to follow.",
+   "cited_divisions": [
+    "tmsd",
+    "utilities"
+   ],
+   "parts": [
+    {
+     "id": "utilities-001",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    },
+    {
+     "id": "tmsd-004",
+     "division": "tmsd",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": true,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-10",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 22,
+    "search": 21,
+    "rerank": 736,
+    "llm": 1643,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 4895,
+    "suggest": 0,
+    "retrieval": 779,
+    "total": 7320
+   },
+   "calls": 2,
+   "tokens": [
+    11149,
+    241
+   ],
+   "passages": 8,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Collisions with roadside trees and utility poles are the most harmful event in 14 percent of all fatal crashes [1]. The Signal Timing Manual cites an accident modification factor of 0.77 for converting a 4‑legged urban intersection from stop control to signal control [2].\n\n**The documents give different values:**\n- Federal, Utility Accommodation within Federal-aid Rights-of-Way (FHWA Office of Infrastructure presentation, April 2018): 14 percent [1]\n- Federal, Traffic Signal Timing Manual (FHWA-HOP-08-024, June 2008): 0.77 [2]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): Check both documents; neither value is shown as the one to follow.",
+   "cited_divisions": [
+    "tmsd",
+    "utilities"
+   ],
+   "parts": [
+    {
+     "id": "utilities-063",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    },
+    {
+     "id": "tmsd-074",
+     "division": "tmsd",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": true,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-11",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 47,
+    "search": 27,
+    "rerank": 802,
+    "llm": 3528,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 8747,
+    "suggest": 0,
+    "retrieval": 876,
+    "total": 13156
+   },
+   "calls": 2,
+   "tokens": [
+    7796,
+    394
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Per the Utilities Accommodation Manual, when guardrail post spacing is reduced to 3 ft 1.5 in., a light pole may be placed 3 ft 6 in. behind the face of the guardrail [1]. In the Work Zone Traffic Control Design Manual, Detail 3‑2A (Run‑out Length table) shows that for a design speed of 60 mph and an ADT of 800–2,000 vpd the run‑out length LR is 345 ft [2].\n\n**The documents give different values:**\n- Division, Work Zone Traffic Control Design Manual (TMP Design Manual): 345 ft [2]\n- State, Utilities Accommodation Manual, Version 2.0 (July 2022): 3 feet 6 inches [1]\n- Federal, Highway/Utility Guide (FHWA-SA-93-049, June 1993): 3.5 feet [3]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): For guardrail post spacing reduced to 3 feet 1.5 inches, the Utilities Accommodation Manual (UAM) specifies 3 feet 6 inches behind the face of guardrail [1], which is the governing state standard for utility accommodation. The Federal Highway/Utility Guide recommends 3.5 feet (3 feet 6 inches) as a minimum for guardrail function [3], which aligns with the UAM value. For runout length LR at 60 mph with ADT 800–2,000, the Work Zone Traffic Control Design Manual provides 345 ft [2]; the Roadway Design Manual references Detail 3-2A for LR but does not include the table in the provided passages …",
+   "cited_divisions": [
+    "utilities",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "utilities-019",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    },
+    {
+     "id": "tmsd-003",
+     "division": "tmsd",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": false
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": true
+  },
+  {
+   "id": "x-12",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 17,
+    "search": 23,
+    "rerank": 473,
+    "llm": 1987,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3842,
+    "suggest": 0,
+    "retrieval": 513,
+    "total": 6345
+   },
+   "calls": 2,
+   "tokens": [
+    11106,
+    242
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Per footnote b of Table 3-1 in the Utilities Accommodation Manual, the minimum cover depth for a transverse HDD installation of any size on a fully controlled access roadway is 15 feet [1]. When a TODS attraction changes ownership, Form TOD-5 “Change of Ownership” is filled out and signed by both the old and new owners [2].\n\n**The documents give different values:**\n- State, Utilities Accommodation Manual, Version 2.0 (July 2022): 15 feet [1]\n- Division, Tourist Oriented Directional Signs (TODS) Procedures Manual (September 2024): TOD-5 [2]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): Check both documents; neither value is shown as the one to follow.",
+   "cited_divisions": [
+    "tmsd",
+    "utilities"
+   ],
+   "parts": [
+    {
+     "id": "utilities-002",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    },
+    {
+     "id": "tmsd-034",
+     "division": "tmsd",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": true
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": true,
+   "one_value_ok": false
+  },
+  {
+   "id": "tmsd-003@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 2,
+    "rerank": 195,
+    "llm": 1565,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 204,
+    "total": 1772
+   },
+   "calls": 1,
+   "tokens": [
+    2288,
+    9
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The runout length LR is 330 ft. [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-003@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 5,
+    "rerank": 116,
+    "llm": 891,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 4400,
+    "suggest": 0,
+    "retrieval": 128,
+    "total": 5421
+   },
+   "calls": 2,
+   "tokens": [
+    5899,
+    194
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "345 ft [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": false,
+   "strict_ok": false,
+   "critical": true,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-004@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 2,
+    "rerank": 358,
+    "llm": 680,
+    "citations": 0,
+    "retry": 0,
+    "recite": 3569,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 368,
+    "total": 4620
+   },
+   "calls": 2,
+   "tokens": [
+    5044,
+    25
+   ],
+   "passages": 3,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The N width for a local or collector road with a design-year ADT of 400 to 1,500 is 5 ft [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-004@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 6,
+    "rerank": 203,
+    "llm": 966,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1076,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3287,
+    "suggest": 0,
+    "retrieval": 216,
+    "total": 5545
+   },
+   "calls": 3,
+   "tokens": [
+    11605,
+    184
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Detail 3-2A specifies a usable shoulder width of 6 ft for locals and collectors with a design-year ADT of 400–1,500 [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": false,
+   "strict_ok": false,
+   "critical": true,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-023@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 2,
+    "rerank": 246,
+    "llm": 2147,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1128,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2244,
+    "suggest": 0,
+    "retrieval": 255,
+    "total": 5776
+   },
+   "calls": 3,
+   "tokens": [
+    7341,
+    88
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The date listed for revision 1.0 in the revision grid is 12/25/2015 [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-023@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 6,
+    "rerank": 247,
+    "llm": 1017,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1873,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2609,
+    "suggest": 0,
+    "retrieval": 259,
+    "total": 5759
+   },
+   "calls": 3,
+   "tokens": [
+    12255,
+    103
+   ],
+   "passages": 8,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "12/25/2015 [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-029@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 3,
+    "rerank": 287,
+    "llm": 4527,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 296,
+    "total": 4825
+   },
+   "calls": 1,
+   "tokens": [
+    1272,
+    24
+   ],
+   "passages": 2,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The peak hour total for the AM peak turning movement counts in Table 1 is 2,522 vehicles. [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-029@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 7,
+    "rerank": 149,
+    "llm": 2798,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2315,
+    "suggest": 0,
+    "retrieval": 163,
+    "total": 5276
+   },
+   "calls": 2,
+   "tokens": [
+    6224,
+    130
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The peak hour total for the AM peak turning movement counts is 2522 vehicles. [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-033@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 3,
+    "rerank": 398,
+    "llm": 879,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1035,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 409,
+    "total": 2326
+   },
+   "calls": 2,
+   "tokens": [
+    7620,
+    19
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "$160.00 per attraction (TODS) sign [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-033@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 7,
+    "rerank": 412,
+    "llm": 761,
+    "citations": 0,
+    "retry": 0,
+    "recite": 734,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 425,
+    "total": 1922
+   },
+   "calls": 2,
+   "tokens": [
+    12804,
+    19
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "$160.00 per attraction (TODS) sign [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-034@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 4,
+    "search": 2,
+    "rerank": 345,
+    "llm": 737,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 351,
+    "total": 1091
+   },
+   "calls": 1,
+   "tokens": [
+    3811,
+    22
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "TOD-5 (Change of Ownership) is filled out when a TODS attraction changes ownership [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-034@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 5,
+    "search": 5,
+    "rerank": 293,
+    "llm": 1583,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1322,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 1731,
+    "suggest": 0,
+    "retrieval": 303,
+    "total": 4942
+   },
+   "calls": 3,
+   "tokens": [
+    15842,
+    95
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "TOD-5 is the form used for a change of ownership of a TODS attraction [1][2].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-038@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 5,
+    "search": 2,
+    "rerank": 329,
+    "llm": 2472,
+    "citations": 0,
+    "retry": 0,
+    "recite": 731,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 336,
+    "total": 3543
+   },
+   "calls": 2,
+   "tokens": [
+    5763,
+    36
+   ],
+   "passages": 1,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": true,
+   "answer": "The field guidelines say to check curves with a Ball Bank Indicator.",
+   "cited_divisions": [],
+   "value_ok": true,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-038@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 5,
+    "rerank": 385,
+    "llm": 721,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1096,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 396,
+    "total": 2215
+   },
+   "calls": 2,
+   "tokens": [
+    11236,
+    23
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The field guidelines say to check curves with a Ball Bank Indicator [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-043@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 5,
+    "search": 2,
+    "rerank": 248,
+    "llm": 3495,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 255,
+    "total": 3753
+   },
+   "calls": 1,
+   "tokens": [
+    2739,
+    23
+   ],
+   "passages": 3,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The Jacksonville Clinton Wilmington district office covers Onslow and Pender counties [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-043@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 11,
+    "search": 7,
+    "rerank": 272,
+    "llm": 2097,
+    "citations": 0,
+    "retry": 0,
+    "recite": 2000,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 290,
+    "total": 4389
+   },
+   "calls": 2,
+   "tokens": [
+    12553,
+    39
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The NCDOT district office that covers Onslow and Pender counties is the Jacksonville Clinton Wilmington district office [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-053@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 9,
+    "search": 3,
+    "rerank": 245,
+    "llm": 1270,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 257,
+    "total": 1529
+   },
+   "calls": 1,
+   "tokens": [
+    1939,
+    4
+   ],
+   "passages": 1,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Recommended [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-053@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 6,
+    "rerank": 262,
+    "llm": 1225,
+    "citations": 0,
+    "retry": 0,
+    "recite": 2022,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 274,
+    "total": 3524
+   },
+   "calls": 2,
+   "tokens": [
+    6688,
+    7
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "tmsd",
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Recommended [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-056@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 3,
+    "rerank": 218,
+    "llm": 1012,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 228,
+    "total": 1242
+   },
+   "calls": 1,
+   "tokens": [
+    2070,
+    3
+   ],
+   "passages": 3,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "700 feet [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-056@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 8,
+    "rerank": 117,
+    "llm": 653,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3787,
+    "suggest": 0,
+    "retrieval": 132,
+    "total": 4573
+   },
+   "calls": 2,
+   "tokens": [
+    4953,
+    220
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "700 feet [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-061@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 4,
+    "rerank": 387,
+    "llm": 1372,
+    "citations": 0,
+    "retry": 0,
+    "recite": 2531,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 399,
+    "total": 4305
+   },
+   "calls": 2,
+   "tokens": [
+    7771,
+    35
+   ],
+   "passages": 2,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "A Strategic Highway Safety Plan update must be completed no later than 5 years from the date of the previous approved version [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-061@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 7,
+    "rerank": 504,
+    "llm": 700,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1084,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3050,
+    "suggest": 0,
+    "retrieval": 519,
+    "total": 5357
+   },
+   "calls": 3,
+   "tokens": [
+    16598,
+    131
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "tmsd",
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "A Strategic Highway Safety Plan update must be completed no later than 5 years from the date of the previous approved version [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-064@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 3,
+    "rerank": 300,
+    "llm": 1453,
+    "citations": 0,
+    "retry": 0,
+    "recite": 777,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 309,
+    "total": 2542
+   },
+   "calls": 2,
+   "tokens": [
+    6342,
+    3
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "36 [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-064@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 5,
+    "search": 7,
+    "rerank": 354,
+    "llm": 1014,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 366,
+    "total": 1383
+   },
+   "calls": 1,
+   "tokens": [
+    5717,
+    19
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The pilot project team's initial list contained 36 candidate locations [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-065@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 3,
+    "rerank": 295,
+    "llm": 799,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 306,
+    "total": 1108
+   },
+   "calls": 1,
+   "tokens": [
+    2743,
+    5
+   ],
+   "passages": 2,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "20 total crashes [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-065@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 6,
+    "rerank": 234,
+    "llm": 1901,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3092,
+    "suggest": 0,
+    "retrieval": 248,
+    "total": 5243
+   },
+   "calls": 2,
+   "tokens": [
+    7790,
+    106
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "20 total crashes [1]",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-074@own",
+   "group": "single",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 3,
+    "rerank": 537,
+    "llm": 1491,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 547,
+    "total": 2041
+   },
+   "calls": 1,
+   "tokens": [
+    4322,
+    44
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The manual cites an accident modification factor of 0.77 for all fatal and injury crashes when converting a 4-legged urban intersection from stop control to signal control [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-074@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 6,
+    "rerank": 348,
+    "llm": 3521,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 1376,
+    "suggest": 0,
+    "retrieval": 361,
+    "total": 5260
+   },
+   "calls": 2,
+   "tokens": [
+    12323,
+    119
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The manual cites an accident modification factor of 0.77 for all fatal and injury crashes when converting a 4-legged urban intersection from stop control to signal control, indicating an anticipated 23 percent reduction in crashes [1].",
+   "cited_divisions": [
+    "tmsd"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "tmsd-093@own",
+   "group": "refuse",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 2,
+    "rerank": 416,
+    "llm": 708,
+    "citations": 0,
+    "retry": 1118,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 231,
+    "retrieval": 424,
+    "total": 2482
+   },
+   "calls": 2,
+   "tokens": [
+    11968,
+    8
+   ],
+   "passages": 2,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). The Work Zone Traffic Control documents look more relevant: try asking Work Zone Traffic Control instead.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "tmsd-093@all",
+   "group": "refuse",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 6,
+    "rerank": 374,
+    "llm": 1323,
+    "citations": 0,
+    "retry": 9907,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 386,
+    "total": 11617
+   },
+   "calls": 2,
+   "tokens": [
+    18496,
+    8
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in any division's documents (58 documents in Work Zone Traffic Control; Utilities; Transportation Mobility and Safety). Try rephrasing the question.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "tmsd-096@own",
+   "group": "refuse",
+   "target": "tmsd",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 3,
+    "rerank": 271,
+    "llm": 724,
+    "citations": 0,
+    "retry": 13343,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 248,
+    "retrieval": 281,
+    "total": 14596
+   },
+   "calls": 2,
+   "tokens": [
+    13140,
+    8
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "tmsd"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in the Transportation Mobility and Safety documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "tmsd-096@all",
+   "group": "refuse",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 6,
+    "rerank": 327,
+    "llm": 936,
+    "citations": 0,
+    "retry": 15960,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 340,
+    "total": 17237
+   },
+   "calls": 2,
+   "tokens": [
+    16755,
+    8
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in any division's documents (58 documents in Work Zone Traffic Control; Utilities; Transportation Mobility and Safety). Try rephrasing the question.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "utilities-001@own",
+   "group": "single",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 9,
+    "search": 2,
+    "rerank": 281,
+    "llm": 1151,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 292,
+    "total": 1447
+   },
+   "calls": 1,
+   "tokens": [
+    2874,
+    8
+   ],
+   "passages": 1,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "12 times the hole diameter [1]",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-001@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 9,
+    "search": 7,
+    "rerank": 185,
+    "llm": 717,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 5611,
+    "suggest": 0,
+    "retrieval": 201,
+    "total": 6532
+   },
+   "calls": 2,
+   "tokens": [
+    9043,
+    287
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "12 times the hole diameter [1]",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-002@own",
+   "group": "single",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 2,
+    "rerank": 285,
+    "llm": 2442,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 295,
+    "total": 2742
+   },
+   "calls": 1,
+   "tokens": [
+    2946,
+    30
+   ],
+   "passages": 1,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The minimum cover depth for transverse HDD installations of any size on fully controlled access roadways is 15 feet [1].",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-002@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 7,
+    "rerank": 173,
+    "llm": 848,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1451,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3296,
+    "suggest": 0,
+    "retrieval": 187,
+    "total": 5785
+   },
+   "calls": 3,
+   "tokens": [
+    11457,
+    222
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The minimum cover depth for transverse HDD installations of any size on fully controlled access roadways is 15 feet [1].",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-018@own",
+   "group": "single",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 1,
+    "rerank": 449,
+    "llm": 1526,
+    "citations": 0,
+    "retry": 0,
+    "recite": 2195,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 4409,
+    "suggest": 0,
+    "retrieval": 458,
+    "total": 8594
+   },
+   "calls": 3,
+   "tokens": [
+    11802,
+    185
+   ],
+   "passages": 3,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Where a guardrail is present, poles shall be placed 5 feet 6 inches behind the face of the guard rail under standard placement [1].\n\n**The documents give different values:**\n- State, Utilities Accommodation Manual, Version 2.0 (July 2022): 5 feet 6 inches [1]\n- Federal, Highway/Utility Guide (FHWA-SA-93-049, June 1993): 3.5 feet [2]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): Follow the NCDOT Utilities Accommodation Manual's 5 feet 6 inches requirement because it is the current state standard (July 2022) that specifically governs utility accommodations on North Carolina highways, whereas the federal guide's 3.5 feet is from a 1993 document that provides general guidance rather than state-specific requirements.",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-018@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 7,
+    "rerank": 453,
+    "llm": 791,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1636,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 4869,
+    "suggest": 0,
+    "retrieval": 467,
+    "total": 7768
+   },
+   "calls": 3,
+   "tokens": [
+    14075,
+    306
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Where a guardrail is present, poles shall be placed 5 feet 6 inches behind the face of the guard rail under standard placement [1].\n\n**The documents give different values:**\n- State, Utilities Accommodation Manual, Version 2.0 (July 2022): 5 feet 6 inches behind the face of the guard rail [1]\n- Federal, Highway/Utility Guide (FHWA-SA-93-049, June 1993): 3.5 feet from face of guardrail to face of utility object [2]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): Follow the Utilities Accommodation Manual's 5 feet 6 inches requirement because it is the current NCDOT state manual (July 2022) specifically governing utility pole placement, whereas the federal guide's 3.5 feet is from a 1993 publication and the UAM explicitly states its setback requirements in Section 3.3.3 and details the guardrail placement rule in Section 3.3.7.9 [1].",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-019@own",
+   "group": "single",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 9,
+    "search": 2,
+    "rerank": 496,
+    "llm": 843,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1146,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 4072,
+    "suggest": 0,
+    "retrieval": 507,
+    "total": 6573
+   },
+   "calls": 3,
+   "tokens": [
+    11780,
+    245
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Standard placement may be reduced to 3 feet 6 inches behind the face of the guardrail when the spacing for guardrail posts is reduced to 3 feet 1.5 inches [1].\n\n**The documents give different values:**\n- State, Utilities Accommodation Manual, Version 2.0 (July 2022): 3 feet 6 inches [1]\n- Federal, Highway/Utility Guide (FHWA-SA-93-049, June 1993): 3.5 feet [2]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): The Utilities Accommodation Manual (UAM) is the governing North Carolina state document for utility accommodations and specifically addresses the reduced guardrail post spacing of 3 feet 1.5 inches, allowing a reduced setback of 3 feet 6 inches behind the face of the guardrail [1]. The Federal Highway/Utility Guide provides a general minimum of 3.5 feet (3 feet 6 inches) for guardrail-to-utility-object clearance but does not reference the specific post-spacing condition [2]. For projects under NCDOT jurisdiction, the UAM value should be followed.",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-019@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 6,
+    "rerank": 454,
+    "llm": 2709,
+    "citations": 0,
+    "retry": 0,
+    "recite": 3481,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 6150,
+    "suggest": 0,
+    "retrieval": 468,
+    "total": 12811
+   },
+   "calls": 3,
+   "tokens": [
+    16258,
+    321
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "3 feet 6 inches [1]\n\n**The documents give different values:**\n- State, Utilities Accommodation Manual, Version 2.0 (July 2022): 3 feet 6 inches behind the face of the guardrail [1]\n- Federal, Highway/Utility Guide (FHWA-SA-93-049, June 1993): 3.5 feet from face of guardrail to face of utility object [2]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): Follow the Utilities Accommodation Manual value of 3 feet 6 inches behind the face of the guardrail, as it is the current NCDOT state manual (July 2022) that specifically addresses pole placement with reduced guardrail post spacing of 3 feet 1.5 inches [1]. The federal Highway/Utility Guide value of 3.5 feet is from a 1993 document and does not reference the reduced post spacing condition.",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-026@own",
+   "group": "single",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 1,
+    "rerank": 445,
+    "llm": 1212,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 453,
+    "total": 1669
+   },
+   "calls": 1,
+   "tokens": [
+    4170,
+    36
+   ],
+   "passages": 3,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The abandoned pipe must be filled with grout or flowable fill to at least 90 percent full, or completely full when on railroad right of way [1].",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-026@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 5,
+    "rerank": 295,
+    "llm": 1061,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3985,
+    "suggest": 0,
+    "retrieval": 307,
+    "total": 5358
+   },
+   "calls": 2,
+   "tokens": [
+    10772,
+    179
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Fill abandoned pipe with grout or flowable fill to at least 90 percent full or completely full when on railroad right of way. [1][2]",
+   "cited_divisions": [
+    "utilities",
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-029@own",
+   "group": "single",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 9,
+    "search": 1,
+    "rerank": 466,
+    "llm": 1357,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1129,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2704,
+    "suggest": 0,
+    "retrieval": 476,
+    "total": 5669
+   },
+   "calls": 3,
+   "tokens": [
+    12916,
+    197
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "To have a compensable interest by adverse possession, possession must have begun 20 years prior to the facilities being taken into NCDOT right of way [1].",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-029@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 6,
+    "rerank": 431,
+    "llm": 742,
+    "citations": 0,
+    "retry": 0,
+    "recite": 9825,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 5289,
+    "suggest": 0,
+    "retrieval": 445,
+    "total": 16304
+   },
+   "calls": 3,
+   "tokens": [
+    17930,
+    285
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "To have a compensable interest by adverse possession, possession must have begun 20 years prior to the facilities being taken into NCDOT right of way [1].",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-042@own",
+   "group": "single",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 2,
+    "rerank": 434,
+    "llm": 1215,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1776,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 444,
+    "total": 3437
+   },
+   "calls": 2,
+   "tokens": [
+    5651,
+    23
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The phone number given for the State Utility Agent is (919) 733-4420 [1].",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-042@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 6,
+    "rerank": 354,
+    "llm": 2243,
+    "citations": 0,
+    "retry": 0,
+    "recite": 2219,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 1668,
+    "suggest": 0,
+    "retrieval": 368,
+    "total": 6501
+   },
+   "calls": 3,
+   "tokens": [
+    13239,
+    87
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The phone number given for the State Utility Agent is (919) 733-4420 [1].",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-043@own",
+   "group": "single",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 2,
+    "rerank": 343,
+    "llm": 818,
+    "citations": 2,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 353,
+    "total": 1179
+   },
+   "calls": 1,
+   "tokens": [
+    5756,
+    4
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "48 inches [1]",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-043@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 8,
+    "rerank": 372,
+    "llm": 769,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1212,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 4322,
+    "suggest": 0,
+    "retrieval": 388,
+    "total": 6694
+   },
+   "calls": 3,
+   "tokens": [
+    16946,
+    246
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The minimum fence height for an alternate specialty fence is 48 inches [1].",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-063@own",
+   "group": "single",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 2,
+    "rerank": 324,
+    "llm": 775,
+    "citations": 0,
+    "retry": 0,
+    "recite": 857,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 5359,
+    "suggest": 0,
+    "retrieval": 334,
+    "total": 7326
+   },
+   "calls": 3,
+   "tokens": [
+    5384,
+    175
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Collisions with roadside trees and utility poles are the most harmful event in 14 percent of all fatal crashes [1].",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-063@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 6,
+    "rerank": 355,
+    "llm": 2491,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1621,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2620,
+    "suggest": 0,
+    "retrieval": 369,
+    "total": 7104
+   },
+   "calls": 3,
+   "tokens": [
+    20168,
+    183
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Collisions with roadside trees and utility poles are the most harmful event in 14 percent of all fatal crashes [1].",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "utilities-072@own",
+   "group": "refuse",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 1,
+    "rerank": 269,
+    "llm": 679,
+    "citations": 0,
+    "retry": 20577,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 130,
+    "retrieval": 276,
+    "total": 21664
+   },
+   "calls": 2,
+   "tokens": [
+    16281,
+    8
+   ],
+   "passages": 3,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "utilities-072@all",
+   "group": "refuse",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 7,
+    "rerank": 189,
+    "llm": 1257,
+    "citations": 0,
+    "retry": 13017,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 202,
+    "total": 14477
+   },
+   "calls": 2,
+   "tokens": [
+    16357,
+    8
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in any division's documents (58 documents in Work Zone Traffic Control; Utilities; Transportation Mobility and Safety). Try rephrasing the question.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "utilities-073@own",
+   "group": "refuse",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 1,
+    "rerank": 459,
+    "llm": 1807,
+    "citations": 0,
+    "retry": 25849,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 143,
+    "retrieval": 466,
+    "total": 28266
+   },
+   "calls": 2,
+   "tokens": [
+    20848,
+    8
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "utilities-073@all",
+   "group": "refuse",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 6,
+    "rerank": 348,
+    "llm": 31278,
+    "citations": 0,
+    "retry": 234,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 361,
+    "total": 31874
+   },
+   "calls": 1,
+   "tokens": [
+    6409,
+    4
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "utilities",
+    "wztc"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in any division's documents (58 documents in Work Zone Traffic Control; Utilities; Transportation Mobility and Safety). Try rephrasing the question.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "utilities-074@own",
+   "group": "refuse",
+   "target": "utilities",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 2,
+    "rerank": 512,
+    "llm": 1076,
+    "citations": 0,
+    "retry": 9187,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 91,
+    "retrieval": 520,
+    "total": 10875
+   },
+   "calls": 2,
+   "tokens": [
+    21556,
+    8
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "utilities"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in the Utilities documents (19 documents). Try rephrasing the question, or ask the division that owns the topic.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "utilities-074@all",
+   "group": "refuse",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 6,
+    "rerank": 264,
+    "llm": 791,
+    "citations": 0,
+    "retry": 22118,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 276,
+    "total": 23188
+   },
+   "calls": 2,
+   "tokens": [
+    17924,
+    8
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in any division's documents (58 documents in Work Zone Traffic Control; Utilities; Transportation Mobility and Safety). Try rephrasing the question.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "wztc-005@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 3,
+    "rerank": 242,
+    "llm": 1419,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 252,
+    "total": 1673
+   },
+   "calls": 1,
+   "tokens": [
+    1800,
+    24
+   ],
+   "passages": 2,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "A rural widening project is classified as Level 2 when the project length is 5 to 8 miles [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-005@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 6,
+    "rerank": 278,
+    "llm": 1371,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1837,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2029,
+    "suggest": 0,
+    "retrieval": 291,
+    "total": 5529
+   },
+   "calls": 3,
+   "tokens": [
+    16525,
+    92
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "A rural widening project is classified as Level 2 when its length is 5 to 8 miles [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-009@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 2,
+    "rerank": 68,
+    "llm": 1953,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 78,
+    "total": 2033
+   },
+   "calls": 1,
+   "tokens": [
+    3586,
+    5
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "36 x 54 inches [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-009@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 6,
+    "rerank": 133,
+    "llm": 1440,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2437,
+    "suggest": 0,
+    "retrieval": 147,
+    "total": 4027
+   },
+   "calls": 2,
+   "tokens": [
+    8165,
+    148
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The MUTCD lists the End Work Zone Speed Limit (R2-12) sign as 36 x 54 inches for freeway or expressway use [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-015@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 3,
+    "rerank": 225,
+    "llm": 861,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 235,
+    "total": 1099
+   },
+   "calls": 1,
+   "tokens": [
+    4294,
+    25
+   ],
+   "passages": 3,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "New York uses a project duration of ≥ 60 days as a criterion for temporary positive protection. [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-015@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 6,
+    "rerank": 358,
+    "llm": 1435,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2468,
+    "suggest": 0,
+    "retrieval": 371,
+    "total": 4275
+   },
+   "calls": 2,
+   "tokens": [
+    14481,
+    148
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "New York uses a project duration of ≥ 60 days as a criterion for temporary positive protection. [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-016@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 2,
+    "rerank": 95,
+    "llm": 1542,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 104,
+    "total": 1649
+   },
+   "calls": 1,
+   "tokens": [
+    2773,
+    17
+   ],
+   "passages": 3,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The minimum size for a Yield (R1-2) sign is 30 x 30 x 30 inches. [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-016@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 6,
+    "rerank": 37,
+    "llm": 1867,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2126,
+    "suggest": 0,
+    "retrieval": 49,
+    "total": 4045
+   },
+   "calls": 2,
+   "tokens": [
+    7009,
+    150
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The minimum size for a Yield (R1-2) sign is 30 x 30 x 30 inches. [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-030@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 3,
+    "rerank": 215,
+    "llm": 966,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1177,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 225,
+    "total": 2369
+   },
+   "calls": 2,
+   "tokens": [
+    9514,
+    3
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "FSU [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-030@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 7,
+    "rerank": 346,
+    "llm": 2901,
+    "citations": 0,
+    "retry": 0,
+    "recite": 978,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 361,
+    "total": 4242
+   },
+   "calls": 2,
+   "tokens": [
+    12810,
+    3
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "FSU [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-034@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 2,
+    "rerank": 195,
+    "llm": 1073,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1662,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 203,
+    "total": 2939
+   },
+   "calls": 2,
+   "tokens": [
+    9898,
+    16
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Texas DOT deployed its queue warning example on I-35 [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-034@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 6,
+    "rerank": 220,
+    "llm": 815,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1348,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 1831,
+    "suggest": 0,
+    "retrieval": 232,
+    "total": 4228
+   },
+   "calls": 3,
+   "tokens": [
+    18803,
+    113
+   ],
+   "passages": 8,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Texas DOT deployed its queue warning example on I-35 [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": false
+  },
+  {
+   "id": "wztc-037@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 2,
+    "rerank": 190,
+    "llm": 2291,
+    "citations": 0,
+    "retry": 19681,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 256,
+    "retrieval": 199,
+    "total": 22429
+   },
+   "calls": 1,
+   "tokens": [
+    3318,
+    4
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
+   "cited_divisions": [],
+   "value_ok": false,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": true,
+   "false_answer": null,
+   "in_passages": false
+  },
+  {
+   "id": "wztc-037@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 6,
+    "rerank": 383,
+    "llm": 862,
+    "citations": 0,
+    "retry": 26358,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 396,
+    "total": 27616
+   },
+   "calls": 1,
+   "tokens": [
+    5784,
+    4
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in any division's documents (58 documents in Work Zone Traffic Control; Utilities; Transportation Mobility and Safety). Try rephrasing the question.",
+   "cited_divisions": [],
+   "value_ok": false,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": true,
+   "false_answer": null,
+   "in_passages": false
+  },
+  {
+   "id": "wztc-041@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 2,
+    "rerank": 254,
+    "llm": 938,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 262,
+    "total": 1203
+   },
+   "calls": 1,
+   "tokens": [
+    4836,
+    14
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Mobile work may stop for up to 5 minutes at a time. [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-041@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 6,
+    "rerank": 204,
+    "llm": 1556,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 216,
+    "total": 1775
+   },
+   "calls": 1,
+   "tokens": [
+    5481,
+    14
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Mobile work may stop for up to 5 minutes at a time. [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-043@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 6,
+    "rerank": 724,
+    "llm": 1730,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 738,
+    "total": 2471
+   },
+   "calls": 1,
+   "tokens": [
+    4220,
+    32
+   ],
+   "passages": 3,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Type IV projects list pothole patching as an example in the FHWA Work Zone Self Assessment project classification scheme. [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-043@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 8,
+    "rerank": 348,
+    "llm": 740,
+    "citations": 0,
+    "retry": 0,
+    "recite": 677,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 362,
+    "total": 1785
+   },
+   "calls": 2,
+   "tokens": [
+    11801,
+    18
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": true,
+   "answer": "Type IV projects list pothole patching as an example.",
+   "cited_divisions": [],
+   "value_ok": true,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-045@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 3,
+    "rerank": 233,
+    "llm": 1009,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1903,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 1810,
+    "suggest": 0,
+    "retrieval": 243,
+    "total": 4965
+   },
+   "calls": 3,
+   "tokens": [
+    5949,
+    102
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Whenever blasting caps are used within 1,000 feet of a roadway, the signing shown shall be used [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-045@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 7,
+    "rerank": 276,
+    "llm": 1034,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1125,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 1733,
+    "suggest": 0,
+    "retrieval": 291,
+    "total": 4185
+   },
+   "calls": 3,
+   "tokens": [
+    7772,
+    107
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Per the notes for MUTCD Figure 6P-2, blasting caps used within 1,000 feet of a roadway require the signing shown [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-046@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 2,
+    "rerank": 244,
+    "llm": 962,
+    "citations": 0,
+    "retry": 0,
+    "recite": 770,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 254,
+    "total": 1988
+   },
+   "calls": 2,
+   "tokens": [
+    6000,
+    12
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The cost update factor shown is 1.67 [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-046@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 7,
+    "rerank": 361,
+    "llm": 1250,
+    "citations": 0,
+    "retry": 0,
+    "recite": 3256,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3571,
+    "suggest": 0,
+    "retrieval": 376,
+    "total": 8454
+   },
+   "calls": 3,
+   "tokens": [
+    14067,
+    143
+   ],
+   "passages": 8,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The cost update factor shown is 1.67 [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-057@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 2,
+    "rerank": 41,
+    "llm": 763,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 49,
+    "total": 813
+   },
+   "calls": 1,
+   "tokens": [
+    1964,
+    3
+   ],
+   "passages": 3,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "5 metres [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-057@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 6,
+    "rerank": 109,
+    "llm": 1020,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3009,
+    "suggest": 0,
+    "retrieval": 121,
+    "total": 4152
+   },
+   "calls": 2,
+   "tokens": [
+    6288,
+    121
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "5 metres [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-058@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 2,
+    "rerank": 45,
+    "llm": 1017,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1389,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 54,
+    "total": 2463
+   },
+   "calls": 2,
+   "tokens": [
+    4765,
+    19
+   ],
+   "passages": 2,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Curves flatter than 900 m do not require an adjusted clear zone [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-058@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 5,
+    "search": 7,
+    "rerank": 65,
+    "llm": 887,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1153,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3059,
+    "suggest": 0,
+    "retrieval": 77,
+    "total": 5178
+   },
+   "calls": 3,
+   "tokens": [
+    8940,
+    106
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Curves flatter than 900 m do not require an adjusted clear zone [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-062@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 5,
+    "search": 3,
+    "rerank": 8,
+    "llm": 2007,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 16,
+    "total": 2025
+   },
+   "calls": 1,
+   "tokens": [
+    2198,
+    34
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The dimensions in the MUTCD temporary traffic control sign size tables are shown in inches, in the order width × height. [1][2][3]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-062@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 5,
+    "search": 5,
+    "rerank": 73,
+    "llm": 1026,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 83,
+    "total": 1112
+   },
+   "calls": 1,
+   "tokens": [
+    3795,
+    19
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "Dimensions are shown in inches and are shown as width x height. [1][2][3]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": false,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-067@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 5,
+    "search": 3,
+    "rerank": 381,
+    "llm": 859,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 389,
+    "total": 1249
+   },
+   "calls": 1,
+   "tokens": [
+    5616,
+    17
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "States must perform a process review at least every two years. [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-067@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 6,
+    "rerank": 356,
+    "llm": 2891,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 369,
+    "total": 3263
+   },
+   "calls": 1,
+   "tokens": [
+    5831,
+    19
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "States must perform a work zone process review at least every two years. [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-076@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 3,
+    "rerank": 47,
+    "llm": 1987,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 56,
+    "total": 2044
+   },
+   "calls": 1,
+   "tokens": [
+    1969,
+    3
+   ],
+   "passages": 3,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "30 ft [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-076@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 7,
+    "rerank": 126,
+    "llm": 1077,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2149,
+    "suggest": 0,
+    "retrieval": 139,
+    "total": 3368
+   },
+   "calls": 2,
+   "tokens": [
+    5318,
+    148
+   ],
+   "passages": 6,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The table lists a clear-zone width of 30 ft for speeds of 60–70 mph [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-077@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 3,
+    "rerank": 23,
+    "llm": 1809,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 34,
+    "total": 1845
+   },
+   "calls": 1,
+   "tokens": [
+    1816,
+    19
+   ],
+   "passages": 2,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The curve correction factor (KCZ) for an 820 ft radius at 50 mph is 1.4 [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-077@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 8,
+    "search": 7,
+    "rerank": 41,
+    "llm": 980,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 15012,
+    "suggest": 0,
+    "retrieval": 56,
+    "total": 16049
+   },
+   "calls": 1,
+   "tokens": [
+    2554,
+    34
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "The TMP Design Manual’s Table 3-2 lists a curve correction factor (KCZ) of 1.4 for a radius of 820 ft at a design speed of 50 mph [1].",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-088@own",
+   "group": "single",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 6,
+    "search": 2,
+    "rerank": 264,
+    "llm": 682,
+    "citations": 0,
+    "retry": 0,
+    "recite": 1387,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 5157,
+    "suggest": 0,
+    "retrieval": 272,
+    "total": 7500
+   },
+   "calls": 3,
+   "tokens": [
+    10749,
+    72
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "2 [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-088@all",
+   "group": "single",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 7,
+    "search": 6,
+    "rerank": 279,
+    "llm": 854,
+    "citations": 0,
+    "retry": 0,
+    "recite": 3765,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2051,
+    "suggest": 0,
+    "retrieval": 292,
+    "total": 6965
+   },
+   "calls": 3,
+   "tokens": [
+    18583,
+    98
+   ],
+   "passages": 7,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": false,
+   "uncited": false,
+   "answer": "2 [1]",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "value_ok": true,
+   "strict_ok": true,
+   "critical": false,
+   "over_refusal": false,
+   "false_answer": null,
+   "in_passages": true
+  },
+  {
+   "id": "wztc-093@own",
+   "group": "refuse",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 5,
+    "search": 2,
+    "rerank": 229,
+    "llm": 746,
+    "citations": 0,
+    "retry": 14885,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 148,
+    "retrieval": 236,
+    "total": 16016
+   },
+   "calls": 2,
+   "tokens": [
+    12337,
+    8
+   ],
+   "passages": 4,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "wztc-093@all",
+   "group": "refuse",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 4,
+    "search": 5,
+    "rerank": 268,
+    "llm": 952,
+    "citations": 0,
+    "retry": 16997,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 277,
+    "total": 18228
+   },
+   "calls": 2,
+   "tokens": [
+    21030,
+    8
+   ],
+   "passages": 8,
+   "passage_divisions": [
+    "tmsd",
+    "utilities",
+    "wztc"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in any division's documents (58 documents in Work Zone Traffic Control; Utilities; Transportation Mobility and Safety). Try rephrasing the question.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "wztc-098@own",
+   "group": "refuse",
+   "target": "wztc",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 5,
+    "search": 2,
+    "rerank": 332,
+    "llm": 904,
+    "citations": 0,
+    "retry": 16088,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 204,
+    "retrieval": 339,
+    "total": 17535
+   },
+   "calls": 2,
+   "tokens": [
+    17778,
+    8
+   ],
+   "passages": 5,
+   "passage_divisions": [
+    "wztc"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in the Work Zone Traffic Control documents (20 documents). Try rephrasing the question, or ask the division that owns the topic.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  },
+  {
+   "id": "wztc-098@all",
+   "group": "refuse",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 5,
+    "search": 6,
+    "rerank": 332,
+    "llm": 1337,
+    "citations": 0,
+    "retry": 1117,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 343,
+    "total": 2798
+   },
+   "calls": 2,
+   "tokens": [
+    23785,
+    8
+   ],
+   "passages": 8,
+   "passage_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "refused": true,
+   "uncited": false,
+   "answer": "I couldn't find an answer to that in any division's documents (58 documents in Work Zone Traffic Control; Utilities; Transportation Mobility and Safety). Try rephrasing the question.",
+   "cited_divisions": [],
+   "value_ok": null,
+   "strict_ok": null,
+   "critical": false,
+   "over_refusal": null,
+   "false_answer": false
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Cross-division development questions (DAR-666). Each joins two questions of the locked set's tuning split (evaluation/locked/<division>.json), one from each of two divisions, word for word as \"<first> Also: <second>\", so only an \"All divisions\" search can answer both parts. The gold is read from those items, never copied here. Development set only: not part of the locked or held-out sets.",
+  "pairs": [
+    {"id": "x-01", "parts": ["wztc-037", "utilities-026"]},
+    {"id": "x-02", "parts": ["wztc-041", "utilities-018"]},
+    {"id": "x-03", "parts": ["wztc-045", "utilities-029"]},
+    {"id": "x-04", "parts": ["wztc-009", "utilities-043"]},
+    {"id": "x-05", "parts": ["wztc-016", "tmsd-056"]},
+    {"id": "x-06", "parts": ["wztc-067", "tmsd-061"]},
+    {"id": "x-07", "parts": ["wztc-005", "tmsd-043"]},
+    {"id": "x-08", "parts": ["wztc-030", "tmsd-038"]},
+    {"id": "x-09", "parts": ["utilities-001", "tmsd-004"]},
+    {"id": "x-10", "parts": ["utilities-063", "tmsd-074"]},
+    {"id": "x-11", "parts": ["utilities-019", "tmsd-003"]},
+    {"id": "x-12", "parts": ["utilities-002", "tmsd-034"]}
+  ]
+}
