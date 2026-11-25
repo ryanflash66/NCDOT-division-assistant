@@ -61,7 +61,8 @@ from .llm import Completion, LLMError, OpenRouterClient, answered_by_backup
 from .page_images import PageImages
 from .register import entry_for, level_label
 from .pages_static import image_url
-from .readings import READING_RULE, SOURCE_READING_CHARS, Readings, notice, passage_readings, reading_text
+from .readings import (READING_RULE, SOURCE_READING_CHARS, Readings, notice, passage_readings, prompt_readings,
+                       reading_text)
 from .retrieval import DEFAULT_CANDIDATES, DEFAULT_MAX_CHUNKS_PER_PAGE, Retriever, _page_key, is_table
 from .timing import StepTimer, timed
 from .rowcheck import misread_numbers
@@ -445,12 +446,17 @@ def _history_text(history: Sequence[Dict[str, str]]) -> str:
     return HISTORY_PROMPT.format(turns="\n\n".join(turns)) if turns else ""
 
 
-def passage_text(chunk: Dict) -> str:
+def passage_text(chunk: Dict, shown: Optional[set] = None) -> str:
     """A passage as the model reads it: each part's text after its context line, once per page.
 
     The context line names the page's figure and table captions, so a chunk of
     numbers split away from its caption still says which table it is (the TMP
     manual's asphalt and concrete deflection tables, pp. 37-38).
+
+    `shown` holds the pages whose image reading an earlier passage of the same
+    prompt already carries (_numbered); those are left out here and the page is
+    added. Without it every reading of the passage is included, as the number
+    checks need: a value the model took from a page's reading is on that page.
     """
     out, last = [], None
     for part in chunk.get("parts", [chunk]):
@@ -460,7 +466,14 @@ def passage_text(chunk: Dict) -> str:
     if chunk.get("continues"):
         out.append(CONTINUES_NOTE)
     # The page's image reading when its two readings differ (DAR-739); the model takes values from it.
-    out += [reading_text(r) for r in passage_readings(chunk)]
+    # Once per page in a prompt: two passages from one page carried it twice until Nov 25.
+    for reading in prompt_readings(chunk):
+        page = (chunk.get("division"), chunk.get("source"), int(reading["page"]))
+        if shown is not None:
+            if page in shown:
+                continue
+            shown.add(page)
+        out.append(reading_text(reading))
     return "\n\n".join(out)
 
 
@@ -488,7 +501,7 @@ def build_messages(question: str, asker: Division, target: Division, hits: List[
         extra.append(NOTE_RULE)
     if any(hit.chunk.get("continues") for hit in hits):
         extra.append(CONTINUES_RULE)
-    if any(passage_readings(hit.chunk) for hit in hits):
+    if any(prompt_readings(hit.chunk) for hit in hits):
         extra.append(READING_RULE)
     if earlier:
         extra.append(HISTORY_RULE.format(not_found=NOT_FOUND))
@@ -497,13 +510,21 @@ def build_messages(question: str, asker: Division, target: Division, hits: List[
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
-def _numbered(hits: Sequence[Hit], start: int = 1, levels: bool = False) -> str:
+def _numbered(hits: Sequence[Hit], start: int = 1, levels: bool = False, shown: Optional[set] = None) -> str:
     """The passages as the prompt shows them, numbered from `start`: "[n] (locator)" and the text.
 
     `levels` names each document's register level in its locator (the conflict check's prompt only).
+    `shown` holds pages whose image reading the prompt already has (see passage_text); it is filled in.
     """
-    return "\n\n---\n\n".join(f"[{n}] ({_locator(hit, levels)})\n{passage_text(hit.chunk)}"
+    shown = set() if shown is None else shown
+    return "\n\n---\n\n".join(f"[{n}] ({_locator(hit, levels)})\n{passage_text(hit.chunk, shown)}"
                                 for n, hit in enumerate(hits, start))
+
+
+def _reading_pages(hits: Sequence[Hit]) -> set:
+    """The pages whose image reading the passages carry, keyed as passage_text's `shown` is."""
+    return {(hit.chunk.get("division"), hit.chunk.get("source"), int(r["page"]))
+            for hit in hits for r in prompt_readings(hit.chunk)}
 
 
 def _marker_numbers(marker: "re.Match[str]", n_hits: int) -> List[int]:
@@ -570,11 +591,14 @@ def _on_pages(chunk: Dict, page: int) -> bool:
 
 
 def _shown_reading(reading: Dict[str, Any]) -> Dict[str, Any]:
-    """A page reading as the Sources panel shows it: the image reading cut to SOURCE_READING_CHARS."""
+    """A page reading as the Sources panel shows it: the image reading cut to SOURCE_READING_CHARS.
+
+    The model's excerpt is left out: the panel shows the reading from its start.
+    """
     image = reading.get("image") or ""
     if len(image) > SOURCE_READING_CHARS:
         image = image[:SOURCE_READING_CHARS].rsplit(" ", 1)[0] + " …"
-    return dict(reading, image=image)
+    return {key: value for key, value in dict(reading, image=image).items() if key != "excerpt"}
 
 
 _WORD = re.compile(r"[a-z0-9]+(?:\.[0-9]+)*")
@@ -1111,7 +1135,8 @@ class Answerer:
             messages = messages + [
                 {"role": "assistant", "content": first.text},
                 await self._with_page_images({"role": "user", "content": SECOND_LOOK_RULE.format(
-                    target_name=target.name, context=_numbered(extra, len(hits) + 1), last=len(wider),
+                    target_name=target.name, context=_numbered(extra, len(hits) + 1, shown=_reading_pages(hits)),
+                    last=len(wider),
                     not_found=NOT_FOUND)}, extra, len(hits) + 1),
             ]
         models = self.llm.retry_models(first.model)

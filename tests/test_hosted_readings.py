@@ -210,6 +210,76 @@ def test_a_value_only_one_reading_has_is_named_as_such():
     assert "“s jet boats 2.5 dick and harry” in the image, not in the text" in notice
 
 
+# The excerpt the model reads (Nov 25: the whole reading with every passage cost 1.8 s of median time)
+
+PERMIT_PAGE = "\n\n".join([
+    "STATE OF INDIANA",
+    "(a) The pavement replacement may consist of 9 inches of concrete. " + "Lifts shall be thoroughly compacted. " * 8
+    + "See sub-section 401.15 of the Standard Specification.",
+    "(b) The sub-grade shall be compacted thoroughly prior to placing the concrete.",
+    "(B) Cutting shall be done as follows. " + "Breakage shall be confined to required lines. " * 6
+    + "The edge of the area after removal shall be such that the maximum variation from the vertical will not "
+      "exceed 1 1/2 inches. In trimming these edges, hand methods may be needed. Equipment shall not cause spalling. "
+    + "Vibration shall not be transmitted along the steel. " * 4,
+    "(C) All cuts shall be open to traffic.",
+])
+
+
+def test_the_excerpt_keeps_the_sentence_with_the_differing_value_of_a_long_paragraph():
+    # utilities-h056: the permit's paragraphs run to 900 characters; the whole reading cut at a length lost the value.
+    excerpt = rd.excerpt(PERMIT_PAGE, (("will not exceed 0.5 in in trimming", "will not exceed 1.5 in in trimming"),))
+
+    assert "will not exceed 1 1/2 inches." in excerpt
+    assert "In trimming these edges" in excerpt  # a sentence of context either side
+    assert "401.15" not in excerpt and "STATE OF INDIANA" not in excerpt
+    assert len(excerpt) < len(PERMIT_PAGE) / 2
+
+
+def test_the_excerpt_keeps_a_reordered_row_with_its_tables_header():
+    # tmsd-h052: the row's numbers are the same in both readings, only their order differs.
+    page = "Recommended Treatment for Turn Lanes\n\n" + SIDEWAYS_IMAGE + "\n\nApproach / Departure Taper (A)\n\nS = Design Speed"
+    excerpt = rd.excerpt(page, (("150, 300, 100, 45, 50", "50, 45, 150, 300, 100"),))
+
+    lines = excerpt.splitlines()
+    assert lines[:2] == SIDEWAYS_IMAGE.splitlines()[:2]  # the header row and its rule
+    assert lines[2] == rd.EXCERPT_GAP and "| 50 | 45 | 150' | 300' | 100' |" in lines
+    assert "Recommended Treatment" not in excerpt and "S = Design Speed" not in excerpt
+
+
+def test_no_excerpt_when_only_the_text_has_the_differing_value():
+    assert rd.excerpt(PERMIT_PAGE, (("page 278 of 400", rd.MISSING),)) == ""
+    long = rd.PageReading(7, rd.IMAGE_ONLY, "x " * 4000)
+    assert len(long.excerpt) <= rd.PASSAGE_READING_CHARS + 2  # no OCR text: the whole reading, cut
+
+
+def test_a_page_whose_excerpt_is_empty_is_not_in_the_prompt_but_still_warns():
+    readings = rd.Readings({("utilities", APPENDIX, 278): rd.PageReading(
+        278, rd.DISAGREE, PERMIT_IMAGE, (("depth 9 in page 12", "depth 9 in"),))})
+    (hit,) = readings.annotate([Hit(1.0, _chunk(278, PERMIT_OCR))])
+
+    assert "Read from the page image" not in passage_text(hit.chunk)
+    system = build_messages("q", BY_ID["utilities"], BY_ID["utilities"], [hit])[0]["content"]
+    assert rd.READING_RULE not in system
+    _, (source,) = attach_sources("The page is 12 [1].", [hit])
+    assert source.readings[0]["page"] == 278 and "excerpt" not in source.as_dict()["readings"][0]
+    assert Answer("The page is 12 [1].", refused=False, sources=[source]).notices()
+
+
+def test_a_pages_reading_is_sent_once_however_many_passages_come_from_it():
+    first, second = _readings().annotate([Hit(2.0, _chunk(278, PERMIT_OCR)), Hit(1.0, _chunk(278, "more of the page"))])
+
+    user = build_messages("q", BY_ID["utilities"], BY_ID["utilities"], [first, second])[1]["content"]
+    assert user.count("Read from the page image (PDF page 278)") == 1
+    # The number checks still read it with each passage: a value from page 278's reading is on page 278.
+    assert "Read from the page image" in passage_text(second.chunk)
+    # Another document's page 278 is another page.
+    other = rd.Readings({(d, s, 278): rd.PageReading(278, rd.DISAGREE, PERMIT_IMAGE, (("0.5 in", "1.5 in"),))
+                         for d, s in (("utilities", APPENDIX), ("utilities", "other.pdf"))})
+    hits = other.annotate([Hit(2.0, _chunk(278, PERMIT_OCR)), Hit(1.0, _chunk(278, "x", source="other.pdf"))])
+    assert build_messages("q", BY_ID["utilities"], BY_ID["utilities"], hits)[1]["content"].count(
+        "Read from the page image") == 2
+
+
 def test_a_narrowed_citation_keeps_only_the_cited_pages_readings():
     merged = Hit(1.0, dict(_chunk(278), parts=[_chunk(278, PERMIT_OCR + " permit edge vertical"),
                                                _chunk(280, "storage bay lane widening taper")]))

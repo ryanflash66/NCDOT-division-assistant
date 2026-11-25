@@ -20,7 +20,11 @@ once, at indexing time, and stores that reading beside the index
 
 At answer time (Readings.annotate) a passage from a `disagree` or `image_only`
 page carries its page's image reading, and the model is told to take values from
-it where the two differ (it was right on the DAR-733 pages). The image reading
+it where the two differ (it was right on the DAR-733 pages). The model reads only
+the lines of the reading that hold a differing value (excerpt()), once per page
+in a prompt: the whole reading with every passage cost 1.8 s of median answer
+time on the development set (Nov 25), and the values that fixed the misreads
+are on those lines. The image reading
 is not trusted alone either: every cited page that disagrees gets a notice
 naming the two readings, and the Sources panel shows both. Pages that agree
 change nothing, in the prompt or the reply.
@@ -36,6 +40,7 @@ import logging
 import re
 from collections import Counter
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
@@ -58,10 +63,18 @@ NOTICE_WORDS = 5
 SNIPPET_WORDS = 3
 # A table row: a line of the image reading with at least this many numbers.
 ROW_NUMBERS = 3
-# The image reading the model reads with a passage. A page's whole reading averages about
-# 1,700 characters (the OCR text of the 1,189 flagged pages: mean 1,656, median 1,427), and
-# a few dense drawings run to 20,000; past this the reading is cut with a mark.
+# The image reading the model reads for a page with no OCR text at all, where it is the
+# page's only text. A page's whole reading averages about 1,700 characters (the OCR text of
+# the 1,189 flagged pages: mean 1,656, median 1,427), and a few dense drawings run to 20,000;
+# past this the reading is cut with a mark.
 PASSAGE_READING_CHARS = 6000
+# The part of a disagreeing page's image reading the model reads (excerpt()): the lines
+# holding a differing value, EXCERPT_CONTEXT_LINES lines either side and the header row of
+# a table they are in, cut at EXCERPT_CHARS. The whole reading (median 1,268 characters,
+# p90 2,822) went with every passage from the page until Nov 25.
+EXCERPT_CHARS = 1500
+EXCERPT_CONTEXT_LINES = 1
+EXCERPT_GAP = "…"
 # The image reading the Sources panel shows under the OCR excerpt.
 SOURCE_READING_CHARS = 1500
 
@@ -201,6 +214,13 @@ class PageReading:
         """Whether the model should read the image reading with the passage, and the reader be warned."""
         return self.agreement in (DISAGREE, IMAGE_ONLY)
 
+    @property
+    def excerpt(self) -> str:
+        """What the model reads with the passage: the whole reading when OCR found no text, else excerpt()."""
+        if self.agreement == IMAGE_ONLY:
+            return _cut(self.image, PASSAGE_READING_CHARS)
+        return excerpt(self.image, self.differences)
+
     def as_dict(self, chars: int = SOURCE_READING_CHARS) -> Dict[str, Any]:
         return {"page": self.page, "agreement": self.agreement, "image": _cut(self.image, chars),
                 "differences": [list(d) for d in self.differences]}
@@ -209,6 +229,84 @@ class PageReading:
 def _cut(text: str, chars: int) -> str:
     text = (text or "").strip()
     return text if len(text) <= chars else text[:chars].rsplit(" ", 1)[0] + " …"
+
+
+def _line_matches(differences: Sequence[Tuple[str, str]]) -> List[Tuple[set, bool]]:
+    """For each difference, the values a line of the image reading must hold: (values, all of them).
+
+    A changed value (0.5 in vs 1.5 in) is found by the values only the image side
+    has. A table row read in another order has the same values on both sides, so
+    its line is the one holding all of them. A difference whose values are all
+    in the text already (a stretch only the text has, or a value only it has)
+    has nothing to show from the image reading.
+    """
+    out = []
+    for ocr, image in differences:
+        if image == MISSING:
+            continue
+        shown = _numbers_of(image)
+        theirs = set() if ocr == MISSING else _numbers_of(ocr)
+        if shown - theirs:
+            out.append((shown - theirs, False))
+        elif shown == theirs and len(shown) >= ROW_NUMBERS:
+            out.append((shown, True))
+    return out
+
+
+@lru_cache(maxsize=2048)
+def excerpt(image: str, differences: Tuple[Tuple[str, str], ...]) -> str:
+    """The lines of a page's image reading that hold a value the OCR text reads differently.
+
+    Each such line comes with EXCERPT_CONTEXT_LINES lines either side, and a
+    table row with its table's header row, so the model still sees which column
+    a value is in (tmsd-h019's 300' is the Desirable Deceleration Length). Gaps
+    are marked EXCERPT_GAP. Empty when no line qualifies, as when every
+    difference is a stretch only the text has: the image reading then adds no
+    value to the passage, and only the notice and the Sources panel show it.
+    """
+    units = _units(image)
+    wanted = _line_matches(differences)
+    if not units or not wanted:
+        return ""
+    keep = set()
+    for i, (_, text) in enumerate(units):
+        values = _numbers_of(text)
+        if not any((need <= values) if every else (need & values) for need, every in wanted):
+            continue
+        keep.update(range(max(0, i - EXCERPT_CONTEXT_LINES), min(len(units), i + EXCERPT_CONTEXT_LINES + 1)))
+        if text.lstrip().startswith("|"):
+            top = i
+            while top > 0 and units[top - 1][1].lstrip().startswith("|"):
+                top -= 1
+            keep.update(range(top, min(top + 2, i)))  # the header row and its |---| rule
+    out, last = "", None
+    for i in sorted(keep):
+        line, text = units[i]
+        if last is None:
+            out = text
+        elif i > last + 1:
+            out += f"\n{EXCERPT_GAP}\n{text}"
+        else:
+            out += (" " if line == units[last][0] else "\n") + text
+        last = i
+    return _cut(out, EXCERPT_CHARS)
+
+
+# A line longer than this is split into sentences for excerpt(): a scanned permit's paragraph
+# runs to 900 characters, and utilities-h056's 1 1/2 in is in one sentence of it.
+SENTENCE_SPLIT_CHARS = 250
+_SENTENCE_END = re.compile(r"(?<=[.;])\s+(?=[A-Z(])")
+
+
+def _units(image: str) -> List[Tuple[int, str]]:
+    """The image reading's non-empty lines, long ones split into sentences, each with its line number."""
+    units = []
+    for n, line in enumerate(line.rstrip() for line in (image or "").splitlines()):
+        if not line.strip():
+            continue
+        parts = _SENTENCE_END.split(line) if len(line) > SENTENCE_SPLIT_CHARS else [line]
+        units += [(n, part) for part in parts if part.strip()]
+    return units
 
 
 @dataclass
@@ -259,7 +357,7 @@ class Readings:
 def _with_readings(part: Mapping[str, Any], readings: List[PageReading]) -> Any:
     if not readings:
         return part
-    return dict(part, readings=[r.as_dict(PASSAGE_READING_CHARS) for r in readings])
+    return dict(part, readings=[dict(r.as_dict(), excerpt=r.excerpt) for r in readings])
 
 
 def load(index_dir: Path) -> Readings:
@@ -304,9 +402,14 @@ def passage_readings(chunk: Mapping[str, Any]) -> List[Dict[str, Any]]:
     return [seen[p] for p in sorted(seen)]
 
 
+def prompt_readings(chunk: Mapping[str, Any]) -> List[Mapping[str, Any]]:
+    """The passage's readings the model reads: those with an excerpt (passage_readings has them all)."""
+    return [r for r in passage_readings(chunk) if r.get("excerpt")]
+
+
 def reading_text(reading: Mapping[str, Any]) -> str:
-    """An image reading as the model reads it after its passage."""
-    return READING_HEADER.format(page=reading["page"]) + "\n" + reading["image"]
+    """An image reading as the model reads it after its passage: its excerpt."""
+    return READING_HEADER.format(page=reading["page"]) + "\n" + reading["excerpt"]
 
 
 def _numbers_of(text: str) -> set:
