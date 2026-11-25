@@ -231,7 +231,8 @@ def test_the_excerpt_keeps_the_sentence_with_the_differing_value_of_a_long_parag
 
     assert "will not exceed 1 1/2 inches." in excerpt
     assert "In trimming these edges" in excerpt  # a sentence of context either side
-    assert "401.15" not in excerpt and "STATE OF INDIANA" not in excerpt
+    assert "401.15" not in excerpt
+    assert excerpt.startswith("STATE OF INDIANA\n")  # the page's title
     assert len(excerpt) < len(PERMIT_PAGE) / 2
 
 
@@ -241,9 +242,10 @@ def test_the_excerpt_keeps_a_reordered_row_with_its_tables_header():
     excerpt = rd.excerpt(page, (("150, 300, 100, 45, 50", "50, 45, 150, 300, 100"),))
 
     lines = excerpt.splitlines()
-    assert lines[:2] == SIDEWAYS_IMAGE.splitlines()[:2]  # the header row and its rule
-    assert lines[2] == rd.EXCERPT_GAP and "| 50 | 45 | 150' | 300' | 100' |" in lines
-    assert "Recommended Treatment" not in excerpt and "S = Design Speed" not in excerpt
+    assert lines[0] == "Recommended Treatment for Turn Lanes"  # the title, which the sideways OCR text lacks
+    assert lines[1:3] == SIDEWAYS_IMAGE.splitlines()[:2]  # the header row and its rule
+    assert lines[3] == rd.EXCERPT_GAP and "| 50 | 45 | 150' | 300' | 100' |" in lines
+    assert "S = Design Speed" not in excerpt
 
 
 def test_no_excerpt_when_only_the_text_has_the_differing_value():

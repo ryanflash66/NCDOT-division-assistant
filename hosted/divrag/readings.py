@@ -74,6 +74,8 @@ PASSAGE_READING_CHARS = 6000
 # p90 2,822) went with every passage from the page until Nov 25.
 EXCERPT_CHARS = 1500
 EXCERPT_CONTEXT_LINES = 1
+# The reading's first lines, kept in every excerpt: the page's running head and title.
+EXCERPT_TITLE_LINES = 2
 EXCERPT_GAP = "…"
 # The image reading the Sources panel shows under the OCR excerpt.
 SOURCE_READING_CHARS = 1500
@@ -279,6 +281,11 @@ def excerpt(image: str, differences: Tuple[Tuple[str, str], ...]) -> str:
             while top > 0 and units[top - 1][1].lstrip().startswith("|"):
                 top -= 1
             keep.update(range(top, min(top + 2, i)))  # the header row and its |---| rule
+    if not keep:
+        return ""
+    # The page's title: on a sideways page the OCR text has none the model can read, and without
+    # it the model said the "Recommended Treatment for Turn Lanes" exhibit wasn't there (tmsd-h019).
+    keep.update(range(min(EXCERPT_TITLE_LINES, len(units))))
     out, last = "", None
     for i in sorted(keep):
         line, text = units[i]
