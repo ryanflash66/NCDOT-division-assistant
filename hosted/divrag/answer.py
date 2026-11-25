@@ -59,6 +59,7 @@ from .divisions import BY_ID, DIVISIONS, Division, document_for, is_all
 from .index_file import Hit
 from .llm import Completion, LLMError, OpenRouterClient, answered_by_backup
 from .page_images import PageImages
+from .query import split_parts
 from .register import entry_for, level_label
 from .pages_static import image_url
 from .retrieval import DEFAULT_CANDIDATES, DEFAULT_MAX_CHUNKS_PER_PAGE, DEFAULT_MERGED_CANDIDATES, Retriever, _page_key, is_table
@@ -961,10 +962,13 @@ class Answerer:
         """
         top_k = self.top_k_for(target)
         if is_all(target):
-            # Every division searched on its own, merged and reranked once (Retriever.retrieve_across).
-            ranked = self.retriever.retrieve_across(self.search_query(question, history), [d.id for d in DIVISIONS],
-                                                    k=self._ranked_depth(top_k, self.merged_candidates), timer=timer,
-                                                    merged=self.merged_candidates, sources=documents)
+            # Every division searched on its own, merged and reranked once (Retriever.retrieve_across);
+            # a question asking two or three things is searched part by part (query.split_parts).
+            parts = split_parts(question)
+            ranked = self.retriever.retrieve_across(
+                self.search_query(question, history), [d.id for d in DIVISIONS],
+                k=self._ranked_depth(top_k, self.merged_candidates), timer=timer, merged=self.merged_candidates,
+                sources=documents, parts=[self.search_query(p, history) for p in parts] if len(parts) > 1 else ())
         else:
             ranked = self.retriever.retrieve(self.search_query(question, history), division=target.id,
                                              k=self._ranked_depth(top_k), timer=timer, sources=documents)

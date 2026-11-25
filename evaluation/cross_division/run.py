@@ -262,6 +262,7 @@ def render(report: Dict[str, Any]) -> str:
 async def run(args) -> int:
     from divrag.config import DEFAULT_OPENAI_MODEL, load_settings
     from divrag.llm import TOO_LONG, TOO_SLOW, LLMError, client_from_settings
+    from divrag.query import split_parts
     from divrag.spend import price_for
     from evaluation.locked.run import Runtime, _load_env
 
@@ -277,15 +278,22 @@ async def run(args) -> int:
     counting = _Counting(llm)
     answer_config = (f"{config_label(OPENROUTER_URL, settings.answer_models)}"
                      f"#k{settings.top_k}#all{settings.all_divisions_top_k}-{settings.all_divisions_candidates}")
+
+    def config_for(item: Dict[str, Any]) -> str:
+        # A question the All divisions search splits into parts (query.split_parts) is searched part by part
+        # since the split; one it doesn't split is searched as before, so its cached answer still holds.
+        split = item["target"] == "all" and len(split_parts(item["question"])) > 1
+        return f"{answer_config}#split" if split else answer_config
+
     cache = Cache(Path(args.cache))
-    todo = [i for i in items if cache.answer(i["id"], answer_config) is None]
+    todo = [i for i in items if cache.answer(i["id"], config_for(i)) is None]
     print(f"{len(items)} questions: {len(items) - len(todo)} cached, {len(todo)} to ask ({answer_config})", flush=True)
     for n, item in enumerate(todo, 1):
         if args.max_requests is not None and n > args.max_requests:
             print(f"stopped after --max-requests {args.max_requests}")
             break
         counting.reset()
-        record = {"kind": "answer", "id": item["id"], "answer_config": answer_config, "at": _now()}
+        record = {"kind": "answer", "id": item["id"], "answer_config": config_for(item), "at": _now()}
         try:
             record.update(await _with_busy_waits(lambda: answer_one(runtime, llm, item, settings.request_budget_seconds),
                                                  item["id"]))
@@ -311,7 +319,7 @@ async def run(args) -> int:
     divisions_by_source = {c.get("source"): c.get("division") for c in runtime.index.chunks}
     rows = []
     for item in items:
-        record = cache.answer(item["id"], answer_config)
+        record = cache.answer(item["id"], config_for(item))
         if record is None:
             continue
         for passage in record.get("passages") or []:

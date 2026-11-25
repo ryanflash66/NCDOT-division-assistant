@@ -242,7 +242,7 @@ class Retriever:
 
     def retrieve_across(self, question: str, divisions: Sequence[str], k: int = 5,
                         timer: Optional[StepTimer] = None, merged: int = DEFAULT_MERGED_CANDIDATES,
-                        sources: Optional[Sequence[str]] = None) -> List[Hit]:
+                        sources: Optional[Sequence[str]] = None, parts: Sequence[str] = ()) -> List[Hit]:
         """The k best chunks of all `divisions` together (DAR-666, "All divisions").
 
         Each division is searched on its own, exactly as a question asked of it
@@ -254,23 +254,41 @@ class Retriever:
         one scale, the ranks are. The cross-encoder's scores are, so the reranked
         pool is ordered across divisions by them, and aggregate_pages takes the k.
 
+        With two or more `parts` (query.split_parts), each part is searched and
+        reranked against itself instead of `question`, and the parts' rankings
+        are interleaved (first of each part, then second...): one ranking of
+        the whole question puts the first part's pages above the second's. The
+        parts share the `merged` reranked candidates, so the rerank costs what
+        one question's does (5.4 s for 40 on Vercel's CPU).
+
         The division filter still runs inside every search: only the listed
         divisions' chunks (and only `sources`' documents, when given) can reach
         the reranker or the answer.
         """
+        questions = list(parts) if len(parts) > 1 else [question]
         pool = self.candidates if self.reranker else k
+        # Each part reranks its share of `merged`, but at least its share of the k it must fill.
+        cut = max(-(-k // len(questions)), merged // len(questions)) if self.reranker else k
         with timed(timer, "embed"):
-            vector = self.embedder.query(question)
+            vectors = [self.embedder.query(q) for q in questions]
         with timed(timer, "search"):
-            rankings = [self._searched(question, vector, division, pool, sources) for division in divisions]
-            by_id = {id(h.chunk): h for ranking in rankings for h in ranking}
-            order = fuse([[id(h.chunk) for h in ranking] for ranking in rankings], k=self.rrf_k)
-            hits = [by_id[i] for i in order][:max(k, merged) if self.reranker else k]
-        if self.reranker and len(hits) > 1:
+            pools = [self._merged(q, vector, divisions, pool, sources)[:cut] for q, vector in zip(questions, vectors)]
+        if self.reranker:
             with timed(timer, "rerank"):
-                hits = rerank_text_only(self.reranker, question, hits) if self.text_only else rerank(self.reranker, question, hits)
-        return aggregate_pages(hits, self.page_aggregation, k, max_per_page=self.max_chunks_per_page,
-                               max_per_document=self.max_chunks_per_document)
+                pools = [self._reranked(q, hits) if len(hits) > 1 else hits for q, hits in zip(questions, pools)]
+        ranked = [aggregate_pages(hits, self.page_aggregation, k, max_per_page=self.max_chunks_per_page,
+                                  max_per_document=self.max_chunks_per_document) for hits in pools]
+        return _interleaved(ranked, k)
+
+    def _merged(self, question: str, vector, divisions: Sequence[str], pool: int,
+                sources: Optional[Sequence[str]]) -> List[Hit]:
+        """Every division's `pool` best hits for the question, merged by reciprocal rank fusion of their ranks."""
+        rankings = [self._searched(question, vector, division, pool, sources) for division in divisions]
+        by_id = {id(h.chunk): h for ranking in rankings for h in ranking}
+        return [by_id[i] for i in fuse([[id(h.chunk) for h in ranking] for ranking in rankings], k=self.rrf_k)]
+
+    def _reranked(self, question: str, hits: List[Hit]) -> List[Hit]:
+        return rerank_text_only(self.reranker, question, hits) if self.text_only else rerank(self.reranker, question, hits)
 
     def warm_up(self) -> None:
         """Load the models and run each once on a few words.
@@ -569,6 +587,25 @@ def rerank_text_only(reranker: Reranker, question: str, hits: List[Hit]) -> List
             last_text_score = hit.score
         out.append(hit)
     return out
+
+
+def _interleaved(rankings: List[List[Hit]], k: int) -> List[Hit]:
+    """The rankings' first hits, then their second hits, and so on, each chunk once: the first k.
+
+    One ranking is returned as it is (cut to k). Several are the parts of a
+    multi-part question (retrieve_across): taking them in turn gives every part
+    its best pages before any part's second best.
+    """
+    if len(rankings) == 1:
+        return rankings[0][:k]
+    out: List[Hit] = []
+    seen = set()
+    for depth in range(max((len(r) for r in rankings), default=0)):
+        for ranking in rankings:
+            if depth < len(ranking) and id(ranking[depth].chunk) not in seen:
+                seen.add(id(ranking[depth].chunk))
+                out.append(ranking[depth])
+    return out[:k]
 
 
 def _fused(vector_hits: List[Hit], keyword_hits: List[Hit], k: int = RRF_K,

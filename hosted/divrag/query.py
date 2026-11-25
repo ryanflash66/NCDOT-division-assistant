@@ -62,3 +62,54 @@ def parse(question: str) -> ParsedQuery:
 def _add(items: List[str], item: str) -> None:
     if item not in items:
         items.append(item)
+
+
+# Splitting a question that asks two things (an "All divisions" question, DAR-666). Searched as one
+# text, "What share of a cone's weight must be in its base? Also: how full must an abandoned pipe be
+# grouted?" ranks the first question's pages above the second's: on the 12 two-division development
+# questions the first part's value was right in 12 and the second's in 3, and the second part's page
+# reached the model in 2 (docs/cross-division/free-models-2026-11-24.md).
+MAX_PARTS = 3
+# A shorter question is a follow-up of the one before it ("What about at 55 mph?") and is searched with it.
+MIN_PART_WORDS = 6
+_SENTENCE_BREAK = re.compile(r"(?<=[.?!])\s+(?=\S)")
+_ALSO = re.compile(r"^(?:and\s+)?also\b\s*[:,]?\s*", re.IGNORECASE)
+_ASKS = re.compile(r"\?[\"'”’)\]]*$")
+
+
+def split_parts(question: str) -> List[str]:
+    """The questions a message asks, each with the statements before it; [question] when it asks one.
+
+    Deterministic, no model call. A part ends at a sentence ending in "?"; a
+    sentence starting "Also" (or "And also") starts one. A statement goes with
+    the question after it ("The road is a freeway. What sign size applies?"),
+    which also mends a sentence the split cut at an abbreviation ("U.S." then
+    "Route 64?"). Parts under MIN_PART_WORDS words join the part before them,
+    and the parts past MAX_PARTS join the last one. "Also:" is dropped from the
+    part, since it is not what the part asks.
+    """
+    text = (question or "").strip()
+    groups: List[str] = []
+    pending: List[str] = []
+    for sentence in _SENTENCE_BREAK.split(text):
+        if _ALSO.match(sentence) and pending:
+            groups.append(" ".join(pending))
+            pending = []
+        pending.append(sentence)
+        if _ASKS.search(sentence):
+            groups.append(" ".join(pending))
+            pending = []
+    if pending:
+        if groups and len(" ".join(pending).split()) < MIN_PART_WORDS:
+            groups[-1] = f"{groups[-1]} {' '.join(pending)}"  # "Please cite the page." after the last question
+        else:
+            groups.append(" ".join(pending))
+    parts: List[str] = []
+    for group in (_ALSO.sub("", g, count=1).strip() for g in groups):
+        if parts and len(group.split()) < MIN_PART_WORDS:
+            parts[-1] = f"{parts[-1]} {group}"
+        elif group:
+            parts.append(group)
+    if len(parts) > MAX_PARTS:
+        parts = parts[:MAX_PARTS - 1] + [" ".join(parts[MAX_PARTS - 1:])]
+    return parts if len(parts) > 1 else [text]

@@ -137,3 +137,74 @@ def test_the_all_divisions_prompt_names_each_passages_division_and_the_refusal_s
     text = refusal_text(ALL, [])
     assert text.startswith(f"I couldn't find an answer to that in any division's documents ({len(ALL.documents)} documents")
     assert "try asking" not in text
+
+
+class _TopicReranker:
+    """Scores a passage high when the question names its division, and records each (question, passage count)."""
+
+    def __init__(self):
+        self.seen = []
+
+    def scores(self, question, passages):
+        self.seen.append((question, len(passages)))
+        return [100.0 - float(p.split()[-1]) if p.split()[0] in question else float(p.split()[-1]) for p in passages]
+
+
+def test_a_question_asking_two_things_is_split_into_its_questions():
+    from divrag.query import split_parts
+
+    first = "According to NCDOT's maintenance guidelines, what share of a traffic cone's weight must be in its base?"
+    second = "When a utility abandons a pipe in place, how full does it have to be grouted?"
+    assert split_parts(f"{first} Also: {second}") == [first, second]
+    assert split_parts(f"{first} {second}") == [first, second]
+    assert split_parts(f"{first} Also, give the grout rule for an abandoned pipe.") == [
+        first, "give the grout rule for an abandoned pipe."]
+    # One question stays whole: a statement goes with the question after it, an abbreviation doesn't split it,
+    # and a request after the question joins it.
+    for one in ("What is the speed limit on U.S. Route 64 through a work zone?",
+                "The road is a freeway. What size is the End Work Zone Speed Limit sign?",
+                f"{first} Please cite the page."):
+        assert split_parts(one) == [one]
+    # A short follow-up is searched with the question before it.
+    assert split_parts(f"{first} What about cones?") == [f"{first} What about cones?"]
+    # At most three parts; the rest join the third.
+    many = [f"What is rule number {n} of the manual?" for n in range(1, 6)]
+    assert split_parts(" ".join(many)) == many[:2] + [" ".join(many[2:])]
+
+
+def test_each_part_is_reranked_against_itself_and_the_parts_take_turns():
+    retriever = Retriever(_index(), _Embedder(), _TopicReranker(), candidates=3, keyword=False, text_only=False)
+
+    hits = retriever.retrieve_across("utilities and tmsd", ["wztc", "utilities", "tmsd"], k=4, merged=9,
+                                     parts=["a utilities question", "a tmsd question"])
+
+    # Each part reranked its share of the 9 candidates against its own words, not the whole question.
+    assert retriever.reranker.seen == [("a utilities question", 4), ("a tmsd question", 4)]
+    # Each part's best chunk comes first, before either part's second best (here other divisions' chunks,
+    # since each part reranked only its 4 of the merged pool).
+    assert [h.chunk["division"] for h in hits[:2]] == ["utilities", "tmsd"] and len(hits) == 4
+
+
+def test_one_part_searches_the_question_as_before():
+    plain, parted = _retriever(candidates=3), _retriever(candidates=3)
+
+    hits = plain.retrieve_across("q", ["wztc", "utilities", "tmsd"], k=4, merged=9)
+    same = parted.retrieve_across("q", ["wztc", "utilities", "tmsd"], k=4, merged=9, parts=["q"])
+
+    assert [h.chunk for h in same] == [h.chunk for h in hits] and parted.reranker.seen == plain.reranker.seen == [9]
+
+
+def test_the_answerer_splits_only_an_all_divisions_question():
+    retriever = Retriever(_index(), _Embedder(), _TopicReranker(), candidates=5, keyword=False, text_only=False)
+    answerer = Answerer(retriever, llm=None, top_k=2, all_top_k=4, merged_candidates=10)
+    question = "Which utilities chunk comes first in the index? Also: which tmsd chunk comes first in the index?"
+
+    answerer.retrieve(question, BY_ID["wztc"])
+    assert [q for q, _ in retriever.reranker.seen] == [question]
+
+    retriever.reranker.seen.clear()
+    every = answerer.retrieve(question, ALL)
+    assert [q for q, _ in retriever.reranker.seen] == ["Which utilities chunk comes first in the index?",
+                                                       "which tmsd chunk comes first in the index?"]
+    # Both parts' divisions reach the model (as_passages puts the passages in reading order, not rank order).
+    assert {"utilities", "tmsd"} <= {h.chunk["division"] for h in every}

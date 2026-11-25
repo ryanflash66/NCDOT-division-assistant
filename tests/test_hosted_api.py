@@ -61,7 +61,7 @@ class _FakeRetriever:
             chunk["printed_page"] = self.printed_page
         return [Hit(2.0, chunk)]
 
-    def retrieve_across(self, question, divisions, k=5, timer=None, merged=40, sources=None):
+    def retrieve_across(self, question, divisions, k=5, timer=None, merged=40, sources=None, parts=()):
         """An "All divisions" search (DAR-666): one Utilities hit and one Work Zone hit, recorded as division "*all*"."""
         self.across = list(divisions)
         self.divisions.append("*all*")
