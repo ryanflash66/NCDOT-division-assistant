@@ -20,6 +20,11 @@ ledger does without a usage report (spend.estimated_usage); the cost column pric
 production OpenAI model's rate (OPENAI_MODEL, config.DEFAULT_OPENAI_MODEL). Local time is not
 Vercel's: the reranker runs about 12 times slower there (retrieval.DEFAULT_CANDIDATES).
 
+With --site the answers come from a deployed copy's /api/ask instead (evaluation.locked.run SiteAsker,
+which sends VERCEL_AUTOMATION_BYPASS_SECRET to get past a preview's login): the deployment's own models
+answer, OpenAI on Vercel. The site returns no passages and no token counts, so those columns are left
+blank and the cost is the site's OpenAI ledger before and after the run (shared with any live traffic).
+
 Answers are cached in evaluation/cross_division/results/cache.jsonl (gitignored), keyed by item and
 the code's configuration, so a stopped run resumes. The report goes to docs/cross-division/<label>.{json,md}.
 """
@@ -84,10 +89,12 @@ def _in_passages(passages: Sequence[Dict[str, Any]], expected: Dict[str, Any]) -
 def score(item: Dict[str, Any], record: Dict[str, Any], gold: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
     """One row: what was asked, its outcome, per-part scores, time and cost."""
     payload = record.get("answer")
+    # None when the answer came from a site (/api/ask returns only the cited sources): unknown, not missed.
+    known = record.get("passages") is not None
     passages = record.get("passages") or []
     row: Dict[str, Any] = {"id": item["id"], "group": item["group"], "target": item["target"], "error": record.get("error"),
                            "ms": record.get("timing_ms"), "calls": record.get("calls"), "tokens": record.get("tokens"),
-                           "passages": len(passages), "passage_divisions": sorted({p.get("division") for p in passages if p.get("division")})}
+                           "passages": len(passages) if known else None, "passage_divisions": sorted({p.get("division") for p in passages if p.get("division")})}
     if payload is None:
         return row
     row.update(refused=bool(payload.get("refused")), uncited=bool(payload.get("uncited")), answer=payload.get("answer"),
@@ -100,7 +107,7 @@ def score(item: Dict[str, Any], record: Dict[str, Any], gold: Dict[str, Dict[str
             value = not row["refused"] and value_matches(expected.get("value"), expected.get("accept"), text)
             cited = not row["refused"] and _cited_part(payload, expected)
             parts.append({"id": part_id, "division": gold[part_id]["division"], "value_ok": value,
-                          "cited_ok": cited, "in_passages": _in_passages(passages, expected)})
+                          "cited_ok": cited, "in_passages": _in_passages(passages, expected) if known else None})
         row.update(parts=parts, both_value_ok=all(p["value_ok"] for p in parts),
                    both_strict_ok=all(p["value_ok"] and p["cited_ok"] for p in parts),
                    one_value_ok=sum(p["value_ok"] for p in parts) == 1)
@@ -110,7 +117,7 @@ def score(item: Dict[str, Any], record: Dict[str, Any], gold: Dict[str, Dict[str
                         cited=cited_pages(payload))
     row.update({k: scored[k] for k in ("value_ok", "strict_ok", "critical", "over_refusal", "false_answer")})
     if base.get("expected"):
-        row["in_passages"] = _in_passages(passages, base["expected"])
+        row["in_passages"] = _in_passages(passages, base["expected"]) if known else None
     return row
 
 
@@ -171,7 +178,8 @@ def summarize(rows: Sequence[Dict[str, Any]], prices) -> Dict[str, Any]:
                    "both_strict_ok": count(pairs, "both_strict_ok"), "one_value_ok": count(pairs, "one_value_ok"),
                    "refused": count(pairs, "refused"),
                    "parts_value_ok": {"k": sum(p["value_ok"] for r in pairs for p in r["parts"]), "n": 2 * len(pairs)},
-                   "parts_in_passages": {"k": sum(p["in_passages"] for r in pairs for p in r["parts"]), "n": 2 * len(pairs)},
+                   "parts_in_passages": {"k": sum(bool(p["in_passages"]) for r in pairs for p in r["parts"]),
+                                         "n": sum(p["in_passages"] is not None for r in pairs for p in r["parts"])},
                    "cited_two_divisions": {"k": sum(len(r.get("cited_divisions") or []) >= 2 for r in pairs), "n": len(pairs)}}
     for group in ("single", "refuse"):
         for kind in ("own", "all"):
@@ -197,7 +205,7 @@ def summarize(rows: Sequence[Dict[str, Any]], prices) -> Dict[str, Any]:
             cost = round((statistics.mean(tokens_in) * prices[0] + statistics.mean(tokens_out) * prices[1]) / 1e6, 5)
         out[f"time_cost_{kind}"] = {"n": len(selected), "total_s_mean": _mean(totals), "total_s_median": _median(totals),
                                     "retrieval_s_mean": _mean(retrieval), "rerank_s_mean": _mean(rerank),
-                                    "passages_mean": _mean([r["passages"] for r in selected]),
+                                    "passages_mean": _mean([r["passages"] for r in selected if r["passages"] is not None]),
                                     "calls_mean": _mean(calls), "input_tokens_mean": _mean(tokens_in),
                                     "output_tokens_mean": _mean(tokens_out), "openai_usd_per_question": cost}
     return out
@@ -232,8 +240,9 @@ def render(report: Dict[str, Any]) -> str:
         lines.append(f"| {label} | {kn(s['single_own'].get(key))} | {kn(s['single_all'].get(key))} |")
     lines += [f"| must-refuse questions answered | {kn(s['refuse_own'].get('false_answer'))} | "
               f"{kn(s['refuse_all'].get('false_answer'))} (read below: another division may cover them) |", "",
-              "## Time and cost per question (local CPU; free models answered, cost priced at "
-              f"{meta['cost_model']})", "",
+              (f"## Time and cost per question (Vercel, {meta['site']}; its models answered)" if meta.get("site") else
+               "## Time and cost per question (local CPU; free models answered, cost priced at "
+               f"{meta['cost_model']})"), "",
               "| | own division | All divisions |", "|---|---|---|"]
     for key, label in (("n", "questions"), ("total_s_mean", "total s, mean"), ("total_s_median", "total s, median"),
                        ("retrieval_s_mean", "retrieval s, mean"), ("rerank_s_mean", "rerank s, mean"),
@@ -241,13 +250,18 @@ def render(report: Dict[str, Any]) -> str:
                        ("input_tokens_mean", "input tokens, mean (estimated)"),
                        ("output_tokens_mean", "output tokens, mean (estimated)"),
                        ("openai_usd_per_question", "OpenAI $ per question (estimated)")):
-        lines.append(f"| {label} | {s['time_cost_own'].get(key)} | {s['time_cost_all'].get(key)} |")
+        own, every = (s[f"time_cost_{kind}"].get(key) for kind in ("own", "all"))
+        lines.append(f"| {label} | {'-' if own is None else own} | {'-' if every is None else every} |")
+    if meta.get("site_spend_usd") is not None:
+        lines += ["", f"OpenAI spend on the site's ledger during the run: ${meta['site_spend_usd']:.4f} for "
+                      f"{meta['site_asked']} questions asked (the ledger is shared with live traffic; estimated from "
+                      "token usage, not billed)."]
     lines += ["", "## Every cross-division question", "", "| id | parts | value | cited | in passages | divisions cited |",
               "|---|---|---|---|---|---|"]
     for r in report["rows"]:
         if r["group"] != "pair" or "parts" not in r:
             continue
-        mark = lambda key: " ".join("yes" if part[key] else "no" for part in r["parts"])  # noqa: E731
+        mark = lambda key: " ".join("-" if part[key] is None else "yes" if part[key] else "no" for part in r["parts"])  # noqa: E731
         lines.append(f"| {r['id']} | {' + '.join(part['id'] for part in r['parts'])} | {mark('value_ok')} | "
                      f"{mark('cited_ok')} | {mark('in_passages')} | {', '.join(r.get('cited_divisions') or []) or '-'} |")
     refuse_all = [r for r in report["rows"] if r["group"] == "refuse" and r["target"] == "all" and r.get("refused") is False]
@@ -279,7 +293,22 @@ async def run(args) -> int:
     answer_config = (f"{config_label(OPENROUTER_URL, settings.answer_models)}"
                      f"#k{settings.top_k}#all{settings.all_divisions_top_k}-{settings.all_divisions_candidates}")
 
+    site, site_health, spend_before, asked = None, None, None, 0
+    if args.site:
+        from evaluation.locked.run import SiteAsker
+        from evaluation.run_ragas import _host
+
+        # The deployment's code and settings answer, so its address (one per deployment) is the cache key.
+        site = SiteAsker(args.site)
+        site_health = await site.health()
+        spend_before = (site_health.get("openai_spend") or {}).get("estimated_usd")
+        answer_config = f"site:{_host(args.site)}:{'+'.join(site_health.get('llm_models') or [])}"
+        print(f"site {args.site}: {site_health.get('llm_provider')} {site_health.get('llm_models')}, "
+              f"OpenAI spend {site_health.get('openai_spend')}", flush=True)
+
     def config_for(item: Dict[str, Any]) -> str:
+        if site:
+            return answer_config
         # A question the All divisions search splits into parts (query.split_parts) is searched part by part
         # since the split; one it doesn't split is searched as before, so its cached answer still holds.
         split = item["target"] == "all" and len(split_parts(item["question"])) > 1
@@ -295,8 +324,13 @@ async def run(args) -> int:
         counting.reset()
         record = {"kind": "answer", "id": item["id"], "answer_config": config_for(item), "at": _now()}
         try:
-            record.update(await _with_busy_waits(lambda: answer_one(runtime, llm, item, settings.request_budget_seconds),
-                                                 item["id"]))
+            if site:
+                asked += 1
+                reply = await site.ask(item)
+                record.update(answer=reply["answer"], passages=None, timing_ms=reply.get("timing_ms"))
+            else:
+                record.update(await _with_busy_waits(lambda: answer_one(runtime, llm, item, settings.request_budget_seconds),
+                                                     item["id"]))
         except Stop as stop:
             print(stop)
             break
@@ -308,13 +342,22 @@ async def run(args) -> int:
             record.update({"answer": None, "error": exc.user_message, "passages": [], "timing_ms": None})
         for passage in record.get("passages") or []:
             passage.pop("text", None)  # the cache keeps what scoring needs, not the documents' text
-        record.update(calls=counting.calls, tokens=list(counting.tokens))
+        if not site:
+            record.update(calls=counting.calls, tokens=list(counting.tokens))
         cache.add(record)
         answer = record.get("answer") or {}
         state = record.get("error") or ("refused" if answer.get("refused") else "answered")
         print(f"  [{n}/{len(todo)}] {item['id']}: {state} in {(record.get('timing_ms') or {}).get('total', 0) / 1000:.1f}s",
               flush=True)
         await asyncio.sleep(args.pause)
+
+    spend_used = None
+    if site:
+        site_health = await site.health()
+        await site.aclose()
+        spend_after = (site_health.get("openai_spend") or {}).get("estimated_usd")
+        if spend_before is not None and spend_after is not None:
+            spend_used = round(spend_after - spend_before, 4)
 
     divisions_by_source = {c.get("source"): c.get("division") for c in runtime.index.chunks}
     rows = []
@@ -326,12 +369,14 @@ async def run(args) -> int:
             passage["division"] = divisions_by_source.get(passage.get("source"))
         rows.append(score(item, record, gold))
     prices = price_for(settings.openai_model or DEFAULT_OPENAI_MODEL)
-    report = {"meta": {"label": args.label, "commit": _git("rev-parse", "--short", "HEAD"), "at": _now(),
-                       "models": list(settings.answer_models), "answer_config": answer_config,
+    report = {"meta": {"label": args.label, "commit": args.site_commit or _git("rev-parse", "--short", "HEAD"), "at": _now(),
+                       "models": list((site_health or {}).get("llm_models") or settings.answer_models),
+                       "answer_config": answer_config,
                        "top_k": settings.top_k, "all_divisions_top_k": settings.all_divisions_top_k,
                        "all_divisions_candidates": settings.all_divisions_candidates,
                        "cost_model": f"{settings.openai_model or DEFAULT_OPENAI_MODEL} {prices}",
-                       "asked": len(rows), "of": len(items)},
+                       "asked": len(rows), "of": len(items), "site": args.site, "site_health": site_health,
+                       "site_spend_usd": spend_used, "site_asked": asked},
               "summary": summarize(rows, prices), "rows": rows}
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
     (DOCS_DIR / f"{args.label}.json").write_text(json.dumps(report, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -348,6 +393,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--max-requests", type=int)
     parser.add_argument("--pause", type=float, default=2.0)
     parser.add_argument("--cache", default=str(CACHE_PATH))
+    parser.add_argument("--site", help="ask a deployed copy's /api/ask (e.g. https://…vercel.app) instead of answering "
+                                       "in-process")
+    # A CLI preview carries no commit of its own: name the commit it was deployed from, not this checkout's.
+    parser.add_argument("--site-commit", help="with --site: the commit the deployment was built from")
     return asyncio.run(run(parser.parse_args(argv)))
 
 

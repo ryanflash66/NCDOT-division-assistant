@@ -1,0 +1,855 @@
+{
+ "meta": {
+  "label": "openai-site-joined-2026-11-25",
+  "commit": "cac180a",
+  "at": "2026-11-25T10:10:42+00:00",
+  "models": [
+   "gpt-6.1-terra",
+   "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "nvidia/nemotron-3.5-super-vl:free",
+   "google/gemma-4-31b-it:free"
+  ],
+  "answer_config": "site:ncdot-division-assistant-3p93q25sd-ncdot.vercel.app:gpt-6.1-terra+nvidia/nemotron-3-ultra-550b-a55b:free+nvidia/nemotron-3.5-super-vl:free+google/gemma-4-31b-it:free",
+  "top_k": 5,
+  "all_divisions_top_k": 8,
+  "all_divisions_candidates": 40,
+  "cost_model": "gpt-6.1-terra (1.0, 5.0)",
+  "asked": 12,
+  "of": 12,
+  "site": "https://ncdot-division-assistant-3p93q25sd-ncdot.vercel.app",
+  "site_health": {
+   "ok": true,
+   "chunks": {
+    "wztc": 5355,
+    "utilities": 2003,
+    "tmsd": 5899
+   },
+   "embedding_model": "BAAI/bge-small-en-v1.5",
+   "rerank": true,
+   "rerank_model": "Xenova/ms-marco-MiniLM-L-6-v2",
+   "rerank_model_file": "onnx/model_quantized.onnx",
+   "rerank_text_only": true,
+   "rerank_batch_size": 1,
+   "keyword_search": true,
+   "keyword_field": true,
+   "keyword_field_boost": 1.5,
+   "keyword_id_boost": 2.0,
+   "rerank_candidates": 40,
+   "top_k": 5,
+   "page_aggregation": "off",
+   "max_chunks_per_page": 2,
+   "max_chunks_per_document": 0,
+   "rrf_k": 60,
+   "fusion_weights": [
+    1.0,
+    1.0
+   ],
+   "bm25_k1": 1.2,
+   "bm25_b": 0.75,
+   "index_bm25": {
+    "k1": 1.2,
+    "b": 0.75
+   },
+   "llm_provider": "openai",
+   "llm_models": [
+    "gpt-6.1-terra",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "nvidia/nemotron-3.5-super-vl:free",
+    "google/gemma-4-31b-it:free"
+   ],
+   "llm_configured": true,
+   "number_agreement": false,
+   "conflict_check": true,
+   "document_precedence": [],
+   "page_images_to_model": false,
+   "page_images_max": null,
+   "page_images_detail": null,
+   "openai_spend": {
+    "month": "2026-11",
+    "estimated_usd": 17.1256,
+    "limit_usd": 45.0,
+    "budget_usd": 50.0,
+    "over_limit": false,
+    "shared": true
+   },
+   "all_divisions_top_k": 8,
+   "all_divisions_candidates": 40,
+   "faq": {
+    "on": true,
+    "threshold": 0.95,
+    "namespace": "preview",
+    "shared": true
+   },
+   "cpus": {
+    "cpu_count": 1,
+    "onnx_threads": null,
+    "affinity": 1,
+    "cgroup_cpu.max": "max 100000"
+   }
+  },
+  "site_spend_usd": 0.3612,
+  "site_asked": 12
+ },
+ "summary": {
+  "pair": {
+   "n": 12,
+   "both_value_ok": {
+    "k": 2,
+    "n": 12
+   },
+   "both_strict_ok": {
+    "k": 2,
+    "n": 12
+   },
+   "one_value_ok": {
+    "k": 9,
+    "n": 12
+   },
+   "refused": {
+    "k": 0,
+    "n": 12
+   },
+   "parts_value_ok": {
+    "k": 13,
+    "n": 24
+   },
+   "parts_in_passages": {
+    "k": 0,
+    "n": 0
+   },
+   "cited_two_divisions": {
+    "k": 3,
+    "n": 12
+   }
+  },
+  "single_own": {
+   "n": 0,
+   "refused": {
+    "k": 0,
+    "n": 0
+   },
+   "value_ok": {
+    "k": 0,
+    "n": 0
+   },
+   "strict_ok": {
+    "k": 0,
+    "n": 0
+   },
+   "critical": {
+    "k": 0,
+    "n": 0
+   },
+   "over_refusal": {
+    "k": 0,
+    "n": 0
+   },
+   "in_passages": {
+    "k": 0,
+    "n": 0
+   }
+  },
+  "single_all": {
+   "n": 0,
+   "refused": {
+    "k": 0,
+    "n": 0
+   },
+   "value_ok": {
+    "k": 0,
+    "n": 0
+   },
+   "strict_ok": {
+    "k": 0,
+    "n": 0
+   },
+   "critical": {
+    "k": 0,
+    "n": 0
+   },
+   "over_refusal": {
+    "k": 0,
+    "n": 0
+   },
+   "in_passages": {
+    "k": 0,
+    "n": 0
+   }
+  },
+  "refuse_own": {
+   "n": 0,
+   "refused": {
+    "k": 0,
+    "n": 0
+   },
+   "false_answer": {
+    "k": 0,
+    "n": 0
+   }
+  },
+  "refuse_all": {
+   "n": 0,
+   "refused": {
+    "k": 0,
+    "n": 0
+   },
+   "false_answer": {
+    "k": 0,
+    "n": 0
+   }
+  },
+  "time_cost_own": {
+   "n": 0,
+   "total_s_mean": null,
+   "total_s_median": null,
+   "retrieval_s_mean": null,
+   "rerank_s_mean": null,
+   "passages_mean": null,
+   "calls_mean": null,
+   "input_tokens_mean": null,
+   "output_tokens_mean": null,
+   "openai_usd_per_question": null
+  },
+  "time_cost_all": {
+   "n": 12,
+   "total_s_mean": 7.4,
+   "total_s_median": 7.4,
+   "retrieval_s_mean": 2.5,
+   "rerank_s_mean": 2.4,
+   "passages_mean": null,
+   "calls_mean": null,
+   "input_tokens_mean": null,
+   "output_tokens_mean": null,
+   "openai_usd_per_question": null
+  }
+ },
+ "rows": [
+  {
+   "id": "x-01",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 833,
+    "embed": 41,
+    "search": 22,
+    "rerank": 3040,
+    "llm": 2717,
+    "citations": 3,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 3941,
+    "total": 6664,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "The documents don’t specify what share of a traffic cone’s weight must be in its base or how full an abandoned pipe must be grouted. The Utilities Accommodation Manual says abandonment in place requires mutual agreement and written notice to NCDOT, and must follow Section 3.6.15.[1]",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "parts": [
+    {
+     "id": "wztc-037",
+     "division": "wztc",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": null
+    },
+    {
+     "id": "utilities-026",
+     "division": "utilities",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-02",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 1,
+    "embed": 46,
+    "search": 15,
+    "rerank": 3428,
+    "llm": 3029,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 3491,
+    "total": 6524,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "Mobile work may stop for **no more than 5 minutes at a time** under the Work Zone Traffic Control maintenance guidelines. [1]\n\nThe Utilities Accommodation Manual material provided does not cover the required distance behind the face of a guardrail for standard street light pole placement.",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-041",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    },
+    {
+     "id": "utilities-018",
+     "division": "utilities",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": true
+  },
+  {
+   "id": "x-03",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 1,
+    "embed": 60,
+    "search": 17,
+    "rerank": 3895,
+    "llm": 2383,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2289,
+    "suggest": 0,
+    "retrieval": 3975,
+    "total": 8649,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "- **Blasting-zone signing:** The Work Zone Traffic Control MUTCD note says, “Whenever blasting caps are used within 1,000 feet of a roadway, the signing shown shall be used.” [1]\n- **Adverse possession:** The documents provided do not cover the UAM’s required possession period.",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-045",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    },
+    {
+     "id": "utilities-029",
+     "division": "utilities",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": true
+  },
+  {
+   "id": "x-04",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 1,
+    "embed": 46,
+    "search": 12,
+    "rerank": 901,
+    "llm": 2697,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2719,
+    "suggest": 0,
+    "retrieval": 961,
+    "total": 6380,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "The Work Zone Traffic Control MUTCD lists **36 × 54** for the “End Work Zone Speed Limit” (R2-12) row and “Freeway or Expressway” column; the table excerpt does not specify the unit.[1]\n\nThe documents provided do not cover the minimum height for an alternate specialty fence in the July 7, 2010 Chief Engineer memo.",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-009",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    },
+    {
+     "id": "utilities-043",
+     "division": "utilities",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": true
+  },
+  {
+   "id": "x-05",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 1,
+    "embed": 46,
+    "search": 12,
+    "rerank": 459,
+    "llm": 4516,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3016,
+    "suggest": 0,
+    "retrieval": 518,
+    "total": 8064,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "- **Yield (R1-2):** Table 6G-1’s “Yield” row and “Minimum” column list **30 × 30 × 30**, but the table does not state the unit. [1]\n- **45 mph:** Table 3B-1’s “45 mph” row and “Minimum Passing Sight Distance” column list **700 feet**. [2]\n\n**The documents give different values:**\n- Federal, MUTCD 11th Edition (December 2023), Part 6: Temporary Traffic Control: 30 x 30 x 30 [1]\n- Federal, MUTCD 11th Edition (December 2023), Part 3: Markings: 700 feet [2]\n\n**Recommendation** (the assistant's judgment, not an NCDOT rule): Check both documents; neither value is shown as the one to follow.",
+   "cited_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-016",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    },
+    {
+     "id": "tmsd-056",
+     "division": "tmsd",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": true,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-06",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 1,
+    "embed": 52,
+    "search": 18,
+    "rerank": 4162,
+    "llm": 2111,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 4234,
+    "total": 6349,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "States must perform a work zone process review **at least every two years**. [1] The documents do not cover the deadline for updating a Strategic Highway Safety Plan under 23 CFR 924.9.",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-067",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    },
+    {
+     "id": "tmsd-061",
+     "division": "tmsd",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": true
+  },
+  {
+   "id": "x-07",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 1,
+    "embed": 42,
+    "search": 12,
+    "rerank": 1535,
+    "llm": 3492,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2680,
+    "suggest": 0,
+    "retrieval": 1593,
+    "total": 7770,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "- **Work Zone Traffic Control:** The “RURAL WIDENING (R) LEVEL 2” row and “PROJECT LENGTH” column list **5 to 8 miles**; the guidelines say two of four criteria must be met to identify the proper level. [1]\n- **Transportation Mobility and Safety:** The **Jacksonville District Office** covers Onslow and Pender counties, according to the Division 3 row and the “District Office” and “Counties Covered By District Office” columns. [2]",
+   "cited_divisions": [
+    "tmsd",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-005",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    },
+    {
+     "id": "tmsd-043",
+     "division": "tmsd",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": true,
+   "both_strict_ok": true,
+   "one_value_ok": false
+  },
+  {
+   "id": "x-08",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 0,
+    "embed": 40,
+    "search": 12,
+    "rerank": 2700,
+    "llm": 3175,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 0,
+    "suggest": 0,
+    "retrieval": 2753,
+    "total": 5930,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "The **FSU** leads the revision of the Feasibility Study process to account for work zone impacts; WZTCU is the affected unit. [1] The documents don’t cover which instrument to use to check curves at a fatal crash site.",
+   "cited_divisions": [
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "wztc-030",
+     "division": "wztc",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    },
+    {
+     "id": "tmsd-038",
+     "division": "tmsd",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": true
+  },
+  {
+   "id": "x-09",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 1,
+    "embed": 52,
+    "search": 14,
+    "rerank": 1239,
+    "llm": 3289,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2738,
+    "suggest": 0,
+    "retrieval": 1307,
+    "total": 7337,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "For a transverse HDD installation under pavement, the Utilities Accommodation Manual’s **“>6–15 inches”** row and **“Minimum Depth of Cover”** column give a minimum cover of **12 times the hole diameter** on limited, partially controlled, or non-controlled access roadways; on fully controlled access roadways, the minimum is **15 feet**. [1]\n\nThe documents provided do not cover the N width in Detail 3-2A.",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "parts": [
+    {
+     "id": "utilities-001",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    },
+    {
+     "id": "tmsd-004",
+     "division": "tmsd",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": true
+  },
+  {
+   "id": "x-10",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 1,
+    "embed": 61,
+    "search": 16,
+    "rerank": 2263,
+    "llm": 2027,
+    "citations": 0,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 4101,
+    "suggest": 0,
+    "retrieval": 2343,
+    "total": 8473,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "Collisions with roadside trees and utility poles are the most harmful event in **14 percent of fatal crashes**, according to the Utilities division’s FHWA slides.[1]\n\nThe documents don’t cover the accident modification factor for converting a 4-legged urban intersection from stop control to signal control.",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "parts": [
+    {
+     "id": "utilities-063",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    },
+    {
+     "id": "tmsd-074",
+     "division": "tmsd",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": true
+  },
+  {
+   "id": "x-11",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 1,
+    "embed": 61,
+    "search": 15,
+    "rerank": 2753,
+    "llm": 3142,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 3809,
+    "suggest": 0,
+    "retrieval": 2830,
+    "total": 9788,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "- **Light pole:** The Utilities Accommodation Manual allows placement **3 feet 6 inches** behind the face of the guardrail when post spacing is reduced to 3 feet 1.5 inches. [1]\n- **Run-out length:** The Work Zone Traffic Control Design Manual gives **345 feet** for the 60 mph design-speed row and the 800–2,000 vpd ADT column. [2] The documents do not identify this table as Detail 3-2A.",
+   "cited_divisions": [
+    "utilities",
+    "wztc"
+   ],
+   "parts": [
+    {
+     "id": "utilities-019",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    },
+    {
+     "id": "tmsd-003",
+     "division": "tmsd",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": true
+  },
+  {
+   "id": "x-12",
+   "group": "pair",
+   "target": "all",
+   "error": null,
+   "ms": {
+    "model_load": 1,
+    "embed": 46,
+    "search": 16,
+    "rerank": 1886,
+    "llm": 2966,
+    "citations": 1,
+    "retry": 0,
+    "recite": 0,
+    "recheck": 0,
+    "agree": 0,
+    "compare": 2472,
+    "suggest": 0,
+    "retrieval": 1951,
+    "total": 7394,
+    "faq": 0
+   },
+   "calls": null,
+   "tokens": null,
+   "passages": null,
+   "passage_divisions": [],
+   "refused": false,
+   "uncited": false,
+   "answer": "The minimum cover depth is **15 feet**. Footnote b of the Utilities Accommodation Manual states: “The minimum cover depth for transverse HDD installations of any size on fully controlled access roadways is 15 feet.” [1]\n\nThe documents provided do not identify which TOD form is filled out when a TODS attraction changes ownership.",
+   "cited_divisions": [
+    "utilities"
+   ],
+   "parts": [
+    {
+     "id": "utilities-002",
+     "division": "utilities",
+     "value_ok": true,
+     "cited_ok": true,
+     "in_passages": null
+    },
+    {
+     "id": "tmsd-034",
+     "division": "tmsd",
+     "value_ok": false,
+     "cited_ok": false,
+     "in_passages": null
+    }
+   ],
+   "both_value_ok": false,
+   "both_strict_ok": false,
+   "one_value_ok": true
+  }
+ ]
+}

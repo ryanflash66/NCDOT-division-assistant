@@ -6,6 +6,7 @@ Commit `cac180a`, 2026-11-25T01:04:09+00:00, models nvidia/nemotron-3-ultra-550b
 
 - **Splitting a two-part question fixes most of what `free-models-2026-11-24` lost.** Both parts right went from 3/12 to 10/12 (both citing their gold page: 3 to 9), the second part's value from 3/12 to 11/12, and every answer now cites both divisions (4/12 before). The parts' gold pages reached the first passages in 21 of 24 parts, against 13.
 - **What is still wrong:** x-01's first part (the cone-base share, wztc-037) lost its page, which the joined question had only reached on the second look; x-11's second part is tmsd-003, which All divisions also gets wrong asked alone (a WZTC document's 345 ft instead of TMSD's 330).
+- **With OpenAI on a Vercel preview** the split gives the same result (both parts right 2/12 to 10/12): see `openai-site-split-2026-11-25.md`.
 - **One-division questions are unchanged:** none of the locked set's questions (all splits) is split, so their All-divisions answers are the cached ones from the earlier run and their table is the same.
 - **Cost:** the parts share the 40 reranked candidates (20 each), so the rerank costs the same: 0.58 s whole against 0.56 s split, timed back to back on the 12 pairs locally (the run's own 0.32 s against 0.71 s was the machine's load). Embedding twice adds 0.02 s. The model reads slightly fewer input tokens (9,771 against 11,249 per pair, estimated) and writes more (292 against 219), since it now answers both parts. The pairs' mean time rose from 6.0 s to 9.6 s, all in the free models' answer time.
 
