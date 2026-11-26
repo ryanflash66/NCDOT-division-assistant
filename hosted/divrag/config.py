@@ -63,6 +63,10 @@ LLM_PROVIDER=openai. Everything else has a default suitable for the public demo.
     PAGE_IMAGES_DETAIL          OpenAI's image detail: "auto" (default), "low", "high" or "original"
     PAGE_IMAGES_BASE_URL        where the function fetches the page images it doesn't have on disk (default on
                                 Vercel: the deployment itself, see page_images.base_url_from_env)
+    PAGE_READINGS               "on" (default) or "off": a passage from a scanned, sideways or drawing page whose
+                                OCR text and image reading disagree (index/page_readings.json, prototype.read_pages)
+                                carries the image reading, and the reply warns the reader (readings.py, DAR-739).
+                                Nothing changes while the index has no readings; "off" ignores them
     CONFLICT_CHECK              "on" (default) or "off": when an answer states numbers and its passages come from two or
                                 more documents, one more model call compares them; when they disagree the reply names
                                 each document's value, level and citation and a labelled recommendation (DAR-674,
@@ -165,6 +169,7 @@ class Settings:
     page_images_max: int = DEFAULT_MAX_IMAGES
     page_images_detail: str = DEFAULT_DETAIL
     page_images_base_url: Optional[str] = None
+    page_readings: bool = True
     conflict_check: bool = False
     document_precedence: Tuple[str, ...] = ()
     faq: bool = True
@@ -355,6 +360,11 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
     if images_detail not in DETAILS:
         raise ValueError(f"PAGE_IMAGES_DETAIL must be one of {', '.join(DETAILS)}, got {images_detail!r}")
     images_base = base_url_from_env(env)
+    # On by default: the readings cost nothing at answer time (they were read at indexing time), and a
+    # page whose two readings agree changes nothing. "off" is for the held-out comparison (DAR-739).
+    readings = _setting(env, "PAGE_READINGS", "on").lower()
+    if readings not in ("on", "off", "1", "0", "true", "false"):
+        raise ValueError(f"PAGE_READINGS must be on or off, got {readings!r}")
     if images_base and not images_base.startswith(("https://", "http://localhost", "http://127.0.0.1")):
         raise ValueError(f"PAGE_IMAGES_BASE_URL must be an https:// URL (or http://localhost), got {images_base!r}")
     # On by default (DAR-674, decided Nov 17): when an answer states numbers and its passages come from
@@ -434,6 +444,7 @@ def load_settings(env: Optional[Mapping[str, str]] = None) -> Settings:
         page_images_max=int(images_max),
         page_images_detail=images_detail,
         page_images_base_url=images_base,
+        page_readings=readings in ("on", "1", "true"),
         conflict_check=conflict in ("on", "1", "true"),
         document_precedence=precedence,
         faq=faq in ("on", "1", "true"),

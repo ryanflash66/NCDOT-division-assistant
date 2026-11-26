@@ -5,7 +5,7 @@ import { levelTitle, pagesText, pagesTitle, pickAnswer } from "@/panels/answers"
 import { webUrl } from "@/panels/format";
 import { PageImage } from "@/panels/PageImage";
 import { useApp } from "@/state";
-import type { Source } from "@/types";
+import type { PageReading, Source } from "@/types";
 
 // The right panel (public/js/sources.js): the passages the shown answer cites. Clicking
 // [n] in an answer (useApp().focusSource) shows that answer's passages, scrolls to
@@ -134,6 +134,39 @@ export function SourcesPanel() {
   );
 }
 
+/**
+ * The cited page as OpenAI read it from the page image, under the OCR excerpt above it (DAR-739):
+ * shown only for a page whose two readings differ, so the reader can compare them with the page.
+ */
+function PageReadingBox({ reading }: { reading: PageReading }) {
+  const [open, setOpen] = useState(false);
+  const textId = useId();
+  const long = reading.image.length > CLAMP_CHARS;
+  return (
+    <div className="aui-page-reading mt-2 rounded-r border-l-[3px] border-amber-400 bg-amber-50/60 px-2.5 py-2 text-[0.9rem] leading-relaxed dark:bg-amber-950/30">
+      <p className="text-[0.8rem] font-semibold text-muted-foreground">
+        {reading.agreement === "image_only"
+          ? `Read from the page image (PDF p.${reading.page}); the scan had no text`
+          : `Read from the page image (PDF p.${reading.page}); differs from the text above`}
+      </p>
+      <p id={textId} className={cn("whitespace-pre-line", long && !open && "line-clamp-5")}>
+        {reading.image}
+      </p>
+      {long && (
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls={textId}
+          onClick={() => setOpen(!open)}
+          className="inline-flex items-center py-1 text-[0.85rem] font-semibold text-primary underline-offset-4 hover:underline pointer-coarse:min-h-11"
+        >
+          {open ? "Show less" : "Show more"}
+        </button>
+      )}
+    </div>
+  );
+}
+
 function SourceItem({ source: s, current }: { source: Source; current: boolean }) {
   const n = Number(s.n);
   const text = s.excerpt ? String(s.excerpt) : "";
@@ -190,6 +223,9 @@ function SourceItem({ source: s, current }: { source: Source; current: boolean }
           </p>
         </div>
       )}
+      {(s.readings ?? []).map((r) => (
+        <PageReadingBox key={r.page} reading={r} />
+      ))}
       <PageImage key={String(s.image ?? "")} source={s} />
       {(long || href) && (
         <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-0.5">
