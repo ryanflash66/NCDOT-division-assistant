@@ -19,7 +19,10 @@ OCR reading) by divrag.readings.compare(), and both go to
 hosted/index/page_readings.json with the flag (`agree`, `disagree`,
 `image_only`), the differences, and the call's tokens and cost. The file is
 written after every page, so a run that stops is resumed by running it again:
-pages already read are skipped (--force reads them again).
+pages already read are skipped (--force reads them again), unless their PDF has
+changed since (each reading keeps the file's hash). --compare-only also drops
+the readings of pages no longer flagged. One run at a time holds the file
+(page_readings.json.lock).
 
 The key is OPENAI_API_KEY (read from the environment or .env, never written
 anywhere); --base-url sends the calls to another OpenAI-compatible endpoint.
@@ -37,12 +40,14 @@ and the output at the page's OCR text length.
 import argparse
 import asyncio
 import base64
+import hashlib
 import json
 import math
 import os
 import sys
 import time
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
@@ -82,6 +87,7 @@ PROMPT_TOKENS = 450  # TRANSCRIBE_PROMPT and the page's label
 CHARS_PER_TOKEN = 4
 MARKDOWN_OVERHEAD = 1.3  # table bars and line breaks the transcription adds to the OCR text's length
 NO_TEXT = "NO_TEXT"
+WORST_INPUT_TOKENS = math.ceil(MAX_SIDE * MAX_SIDE * MEASURED_TOKENS_PER_PIXEL) + PROMPT_TOKENS
 PROMPT_VERSION = 1
 
 TRANSCRIBE_PROMPT = """You transcribe one page of a transportation agency's manual from its image, for a search index whose answers engineers rely on. Write out all the text on the page exactly as printed, in reading order.
@@ -131,12 +137,13 @@ def flagged_pages(chunks: Sequence[Dict[str, Any]], no_text: Any) -> List[Page]:
         division, source, first = chunk.get("division"), chunk.get("source"), chunk.get("page")
         if not (division and source and first):
             continue
-        found = [r for r in reasons(chunk, no_text) if r in READ_REASONS]
         for page in range(int(first), int(chunk.get("page_end") or first) + 1):
             key = (division, source, page)
             if key not in texts:
                 order.append(key)
             texts.setdefault(key, []).append((chunk.get("kind") == "figure", chunk.get("text") or ""))
+            # Each page of a chunk joined over a page break on its own: OCR's no-text pages are per page.
+            found = [r for r in reasons(dict(chunk, page=page), no_text) if r in READ_REASONS]
             if found:
                 why.setdefault(key, set()).update(found)
     pages = []
@@ -151,11 +158,32 @@ def flagged_pages(chunks: Sequence[Dict[str, Any]], no_text: Any) -> List[Page]:
 
 
 def pdf_path(page: Page, documents_dir: Path, data_dir: Path = DATA_DIR) -> Optional[Path]:
-    """The PDF a page is in: its division's folder (fetch_documents.py), else DATA_DIR, as prototype.ingest reads it."""
+    """The PDF a page is in: its division's folder (fetch_documents.py), else DATA_DIR, as prototype.ingest reads it.
+
+    Only a file inside one of those folders: a chunk's `source` is a file name,
+    and one that climbs out (an absolute path, "..") would send some other PDF's
+    pages to the model.
+    """
     for root in (documents_dir / page.division, data_dir):
-        if (root / page.source).is_file():
-            return root / page.source
+        root = root.resolve()
+        path = (root / page.source).resolve()
+        if path.is_relative_to(root) and path.is_file():
+            return path
     return None
+
+
+@lru_cache(maxsize=None)
+def pdf_sha256(path: Path) -> str:
+    """The PDF file's hash, stored with each reading: a new edition under the same file name is read again."""
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def is_current(row: Optional[Dict[str, Any]], path: Optional[Path]) -> bool:
+    """Whether a stored reading is of the PDF as it is now (rows read before the hash was kept count as current)."""
+    if row is None:
+        return False
+    stored = row.get("pdf_sha256")
+    return stored is None or path is None or stored == pdf_sha256(path)
 
 
 def image_size(width_pt: float, height_pt: float, dpi: int) -> Tuple[int, int]:
@@ -257,9 +285,30 @@ class ReadingsFile:
         ordered["pages"] = {d: {f: dict(sorted(p.items(), key=lambda kv: int(kv[0])))
                                 for f, p in sorted(files.items())}
                             for d, files in sorted(self.data["pages"].items())}
-        tmp = self.path.with_suffix(".tmp")
+        tmp = self.path.with_name(f"{self.path.name}.{os.getpid()}.tmp")
         tmp.write_text(json.dumps(ordered, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
         tmp.replace(self.path)
+
+    def lock(self) -> "RunLock":
+        return RunLock(self.path.with_name(self.path.name + ".lock"))
+
+
+class RunLock:
+    """One run at a time on a readings file: each run saves the pages it started with, so two would lose pages."""
+
+    def __init__(self, path: Path):
+        self.path = path
+
+    def __enter__(self) -> "RunLock":
+        try:
+            with open(self.path, "x", encoding="utf-8") as f:
+                f.write(str(os.getpid()))
+        except FileExistsError:
+            raise SystemExit(f"another run holds {self.path}; wait for it, or delete the file if no run is going")
+        return self
+
+    def __exit__(self, *exc: Any) -> None:
+        self.path.unlink(missing_ok=True)
 
 
 def flag(ocr_text: str, image_text: str) -> Tuple[str, List[List[str]]]:
@@ -290,8 +339,9 @@ class Budget:
         self.max_usd = max_usd
         self.prices = prices
         self.spent = 0.0
-        # A call's worst case: a large image's input and the full completion allowance.
-        self.worst = (6000 * prices[0] + MAX_COMPLETION_TOKENS * prices[1]) / 1e6
+        # A call's worst case: the largest image sent (MAX_SIDE square at DAR-733's measured rate,
+        # about 16,600 tokens with the prompt) and the full completion allowance.
+        self.worst = (WORST_INPUT_TOKENS * prices[0] + MAX_COMPLETION_TOKENS * prices[1]) / 1e6
         self.pending = 0
 
     def admit(self) -> bool:
@@ -336,10 +386,15 @@ async def read_all(pages: Sequence[Page], store: ReadingsFile, meta: Dict[str, A
             print(f"  {page.key}: PDF not found under {documents_dir} or {DATA_DIR}")
             return
         async with gate:
+            try:
+                jpeg = await asyncio.to_thread(render, path, page.page, dpi)
+            except Exception as exc:  # noqa: BLE001  a page that won't render is one failed page, not the run
+                counts["failed"] += 1
+                print(f"  {page.key}: could not render ({exc.__class__.__name__}: {str(exc)[:160]})")
+                return
             if not budget.admit():
                 counts["skipped_budget"] += 1
                 return
-            jpeg = await asyncio.to_thread(render, path, page.page, dpi)
             started = time.perf_counter()
             try:
                 text, tokens, cut_off = await read_page(client, url, key, model, page, jpeg)
@@ -351,7 +406,7 @@ async def read_all(pages: Sequence[Page], store: ReadingsFile, meta: Dict[str, A
             usd = budget.charge(tokens)
         agreement, differences = flag(page.ocr_text, text)
         row = {"image": text, "agreement": agreement, "differences": differences, "reasons": list(page.reasons),
-               "model": model, "dpi": dpi, "prompt_version": PROMPT_VERSION,
+               "model": model, "dpi": dpi, "prompt_version": PROMPT_VERSION, "pdf_sha256": pdf_sha256(path),
                "input_tokens": tokens[0] if tokens else None, "output_tokens": tokens[1] if tokens else None,
                "usd": round(usd, 6), "seconds": round(time.perf_counter() - started, 1)}
         if cut_off:
@@ -382,13 +437,43 @@ def recompare(pages: Sequence[Page], store: ReadingsFile) -> int:
     return changed
 
 
+def prune(pages: Sequence[Page], store: ReadingsFile, documents_dir: Path) -> int:
+    """Drop the readings of pages no longer flagged, or whose PDF changed since; how many went.
+
+    After an index rebuild a page can stop being a picture page, and a new
+    edition can keep its file name: the app would otherwise put the old
+    reading beside the new text.
+    """
+    flagged = {(p.division, p.source, str(p.page)): p for p in pages}
+    removed = 0
+    for division, files in list(store.data["pages"].items()):
+        for source, by_page in list(files.items()):
+            for number, row in list(by_page.items()):
+                page = flagged.get((division, source, number))
+                if page is None or not is_current(row, pdf_path(page, documents_dir)):
+                    del by_page[number]
+                    removed += 1
+            if not by_page:
+                del files[source]
+        if not files:
+            del store.data["pages"][division]
+    return removed
+
+
 def _wanted(pages: List[Page], selected: Sequence[str]) -> List[Page]:
-    """The pages named "division/file:page" (as Page.key prints them), in the order given."""
+    """The pages named "division/file:page" (as Page.key prints them), in the order first given, each once."""
     by_key = {page.key: page for page in pages}
     unknown = [key for key in selected if key not in by_key]
     if unknown:
         raise SystemExit(f"not a flagged page of the index: {', '.join(unknown)}")
-    return [by_key[key] for key in selected]
+    return [by_key[key] for key in dict.fromkeys(selected)]
+
+
+def _todo(pages: Sequence[Page], store: ReadingsFile, documents_dir: Path, force: bool) -> List[Page]:
+    """The pages to read: those with no reading, or one of an older copy of the PDF (all with --force)."""
+    if force:
+        return list(pages)
+    return [p for p in pages if not is_current(store.get(p), pdf_path(p, documents_dir))]
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -418,27 +503,33 @@ def main(argv: Optional[List[str]] = None) -> int:
             "reasons": list(READ_REASONS)}
 
     if args.estimate:
-        todo = pages if args.force else [p for p in pages if store.get(p) is None]
+        todo = _todo(pages, store, args.documents, args.force)
         print(json.dumps(estimate(todo, args.documents, args.dpi, prices), indent=1))
         return 0
     if args.compare_only:
-        changed = recompare(pages, store)
-        store.save({})
-        print(f"{changed} page flags changed; totals {store.data['totals']}")
+        with store.lock():
+            store = ReadingsFile(store.path)
+            removed = 0 if args.page else prune(pages, store, args.documents)
+            changed = recompare(pages, store)
+            store.save({})
+        print(f"{changed} page flags changed, {removed} stale readings dropped; totals {store.data['totals']}")
         return 0
 
     key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not key:
         raise SystemExit("OPENAI_API_KEY is not set (environment or .env)")
-    todo = pages if args.force else [p for p in pages if store.get(p) is None]
-    if args.limit is not None:
-        todo = todo[:args.limit]
-    print(f"{len(pages)} flagged pages, {len(todo)} to read with {args.model} at {args.dpi} dpi, "
-          f"at most ${args.max_usd:.2f}")
-    budget = Budget(args.max_usd, prices)
-    started = time.perf_counter()
-    counts = asyncio.run(read_all(todo, store, meta, args.documents, args.base_url, key, args.model, args.dpi, budget))
-    store.save(meta)
+    with store.lock():
+        store = ReadingsFile(store.path)  # the file as it is once this run holds it
+        todo = _todo(pages, store, args.documents, args.force)
+        if args.limit is not None:
+            todo = todo[:args.limit]
+        print(f"{len(pages)} flagged pages, {len(todo)} to read with {args.model} at {args.dpi} dpi, "
+              f"at most ${args.max_usd:.2f}")
+        budget = Budget(args.max_usd, prices)
+        started = time.perf_counter()
+        counts = asyncio.run(read_all(todo, store, meta, args.documents, args.base_url, key, args.model, args.dpi,
+                                      budget))
+        store.save(meta)
     print(f"{counts} in {time.perf_counter() - started:.0f}s, ${budget.spent:.2f} this run; "
           f"file totals {store.data['totals']}")
     return 1 if counts["failed"] else 0

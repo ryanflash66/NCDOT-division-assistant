@@ -1,6 +1,7 @@
 """Tests for the indexing-time image readings of picture pages (prototype.read_pages, DAR-739)."""
 
 import asyncio
+import base64
 import json
 
 import httpx
@@ -65,6 +66,9 @@ def test_the_budget_admits_a_call_only_while_its_worst_case_fits():
     budget.charge((1000, 500))  # a real call costs far less than its worst case
     assert budget.spent == pytest.approx(0.0035)
     assert budget.admit()
+    # The worst case covers the largest image sent, at the measured rate.
+    largest = rp.estimate_tokens((rp.MAX_SIDE, rp.MAX_SIDE), 0)["input_measured"]
+    assert budget.worst >= (largest * 1.0 + rp.MAX_COMPLETION_TOKENS * 5.0) / 1e6
 
 
 def _pages():
@@ -72,9 +76,9 @@ def _pages():
             rp.Page("utilities", "010604.pdf", 279, ("scan",), "depth 9 inches")]
 
 
-def test_a_run_reads_each_page_once_saves_as_it_goes_and_resumes(tmp_path, monkeypatch):
-    replies = {278: "will not exceed 1 1/2 inches", 279: "NO_TEXT"}
-    seen = []
+def _fake_run(tmp_path, monkeypatch, replies):
+    """read_all against a mock OpenAI: each page's image is its own bytes; returns the pages called and rendered."""
+    seen, rendered = [], []
 
     def handler(request):
         body = json.loads(request.content)
@@ -83,36 +87,137 @@ def test_a_run_reads_each_page_once_saves_as_it_goes_and_resumes(tmp_path, monke
         image = body["messages"][1]["content"][1]["image_url"]
         assert image["url"].startswith("data:image/jpeg;base64,") and image["detail"] == "high"
         page = int(body["messages"][1]["content"][0]["text"].rsplit(" ", 1)[1].rstrip("."))
+        # The image sent is the one rendered for this page.
+        assert base64.b64decode(image["url"].split(",", 1)[1]) == f"jpeg of page {page}".encode()
         seen.append(page)
-        return httpx.Response(200, json={"choices": [{"message": {"content": replies[page]}, "finish_reason": "stop"}],
+        reply = replies[page]
+        if reply is None:
+            return httpx.Response(500, text="boom")
+        return httpx.Response(200, json={"choices": [{"message": {"content": reply}, "finish_reason": "stop"}],
                                          "usage": {"prompt_tokens": 4000, "completion_tokens": 100}})
+
+    def render(path, page, dpi):
+        rendered.append((path.name, page, dpi))
+        return f"jpeg of page {page}".encode()
 
     real_client = httpx.AsyncClient
     monkeypatch.setattr(rp.httpx, "AsyncClient",
                         lambda **kw: real_client(transport=httpx.MockTransport(handler), **kw))
-    monkeypatch.setattr(rp, "render", lambda path, page, dpi: b"\xff\xd8\xff jpeg")
+    monkeypatch.setattr(rp, "render", render)
     monkeypatch.setattr(rp, "pdf_path", lambda page, documents: tmp_path / page.source)
-    store = rp.ReadingsFile(tmp_path / "page_readings.json")
-    budget = rp.Budget(1.0, (1.0, 5.0))
+    (tmp_path / "010604.pdf").write_bytes(b"%PDF-1.7 fake")
 
-    counts = asyncio.run(rp.read_all(_pages(), store, {"model": "gpt-6.1-terra"}, tmp_path,
-                                     "https://example.test/v1", "sk-test", "gpt-6.1-terra", 100, budget))
+    def run(pages):
+        store = rp.ReadingsFile(tmp_path / "page_readings.json")
+        todo = rp._todo(pages, store, tmp_path, force=False)
+        counts = asyncio.run(rp.read_all(todo, store, {"model": "gpt-6.1-terra"}, tmp_path,
+                                         "https://example.test/v1", "sk-test", "gpt-6.1-terra", 100,
+                                         rp.Budget(1.0, (1.0, 5.0))))
+        return todo, counts
 
-    assert counts["read"] == 2 and sorted(seen) == [278, 279]
+    return run, seen, rendered
+
+
+def test_a_run_reads_each_page_once_saves_as_it_goes_and_resumes(tmp_path, monkeypatch):
+    replies = {278: "will not exceed 1 1/2 inches", 279: None}  # page 279's call fails: the run stops partway
+    run, seen, rendered = _fake_run(tmp_path, monkeypatch, replies)
+
+    _, counts = run(_pages())
+
+    assert counts["read"] == 1 and counts["failed"] == 1 and sorted(seen) == [278, 279]
+    assert sorted(rendered) == [("010604.pdf", 278, 100), ("010604.pdf", 279, 100)]
+    # The page that finished is saved; the one that failed is not.
     saved = json.loads((tmp_path / "page_readings.json").read_text(encoding="utf-8"))
     row = saved["pages"]["utilities"]["010604.pdf"]["278"]
     assert row["agreement"] == "disagree" and row["usd"] == pytest.approx(0.0045)
+    assert row["pdf_sha256"] == rp.pdf_sha256(tmp_path / "010604.pdf")
+    assert "279" not in saved["pages"]["utilities"]["010604.pdf"]
+    assert "sk-test" not in (tmp_path / "page_readings.json").read_text(encoding="utf-8")
+
+    # Run again: only the page that failed is read.
+    replies[279] = "NO_TEXT"
+    todo, counts = run(_pages())
+    assert [p.page for p in todo] == [279] and counts["read"] == 1 and sorted(seen) == [278, 279, 279]
+    saved = json.loads((tmp_path / "page_readings.json").read_text(encoding="utf-8"))
     assert saved["pages"]["utilities"]["010604.pdf"]["279"]["agreement"] == "no_image_text"
     assert saved["totals"] == {"pages": 2, "agree": 0, "disagree": 1, "image_only": 0, "no_image_text": 1,
                                "usd": 0.009}
-    assert "sk-test" not in (tmp_path / "page_readings.json").read_text(encoding="utf-8")
-    # The app reads the same file: the disagreeing page is used, the unread one is not.
+    # The app reads the same file: the disagreeing page is used, the one with no image text is not.
     readings = load(tmp_path)
     assert readings.get("utilities", "010604.pdf", 278).differs
     assert readings.get("utilities", "010604.pdf", 279) is None
-    # A second run finds both pages read.
-    again = rp.ReadingsFile(tmp_path / "page_readings.json")
-    assert all(again.get(p) is not None for p in _pages())
+
+    # A third run calls nothing.
+    todo, counts = run(_pages())
+    assert todo == [] and counts["read"] == 0 and len(seen) == 3
+
+    # A new edition of the PDF under the same name is read again.
+    (tmp_path / "010604.pdf").write_bytes(b"%PDF-1.7 new edition")
+    rp.pdf_sha256.cache_clear()
+    todo, _ = run(_pages())
+    assert [p.page for p in todo] == [278, 279]
+
+
+def test_a_page_that_will_not_render_fails_alone(tmp_path, monkeypatch):
+    run, seen, _ = _fake_run(tmp_path, monkeypatch, {278: "1 1/2 inches", 279: "9 inches"})
+    good = rp.render
+
+    def render(path, page, dpi):
+        if page == 278:
+            raise RuntimeError("broken page")
+        return good(path, page, dpi)
+
+    monkeypatch.setattr(rp, "render", render)
+    _, counts = run(_pages())
+
+    assert counts["failed"] == 1 and counts["read"] == 1 and seen == [279]
+
+
+def test_a_pdf_outside_the_document_folders_is_not_read(tmp_path):
+    documents, data = tmp_path / "documents", tmp_path / "data"
+    (documents / "tmsd").mkdir(parents=True)
+    data.mkdir()
+    (documents / "tmsd" / "a.pdf").write_bytes(b"%PDF")
+    (tmp_path / "secret.pdf").write_bytes(b"%PDF")
+
+    def page(source):
+        return rp.Page("tmsd", source, 1, ("scan",), "")
+
+    assert rp.pdf_path(page("a.pdf"), documents, data) == (documents / "tmsd" / "a.pdf").resolve()
+    assert rp.pdf_path(page("../../secret.pdf"), documents, data) is None
+    assert rp.pdf_path(page(str(tmp_path / "secret.pdf")), documents, data) is None
+
+
+def test_compare_only_drops_readings_of_pages_no_longer_flagged(tmp_path, monkeypatch):
+    monkeypatch.setattr(rp, "pdf_path", lambda page, documents: None)
+    store = rp.ReadingsFile(tmp_path / "page_readings.json")
+    kept, gone = _pages()
+    for page in (kept, gone):
+        store.put(page, {"image": "x", "agreement": "agree", "differences": []})
+
+    assert rp.prune([kept], store, tmp_path) == 1
+    assert store.get(kept) is not None and store.get(gone) is None
+
+
+def test_a_page_named_twice_is_read_once():
+    pages = _pages()
+    assert rp._wanted(pages, [pages[1].key, pages[0].key, pages[1].key]) == [pages[1], pages[0]]
+
+
+def test_one_run_at_a_time_holds_the_readings_file(tmp_path):
+    store = rp.ReadingsFile(tmp_path / "page_readings.json")
+    with store.lock():
+        with pytest.raises(SystemExit):
+            with store.lock():
+                pass
+    with store.lock():  # released
+        pass
+
+
+def test_a_chunk_over_a_page_break_flags_only_its_scanned_page():
+    chunks = [_chunk(6, "joined table rows", page_end=7)]
+    pages = rp.flagged_pages(chunks, {("tmsd", "a.pdf"): {7}})
+    assert [(p.page, p.reasons) for p in pages] == [(7, ("scan",))]
 
 
 def test_a_failed_call_costs_its_worst_case_and_leaves_the_page_unread(tmp_path, monkeypatch):
