@@ -210,6 +210,8 @@ class PageReading:
     agreement: str
     image: str
     differences: Tuple[Tuple[str, str], ...] = ()
+    # The transcription ran out of completion tokens before the page did (read_pages' `cut_off`).
+    cut_off: bool = False
 
     @property
     def differs(self) -> bool:
@@ -218,14 +220,30 @@ class PageReading:
 
     @property
     def excerpt(self) -> str:
-        """What the model reads with the passage: the whole reading when OCR found no text, else excerpt()."""
+        """What the model reads with the passage: the whole reading when OCR found no text, else excerpt().
+
+        Nothing from a cut-off reading: the model is told to prefer the image
+        reading's values, and one that stopped partway can lack the value or end
+        mid-row. The reader still gets the notice and the Sources panel shows it.
+        """
+        if self.cut_off:
+            return ""
         if self.agreement == IMAGE_ONLY:
             return _cut(self.image, PASSAGE_READING_CHARS)
         return excerpt(self.image, self.differences)
 
     def as_dict(self, chars: int = SOURCE_READING_CHARS) -> Dict[str, Any]:
-        return {"page": self.page, "agreement": self.agreement, "image": _cut(self.image, chars),
-                "differences": [list(d) for d in self.differences]}
+        """The reading as the Sources panel shows it: whole when it fits, else the lines that differ."""
+        shown = self.image.strip()
+        if len(shown) > chars:
+            # A long reading cut at `chars` can stop before the value the notice names; its excerpt holds it.
+            part = excerpt(self.image, self.differences) if self.agreement == DISAGREE else ""
+            shown = part if part else _cut(shown, chars)
+        out = {"page": self.page, "agreement": self.agreement, "image": shown,
+               "differences": [list(d) for d in self.differences]}
+        if self.cut_off:
+            out["cut_off"] = True
+        return out
 
 
 def _cut(text: str, chars: int) -> str:
@@ -233,12 +251,14 @@ def _cut(text: str, chars: int) -> str:
     return text if len(text) <= chars else text[:chars].rsplit(" ", 1)[0] + " …"
 
 
-def _line_matches(differences: Sequence[Tuple[str, str]]) -> List[Tuple[set, bool]]:
+def _line_matches(differences: Sequence[Tuple[str, str]]) -> List[Tuple[set, Optional[bool]]]:
     """For each difference, the values a line of the image reading must hold: (values, all of them).
 
     A changed value (0.5 in vs 1.5 in) is found by the values only the image side
     has. A table row read in another order has the same values on both sides, so
-    its line is the one holding all of them. A difference whose values are all
+    its line is the one holding all of them. A value OCR gave another unit
+    (wztc Division 11 p.50 prints 24" MIN., OCR read 24 ft) is found by the image
+    side's (value, unit), marked None. A difference whose values are all
     in the text already (a stretch only the text has, or a value only it has)
     has nothing to show from the image reading.
     """
@@ -252,7 +272,20 @@ def _line_matches(differences: Sequence[Tuple[str, str]]) -> List[Tuple[set, boo
             out.append((shown - theirs, False))
         elif shown == theirs and len(shown) >= ROW_NUMBERS:
             out.append((shown, True))
+        else:
+            # The same value in another unit (18 in vs 18 ft): the line holding the image's value and unit.
+            changed = set(_unmatched(_numbers(_tokens(image)), [] if ocr == MISSING else _numbers(_tokens(ocr))))
+            if changed:
+                out.append((changed, None))
     return out
+
+
+def _line_holds(need: set, every: Optional[bool], text: str) -> bool:
+    """Whether a line of the image reading holds what one _line_matches entry asks for."""
+    if every is None:
+        return bool(need & set(_numbers(_tokens(text))))
+    values = _numbers_of(text)
+    return need <= values if every else bool(need & values)
 
 
 @lru_cache(maxsize=2048)
@@ -272,8 +305,7 @@ def excerpt(image: str, differences: Tuple[Tuple[str, str], ...]) -> str:
         return ""
     keep = set()
     for i, (_, text) in enumerate(units):
-        values = _numbers_of(text)
-        if not any((need <= values) if every else (need & values) for need, every in wanted):
+        if not any(_line_holds(need, every, text) for need, every in wanted):
             continue
         keep.update(range(max(0, i - EXCERPT_CONTEXT_LINES), min(len(units), i + EXCERPT_CONTEXT_LINES + 1)))
         if text.lstrip().startswith("|"):
@@ -391,7 +423,8 @@ def from_json(data: Mapping[str, Any]) -> Readings:
                         continue  # not read yet, or the call failed: the page keeps its OCR text alone
                     pages[(division, file, int(page))] = PageReading(
                         int(page), row["agreement"], row["image"],
-                        tuple((str(a), str(b)) for a, b in row.get("differences") or ()))
+                        tuple((str(a), str(b)) for a, b in row.get("differences") or ()),
+                        cut_off=bool(row.get("cut_off")))
     except (AttributeError, TypeError, ValueError):
         log.warning("page readings are malformed; answering without them")
         return Readings()

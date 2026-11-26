@@ -254,6 +254,32 @@ def test_no_excerpt_when_only_the_text_has_the_differing_value():
     assert len(long.excerpt) <= rd.PASSAGE_READING_CHARS + 2  # no OCR text: the whole reading, cut
 
 
+def test_the_excerpt_keeps_the_line_whose_unit_ocr_misread():
+    # wztc Division 11 p.50: the drawing prints 24" MIN., OCR read 24 ft.
+    image = "DETAIL OF CRASH CUSHION\nFRONT VIEW\nSome note\nYELLOW SHEETING\n24\" MIN.\nGENERAL NOTES"
+    _, differences = rd.compare("YELLOW SHEETING 24' MIN. GENERAL NOTES", image)
+    assert differences
+    assert "24\" MIN." in rd.excerpt(image, tuple(tuple(d) for d in differences))
+
+
+def test_a_cut_off_reading_is_not_in_the_prompt_but_still_warns(tmp_path):
+    row = dict(_row(rd.DISAGREE, PERMIT_IMAGE, [["1/½2 inches", "1 1/2 inches"]]), cut_off=True)
+    reading = rd.from_json({"pages": {"utilities": {APPENDIX: {"278": row}}}}).get("utilities", APPENDIX, 278)
+
+    assert reading.cut_off and reading.differs and reading.excerpt == ""
+    assert reading.as_dict()["cut_off"] is True
+
+
+def test_the_sources_panel_shows_the_differing_lines_of_a_long_reading():
+    filler = "\n".join(f"Line {i} of the general notes." for i in range(200))
+    image = "STATE OF INDIANA\nPERMIT\n" + filler + "\nmaximum variation 1 1/2 inches\nend"
+    reading = rd.PageReading(278, rd.DISAGREE, image, (("1/½2 inches", "1 1/2 inches"),))
+
+    shown = reading.as_dict()["image"]
+    assert len(image) > rd.SOURCE_READING_CHARS and "1 1/2 inches" in shown and shown.startswith("STATE OF INDIANA")
+    assert rd.PageReading(5, rd.DISAGREE, "short 1 1/2 inches").as_dict()["image"] == "short 1 1/2 inches"
+
+
 def test_a_page_whose_excerpt_is_empty_is_not_in_the_prompt_but_still_warns():
     readings = rd.Readings({("utilities", APPENDIX, 278): rd.PageReading(
         278, rd.DISAGREE, PERMIT_IMAGE, (("depth 9 in page 12", "depth 9 in"),))})
